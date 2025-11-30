@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VideoDemo from './components/VideoDemo';
@@ -6,11 +7,20 @@ import Roadmap from './components/Roadmap';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import { LanguageProvider } from './contexts/LanguageContext';
+import ResetPasswordPage from './src/pages/ResetPasswordPage';
+import VerifyEmailPage from './src/pages/VerifyEmailPage';
+import LinkPaypalPage from './src/pages/LinkPaypalPage';
+
 
 function App() {
   return (
     <LanguageProvider>
-      <Content />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/linkpaypal" element={<LinkPaypalPage />} />
+      </Routes>
     </LanguageProvider>
   );
 }
@@ -18,7 +28,7 @@ function App() {
 // Extract content to use the hook inside
 import { useLanguage } from './contexts/LanguageContext';
 
-function Content() {
+function HomePage() {
   const { t } = useLanguage();
   
   return (
