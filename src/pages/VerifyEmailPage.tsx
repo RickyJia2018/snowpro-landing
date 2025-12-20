@@ -12,7 +12,7 @@ export default function VerifyEmailPage() {
   const emailId = searchParams.get('email_id');
   const secretCode = searchParams.get('secret_code');
   
-  const appDeepLink = "snowpro://home";
+  const appDeepLink = "snowpro://";
 
   useEffect(() => {
     if (!emailId || !secretCode) {
