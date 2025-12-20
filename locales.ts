@@ -73,6 +73,17 @@ export const translations = {
       desc: "加入 SnowPro 社区，体验专业的视频分析功能。现在下载，即刻开启您的进阶之旅。",
       btnIos: "App Store 下载",
       btnAndroid: "Android 下载"
+    },
+    verifyEmail: {
+      verifying: "正在验证您的邮箱...",
+      success: "邮箱验证成功！",
+      successTitle: "验证成功！",
+      errorTitle: "验证失败",
+      openApp: "打开 SnowPro App",
+      invalidLink: "验证链接无效，缺少参数。",
+      errorFallback: "验证失败。",
+      errorOccurred: "验证过程中发生错误。",
+      errorInstruction: "请尝试在 App 中重新请求验证邮件。"
     }
   },
   en: {
@@ -147,6 +158,17 @@ export const translations = {
       desc: "Join the SnowPro community and experience professional video analysis. Download now to start your journey.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
+    },
+    verifyEmail: {
+      verifying: "Verifying your email...",
+      success: "Email verified successfully!",
+      successTitle: "Success!",
+      errorTitle: "Verification Failed",
+      openApp: "Open SnowPro App",
+      invalidLink: "Invalid verification link. Missing parameters.",
+      errorFallback: "Verification failed.",
+      errorOccurred: "An error occurred during verification.",
+      errorInstruction: "Please try requesting a new verification email from the app."
     }
   },
   ja: {
@@ -221,6 +243,17 @@ export const translations = {
       desc: "SnowProコミュニティに参加して、プロのビデオ分析を体験してください。",
       btnIos: "App Store",
       btnAndroid: "Google Play"
+    },
+    verifyEmail: {
+      verifying: "Verifying your email...",
+      success: "Email verified successfully!",
+      successTitle: "Success!",
+      errorTitle: "Verification Failed",
+      openApp: "Open SnowPro App",
+      invalidLink: "Invalid verification link. Missing parameters.",
+      errorFallback: "Verification failed.",
+      errorOccurred: "An error occurred during verification.",
+      errorInstruction: "Please try requesting a new verification email from the app."
     }
   },
   ko: {
@@ -295,6 +328,17 @@ export const translations = {
       desc: "SnowPro 커뮤니티에 가입하고 전문적인 분석을 경험해보세요.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
+    },
+    verifyEmail: {
+      verifying: "Verifying your email...",
+      success: "Email verified successfully!",
+      successTitle: "Success!",
+      errorTitle: "Verification Failed",
+      openApp: "Open SnowPro App",
+      invalidLink: "Invalid verification link. Missing parameters.",
+      errorFallback: "Verification failed.",
+      errorOccurred: "An error occurred during verification.",
+      errorInstruction: "Please try requesting a new verification email from the app."
     }
   },
   fr: {
@@ -369,6 +413,17 @@ export const translations = {
       desc: "Rejoignez la communauté SnowPro et profitez d'une analyse vidéo professionnelle.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
+    },
+    verifyEmail: {
+      verifying: "Verifying your email...",
+      success: "Email verified successfully!",
+      successTitle: "Success!",
+      errorTitle: "Verification Failed",
+      openApp: "Open SnowPro App",
+      invalidLink: "Invalid verification link. Missing parameters.",
+      errorFallback: "Verification failed.",
+      errorOccurred: "An error occurred during verification.",
+      errorInstruction: "Please try requesting a new verification email from the app."
     }
   },
   de: {
@@ -443,6 +498,17 @@ export const translations = {
       desc: "Treten Sie der SnowPro-Community bei und erleben Sie professionelle Videoanalyse.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
+    },
+    verifyEmail: {
+      verifying: "Verifying your email...",
+      success: "Email verified successfully!",
+      successTitle: "Success!",
+      errorTitle: "Verification Failed",
+      openApp: "Open SnowPro App",
+      invalidLink: "Invalid verification link. Missing parameters.",
+      errorFallback: "Verification failed.",
+      errorOccurred: "An error occurred during verification.",
+      errorInstruction: "Please try requesting a new verification email from the app."
     }
   }
 };

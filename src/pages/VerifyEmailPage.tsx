@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 // Define API Base URL - Using the one found in Makefile
 const API_BASE_URL = "https://peakpal-server-786618190531.us-west2.run.app";
 
 export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
+  const { t } = useLanguage();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
-  const [message, setMessage] = useState('Verifying your email...');
+  const [message, setMessage] = useState(t.verifyEmail.verifying);
 
   const emailId = searchParams.get('email_id');
   const secretCode = searchParams.get('secret_code');
   
-  const appDeepLink = "snowpro://";
+  const appDeepLink = "snowpro://app/login";
 
   useEffect(() => {
     if (!emailId || !secretCode) {
       setStatus('error');
-      setMessage('Invalid verification link. Missing parameters.');
+      setMessage(t.verifyEmail.invalidLink);
       return;
     }
 
@@ -28,7 +30,7 @@ export default function VerifyEmailPage() {
         
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || 'Verification failed');
+          throw new Error(errorData.message || t.verifyEmail.errorFallback);
         }
 
         const data = await response.json();
@@ -36,23 +38,23 @@ export default function VerifyEmailPage() {
         // Check response body based on proto definition
         if (data.success) {
           setStatus('success');
-          setMessage('Email verified successfully!');
+          setMessage(t.verifyEmail.success);
           // Optional: Auto-open app after a short delay
           // setTimeout(() => window.location.href = appDeepLink, 1500);
         } else {
             // Fallback if success is false in body but http is 200
             setStatus('error');
-            setMessage(data.message || 'Verification failed.');
+            setMessage(data.message || t.verifyEmail.errorFallback);
         }
 
       } catch (err: any) {
         setStatus('error');
-        setMessage(err.message || 'An error occurred during verification.');
+        setMessage(err.message || t.verifyEmail.errorOccurred);
       }
     };
 
     verify();
-  }, [emailId, secretCode]);
+  }, [emailId, secretCode, t]); // Added t to dependency array
 
   const handleOpenApp = () => {
     window.location.href = appDeepLink;
@@ -85,8 +87,8 @@ export default function VerifyEmailPage() {
         </div>
         
         <h1 className="text-2xl font-bold text-slate-900 mb-2">
-            {status === 'loading' ? 'Verifying...' : 
-             status === 'success' ? 'Success!' : 'Verification Failed'}
+            {status === 'loading' ? t.verifyEmail.verifying : 
+             status === 'success' ? t.verifyEmail.successTitle : t.verifyEmail.errorTitle}
         </h1>
         <p className="text-slate-600 mb-8">{message}</p>
 
@@ -95,13 +97,13 @@ export default function VerifyEmailPage() {
             onClick={handleOpenApp}
             className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
           >
-            Open SnowPro App
+            {t.verifyEmail.openApp}
           </button>
         )}
         
         {status === 'error' && (
             <div className="text-sm text-slate-500 mt-4">
-                Please try requesting a new verification email from the app.
+                {t.verifyEmail.errorInstruction}
             </div>
         )}
       </div>
