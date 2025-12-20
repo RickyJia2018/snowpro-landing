@@ -14,7 +14,7 @@ export default function VerifyEmailPage() {
   const emailId = searchParams.get('email_id');
   const secretCode = searchParams.get('secret_code');
   
-  const appDeepLink = "snowpro://app/login";
+  const appDeepLink = "snowpro://login";
 
   useEffect(() => {
     if (!emailId || !secretCode) {
