@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const API_BASE_URL = "https://peakpal-server-786618190531.us-west2.run.app";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://peakpal-server-786618190531.us-west2.run.app";
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
