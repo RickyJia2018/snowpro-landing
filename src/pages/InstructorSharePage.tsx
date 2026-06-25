@@ -95,10 +95,55 @@ export default function InstructorSharePage() {
   
   const t = pageTranslations[language] || pageTranslations['en'];
 
+  // Detect environment
+  const ua = navigator.userAgent;
+  const isWeChat = /MicroMessenger/i.test(ua);
+
+  if (isWeChat) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-start items-end p-6 text-white relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-10 left-10 w-[250px] h-[250px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        {/* Arrow and Tip */}
+        <div className="flex items-center space-x-2 text-cyan-400 animate-bounce z-10">
+          <span className="text-sm font-semibold">{t.wechatTip}</span>
+          <ArrowUpRight className="w-8 h-8" />
+        </div>
+
+        {/* Core Message Container */}
+        <div className="w-full max-w-md mx-auto my-auto text-center space-y-6 z-10 px-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/20 mx-auto">
+            <span className="font-black text-lg tracking-tighter text-white">SP</span>
+          </div>
+          
+          <div className="space-y-3">
+            <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">
+              SnowPro
+            </h1>
+            <p className="text-slate-400 text-xs tracking-widest uppercase">滑雪指导专业平台</p>
+          </div>
+
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4 backdrop-blur-xl">
+            <h2 className="text-lg font-bold text-white tracking-wide">{t.wechatTip}</h2>
+            <p className="text-slate-300 text-sm whitespace-pre-line leading-relaxed">
+              {t.wechatDesc}
+            </p>
+          </div>
+        </div>
+
+        {/* Minimal Footer */}
+        <footer className="w-full text-center py-4 z-10 text-slate-600 text-[10px] tracking-wide mt-auto">
+          &copy; {new Date().getFullYear()} SnowPro. All Rights Reserved.
+        </footer>
+      </div>
+    );
+  }
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [data, setData] = useState<GetPublicInstructorResponse | null>(null);
-  const [showWechatOverlay, setShowWechatOverlay] = useState(false);
   
   // App deep link to open the specific instructor detail
   const appDeepLink = `snowpro://instructors/${id}`;
@@ -107,18 +152,8 @@ export default function InstructorSharePage() {
   const playStoreLink = "https://play.google.com/store/apps/details?id=com.googuar.snowpro";
 
   useEffect(() => {
-    // Detect environment
-    const ua = navigator.userAgent;
-    const isWeChat = /MicroMessenger/i.test(ua);
-    const isIOS = /iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream;
-    const isAndroid = /Android/i.test(ua);
-
-    if (isWeChat) {
-      setShowWechatOverlay(true);
-    } else {
-      // Auto-trigger deep link attempt if not in WeChat
-      window.location.href = appDeepLink;
-    }
+    // Auto-trigger deep link attempt if not in WeChat (already guaranteed by early return)
+    window.location.href = appDeepLink;
 
     // Fetch public instructor details
     const fetchInstructor = async () => {
@@ -420,36 +455,6 @@ export default function InstructorSharePage() {
       <footer className="w-full text-center py-4 z-10 text-slate-500 text-[10px] tracking-wide mt-8">
         &copy; {new Date().getFullYear()} SnowPro. All Rights Reserved.
       </footer>
-
-      {/* WeChat Overlay */}
-      {showWechatOverlay && (
-        <div 
-          onClick={() => setShowWechatOverlay(false)}
-          className="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex flex-col justify-start items-end p-6 text-white text-right space-y-4"
-        >
-          <div className="flex items-center space-x-2 text-cyan-400 animate-bounce">
-            <span className="text-sm font-semibold">{t.wechatTip}</span>
-            <ArrowUpRight className="w-8 h-8" />
-          </div>
-          <div className="space-y-2 mt-4">
-            <h2 className="text-xl font-bold text-white tracking-wide">{t.wechatTip}</h2>
-            <p className="text-slate-300 text-sm whitespace-pre-line leading-relaxed">
-              {t.wechatDesc}
-            </p>
-          </div>
-          <div className="pt-20 w-full text-center">
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowWechatOverlay(false);
-              }}
-              className="bg-white/10 border border-white/20 text-white rounded-full px-6 py-2.5 text-xs hover:bg-white/20 transition-colors"
-            >
-              我知道了
-            </button>
-          </div>
-        </div>
-      )}
 
     </div>
   );
