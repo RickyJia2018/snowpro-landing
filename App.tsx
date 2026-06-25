@@ -12,6 +12,7 @@ import VerifyEmailPage from './src/pages/VerifyEmailPage';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
+import InstructorSharePage from './src/pages/InstructorSharePage';
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://peakpal-server-786618190531.us-west2.run.app";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/recharge" element={<RechargePage />} />
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
+        <Route path="/instructors/:id" element={<InstructorSharePage />} />
       </Routes>
     </LanguageProvider>
   );
