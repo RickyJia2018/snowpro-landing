@@ -240,9 +240,7 @@ export default function RechargePage() {
         },
         body: JSON.stringify({
           product_id: selectedProductId,
-          productId: selectedProductId,
-          payment_type: 5, // PaymentType_STRIPE
-          paymentType: 5
+          payment_type: 5 // PaymentType_STRIPE
         })
       });
 
