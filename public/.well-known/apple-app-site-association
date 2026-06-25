@@ -5,10 +5,6 @@
       {
         "appID": "654476VZU7.com.googuar.snowpro",
         "paths": [ "/instructors/*", "NOT /instructors/*/edit" ]
-      },
-      {
-        "appID": "654476VZU7.com.googuar.snowpro.dev",
-        "paths": [ "/instructors/*", "NOT /instructors/*/edit" ]
       }
     ]
   }
