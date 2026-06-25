@@ -122,7 +122,7 @@ export default function RechargePage() {
           id: data.user.id || '',
           email: data.user.email || '',
           nickname: data.user.nickname || '',
-          balance: data.user.balance || 0,
+          balance: (data.user.balance || 0) / 100,
         });
         setIsLoggedIn(true);
       } else {
@@ -146,13 +146,17 @@ export default function RechargePage() {
         const data = await response.json();
         if (data.products && data.products.length > 0) {
           // Normalize snake_case from server to camelCase for frontend
-          const normalized: Product[] = data.products.map((p: any) => ({
-            productId: p.productId || p.product_id,
-            tokenAmount: p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount,
-            priceInCents: p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents,
-            title: p.title,
-            description: p.description,
-          }));
+          const normalized: Product[] = data.products.map((p: any) => {
+            const priceVal = p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents;
+            const amountVal = p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount;
+            return {
+              productId: p.productId || p.product_id,
+              tokenAmount: Number(amountVal) || 0,
+              priceInCents: Number(priceVal) || 0,
+              title: p.title,
+              description: p.description,
+            };
+          });
 
           // Sort products by price ascending
           const sorted = [...normalized].sort((a, b) => a.priceInCents - b.priceInCents);
@@ -194,7 +198,7 @@ export default function RechargePage() {
           id: data.user.id || '',
           email: data.user.email || '',
           nickname: data.user.nickname || '',
-          balance: data.user.balance || 0,
+          balance: (data.user.balance || 0) / 100,
         });
         setIsLoggedIn(true);
       } else {
@@ -379,7 +383,7 @@ export default function RechargePage() {
                 <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.balanceLabel}</div>
                 <div className="flex items-center gap-1.5 justify-end mt-0.5">
                   <Coins className="h-5 w-5 text-amber-500" />
-                  <span className="text-xl font-black text-white">{user?.balance}</span>
+                  <span className="text-xl font-black text-white">{user?.balance !== undefined ? user.balance.toFixed(2) : '0.00'}</span>
                 </div>
               </div>
             </div>
