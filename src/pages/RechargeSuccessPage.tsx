@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { CheckCircle, ArrowRight, Home } from 'lucide-react';
+import { CheckCircle, ArrowRight, Home, Coins } from 'lucide-react';
 
 const localTranslations = {
   zh: {
@@ -9,12 +9,14 @@ const localTranslations = {
     successMessage: "您的代币已成功充值。现在您可以返回 SnowPro App 中刷新页面查看最新余额。",
     backHome: "返回官网首页",
     openApp: "打开 SnowPro App",
+    backToRecharge: "继续充值代币",
   },
   en: {
     successTitle: "Recharge Successful!",
     successMessage: "Your tokens have been successfully credited to your account. You can now return to the SnowPro App and refresh to see your updated balance.",
     backHome: "Back to Home",
     openApp: "Open SnowPro App",
+    backToRecharge: "Buy More Tokens",
   }
 };
 
@@ -47,6 +49,14 @@ export default function RechargeSuccessPage() {
           >
             <span>{tLocal.openApp}</span>
             <ArrowRight className="h-4 w-4" />
+          </button>
+
+          <button 
+            onClick={() => navigate('/recharge')}
+            className="w-full bg-blue-600/10 border border-blue-500/30 text-blue-400 hover:text-blue-300 font-bold py-4 px-6 rounded-2xl hover:bg-blue-600/20 hover:border-blue-500/50 transition-all flex items-center justify-center gap-2"
+          >
+            <Coins className="h-4 w-4" />
+            <span>{tLocal.backToRecharge}</span>
           </button>
           
           <button 
