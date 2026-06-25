@@ -203,9 +203,11 @@ export default function RechargePage() {
         });
         setIsLoggedIn(true);
       } else {
+        console.error("[SnowPro Login] Missing token or user in response data. Full response:", data);
         throw new Error(tLocal.unknownError);
       }
     } catch (err: any) {
+      console.error("[SnowPro Login] Login exception:", err);
       setError(err.message || tLocal.errorLogin);
     } finally {
       setAuthLoading(false);
