@@ -10,6 +10,8 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import ResetPasswordPage from './src/pages/ResetPasswordPage';
 import VerifyEmailPage from './src/pages/VerifyEmailPage';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
+import RechargePage from './src/pages/RechargePage';
+import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
+        <Route path="/recharge" element={<RechargePage />} />
+        <Route path="/recharge/success" element={<RechargeSuccessPage />} />
       </Routes>
     </LanguageProvider>
   );

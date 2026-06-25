@@ -7,6 +7,7 @@ export const translations = {
       roadmap: "未来规划",
       about: "关于我们",
       download: "立即下载",
+      recharge: "代币充值",
       appDownload: "下载 APP"
     },
     hero: {
@@ -92,6 +93,7 @@ export const translations = {
       roadmap: "Roadmap",
       about: "About",
       download: "Download",
+      recharge: "Token Recharge",
       appDownload: "Get App"
     },
     hero: {
@@ -177,6 +179,7 @@ export const translations = {
       roadmap: "ロードマップ",
       about: "概要",
       download: "ダウンロード",
+      recharge: "トークンチャージ",
       appDownload: "アプリを入手"
     },
     hero: {
@@ -262,6 +265,7 @@ export const translations = {
       roadmap: "로드맵",
       about: "소개",
       download: "다운로드",
+      recharge: "토큰 충전",
       appDownload: "앱 다운로드"
     },
     hero: {
@@ -347,6 +351,7 @@ export const translations = {
       roadmap: "Feuille de route",
       about: "À propos",
       download: "Télécharger",
+      recharge: "Recharge de jetons",
       appDownload: "Obtenir l'app"
     },
     hero: {
@@ -432,6 +437,7 @@ export const translations = {
       roadmap: "Roadmap",
       about: "Über uns",
       download: "Download",
+      recharge: "Token aufladen",
       appDownload: "App holen"
     },
     hero: {

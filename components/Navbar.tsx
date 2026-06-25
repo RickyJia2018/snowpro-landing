@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Snowflake, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { APP_NAME } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Language } from '../locales';
@@ -21,6 +22,7 @@ const Navbar: React.FC = () => {
     { label: t.nav.features, href: "#core-feature" },
     { label: t.nav.roadmap, href: "#roadmap" },
     { label: t.nav.about, href: "#about" },
+    { label: t.nav.recharge, href: "/recharge" },
     { label: t.nav.download, href: "#download" },
   ];
 
@@ -48,19 +50,34 @@ const Navbar: React.FC = () => {
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-6">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 
-                    ${scrolled 
-                      ? 'text-slate-600 hover:text-brand-primary hover:bg-blue-50' 
-                      : 'text-slate-200 hover:text-white hover:bg-white/10'
-                    }`}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const isRoute = item.href.startsWith('/');
+                return isRoute ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 
+                      ${scrolled 
+                        ? 'text-slate-600 hover:text-brand-primary hover:bg-blue-50' 
+                        : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 
+                      ${scrolled 
+                        ? 'text-slate-600 hover:text-brand-primary hover:bg-blue-50' 
+                        : 'text-slate-200 hover:text-white hover:bg-white/10'
+                      }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
               
               {/* Language Switcher */}
               <div className="relative group">
@@ -106,16 +123,28 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="text-slate-600 hover:text-brand-primary hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium"
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isRoute = item.href.startsWith('/');
+              return isRoute ? (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-slate-600 hover:text-brand-primary hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-slate-600 hover:text-brand-primary hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
             
             <div className="border-t border-gray-100 my-2 pt-2">
               <div className="px-3 text-xs text-slate-400 uppercase font-bold mb-2">Select Language</div>
