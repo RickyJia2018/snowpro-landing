@@ -92,6 +92,7 @@ export default function RechargePage() {
 
   // Check login state on mount
   useEffect(() => {
+    console.log("[SnowPro Recharge] Connecting to API Base URL:", API_BASE_URL);
     const token = localStorage.getItem('accessToken');
     if (token) {
       fetchUserInfo(token);

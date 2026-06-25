@@ -23,6 +23,7 @@ export default function VerifyEmailPage() {
   const appDeepLink = "snowpro://login";
 
   useEffect(() => {
+    console.log("[SnowPro VerifyEmail] Connecting to API Base URL:", API_BASE_URL);
     if (!emailId || !secretCode) {
       setStatus('error');
       setMessage(t.verifyEmail.invalidLink);
