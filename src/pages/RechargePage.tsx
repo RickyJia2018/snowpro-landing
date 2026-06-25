@@ -93,7 +93,21 @@ export default function RechargePage() {
   // Check login state on mount
   useEffect(() => {
     console.log("[SnowPro Recharge] Connecting to API Base URL:", API_BASE_URL);
-    const token = localStorage.getItem('accessToken');
+    
+    // Parse accessToken from URL query parameters (for app redirect bypass login)
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('accessToken');
+    
+    let token = localStorage.getItem('accessToken');
+    
+    if (urlToken) {
+      token = urlToken;
+      localStorage.setItem('accessToken', urlToken);
+      // Clean up the URL parameter to protect the token from exposure
+      const newUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+
     if (token) {
       fetchUserInfo(token);
     } else {
@@ -101,6 +115,45 @@ export default function RechargePage() {
     }
     fetchProducts();
   }, []);
+
+  // Check if there is any pending Stripe checkout session that needs restoration
+  const checkPendingOrder = async (token: string) => {
+    const pendingSessionId = localStorage.getItem('pending_stripe_session_id');
+    if (!pendingSessionId) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: pendingSessionId
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          const amt = data.purchasedTokenAmount || data.purchased_token_amount || 0;
+          // Successfully restored paid tokens
+          alert(
+            language === 'zh'
+              ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
+              : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
+          );
+          // Reload user info to display latest balance
+          fetchUserInfo(token);
+        }
+      }
+      // If it returned ok (either success or unpaid/not found), we clear the pending ID.
+      // If the API server failed/network error occurred, we keep it to try again next time.
+      localStorage.removeItem('pending_stripe_session_id');
+    } catch (err) {
+      console.error("Failed to restore pending purchase:", err);
+    }
+  };
 
   // Fetch user info
   const fetchUserInfo = async (token: string) => {
@@ -126,6 +179,8 @@ export default function RechargePage() {
           balance: (data.user.balance || 0) / 100,
         });
         setIsLoggedIn(true);
+        // Check for pending payments to restore on startup
+        checkPendingOrder(token);
       } else {
         throw new Error('No user data');
       }
@@ -202,6 +257,8 @@ export default function RechargePage() {
           balance: (data.user.balance || 0) / 100,
         });
         setIsLoggedIn(true);
+        // Check for pending payments to restore on login
+        checkPendingOrder(token);
       } else {
         console.error("[SnowPro Login] Missing token or user in response data. Full response:", data);
         throw new Error(tLocal.unknownError);
@@ -243,7 +300,9 @@ export default function RechargePage() {
         },
         body: JSON.stringify({
           product_id: selectedProductId,
-          payment_type: 5 // PaymentType_STRIPE
+          payment_type: 5, // PaymentType_STRIPE
+          success_url: `${window.location.origin}/recharge/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${window.location.origin}/recharge`
         })
       });
 
@@ -255,6 +314,11 @@ export default function RechargePage() {
       const data = await response.json();
       const checkoutUrl = data.stripeCheckoutUrl || data.stripe_checkout_url;
       if (checkoutUrl) {
+        // Try to extract Stripe session_id to save in local storage for restore purpose
+        const match = checkoutUrl.match(/(cs_(?:test|live)_[a-zA-Z0-9]+)/);
+        if (match) {
+          localStorage.setItem('pending_stripe_session_id', match[1]);
+        }
         // Redirect user to Stripe Hosted Checkout Page
         window.location.href = checkoutUrl;
       } else {
