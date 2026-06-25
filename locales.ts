@@ -84,7 +84,12 @@ export const translations = {
       invalidLink: "验证链接无效，缺少参数。",
       errorFallback: "验证失败。",
       errorOccurred: "验证过程中发生错误。",
-      errorInstruction: "请尝试在 App 中重新请求验证邮件。"
+      errorInstruction: "请尝试在 App 中重新请求验证邮件。",
+      resendEmail: "重新发送验证邮件",
+      emailPlaceholder: "请输入您的邮箱地址",
+      resendSuccess: "验证邮件已重新发送，请检查您的收件箱。",
+      resending: "正在重新发送...",
+      invalidEmail: "请输入有效的邮箱地址。"
     }
   },
   en: {
@@ -170,7 +175,12 @@ export const translations = {
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
-      errorInstruction: "Please try requesting a new verification email from the app."
+      errorInstruction: "Please try requesting a new verification email from the app.",
+      resendEmail: "Resend Verification Email",
+      emailPlaceholder: "Enter your email address",
+      resendSuccess: "Verification email resent! Please check your inbox.",
+      resending: "Resending...",
+      invalidEmail: "Please enter a valid email address."
     }
   },
   ja: {
@@ -256,7 +266,12 @@ export const translations = {
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
-      errorInstruction: "Please try requesting a new verification email from the app."
+      errorInstruction: "Please try requesting a new verification email from the app.",
+      resendEmail: "Resend Verification Email",
+      emailPlaceholder: "Enter your email address",
+      resendSuccess: "Verification email resent! Please check your inbox.",
+      resending: "Resending...",
+      invalidEmail: "Please enter a valid email address."
     }
   },
   ko: {
@@ -342,7 +357,12 @@ export const translations = {
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
-      errorInstruction: "Please try requesting a new verification email from the app."
+      errorInstruction: "Please try requesting a new verification email from the app.",
+      resendEmail: "Resend Verification Email",
+      emailPlaceholder: "Enter your email address",
+      resendSuccess: "Verification email resent! Please check your inbox.",
+      resending: "Resending...",
+      invalidEmail: "Please enter a valid email address."
     }
   },
   fr: {
@@ -428,7 +448,12 @@ export const translations = {
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
-      errorInstruction: "Please try requesting a new verification email from the app."
+      errorInstruction: "Please try requesting a new verification email from the app.",
+      resendEmail: "Resend Verification Email",
+      emailPlaceholder: "Enter your email address",
+      resendSuccess: "Verification email resent! Please check your inbox.",
+      resending: "Resending...",
+      invalidEmail: "Please enter a valid email address."
     }
   },
   de: {
@@ -514,7 +539,12 @@ export const translations = {
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
-      errorInstruction: "Please try requesting a new verification email from the app."
+      errorInstruction: "Please try requesting a new verification email from the app.",
+      resendEmail: "Resend Verification Email",
+      emailPlaceholder: "Enter your email address",
+      resendSuccess: "Verification email resent! Please check your inbox.",
+      resending: "Resending...",
+      invalidEmail: "Please enter a valid email address."
     }
   }
 };

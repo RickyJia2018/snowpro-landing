@@ -145,8 +145,17 @@ export default function RechargePage() {
       if (response.ok) {
         const data = await response.json();
         if (data.products && data.products.length > 0) {
+          // Normalize snake_case from server to camelCase for frontend
+          const normalized: Product[] = data.products.map((p: any) => ({
+            productId: p.productId || p.product_id,
+            tokenAmount: p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount,
+            priceInCents: p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents,
+            title: p.title,
+            description: p.description,
+          }));
+
           // Sort products by price ascending
-          const sorted = [...data.products].sort((a, b) => a.priceInCents - b.priceInCents);
+          const sorted = [...normalized].sort((a, b) => a.priceInCents - b.priceInCents);
           setProducts(sorted);
           setSelectedProductId(sorted[0].productId);
         }
@@ -177,8 +186,10 @@ export default function RechargePage() {
       }
 
       const data = await response.json();
-      if (data.accessToken && data.user) {
-        localStorage.setItem('accessToken', data.accessToken);
+      const token = data.accessToken || data.access_token;
+
+      if (token && data.user) {
+        localStorage.setItem('accessToken', token);
         setUser({
           id: data.user.id || '',
           email: data.user.email || '',
@@ -235,9 +246,10 @@ export default function RechargePage() {
       }
 
       const data = await response.json();
-      if (data.stripeCheckoutUrl) {
+      const checkoutUrl = data.stripeCheckoutUrl || data.stripe_checkout_url;
+      if (checkoutUrl) {
         // Redirect user to Stripe Hosted Checkout Page
-        window.location.href = data.stripeCheckoutUrl;
+        window.location.href = checkoutUrl;
       } else {
         throw new Error("No Stripe checkout URL returned from server.");
       }
