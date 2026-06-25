@@ -15,7 +15,7 @@ import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
 
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://peakpal-server-786618190531.us-west2.run.app";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://peakpal-server-dev-786618190531.us-west2.run.app";
 
 function App() {
   React.useEffect(() => {
