@@ -14,7 +14,13 @@ import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://peakpal-server-786618190531.us-west2.run.app";
+
 function App() {
+  React.useEffect(() => {
+    console.log("[SnowPro App] Global API Base URL:", API_BASE_URL);
+  }, []);
+
   return (
     <LanguageProvider>
       <Routes>
