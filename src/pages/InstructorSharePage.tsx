@@ -152,9 +152,6 @@ export default function InstructorSharePage() {
   const playStoreLink = "https://play.google.com/store/apps/details?id=com.googuar.snowpro";
 
   useEffect(() => {
-    // Auto-trigger deep link attempt if not in WeChat (already guaranteed by early return)
-    window.location.href = appDeepLink;
-
     // Fetch public instructor details
     const fetchInstructor = async () => {
       try {
@@ -209,7 +206,7 @@ export default function InstructorSharePage() {
     if (id) {
       fetchInstructor();
     }
-  }, [id, appDeepLink]);
+  }, [id]);
 
   const handleOpenApp = () => {
     window.location.href = appDeepLink;
