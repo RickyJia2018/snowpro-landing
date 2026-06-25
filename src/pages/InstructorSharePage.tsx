@@ -28,7 +28,8 @@ const pageTranslations: Record<string, any> = {
     downloadGooglePlay: "在 Google Play 下载",
     activeStatus: "接单中",
     inactiveStatus: "暂停接单",
-    priceText: "授课价格"
+    priceText: "授课价格",
+    rating: "评分"
   },
   en: {
     loading: "Loading instructor profile...",
@@ -51,7 +52,8 @@ const pageTranslations: Record<string, any> = {
     downloadGooglePlay: "Get it on Google Play",
     activeStatus: "Available",
     inactiveStatus: "Unavailable",
-    priceText: "Price"
+    priceText: "Price",
+    rating: "Rating"
   }
 };
 
@@ -101,8 +103,8 @@ export default function InstructorSharePage() {
   // App deep link to open the specific instructor detail
   const appDeepLink = `snowpro://instructors/${id}`;
   const appStoreLink = "https://apps.apple.com/ca/app/snow-pro/id6754150275";
-  const apkDownloadLink = "/snowpro.apk";
-  const playStoreLink = "https://play.google.com/store/apps/details?id=com.googuar.snowpro"; // Place holder or placeholder link
+  const apkDownloadLink = "https://storage.googleapis.com/snowpro-bucket-public/snowpro.apk";
+  const playStoreLink = "https://play.google.com/store/apps/details?id=com.googuar.snowpro";
 
   useEffect(() => {
     // Detect environment
