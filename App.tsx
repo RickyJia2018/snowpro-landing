@@ -13,9 +13,7 @@ import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
-
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-dev-786618190531.us-west1.run.app";
+import { API_BASE_URL } from './src/config/api';
 
 function App() {
   React.useEffect(() => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { CheckCircle, ArrowRight, Home, Coins, Loader2, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../config/api';
 
 const localTranslations = {
   zh: {
@@ -47,7 +48,6 @@ export default function RechargeSuccessPage() {
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   const tLocal = localTranslations[language === 'zh' ? 'zh' : 'en'];
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://snowpro-dev-786618190531.us-west1.run.app';
 
   const verifyOrder = async () => {
     if (!sessionId) return;

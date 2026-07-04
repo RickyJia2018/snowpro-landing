@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-// Define API Base URL - Using the one found in Makefile
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-dev-786618190531.us-west1.run.app";
+import { API_BASE_URL } from '../config/api';
 
 export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();

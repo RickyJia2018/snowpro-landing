@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-dev-786618190531.us-west1.run.app";
+import { API_BASE_URL } from '../config/api';
 
 interface Product {
   productId: string;

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { ArrowUpRight, Award, MapPin, Star, Calendar, MessageSquare, Download, Play, ShieldCheck } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-dev-786618190531.us-west1.run.app";
+import { API_BASE_URL } from '../config/api';
 
 // Localized strings for this specific share page
 const pageTranslations: Record<string, any> = {

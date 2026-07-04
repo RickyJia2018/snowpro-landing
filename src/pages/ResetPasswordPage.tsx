@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-dev-786618190531.us-west1.run.app";
+import { API_BASE_URL } from '../config/api';
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
