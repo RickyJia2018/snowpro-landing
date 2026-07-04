@@ -3,7 +3,7 @@ import { PeakPalClient } from '../pb/Service_peakpalServiceClientPb';
 import { Request, UnaryResponse, ClientReadableStream } from 'grpc-web'; // Import Request type
 
 const peakPalClient = new PeakPalClient(
-  "https://peakpal-server-786618190531.us-west2.run.app",
+  "https://snowpro-prod-786618190531.us-west1.run.app",
   null,
   {
     unaryInterceptors: [
