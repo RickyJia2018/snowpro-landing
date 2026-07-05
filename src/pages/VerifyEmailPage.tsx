@@ -32,7 +32,7 @@ export default function VerifyEmailPage() {
     const verify = async () => {
       try {
         // Call the gRPC-Gateway REST API
-        const response = await fetch(`${API_BASE_URL}/verify_email?email_id=${emailId}&secret_code=${secretCode}`);
+        const response = await fetch(`${API_BASE_URL}/verify_email?email_id=${emailId}&emailId=${emailId}&secret_code=${secretCode}&secretCode=${secretCode}`);
         
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
