@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 import { API_BASE_URL } from '../config/api';
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
+  const { t } = useLanguage();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,19 +23,19 @@ export default function ResetPasswordPage() {
     
     if (!userId || !token) {
         setStatus('error');
-        setMessage('Invalid link parameters.');
+        setMessage(t.resetPassword.invalidLink);
         return;
     }
     
     if (password !== confirmPassword) {
         setStatus('error');
-        setMessage('Passwords do not match.');
+        setMessage(t.resetPassword.passwordsDoNotMatch);
         return;
     }
     
     if (password.length < 6) {
         setStatus('error');
-        setMessage('Password must be at least 6 characters.');
+        setMessage(t.resetPassword.passwordLength);
         return;
     }
 
@@ -56,21 +58,21 @@ export default function ResetPasswordPage() {
 
         if (!response.ok) {
              const errorData = await response.json().catch(() => ({}));
-             throw new Error(errorData.message || 'Reset failed');
+             throw new Error(errorData.message || t.resetPassword.errorFallback);
         }
 
         const data = await response.json();
         if (data.success) {
              setStatus('success');
-             setMessage('Your password has been reset successfully.');
+             setMessage(t.resetPassword.successDesc);
         } else {
              setStatus('error');
-             setMessage(data.message || 'Reset failed.');
+             setMessage(data.message || t.resetPassword.errorFallback);
         }
 
     } catch (err: any) {
         setStatus('error');
-        setMessage(err.message || 'An error occurred.');
+        setMessage(err.message || t.resetPassword.errorOccurred);
     } finally {
         setIsSubmitting(false);
     }
@@ -87,16 +89,16 @@ export default function ResetPasswordPage() {
           <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center">
              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
              </div>
-             <h1 className="text-2xl font-bold text-slate-900 mb-2">Reset Successful</h1>
+             <h1 className="text-2xl font-bold text-slate-900 mb-2">{t.resetPassword.successTitle}</h1>
              <p className="text-slate-600 mb-8">{message}</p>
              <button 
                 onClick={handleOpenApp}
                 className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
               >
-                Open App to Login
+                {t.resetPassword.openApp}
               </button>
           </div>
         </div>
@@ -107,8 +109,8 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
       <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full">
         <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-slate-900">Reset Password</h1>
-            <p className="text-slate-600 mt-2">Enter your new password below.</p>
+            <h1 className="text-2xl font-bold text-slate-900">{t.resetPassword.title}</h1>
+            <p className="text-slate-600 mt-2">{t.resetPassword.subtitle}</p>
         </div>
 
         {status === 'error' && (
@@ -119,7 +121,7 @@ export default function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t.resetPassword.newPassword}</label>
                 <input 
                     type="password" 
                     value={password}
@@ -131,7 +133,7 @@ export default function ResetPasswordPage() {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">{t.resetPassword.confirmPassword}</label>
                 <input 
                     type="password" 
                     value={confirmPassword}
@@ -147,9 +149,13 @@ export default function ResetPasswordPage() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-                {isSubmitting ? 'Resetting...' : 'Reset Password'}
+                {isSubmitting ? t.resetPassword.resetting : t.resetPassword.submitBtn}
             </button>
         </form>
+      </div>
+    </div>
+  );
+}>
       </div>
     </div>
   );

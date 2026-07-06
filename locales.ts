@@ -90,6 +90,22 @@ export const translations = {
       resendSuccess: "验证邮件已重新发送，请检查您的收件箱。",
       resending: "正在重新发送...",
       invalidEmail: "请输入有效的邮箱地址。"
+    },
+    resetPassword: {
+      title: "重置密码",
+      subtitle: "在下方输入您的新密码。",
+      newPassword: "新密码",
+      confirmPassword: "确认密码",
+      passwordsDoNotMatch: "两次输入的密码不一致。",
+      passwordLength: "密码长度必须至少为 6 个字符。",
+      invalidLink: "链接无效，缺少参数。",
+      successTitle: "重置成功",
+      successDesc: "您的密码已成功重置。",
+      openApp: "打开 App 登录",
+      resetting: "正在重置...",
+      submitBtn: "重置密码",
+      errorFallback: "重置失败。",
+      errorOccurred: "重置过程中发生错误。"
     }
   },
   en: {
@@ -181,6 +197,22 @@ export const translations = {
       resendSuccess: "Verification email resent! Please check your inbox.",
       resending: "Resending...",
       invalidEmail: "Please enter a valid email address."
+    },
+    resetPassword: {
+      title: "Reset Password",
+      subtitle: "Enter your new password below.",
+      newPassword: "New Password",
+      confirmPassword: "Confirm Password",
+      passwordsDoNotMatch: "Passwords do not match.",
+      passwordLength: "Password must be at least 6 characters.",
+      invalidLink: "Invalid link parameters.",
+      successTitle: "Reset Successful",
+      successDesc: "Your password has been reset successfully.",
+      openApp: "Open App to Login",
+      resetting: "Resetting...",
+      submitBtn: "Reset Password",
+      errorFallback: "Reset failed.",
+      errorOccurred: "An error occurred."
     }
   },
   ja: {
@@ -272,6 +304,22 @@ export const translations = {
       resendSuccess: "Verification email resent! Please check your inbox.",
       resending: "Resending...",
       invalidEmail: "Please enter a valid email address."
+    },
+    resetPassword: {
+      title: "パスワード再設定",
+      subtitle: "以下に新しいパスワードを入力してください。",
+      newPassword: "新しいパスワード",
+      confirmPassword: "パスワードの確認",
+      passwordsDoNotMatch: "パスワードが一致しません。",
+      passwordLength: "パスワードは6文字以上である必要があります。",
+      invalidLink: "リンクパラメータが無効です。",
+      successTitle: "再設定成功",
+      successDesc: "パスワードが正常に再設定されました。",
+      openApp: "アプリを開いてログイン",
+      resetting: "再設定中...",
+      submitBtn: "パスワードを再設定",
+      errorFallback: "再設定に失敗しました。",
+      errorOccurred: "エラーが発生しました。"
     }
   },
   ko: {
@@ -363,6 +411,22 @@ export const translations = {
       resendSuccess: "Verification email resent! Please check your inbox.",
       resending: "Resending...",
       invalidEmail: "Please enter a valid email address."
+    },
+    resetPassword: {
+      title: "비밀번호 재설정",
+      subtitle: "아래에 새 비밀번호를 입력하십시오.",
+      newPassword: "새 비밀번호",
+      confirmPassword: "비밀번호 확인",
+      passwordsDoNotMatch: "비밀번호가 일치하지 않습니다.",
+      passwordLength: "비밀번호는 최소 6자 이상이어야 합니다.",
+      invalidLink: "유효하지 않은 링크 매개변수입니다.",
+      successTitle: "재설정 성공",
+      successDesc: "비밀번호가 성공적으로 재설정되었습니다.",
+      openApp: "로그인하려면 앱 열기",
+      resetting: "재설정 중...",
+      submitBtn: "비밀번호 재설정",
+      errorFallback: "재설정에 실패했습니다.",
+      errorOccurred: "오류가 발생했습니다."
     }
   },
   fr: {
@@ -454,6 +518,22 @@ export const translations = {
       resendSuccess: "Verification email resent! Please check your inbox.",
       resending: "Resending...",
       invalidEmail: "Please enter a valid email address."
+    },
+    resetPassword: {
+      title: "Réinitialiser le mot de passe",
+      subtitle: "Saisissez votre nouveau mot de passe ci-dessous.",
+      newPassword: "Nouveau mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      passwordsDoNotMatch: "Les mots de passe ne correspondent pas.",
+      passwordLength: "Le mot de passe doit comporter au moins 6 caractères.",
+      invalidLink: "Paramètres de lien invalides.",
+      successTitle: "Réinitialisation réussie",
+      successDesc: "Votre mot de passe a été réinitialisé avec succès.",
+      openApp: "Ouvrir l'application pour se connecter",
+      resetting: "Réinitialisation...",
+      submitBtn: "Réinitialiser le mot de passe",
+      errorFallback: "Échec de la réinitialisation.",
+      errorOccurred: "Une erreur est survenue."
     }
   },
   de: {
@@ -545,6 +625,22 @@ export const translations = {
       resendSuccess: "Verification email resent! Please check your inbox.",
       resending: "Resending...",
       invalidEmail: "Please enter a valid email address."
+    },
+    resetPassword: {
+      title: "Passwort zurücksetzen",
+      subtitle: "Geben Sie unten Ihr neues Passwort ein.",
+      newPassword: "Neues Passwort",
+      confirmPassword: "Passwort bestätigen",
+      passwordsDoNotMatch: "Passwörter stimmen nicht überein.",
+      passwordLength: "Das Passwort muss mindestens 6 Zeichen lang sein.",
+      invalidLink: "Ungültige Link-Parameter.",
+      successTitle: "Erfolgreich zurückgesetzt",
+      successDesc: "Ihr Passwort wurde erfolgreich zurückgesetzt.",
+      openApp: "App zum Anmelden öffnen",
+      resetting: "Zurücksetzen...",
+      submitBtn: "Passwort zurücksetzen",
+      errorFallback: "Zurücksetzen fehlgeschlagen.",
+      errorOccurred: "Ein Fehler ist aufgetreten."
     }
   }
 };
