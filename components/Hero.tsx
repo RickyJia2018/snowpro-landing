@@ -35,10 +35,9 @@ const Hero: React.FC = () => {
         <p className="mt-4 text-xl text-slate-300 max-w-2xl mx-auto mb-10 font-light">
           {t.hero.subtitle}
         </p>
-
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button 
-            onClick={() => window.open('https://apps.apple.com/ca/app/snow-pro/id6754150275', '_blank')}
+            onClick={() => window.open('https://apps.apple.com/app/id6754150275', '_blank')}
             className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
             <Apple size={24} className="fill-current" />

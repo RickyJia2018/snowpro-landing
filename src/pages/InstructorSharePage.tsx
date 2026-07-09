@@ -147,7 +147,7 @@ export default function InstructorSharePage() {
   
   // App deep link to open the specific instructor detail
   const appDeepLink = `snowpro://instructors/${id}`;
-  const appStoreLink = "https://apps.apple.com/ca/app/snow-pro/id6754150275";
+  const appStoreLink = "https://apps.apple.com/app/id6754150275";
   const apkDownloadLink = "https://storage.googleapis.com/snowpro-bucket-public/snowpro.apk";
   const playStoreLink = "https://play.google.com/store/apps/details?id=com.googuar.snowpro";
 

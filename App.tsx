@@ -125,7 +125,7 @@ function HomePage() {
                 {/* QR Code Container */}
                 <div className="bg-white p-4 rounded-2xl shadow-xl mb-6 transition-transform hover:scale-105 duration-300">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fca%2Fapp%2Fsnow-pro%2Fid6754150275"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fid6754150275"
                     alt="iOS App Store QR Code"
                     className="w-[150px] h-[150px]"
                     loading="lazy"
@@ -137,7 +137,7 @@ function HomePage() {
                 </span>
 
                 <a 
-                  href="https://apps.apple.com/ca/app/snow-pro/id6754150275"
+                  href="https://apps.apple.com/app/id6754150275"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-white text-slate-900 hover:bg-slate-100 font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center"
