@@ -200,7 +200,7 @@ const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop" 
+          src="/hero_bg.jpg" 
           alt="Skiing Background"
           className="w-full h-full object-cover select-none"
         />
