@@ -93,93 +93,9 @@ const Hero: React.FC = () => {
       });
     }
 
-    // 3D Skiing Carving Trails Definition
-    // We model 3 parallel carving lines scrolling down in 3D space
-    interface TrailPoint {
-      x: number;
-      y: number;
-      z: number;
-    }
-
-    // Renders a smooth 3D glowing ribbon representing carving ski lines
-    const draw3DTrail = (
-      ctx: CanvasRenderingContext2D,
-      offsetX: number,
-      color: string,
-      time: number
-    ) => {
-      const segments = 45;
-      const points: TrailPoint[] = [];
-      
-      // Calculate 3D points along a sine wave terrain curve
-      for (let i = 0; i < segments; i++) {
-        const progress = i / (segments - 1);
-        const z = (1 - progress) * 900 + 50; // Depth from 950 down to 50
-        
-        // Dynamic carving curve shape (sine waves simulating skiing turns)
-        const wave1 = Math.sin(progress * 4.5 + time * 0.8) * 160;
-        const wave2 = Math.cos(progress * 2.0 - time * 0.4) * 80;
-        
-        const x = offsetX + wave1 + wave2;
-        // Mountain slope profile (inclined down)
-        const y = (progress - 0.4) * 350 + Math.sin(progress * 3 + time * 0.5) * 20 + 150;
-        
-        points.push({ x, y, z });
-      }
-
-      ctx.beginPath();
-      let first = true;
-
-      // Project all points to 2D screen coordinates
-      for (let i = 0; i < points.length; i++) {
-        const pt = points[i];
-        
-        // 3D Parallax Rotation based on mouse
-        let rx = pt.x;
-        let ry = pt.y;
-        if (mouse.active) {
-          // Rotate slightly around Y axis
-          const cosY = Math.cos(mouse.rx);
-          const sinY = Math.sin(mouse.rx);
-          rx = pt.x * cosY - pt.z * sinY;
-          
-          // Rotate slightly around X axis
-          const cosX = Math.cos(mouse.ry);
-          const sinX = Math.sin(mouse.ry);
-          ry = pt.y * cosX - pt.z * sinX;
-        }
-
-        const scale = fov / (fov + pt.z);
-        const sx = centerX + rx * scale;
-        const sy = centerY + ry * scale;
-
-        if (first) {
-          ctx.moveTo(sx, sy);
-          first = false;
-        } else {
-          ctx.lineTo(sx, sy);
-        }
-      }
-
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 3;
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 18;
-      ctx.stroke();
-      ctx.shadowBlur = 0; // Reset glow
-    };
-
-    let time = 0;
-
     // Render loop
     const render = () => {
-      time += 0.015;
       ctx.clearRect(0, 0, width, height);
-
-      // 1. Draw glowing 3D ski carving lines in space
-      draw3DTrail(ctx, -250, 'rgba(14, 165, 233, 0.75)', time); // Cyan carving path
-      draw3DTrail(ctx, 250, 'rgba(59, 130, 246, 0.65)', time + Math.PI / 2); // Blue carving path
-      draw3DTrail(ctx, 0, 'rgba(255, 255, 255, 0.55)', time - Math.PI / 4); // White carving path
 
       // 2. Update and draw 3D snow particles
       for (let i = 0; i < particles.length; i++) {
