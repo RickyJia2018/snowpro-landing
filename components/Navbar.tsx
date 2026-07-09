@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Snowflake, Globe } from 'lucide-react';
+import { Menu, X, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { APP_NAME } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -40,9 +40,11 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-            <div className={`p-2 rounded-lg ${scrolled ? 'bg-brand-primary text-white' : 'bg-white text-brand-primary'}`}>
-              <Snowflake size={24} />
-            </div>
+            <img 
+              src="/logo_icon.png" 
+              alt="SnowPro Logo" 
+              className="w-10 h-10 rounded-xl object-cover shadow-md"
+            />
             <span className={`font-bold text-2xl tracking-tight ${scrolled ? 'text-slate-900' : 'text-white'}`}>
               {APP_NAME}
             </span>
