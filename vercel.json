@@ -19,6 +19,13 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/download/android",
+      "destination": "https://storage.googleapis.com/snowpro-bucket-public/snowpro.apk",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/.well-known/apple-app-site-association",

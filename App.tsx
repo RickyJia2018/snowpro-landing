@@ -189,7 +189,7 @@ function HomePage() {
                   </div>
 
                   <a 
-                    href="https://storage.googleapis.com/snowpro-bucket-public/snowpro.apk"
+                    href="/download/android"
                     className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center"
                   >
                     <Download size={20} />
