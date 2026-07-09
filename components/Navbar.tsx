@@ -84,16 +84,18 @@ const Navbar: React.FC = () => {
                 <button className={`p-2 rounded-full transition-colors ${scrolled ? 'text-slate-600 hover:bg-blue-50' : 'text-white hover:bg-white/10'}`}>
                   <Globe size={20} />
                 </button>
-                <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block border border-gray-100 text-sm text-slate-700">
-                   {languages.map((lang) => (
-                     <button 
+                <div className="absolute right-0 top-full pt-2 w-32 hidden group-hover:block text-sm text-slate-700">
+                  <div className="bg-white rounded-lg shadow-xl py-2 border border-gray-100">
+                    {languages.map((lang) => (
+                      <button 
                         key={lang.code}
                         onClick={() => setLanguage(lang.code)}
                         className={`block w-full text-left px-4 py-2 hover:bg-blue-50 ${language === lang.code ? 'text-brand-primary font-bold' : ''}`}
-                     >
-                       {lang.label}
-                     </button>
-                   ))}
+                      >
+                        {lang.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 

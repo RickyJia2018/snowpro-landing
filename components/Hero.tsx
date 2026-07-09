@@ -12,10 +12,23 @@ const Hero: React.FC = () => {
         <img
           src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop" 
           alt="Skiing Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover select-none"
         />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-950/95"></div>
+        
+        {/* Tech Grid Pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.07] mix-blend-overlay"
+          style={{
+            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+            backgroundSize: '32px 32px'
+          }}
+        ></div>
+
+        {/* Neon Gradient Blobs */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-500/20 rounded-full blur-[128px] animate-pulse"></div>
+        <div className="absolute bottom-10 -right-20 w-80 h-80 bg-cyan-500/20 rounded-full blur-[96px] animate-pulse" style={{ animationDuration: '8s' }}></div>
       </div>
 
       {/* Content */}

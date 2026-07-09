@@ -14,7 +14,7 @@ export const translations = {
       badge: "SnowPro 2.0 现已上线",
       titlePre: "重新定义你的",
       titleHighlight: "滑雪进阶之路",
-      subtitle: "连接专业教练与滑雪爱好者。通过 AI 辅助的视频分析，精准提升技术。即将上线拼车、陪滑与社区功能，打造一站式滑雪生态。",
+      subtitle: "连接专业教练与滑雪爱好者。通过 AI 辅助的视频分析，精准提升技术。即将上线拼车、陪滑、导滑与社区功能，打造一站式滑雪生态。",
       ctaIos: "App Store 下载",
       ctaIosNote: "适用于 iOS 15+",
       ctaAndroid: "Android 下载",
@@ -48,6 +48,7 @@ export const translations = {
       features: [
         { title: "雪场拼车", desc: "不再为独自去雪场发愁。一键发起或加入拼车行程，环保出行，结识新雪友。" },
         { title: "雪友陪滑", desc: "寻找技术相当的伙伴，或者预约大神陪滑指导。让滑雪不再孤单。" },
+        { title: "雪场导滑", desc: "预约当地专业滑雪向导，带你避开人群、探索野雪与秘境路线，全方位保障滑雪安全。" },
         { title: "在线课程", desc: "海量体系化滑雪教程，从小白入门到黑道大神，随时随地学习理论知识。" },
         { title: "滑雪装备店", desc: "精选全球顶尖滑雪装备与周边好物，正品保障，专业导购推荐。" },
         { title: "雪圈社区", desc: "分享滑雪日常，讨论装备测评，交流雪场攻略，打造最纯粹的滑雪爱好者论坛。" }
@@ -64,7 +65,7 @@ export const translations = {
     footer: {
       tagline: "让每一次滑行都更进一步。连接教练、雪友与优质服务，您的终极滑雪伴侣。",
       product: "产品",
-      productLinks: ["视频分析", "拼车出行", "滑雪课程", "装备商城"],
+      productLinks: ["视频分析", "拼车出行", "雪场导滑", "滑雪课程", "装备商城"],
       support: "支持",
       supportLinks: ["使用帮助", "联系我们", "隐私政策", "服务条款"],
       rights: "保留所有权利。"
@@ -121,7 +122,7 @@ export const translations = {
       badge: "SnowPro 2.0 is Live",
       titlePre: "Redefine Your",
       titleHighlight: "Skiing Progression",
-      subtitle: "Connect with professional instructors. Improve your technique with AI-assisted video analysis. Carpooling, buddy finding, and community features coming soon.",
+      subtitle: "Connect with professional instructors. Improve your technique with AI-assisted video analysis. Carpooling, buddy finding, guiding, and community features coming soon.",
       ctaIos: "App Store",
       ctaIosNote: "Requires iOS 15+",
       ctaAndroid: "Google Play",
@@ -155,6 +156,7 @@ export const translations = {
       features: [
         { title: "Carpooling", desc: "Find rides to the resort easily. Save money and meet new ski buddies." },
         { title: "Ski Buddy", desc: "Find partners of similar skill levels or book a pro for guided skiing." },
+        { title: "Resort Guiding", desc: "Book professional local guides to escape the crowd, explore backcountry terrain and hidden routes, ensuring all-around skiing safety." },
         { title: "Online Courses", desc: "Systematic tutorials from beginner to expert. Learn theory anytime, anywhere." },
         { title: "Gear Shop", desc: "Curated top-tier ski gear and merchandise. Authentic products with professional recommendations." },
         { title: "Community", desc: "Share daily runs, discuss gear, and exchange resort guides in a pure skier forum." }
@@ -171,7 +173,7 @@ export const translations = {
     footer: {
       tagline: "Take your skiing to the next level. Connecting instructors, friends, and services.",
       product: "Product",
-      productLinks: ["Video Analysis", "Carpooling", "Courses", "Gear Shop"],
+      productLinks: ["Video Analysis", "Carpooling", "Resort Guiding", "Courses", "Gear Shop"],
       support: "Support",
       supportLinks: ["Help Center", "Contact Us", "Privacy Policy", "Terms"],
       rights: "All rights reserved."
@@ -228,7 +230,7 @@ export const translations = {
       badge: "SnowPro 2.0 リリース",
       titlePre: "スキーの上達を",
       titleHighlight: "再定義する",
-      subtitle: "プロのインストラクターとつながりましょう。AI支援によるビデオ分析で技術を向上。相乗り、仲間探し、コミュニティ機能も近日公開予定。",
+      subtitle: "プロのインストラクターとつながりましょう。AI支援によるビデオ分析で技術を向上。相乗り、仲間探し、ゲレンデガイド、オンライン講座、ショップ、コミュニティ機能が充実し、究極のスキーエコシステムを提供します。",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 対応",
       ctaAndroid: "Google Play",
@@ -278,7 +280,7 @@ export const translations = {
     footer: {
       tagline: "すべての滑りを次のレベルへ。コーチ、仲間、サービスをつなぐ究極のパートナー。",
       product: "製品",
-      productLinks: ["ビデオ分析", "相乗り", "コース", "ショップ"],
+      productLinks: ["ビデオ分析", "相乗り", "ゲレンデガイド", "コース", "ショップ"],
       support: "サポート",
       supportLinks: ["ヘルプ", "お問い合わせ", "プライバシー", "利用規約"],
       rights: "All rights reserved."
@@ -335,7 +337,7 @@ export const translations = {
       badge: "SnowPro 2.0 출시",
       titlePre: "스키 실력 향상의",
       titleHighlight: "새로운 기준",
-      subtitle: "전문 강사와 연결하세요. AI 기반 비디오 분석으로 기술을 정교하게 다듬으세요. 카풀, 스키 버디, 커뮤니티 기능이 곧 출시됩니다.",
+      subtitle: "전문 강사와 연결하세요. AI 기반 비디오 분석으로 기술을 정교하게 다듬으세요. 카풀, 스키 버디, 가이드 라이딩, 커뮤니티 기능이 곧 출시됩니다.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 지원",
       ctaAndroid: "Google Play",
@@ -369,6 +371,7 @@ export const translations = {
       features: [
         { title: "스키장 카풀", desc: "스키장 가는 길이 더 이상 외롭지 않습니다. 카풀로 이동하고 새 친구도 사귀세요." },
         { title: "스키 버디", desc: "비슷한 실력의 친구를 찾거나 고수에게 동반 라이딩을 요청하세요." },
+        { title: "가이드 라이딩", desc: "현지 전문 가이드를 예약하여 인파를 피하고 백컨트리나 숨겨진 슬로프를 탐험하며 안전한 스키를 즐기세요." },
         { title: "온라인 강좌", desc: "입문부터 최상급까지 체계적인 스키 강좌. 언제 어디서나 이론을 학습하세요." },
         { title: "장비 샵", desc: "엄선된 최고급 스키 장비와 굿즈. 전문가가 추천하는 정품을 만나보세요." },
         { title: "커뮤니티", desc: "라이딩 일지 공유, 장비 리뷰, 스키장 공략 등 순수 스키어들을 위한 포럼." }
@@ -385,7 +388,7 @@ export const translations = {
     footer: {
       tagline: "모든 라이딩을 한 단계 더 높게. 강사, 친구, 서비스를 연결하는 최고의 파트너.",
       product: "제품",
-      productLinks: ["비디오 분석", "카풀", "강좌", "스토어"],
+      productLinks: ["비디오 분석", "카풀", "가이드 라이딩", "강좌", "스토어"],
       support: "지원",
       supportLinks: ["도움말", "문의하기", "개인정보처리방침", "이용약관"],
       rights: "All rights reserved."
@@ -442,7 +445,7 @@ export const translations = {
       badge: "SnowPro 2.0 est en ligne",
       titlePre: "Redéfinissez votre",
       titleHighlight: "Progression en Ski",
-      subtitle: "Connectez-vous avec des instructeurs professionnels. Améliorez votre technique grâce à l'analyse vidéo assistée par IA. Covoiturage et communauté bientôt disponibles.",
+      subtitle: "Connectez-vous avec des instructeurs professionnels. Améliorez votre technique grâce à l'analyse vidéo assistée par IA. Covoiturage, guides et communauté bientôt disponibles.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ requis",
       ctaAndroid: "Google Play",
@@ -476,6 +479,7 @@ export const translations = {
       features: [
         { title: "Covoiturage", desc: "Trouvez facilement un trajet vers la station. Économique et convivial." },
         { title: "Partenaire de Ski", desc: "Trouvez des partenaires de même niveau ou réservez un pro." },
+        { title: "Guides de Station", desc: "Réservez des guides locaux professionnels pour éviter la foule, explorer le hors-piste et les itinéraires cachés en toute sécurité." },
         { title: "Cours en Ligne", desc: "Tutoriels systématiques du débutant à l'expert. Apprenez la théorie n'importe où." },
         { title: "Boutique", desc: "Matériel et produits dérivés sélectionnés. Produits authentiques recommandés par des pros." },
         { title: "Communauté", desc: "Partagez vos sessions, discutez matériel et échangez des conseils." }
@@ -492,7 +496,7 @@ export const translations = {
     footer: {
       tagline: "Passez au niveau supérieur. Votre partenaire ultime pour le ski.",
       product: "Produit",
-      productLinks: ["Analyse Vidéo", "Covoiturage", "Cours", "Boutique"],
+      productLinks: ["Analyse Vidéo", "Covoiturage", "Guides de Station", "Cours", "Boutique"],
       support: "Support",
       supportLinks: ["Aide", "Contact", "Confidentialité", "Conditions"],
       rights: "Tous droits réservés."
@@ -549,7 +553,7 @@ export const translations = {
       badge: "SnowPro 2.0 ist live",
       titlePre: "Definieren Sie Ihren",
       titleHighlight: "Skifortschritt neu",
-      subtitle: "Verbinden Sie sich mit professionellen Skilehrern. Verbessern Sie Ihre Technik durch KI-gestützte Videoanalyse. Fahrgemeinschaften und Community folgen bald.",
+      subtitle: "Verbinden Sie sich mit professionellen Skilehrern. Verbessern Sie Ihre Technik durch KI-gestützte Videoanalyse. Fahrgemeinschaften, Ski-Guiding und Community folgen bald.",
       ctaIos: "App Store",
       ctaIosNote: "Benötigt iOS 15+",
       ctaAndroid: "Google Play",
@@ -583,6 +587,7 @@ export const translations = {
       features: [
         { title: "Fahrgemeinschaften", desc: "Finden Sie einfach eine Mitfahrgelegenheit zum Skigebiet." },
         { title: "Ski-Buddy", desc: "Finden Sie Partner mit ähnlichem Können oder buchen Sie einen Profi." },
+        { title: "Ski-Guiding", desc: "Buchen Sie professionelle lokale Guides, um Menschenmassen zu meiden, Freeride-Zonen zu erkunden und die Sicherheit zu gewährleisten." },
         { title: "Online-Kurse", desc: "Systematische Tutorials vom Anfänger bis zum Experten." },
         { title: "Ausrüstungsshop", desc: "Ausgewählte Top-Ausrüstung und Merchandise. Authentische Produkte." },
         { title: "Community", desc: "Teilen Sie Ihre Läufe, diskutieren Sie über Ausrüstung und tauschen Sie Tipps aus." }
@@ -599,7 +604,7 @@ export const translations = {
     footer: {
       tagline: "Bringen Sie Ihr Skifahren auf das nächste Level. Ihr ultimativer Partner.",
       product: "Produkt",
-      productLinks: ["Videoanalyse", "Fahrgemeinschaft", "Kurse", "Shop"],
+      productLinks: ["Videoanalyse", "Fahrgemeinschaft", "Ski-Guiding", "Kurse", "Shop"],
       support: "Support",
       supportLinks: ["Hilfe", "Kontakt", "Datenschutz", "AGB"],
       rights: "Alle Rechte vorbehalten."

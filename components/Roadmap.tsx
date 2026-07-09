@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Car, Users, PlayCircle, ShoppingBag, MessageSquare } from 'lucide-react';
+import { Clock, Car, Users, Compass, PlayCircle, ShoppingBag, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Roadmap: React.FC = () => {
@@ -9,10 +9,11 @@ const Roadmap: React.FC = () => {
   // Order in translation file must match this order:
   // 0: Carpooling (Car)
   // 1: Buddy (Users)
-  // 2: Courses (PlayCircle)
-  // 3: Shop (ShoppingBag)
-  // 4: Community (MessageSquare)
-  const icons = [Car, Users, PlayCircle, ShoppingBag, MessageSquare];
+  // 2: Guiding (Compass)
+  // 3: Courses (PlayCircle)
+  // 4: Shop (ShoppingBag)
+  // 5: Community (MessageSquare)
+  const icons = [Car, Users, Compass, PlayCircle, ShoppingBag, MessageSquare];
 
   const features = t.roadmap.features.map((f, i) => ({
     ...f,
