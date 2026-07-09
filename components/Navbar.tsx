@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
               alt="SnowPro Logo" 
               className="w-10 h-10 rounded-xl object-cover shadow-md"
             />
-            <span className={`font-bold text-2xl tracking-tight ${scrolled ? 'text-slate-900' : 'text-white'}`}>
+            <span className="font-bold text-2xl tracking-tight text-white">
               {APP_NAME}
             </span>
           </div>
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
                     to={item.href}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 
                       ${scrolled 
-                        ? 'text-slate-600 hover:text-brand-primary hover:bg-blue-50' 
+                        ? 'text-slate-300 hover:text-white hover:bg-white/5' 
                         : 'text-slate-200 hover:text-white hover:bg-white/10'
                       }`}
                   >
@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
                     href={item.href}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 
                       ${scrolled 
-                        ? 'text-slate-600 hover:text-brand-primary hover:bg-blue-50' 
+                        ? 'text-slate-300 hover:text-white hover:bg-white/5' 
                         : 'text-slate-200 hover:text-white hover:bg-white/10'
                       }`}
                   >
@@ -83,16 +83,16 @@ const Navbar: React.FC = () => {
               
               {/* Language Switcher */}
               <div className="relative group">
-                <button className={`p-2 rounded-full transition-colors ${scrolled ? 'text-slate-600 hover:bg-blue-50' : 'text-white hover:bg-white/10'}`}>
+                <button className={`p-2 rounded-full transition-colors ${scrolled ? 'text-slate-300 hover:bg-white/5' : 'text-white hover:bg-white/10'}`}>
                   <Globe size={20} />
                 </button>
                 <div className="absolute right-0 top-full pt-2 w-32 hidden group-hover:block text-sm text-slate-700">
-                  <div className="bg-white rounded-lg shadow-xl py-2 border border-gray-100">
+                  <div className="bg-slate-900/95 backdrop-blur-md rounded-xl shadow-xl py-2 border border-slate-800 text-slate-300">
                     {languages.map((lang) => (
                       <button 
                         key={lang.code}
                         onClick={() => setLanguage(lang.code)}
-                        className={`block w-full text-left px-4 py-2 hover:bg-blue-50 ${language === lang.code ? 'text-brand-primary font-bold' : ''}`}
+                        className={`block w-full text-left px-4 py-2 hover:bg-white/5 ${language === lang.code ? 'text-cyan-400 font-bold' : ''}`}
                       >
                         {lang.label}
                       </button>
@@ -108,8 +108,8 @@ const Navbar: React.FC = () => {
                 }}
                 className={`px-5 py-2 rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg
                   ${scrolled 
-                    ? 'bg-slate-900 text-white hover:bg-slate-800' 
-                    : 'bg-white text-brand-primary hover:bg-gray-100'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:from-blue-500 hover:to-cyan-400 border-0 shadow-blue-500/10' 
+                    : 'bg-white text-slate-900 hover:bg-gray-100'
                   }`}
               >
                 {t.nav.appDownload}
@@ -121,7 +121,7 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none 
-              ${scrolled ? 'text-slate-800' : 'text-white'}`}
+              ${scrolled ? 'text-slate-200' : 'text-white'}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100">
+        <div className="md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-md shadow-xl border-t border-slate-800">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => {
               const isRoute = item.href.startsWith('/');
@@ -140,7 +140,7 @@ const Navbar: React.FC = () => {
                   key={item.label}
                   to={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-slate-600 hover:text-brand-primary hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-slate-350 hover:text-white hover:bg-slate-800 block px-3 py-2 rounded-md text-base font-medium"
                 >
                   {item.label}
                 </Link>
@@ -149,21 +149,21 @@ const Navbar: React.FC = () => {
                   key={item.label}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-slate-600 hover:text-brand-primary hover:bg-blue-50 block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-slate-350 hover:text-white hover:bg-slate-800 block px-3 py-2 rounded-md text-base font-medium"
                 >
                   {item.label}
                 </a>
               );
             })}
             
-            <div className="border-t border-gray-100 my-2 pt-2">
+            <div className="border-t border-slate-800 my-2 pt-2">
               <div className="px-3 text-xs text-slate-400 uppercase font-bold mb-2">Select Language</div>
               <div className="grid grid-cols-3 gap-2 px-2">
                 {languages.map((lang) => (
                   <button 
                     key={lang.code}
                     onClick={() => { setLanguage(lang.code); setIsOpen(false); }}
-                    className={`text-sm py-1 px-2 rounded ${language === lang.code ? 'bg-blue-100 text-blue-600' : 'text-slate-600'}`}
+                    className={`text-sm py-1 px-2 rounded ${language === lang.code ? 'bg-blue-500/20 text-cyan-400' : 'text-slate-400'}`}
                   >
                     {lang.label}
                   </button>
@@ -177,7 +177,7 @@ const Navbar: React.FC = () => {
                  const el = document.getElementById('download');
                  if (el) el.scrollIntoView({ behavior: 'smooth' });
                }}
-               className="w-full mt-4 bg-brand-primary text-white px-5 py-3 rounded-lg font-semibold"
+               className="w-full mt-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-3 rounded-xl font-semibold"
              >
                {t.nav.appDownload}
              </button>

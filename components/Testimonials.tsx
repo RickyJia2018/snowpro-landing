@@ -13,39 +13,39 @@ const Testimonials: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white py-24 overflow-hidden relative">
-      {/* Background Pattern */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-[0.02] pointer-events-none">
-         <svg width="100%" height="100%">
-            <pattern id="pattern-circles" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-               <circle cx="2" cy="2" r="1" className="text-slate-900" fill="currentColor" />
-            </pattern>
-            <rect width="100%" height="100%" fill="url(#pattern-circles)" />
-         </svg>
-      </div>
+    <div className="bg-slate-950 py-24 overflow-hidden relative border-t border-slate-900">
+      {/* Decorative Glow Blob */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <h2 className="text-3xl font-bold text-center text-slate-900 mb-16">
+        <h2 className="text-3xl font-bold text-center text-white mb-16">
           {t.testimonials.title}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {t.testimonials.reviews.map((review, idx) => (
-            <div key={idx} className="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+            <div 
+              key={idx} 
+              className="bg-slate-900/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/80 hover:border-blue-500/30 hover:shadow-[0_0_25px_rgba(59,130,246,0.08)] transition-all duration-300"
+            >
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star 
                     key={i} 
-                    size={16} 
-                    className={`${i < staticData[idx].rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                    size={15} 
+                    className={`${i < staticData[idx].rating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-700'}`} 
                   />
                 ))}
               </div>
-              <p className="text-slate-700 mb-6 italic">"{review.content}"</p>
+              <p className="text-slate-300 mb-6 italic font-light text-sm leading-relaxed">"{review.content}"</p>
               <div className="flex items-center gap-4">
-                <img src={staticData[idx].avatar} alt={review.name} className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" />
+                <img 
+                  src={staticData[idx].avatar} 
+                  alt={review.name} 
+                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-800 shadow-md" 
+                />
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{review.name}</h4>
-                  <span className="text-slate-500 text-xs">{review.role}</span>
+                  <h4 className="font-bold text-white text-sm">{review.name}</h4>
+                  <span className="text-slate-400 text-xs">{review.role}</span>
                 </div>
               </div>
             </div>
