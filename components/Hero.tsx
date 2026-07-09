@@ -37,7 +37,10 @@ const Hero: React.FC = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+          <button 
+            onClick={() => window.open('https://apps.apple.com/ca/app/snow-pro/id6754150275', '_blank')}
+            className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+          >
             <Apple size={24} className="fill-current" />
             <span>{t.hero.ctaIos}</span>
             <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-white whitespace-nowrap">
@@ -45,7 +48,15 @@ const Hero: React.FC = () => {
             </div>
           </button>
           
-          <button className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-white/20 hover:scale-105">
+          <button 
+            onClick={() => {
+              const el = document.getElementById('download');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-white/20 hover:scale-105"
+          >
             <Smartphone size={24} />
             <span>{t.hero.ctaAndroid}</span>
           </button>

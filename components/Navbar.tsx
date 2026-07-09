@@ -97,11 +97,17 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
 
-              <button className={`px-5 py-2 rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg
-                 ${scrolled 
-                   ? 'bg-slate-900 text-white hover:bg-slate-800' 
-                   : 'bg-white text-brand-primary hover:bg-gray-100'
-                 }`}>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('download');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`px-5 py-2 rounded-full font-semibold text-sm transition-all shadow-md hover:shadow-lg
+                  ${scrolled 
+                    ? 'bg-slate-900 text-white hover:bg-slate-800' 
+                    : 'bg-white text-brand-primary hover:bg-gray-100'
+                  }`}
+              >
                 {t.nav.appDownload}
               </button>
             </div>
@@ -161,9 +167,16 @@ const Navbar: React.FC = () => {
               </div>
             </div>
 
-            <button className="w-full mt-4 bg-brand-primary text-white px-5 py-3 rounded-lg font-semibold">
-              {t.nav.appDownload}
-            </button>
+             <button 
+               onClick={() => {
+                 setIsOpen(false);
+                 const el = document.getElementById('download');
+                 if (el) el.scrollIntoView({ behavior: 'smooth' });
+               }}
+               className="w-full mt-4 bg-brand-primary text-white px-5 py-3 rounded-lg font-semibold"
+             >
+               {t.nav.appDownload}
+             </button>
           </div>
         </div>
       )}
