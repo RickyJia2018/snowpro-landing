@@ -33,7 +33,7 @@ export const translations = {
       feature1Desc: "直观的视觉反馈，展示身体角度、板刃位置的细微偏差。",
       feature2Title: "教练语音点评",
       feature2Desc: "不用盯着屏幕看文字，听教练的语音讲解，如同现场指导。",
-      cta: "开始免费试用分析",
+      cta: "体验视频分析",
       demoPoints: [
         { comment: "入弯时重心过高，膝盖弯曲度不足。", type: "correction" },
         { comment: "这一段的立刃角度非常漂亮，保持这个节奏！", type: "praise" },
@@ -141,7 +141,7 @@ export const translations = {
       feature1Desc: "Intuitive visual feedback showing subtle deviations in body angles and edge positions.",
       feature2Title: "Voice Commentary",
       feature2Desc: "Don't just read text. Listen to the instructor's detailed voice explanation as if they were there.",
-      cta: "Try Free Analysis",
+      cta: "Start Video Analysis",
       demoPoints: [
         { comment: "Center of gravity too high entering the turn.", type: "correction" },
         { comment: "Excellent edge angle here, keep this rhythm!", type: "praise" },
@@ -249,7 +249,7 @@ export const translations = {
       feature1Desc: "身体の角度やエッジ位置の微妙なズレを視覚的にフィードバック。",
       feature2Title: "音声コメント",
       feature2Desc: "テキストを読むだけでなく、コーチの音声解説で、まるでその場にいるかのように指導を受けられます。",
-      cta: "無料分析を試す",
+      cta: "ビデオ分析を試す",
       demoPoints: [
         { comment: "ターン入りの重心が高すぎます。", type: "correction" },
         { comment: "ここのエッジ角は素晴らしい！このリズムを維持して。", type: "praise" },
@@ -356,7 +356,7 @@ export const translations = {
       feature1Desc: "신체 각도와 엣지 위치의 미세한 편차를 시각적으로 보여줍니다.",
       feature2Title: "음성 코멘터리",
       feature2Desc: "텍스트만 읽지 마세요. 현장 강습처럼 코치의 생생한 음성 설명을 들어보세요.",
-      cta: "무료 분석 체험",
+      cta: "비디오 분석 체험",
       demoPoints: [
         { comment: "턴 진입 시 무게중심이 너무 높습니다.", type: "correction" },
         { comment: "이 부분의 엣지 각도는 아주 좋습니다!", type: "praise" },
@@ -464,7 +464,7 @@ export const translations = {
       feature1Desc: "Retour visuel intuitif montrant les déviations subtiles des angles du corps et des carres.",
       feature2Title: "Commentaires Vocaux",
       feature2Desc: "Écoutez les explications détaillées de l'instructeur comme s'il était sur place.",
-      cta: "Essai Gratuit",
+      cta: "Essayer l'analyse",
       demoPoints: [
         { comment: "Centre de gravité trop haut en entrée de virage.", type: "correction" },
         { comment: "Excellent angle de prise de carre ici !", type: "praise" },
@@ -572,7 +572,7 @@ export const translations = {
       feature1Desc: "Intuitives visuelles Feedback zeigt subtile Abweichungen in Körperwinkeln und Kantenposition.",
       feature2Title: "Sprachkommentar",
       feature2Desc: "Hören Sie sich die detaillierten Erklärungen des Lehrers an, als wäre er vor Ort.",
-      cta: "Kostenlose Analyse testen",
+      cta: "Videoanalyse testen",
       demoPoints: [
         { comment: "Schwerpunkt bei Kurveneingang zu hoch.", type: "correction" },
         { comment: "Hervorragender Kantenwinkel hier, Rhythmus beibehalten!", type: "praise" },
