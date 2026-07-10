@@ -16,7 +16,7 @@ import { API_BASE_URL } from './src/config/api';
 
 function App() {
   React.useEffect(() => {
-    console.log("[SnowPro App] Global API Base URL:", API_BASE_URL);
+    console.log("[Snow Pro App] Global API Base URL:", API_BASE_URL);
   }, []);
 
   return (
@@ -122,7 +122,7 @@ function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.iosLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '在 App Store 中搜索 "SnowPro" 或扫码下载' : 'Search "SnowPro" in App Store or scan QR code'}
+                  {language === 'zh' ? '在 App Store 中搜索 "Snow Pro" 或扫码下载' : 'Search "Snow Pro" in App Store or scan QR code'}
                 </p>
                 
                 {/* QR Code Container */}

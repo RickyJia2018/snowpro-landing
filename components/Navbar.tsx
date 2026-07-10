@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
             <img 
               src="/logo_icon.png" 
-              alt="SnowPro Logo" 
+              alt="Snow Pro Logo" 
               className="w-10 h-10 rounded-xl object-cover shadow-md"
             />
             <span className="font-bold text-2xl tracking-tight text-white">

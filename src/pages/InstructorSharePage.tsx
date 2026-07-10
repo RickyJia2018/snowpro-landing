@@ -11,7 +11,7 @@ const pageTranslations: Record<string, any> = {
     loading: "正在加载教练名片...",
     errorTitle: "未找到教练",
     errorDesc: "抱歉，未找到该教练的信息，请确认链接是否正确。",
-    openApp: "打开 SnowPro App 预约",
+    openApp: "打开 Snow Pro App 预约",
     wechatTip: "微信内无法直接唤起",
     wechatDesc: "请点击右上角 •••\n选择在浏览器中打开",
     certified: "认证教练",
@@ -21,7 +21,7 @@ const pageTranslations: Record<string, any> = {
     teachingSince: "教龄自 {n} 年",
     skiingSince: "雪龄自 {n} 年",
     selfIntroEmpty: "这位滑雪教练很神秘，还没有写个人介绍~",
-    downloadTitle: "下载 SnowPro App",
+    downloadTitle: "下载 Snow Pro App",
     downloadDesc: "立即下载客户端，预约该教练并享受专业滑雪视频点评",
     downloadIos: "在 App Store 下载",
     downloadAndroid: "直接下载 Android APK",
@@ -35,7 +35,7 @@ const pageTranslations: Record<string, any> = {
     loading: "Loading instructor profile...",
     errorTitle: "Instructor Not Found",
     errorDesc: "Sorry, we couldn't find this instructor's profile. Please verify the link.",
-    openApp: "Open SnowPro App to Book",
+    openApp: "Open Snow Pro App to Book",
     wechatTip: "Cannot open inside WeChat",
     wechatDesc: "Please click the top-right •••\nand select 'Open in Browser'",
     certified: "Certified Coach",
@@ -45,7 +45,7 @@ const pageTranslations: Record<string, any> = {
     teachingSince: "Teaching since {n}",
     skiingSince: "Skiing since {n}",
     selfIntroEmpty: "This instructor is mysterious and has not written an introduction yet~",
-    downloadTitle: "Get SnowPro App",
+    downloadTitle: "Get Snow Pro App",
     downloadDesc: "Download our app now to book this coach and get professional video coaching.",
     downloadIos: "Download on App Store",
     downloadAndroid: "Direct APK Download",
@@ -120,7 +120,7 @@ export default function InstructorSharePage() {
           
           <div className="space-y-3">
             <h1 className="text-2xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">
-              SnowPro
+              Snow Pro
             </h1>
             <p className="text-slate-400 text-xs tracking-widest uppercase">滑雪指导专业平台</p>
           </div>
@@ -135,7 +135,7 @@ export default function InstructorSharePage() {
 
         {/* Minimal Footer */}
         <footer className="w-full text-center py-4 z-10 text-slate-600 text-[10px] tracking-wide mt-auto">
-          &copy; {new Date().getFullYear()} SnowPro. All Rights Reserved.
+          &copy; {new Date().getFullYear()} Snow Pro. All Rights Reserved.
         </footer>
       </div>
     );
@@ -263,7 +263,7 @@ export default function InstructorSharePage() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-cyan-500/20">
             <span className="font-black text-sm tracking-tighter">SP</span>
           </div>
-          <span className="text-xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">SnowPro</span>
+          <span className="text-xl font-black tracking-wider bg-gradient-to-r from-white via-cyan-100 to-blue-200 bg-clip-text text-transparent">Snow Pro</span>
         </div>
 
         {/* Coach micro-card */}
@@ -450,7 +450,7 @@ export default function InstructorSharePage() {
 
       {/* Elegant minimalist footer */}
       <footer className="w-full text-center py-4 z-10 text-slate-500 text-[10px] tracking-wide mt-8">
-        &copy; {new Date().getFullYear()} SnowPro. All Rights Reserved.
+        &copy; {new Date().getFullYear()} Snow Pro. All Rights Reserved.
       </footer>
 
     </div>

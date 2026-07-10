@@ -7,9 +7,9 @@ import { API_BASE_URL } from '../config/api';
 const localTranslations = {
   zh: {
     successTitle: "充值成功！",
-    successMessage: "您的代币已成功充值。现在您可以返回 SnowPro App 中刷新页面查看最新余额。",
+    successMessage: "您的代币已成功充值。现在您可以返回 Snow Pro App 中刷新页面查看最新余额。",
     backHome: "返回官网首页",
-    openApp: "打开 SnowPro App",
+    openApp: "打开 Snow Pro App",
     backToRecharge: "继续充值代币",
     
     verifyingTitle: "正在确认到账...",
@@ -21,9 +21,9 @@ const localTranslations = {
   },
   en: {
     successTitle: "Recharge Successful!",
-    successMessage: "Your tokens have been successfully credited to your account. You can now return to the SnowPro App and refresh to see your updated balance.",
+    successMessage: "Your tokens have been successfully credited to your account. You can now return to the Snow Pro App and refresh to see your updated balance.",
     backHome: "Back to Home",
-    openApp: "Open SnowPro App",
+    openApp: "Open Snow Pro App",
     backToRecharge: "Buy More Tokens",
     
     verifyingTitle: "Verifying Fulfill...",

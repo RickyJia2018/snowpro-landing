@@ -13,7 +13,7 @@ const LinkPaypalPage = () => {
     if (code) {
       // Attempt to open the app automatically
       window.location.href = appDeepLink;
-      setStatus('Opening SnowPro App...');
+      setStatus('Opening Snow Pro App...');
     } else {
       setStatus('Error: No authorization code found.');
     }
@@ -48,7 +48,7 @@ const LinkPaypalPage = () => {
         
         {!code && (
           <p className="text-red-500 text-sm mt-4">
-            Invalid callback. Please try connecting again from the SnowPro app.
+            Invalid callback. Please try connecting again from the Snow Pro app.
           </p>
         )}
       </div>

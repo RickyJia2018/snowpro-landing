@@ -22,8 +22,8 @@ interface UserInfo {
 
 const localTranslations = {
   zh: {
-    title: "SnowPro 账户充值",
-    loginTitle: "登录您的 SnowPro 账号",
+    title: "Snow Pro 账户充值",
+    loginTitle: "登录您的 Snow Pro 账号",
     loginSubtitle: "登录以同步并充值您的滑雪代币",
     emailLabel: "电子邮箱",
     passwordLabel: "密码",
@@ -44,8 +44,8 @@ const localTranslations = {
     welcomeBack: "欢迎回来",
   },
   en: {
-    title: "SnowPro Token Recharge",
-    loginTitle: "Log in to SnowPro Account",
+    title: "Snow Pro Token Recharge",
+    loginTitle: "Log in to Snow Pro Account",
     loginSubtitle: "Sign in to credit tokens to your account",
     emailLabel: "Email Address",
     passwordLabel: "Password",
@@ -92,7 +92,7 @@ export default function RechargePage() {
 
   // Check login state on mount
   useEffect(() => {
-    console.log("[SnowPro Recharge] Connecting to API Base URL:", API_BASE_URL);
+    console.log("[Snow Pro Recharge] Connecting to API Base URL:", API_BASE_URL);
     
     // Parse accessToken from URL query parameters (for app redirect bypass login)
     const params = new URLSearchParams(window.location.search);
@@ -260,11 +260,11 @@ export default function RechargePage() {
         // Check for pending payments to restore on login
         checkPendingOrder(token);
       } else {
-        console.error("[SnowPro Login] Missing token or user in response data. Full response:", data);
+        console.error("[Snow Pro Login] Missing token or user in response data. Full response:", data);
         throw new Error(tLocal.unknownError);
       }
     } catch (err: any) {
-      console.error("[SnowPro Login] Login exception:", err);
+      console.error("[Snow Pro Login] Login exception:", err);
       setError(err.message || tLocal.errorLogin);
     } finally {
       setAuthLoading(false);
@@ -355,7 +355,7 @@ export default function RechargePage() {
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight text-white bg-clip-text">SnowPro</span>
+            <span className="text-xl font-bold tracking-tight text-white bg-clip-text">Snow Pro</span>
           </div>
 
           {isLoggedIn && user && (
@@ -531,7 +531,7 @@ export default function RechargePage() {
 
       {/* Footer copyright */}
       <footer className="border-t border-slate-800 py-6 bg-slate-950/20 text-center text-xs text-slate-500">
-        <p>&copy; {new Date().getFullYear()} SnowPro. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Snow Pro. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -11,10 +11,10 @@ export const translations = {
       appDownload: "下载 APP"
     },
     hero: {
-      badge: "SnowPro 2.0 现已上线",
+      badge: "Snow Pro 1.0 现已上线",
       titlePre: "重新定义你的",
       titleHighlight: "滑雪进阶之路",
-      subtitle: "连接专业教练与滑雪爱好者。通过 AI 辅助的视频分析，精准提升技术。即将上线拼车、陪滑、导滑与社区功能，打造一站式滑雪生态。",
+      subtitle: "连接专业教练与滑雪爱好者。通过专业的视频分析，精准提升技术。即将上线拼车、陪滑、导滑与社区功能，打造一站式滑雪生态。",
       ctaIos: "App Store 下载",
       ctaIosNote: "适用于 iOS 15+",
       ctaAndroid: "Android 下载",
@@ -28,7 +28,7 @@ export const translations = {
       tag: "核心功能",
       titlePre: "教练就在你的口袋里",
       titleHighlight: "逐帧视频分析",
-      desc: "不再盲目练习。上传您的滑行视频，SnowPro 连接认证教练为您提供详细的语音与画线反馈。不仅知道错在哪里，更知道如何改正。",
+      desc: "不再盲目练习。上传您的滑行视频，Snow Pro 连接认证教练为您提供详细的语音与画线反馈。不仅知道错在哪里，更知道如何改正。",
       feature1Title: "精准画线纠错",
       feature1Desc: "直观的视觉反馈，展示身体角度、板刃位置的细微偏差。",
       feature2Title: "教练语音点评",
@@ -43,7 +43,7 @@ export const translations = {
     roadmap: {
       tag: "即将推出",
       title: "打造全方位滑雪生态",
-      desc: "SnowPro 不仅仅是一个分析工具，我们正在构建一个完整的滑雪爱好者平台。以下功能正在紧锣密鼓开发中。",
+      desc: "Snow Pro 不仅仅是一个分析工具，我们正在构建一个完整的滑雪爱好者平台。以下功能正在紧锣密鼓开发中。",
       status: "敬请期待",
       features: [
         { title: "雪场拼车", desc: "不再为独自去雪场发愁。一键发起或加入拼车行程，环保出行，结识新雪友。" },
@@ -57,9 +57,9 @@ export const translations = {
     testimonials: {
       title: "深受雪友喜爱",
       reviews: [
-        { name: "Alex Zhang", role: "双板中级滑雪者", content: "以前自己瞎滑总觉得哪里不对，用了SnowPro的视频分析功能，教练指出的重心问题让我茅塞顿开！" },
+        { name: "Alex Zhang", role: "双板中级滑雪者", content: "以前自己瞎滑总觉得哪里不对，用了Snow Pro的视频分析功能，教练指出的重心问题让我茅塞顿开！" },
         { name: "Sarah Li", role: "单板刻滑爱好者", content: "非常有用的工具。期待未来的拼车功能，这样去崇礼就更方便了。" },
-        { name: "Coach Mike", role: "CASI Level 3 教练", content: "SnowPro 让我能更高效地管理学生视频，画线工具非常顺手，沟通效率大大提高。" }
+        { name: "Coach Mike", role: "CASI Level 3 教练", content: "Snow Pro 让我能更高效地管理学生视频，画线工具非常顺手，沟通效率大大提高。" }
       ]
     },
     footer: {
@@ -72,7 +72,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "准备好提升您的滑雪水平了吗？",
-      desc: "加入 SnowPro 社区，体验专业的视频分析功能。现在下载，即刻开启您的进阶之旅。",
+      desc: "加入 Snow Pro 社区，体验专业的视频分析功能。现在下载，即刻开启您的进阶之旅。",
       btnIos: "App Store 下载",
       btnAndroid: "Android 下载"
     },
@@ -81,7 +81,7 @@ export const translations = {
       success: "邮箱验证成功！",
       successTitle: "验证成功！",
       errorTitle: "验证失败",
-      openApp: "打开 SnowPro App",
+      openApp: "打开 Snow Pro App",
       invalidLink: "验证链接无效，缺少参数。",
       errorFallback: "验证失败。",
       errorOccurred: "验证过程中发生错误。",
@@ -119,10 +119,10 @@ export const translations = {
       appDownload: "Get App"
     },
     hero: {
-      badge: "SnowPro 2.0 is Live",
+      badge: "Snow Pro 1.0 is Live",
       titlePre: "Redefine Your",
       titleHighlight: "Skiing Progression",
-      subtitle: "Connect with professional instructors. Improve your technique with AI-assisted video analysis. Carpooling, buddy finding, guiding, and community features coming soon.",
+      subtitle: "Connect with professional instructors. Improve your technique with professional video analysis. Carpooling, buddy finding, guiding, and community features coming soon.",
       ctaIos: "App Store",
       ctaIosNote: "Requires iOS 15+",
       ctaAndroid: "Google Play",
@@ -151,7 +151,7 @@ export const translations = {
     roadmap: {
       tag: "Coming Soon",
       title: "The Complete Ski Ecosystem",
-      desc: "SnowPro is more than an analysis tool. We are building a complete platform for ski enthusiasts. The following features are under development.",
+      desc: "Snow Pro is more than an analysis tool. We are building a complete platform for ski enthusiasts. The following features are under development.",
       status: "Coming Soon",
       features: [
         { title: "Carpooling", desc: "Find rides to the resort easily. Save money and meet new ski buddies." },
@@ -167,7 +167,7 @@ export const translations = {
       reviews: [
         { name: "Alex Zhang", role: "Intermediate Skier", content: "I felt stuck for a long time. The video analysis pointed out my balance issues immediately!" },
         { name: "Sarah Li", role: "Snowboard Carver", content: "Very useful tool. Can't wait for the carpooling feature, it will make trips so much easier." },
-        { name: "Coach Mike", role: "CASI Level 3 Instructor", content: "SnowPro allows me to manage student videos efficiently. The drawing tools are fantastic." }
+        { name: "Coach Mike", role: "CASI Level 3 Instructor", content: "Snow Pro allows me to manage student videos efficiently. The drawing tools are fantastic." }
       ]
     },
     footer: {
@@ -180,7 +180,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "Ready to Level Up?",
-      desc: "Join the SnowPro community and experience professional video analysis. Download now to start your journey.",
+      desc: "Join the Snow Pro community and experience professional video analysis. Download now to start your journey.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
     },
@@ -189,7 +189,7 @@ export const translations = {
       success: "Email verified successfully!",
       successTitle: "Success!",
       errorTitle: "Verification Failed",
-      openApp: "Open SnowPro App",
+      openApp: "Open Snow Pro App",
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
@@ -227,10 +227,10 @@ export const translations = {
       appDownload: "アプリを入手"
     },
     hero: {
-      badge: "SnowPro 2.0 リリース",
+      badge: "Snow Pro 1.0 リリース",
       titlePre: "スキーの上達を",
       titleHighlight: "再定義する",
-      subtitle: "プロのインストラクターとつながりましょう。AI支援によるビデオ分析で技術を向上。相乗り、仲間探し、ゲレンデガイド、オンライン講座、ショップ、コミュニティ機能が充実し、究極のスキーエコシステムを提供します。",
+      subtitle: "プロのインストラクターとつながりましょう。ビデオ分析で技術を向上。相乗り、仲間探し、ゲレンデガイド、オンライン講座、ショップ、コミュニティ機能が充実し、究極のスキーエコシステムを提供します。",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 対応",
       ctaAndroid: "Google Play",
@@ -259,7 +259,7 @@ export const translations = {
     roadmap: {
       tag: "近日公開",
       title: "究極のスキーエコシステム",
-      desc: "SnowProは単なる分析ツールではありません。スキー愛好家のための完全なプラットフォームを構築しています。",
+      desc: "Snow Proは単なる分析ツールではありません。スキー愛好家のための完全なプラットフォームを構築しています。",
       status: "近日公開",
       features: [
         { title: "相乗り (Carpool)", desc: "スキー場への移動手段を簡単に確保。環境に優しく、新しい仲間とも出会えます。" },
@@ -274,7 +274,7 @@ export const translations = {
       reviews: [
         { name: "Alex Zhang", role: "中級スキーヤー", content: "自分の滑りのどこが悪いのかわかりませんでしたが、ビデオ分析で重心の問題を指摘され、目から鱗でした！" },
         { name: "Sarah Li", role: "スノーボーダー", content: "とても便利なツールです。スキー場への移動が楽になる相乗り機能の追加が楽しみです。" },
-        { name: "Coach Mike", role: "CASI Level 3 インストラクター", content: "SnowProのおかげで生徒の動画管理が効率化しました。描画ツールは非常に使いやすいです。" }
+        { name: "Coach Mike", role: "CASI Level 3 インストラクター", content: "Snow Proのおかげで生徒の動画管理が効率化しました。描画ツールは非常に使いやすいです。" }
       ]
     },
     footer: {
@@ -287,7 +287,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "レベルアップの準備はできましたか？",
-      desc: "SnowProコミュニティに参加して、プロのビデオ分析を体験してください。",
+      desc: "Snow Proコミュニティに参加して、プロのビデオ分析を体験してください。",
       btnIos: "App Store",
       btnAndroid: "Google Play"
     },
@@ -296,7 +296,7 @@ export const translations = {
       success: "Email verified successfully!",
       successTitle: "Success!",
       errorTitle: "Verification Failed",
-      openApp: "Open SnowPro App",
+      openApp: "Open Snow Pro App",
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
@@ -334,10 +334,10 @@ export const translations = {
       appDownload: "앱 다운로드"
     },
     hero: {
-      badge: "SnowPro 2.0 출시",
+      badge: "Snow Pro 1.0 출시",
       titlePre: "스키 실력 향상의",
       titleHighlight: "새로운 기준",
-      subtitle: "전문 강사와 연결하세요. AI 기반 비디오 분석으로 기술을 정교하게 다듬으세요. 카풀, 스키 버디, 가이드 라이딩, 커뮤니티 기능이 곧 출시됩니다.",
+      subtitle: "전문 강사와 연결하세요. 비디오 분석으로 기술을 정교하게 다듬으세요. 카풀, 스키 버디, 가이드 라이딩, 커뮤니티 기능이 곧 출시됩니다.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 지원",
       ctaAndroid: "Google Play",
@@ -366,7 +366,7 @@ export const translations = {
     roadmap: {
       tag: "출시 예정",
       title: "올인원 스키 플랫폼",
-      desc: "SnowPro는 단순한 분석 도구가 아닙니다. 스키 애호가를 위한 완벽한 생태계를 구축하고 있습니다.",
+      desc: "Snow Pro는 단순한 분석 도구가 아닙니다. 스키 애호가를 위한 완벽한 생태계를 구축하고 있습니다.",
       status: "준비 중",
       features: [
         { title: "스키장 카풀", desc: "스키장 가는 길이 더 이상 외롭지 않습니다. 카풀로 이동하고 새 친구도 사귀세요." },
@@ -395,7 +395,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "스키 실력을 레벨업할 준비가 되셨나요?",
-      desc: "SnowPro 커뮤니티에 가입하고 전문적인 분석을 경험해보세요.",
+      desc: "Snow Pro 커뮤니티에 가입하고 전문적인 분석을 경험해보세요.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
     },
@@ -404,7 +404,7 @@ export const translations = {
       success: "Email verified successfully!",
       successTitle: "Success!",
       errorTitle: "Verification Failed",
-      openApp: "Open SnowPro App",
+      openApp: "Open Snow Pro App",
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
@@ -442,10 +442,10 @@ export const translations = {
       appDownload: "Obtenir l'app"
     },
     hero: {
-      badge: "SnowPro 2.0 est en ligne",
+      badge: "Snow Pro 1.0 est en ligne",
       titlePre: "Redéfinissez votre",
       titleHighlight: "Progression en Ski",
-      subtitle: "Connectez-vous avec des instructeurs professionnels. Améliorez votre technique grâce à l'analyse vidéo assistée par IA. Covoiturage, guides et communauté bientôt disponibles.",
+      subtitle: "Connectez-vous avec des instructeurs professionnels. Améliorez votre technique grâce à l'analyse vidéo. Covoiturage, guides et communauté bientôt disponibles.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ requis",
       ctaAndroid: "Google Play",
@@ -474,7 +474,7 @@ export const translations = {
     roadmap: {
       tag: "Bientôt",
       title: "L'Écosystème Ski Complet",
-      desc: "SnowPro est plus qu'un outil d'analyse. Nous construisons une plateforme complète pour les passionnés de ski.",
+      desc: "Snow Pro est plus qu'un outil d'analyse. Nous construisons une plateforme complète pour les passionnés de ski.",
       status: "Bientôt",
       features: [
         { title: "Covoiturage", desc: "Trouvez facilement un trajet vers la station. Économique et convivial." },
@@ -490,7 +490,7 @@ export const translations = {
       reviews: [
         { name: "Alex Zhang", role: "Skieur Intermédiaire", content: "L'analyse vidéo a mis le doigt sur mes problèmes d'équilibre instantanément !" },
         { name: "Sarah Li", role: "Snowboardeuse", content: "Outil très utile. J'ai hâte d'utiliser la fonction covoiturage." },
-        { name: "Coach Mike", role: "Instructeur CASI Niveau 3", content: "SnowPro me permet de gérer efficacement les vidéos de mes élèves." }
+        { name: "Coach Mike", role: "Instructeur CASI Niveau 3", content: "Snow Pro me permet de gérer efficacement les vidéos de mes élèves." }
       ]
     },
     footer: {
@@ -503,7 +503,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "Prêt à progresser ?",
-      desc: "Rejoignez la communauté SnowPro et profitez d'une analyse vidéo professionnelle.",
+      desc: "Rejoignez la communauté Snow Pro et profitez d'une analyse vidéo professionnelle.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
     },
@@ -512,7 +512,7 @@ export const translations = {
       success: "Email verified successfully!",
       successTitle: "Success!",
       errorTitle: "Verification Failed",
-      openApp: "Open SnowPro App",
+      openApp: "Open Snow Pro App",
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
@@ -550,10 +550,10 @@ export const translations = {
       appDownload: "App holen"
     },
     hero: {
-      badge: "SnowPro 2.0 ist live",
+      badge: "Snow Pro 1.0 ist live",
       titlePre: "Definieren Sie Ihren",
       titleHighlight: "Skifortschritt neu",
-      subtitle: "Verbinden Sie sich mit professionellen Skilehrern. Verbessern Sie Ihre Technik durch KI-gestützte Videoanalyse. Fahrgemeinschaften, Ski-Guiding und Community folgen bald.",
+      subtitle: "Verbinden Sie sich mit professionellen Skilehrern. Verbessern Sie Ihre Technik durch Videoanalyse. Fahrgemeinschaften, Ski-Guiding und Community folgen bald.",
       ctaIos: "App Store",
       ctaIosNote: "Benötigt iOS 15+",
       ctaAndroid: "Google Play",
@@ -582,7 +582,7 @@ export const translations = {
     roadmap: {
       tag: "Demnächst",
       title: "Das komplette Ski-Ökosystem",
-      desc: "SnowPro ist mehr als ein Analysetool. Wir bauen eine komplette Plattform für Skibegeisterte.",
+      desc: "Snow Pro ist mehr als ein Analysetool. Wir bauen eine komplette Plattform für Skibegeisterte.",
       status: "Demnächst",
       features: [
         { title: "Fahrgemeinschaften", desc: "Finden Sie einfach eine Mitfahrgelegenheit zum Skigebiet." },
@@ -598,7 +598,7 @@ export const translations = {
       reviews: [
         { name: "Alex Zhang", role: "Fortgeschrittener", content: "Die Videoanalyse hat meine Gleichgewichtsprobleme sofort aufgezeigt!" },
         { name: "Sarah Li", role: "Snowboarder", content: "Sehr nützliches Tool. Ich freue mich auf die Fahrgemeinschaftsfunktion." },
-        { name: "Coach Mike", role: "CASI Level 3 Trainer", content: "SnowPro ermöglicht es mir, Schülervideos effizient zu verwalten." }
+        { name: "Coach Mike", role: "CASI Level 3 Trainer", content: "Snow Pro ermöglicht es mir, Schülervideos effizient zu verwalten." }
       ]
     },
     footer: {
@@ -611,7 +611,7 @@ export const translations = {
     },
     ctaBottom: {
       title: "Bereit für den Aufstieg?",
-      desc: "Treten Sie der SnowPro-Community bei und erleben Sie professionelle Videoanalyse.",
+      desc: "Treten Sie der Snow Pro-Community bei und erleben Sie professionelle Videoanalyse.",
       btnIos: "App Store",
       btnAndroid: "Google Play"
     },
@@ -620,7 +620,7 @@ export const translations = {
       success: "Email verified successfully!",
       successTitle: "Success!",
       errorTitle: "Verification Failed",
-      openApp: "Open SnowPro App",
+      openApp: "Open Snow Pro App",
       invalidLink: "Invalid verification link. Missing parameters.",
       errorFallback: "Verification failed.",
       errorOccurred: "An error occurred during verification.",
