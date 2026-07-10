@@ -80,7 +80,7 @@ const Courses: React.FC = () => {
                 {/* Instructor Info */}
                 <p className="text-xs text-slate-400 font-light mb-6 flex items-center gap-1.5">
                   <Award size={14} className="text-blue-400" />
-                  <span>授课教练: <strong>{course.instructor}</strong></span>
+                  <span>{t.courses.instructorLabel}: <strong>{course.instructor}</strong></span>
                 </p>
               </div>
 
@@ -88,7 +88,7 @@ const Courses: React.FC = () => {
               <div className="border-t border-slate-800/60 pt-4 flex items-center justify-between mt-auto">
                 <div className="flex items-center gap-1.5 text-slate-400 text-xs font-light">
                   <Clock size={14} className="text-slate-500" />
-                  <span>{course.lessons} 课时</span>
+                  <span>{course.lessons} {t.courses.lessonsLabel}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-amber-400 text-sm font-semibold">
                   <Coins size={14} className="text-amber-500" />

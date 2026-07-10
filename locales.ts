@@ -45,10 +45,12 @@ export const translations = {
       title: "系统化滑雪视频课程",
       desc: "由专业认证教练倾力打造。支持单板与双板，涵盖滑行基本功、刻滑、公园自由式及大山野雪，助您从零基础蜕变为雪场大神。",
       btnText: "立即在 App 中探索课程",
+      instructorLabel: "授课教练",
+      lessonsLabel: "课时",
       list: [
-        { title: "双板高级刻滑进阶", instructor: "Coach Mike", lessons: 12, level: "高级", style: "刻滑", price: "80 代币" },
-        { title: "单板零基础滑行入门", instructor: "Sarah Li", lessons: 8, level: "初级", style: "滑行基础", price: "50 代币" },
-        { title: "大山野雪与安全进阶", instructor: "Alex Zhang", lessons: 10, level: "专家级", style: "野雪自由式", price: "100 代币" }
+        { title: "双板高级刻滑进阶", instructor: "Marcus Vogt", lessons: 12, level: "高级", style: "刻滑", price: "80 代币" },
+        { title: "单板零基础滑行入门", instructor: "Hannah Adams", lessons: 8, level: "初级", style: "滑行基础", price: "50 代币" },
+        { title: "大山野雪与安全进阶", instructor: "Sven Lindqvist", lessons: 10, level: "专家级", style: "野雪自由式", price: "100 代币" }
       ]
     },
     roadmap: {
@@ -163,10 +165,12 @@ export const translations = {
       title: "Structured Skiing Courses",
       desc: "Recorded by certified instructors. Covers snowboard & ski, from basic riding to carving, park, and backcountry safety.",
       btnText: "Explore Courses in App",
+      instructorLabel: "Instructor",
+      lessonsLabel: "Lessons",
       list: [
-        { title: "Ski Carving Masterclass", instructor: "Coach Mike", lessons: 12, level: "Advanced", style: "Carving", price: "80 Tokens" },
-        { title: "Snowboard Basics & Core Riding", instructor: "Sarah Li", lessons: 8, level: "Beginner", style: "Basic Riding", price: "50 Tokens" },
-        { title: "Backcountry & Freeride Safety", instructor: "Alex Zhang", lessons: 10, level: "Expert", style: "Freeride", price: "100 Tokens" }
+        { title: "Ski Carving Masterclass", instructor: "Marcus Vogt", lessons: 12, level: "Advanced", style: "Carving", price: "80 Tokens" },
+        { title: "Snowboard Basics & Core Riding", instructor: "Hannah Adams", lessons: 8, level: "Beginner", style: "Basic Riding", price: "50 Tokens" },
+        { title: "Backcountry & Freeride Safety", instructor: "Sven Lindqvist", lessons: 10, level: "Expert", style: "Freeride", price: "100 Tokens" }
       ]
     },
     roadmap: {
@@ -281,10 +285,12 @@ export const translations = {
       title: "体系的なスキー・スノボ動画講座",
       desc: "認定コーチが監修。スノーボードとスキーの両方に対応し、基本の滑りからカービング、パーク、バックカントリーの安全対策まで網羅しています。",
       btnText: "アプリで講座を探索する",
+      instructorLabel: "インストラクター",
+      lessonsLabel: "レッスン",
       list: [
-        { title: "スキー上級カービングマスター", instructor: "Coach Mike", lessons: 12, level: "上級", style: "カービング", price: "80 トークン" },
-        { title: "スノーボード初心者基本ライディング", instructor: "Sarah Li", lessons: 8, level: "初級", style: "基本滑走", price: "50 トークン" },
-        { title: "バックカントリー＆フリーライド安全対策", instructor: "Alex Zhang", lessons: 10, level: "エキスパート", style: "フリーライド", price: "100 トークン" }
+        { title: "スキー上級カービングマスター", instructor: "Marcus Vogt", lessons: 12, level: "上級", style: "カービング", price: "80 トークン" },
+        { title: "スノーボード初心者基本ライディング", instructor: "Hannah Adams", lessons: 8, level: "初級", style: "基本滑走", price: "50 トークン" },
+        { title: "バックカントリー＆フリーライド安全対策", instructor: "Sven Lindqvist", lessons: 10, level: "エキスパート", style: "フリーライド", price: "100 トークン" }
       ]
     },
     roadmap: {
@@ -398,10 +404,12 @@ export const translations = {
       title: "체계적인 스키 강좌",
       desc: "인증된 강사들이 직접 제작했습니다. 스노보드 및 스키 지원, 기초 라이딩부터 카빙, 파크, 백컨트리 안전 가이드까지 지원합니다.",
       btnText: "앱에서 강좌 더 보기",
+      instructorLabel: "강사",
+      lessonsLabel: "레슨",
       list: [
-        { title: "스키 상급 카빙 마스터클래스", instructor: "Coach Mike", lessons: 12, level: "상급", style: "카빙", price: "80 토큰" },
-        { title: "스노보드 기초 및 코어 라이딩", instructor: "Sarah Li", lessons: 8, level: "초급", style: "기초 라이딩", price: "50 토큰" },
-        { title: "백컨트리 및 프리라이드 안전 가이드", instructor: "Alex Zhang", lessons: 10, level: "전문가", style: "프리라이드", price: "100 토큰" }
+        { title: "스키 상급 카빙 마스터클래스", instructor: "Marcus Vogt", lessons: 12, level: "상급", style: "카빙", price: "80 토큰" },
+        { title: "스노보드 기초 및 코어 라이딩", instructor: "Hannah Adams", lessons: 8, level: "초급", style: "기초 라이딩", price: "50 토큰" },
+        { title: "백컨트리 및 프리라이드 안전 가이드", instructor: "Sven Lindqvist", lessons: 10, level: "전문가", style: "프리라이드", price: "100 토큰" }
       ]
     },
     roadmap: {
@@ -516,10 +524,12 @@ export const translations = {
       title: "Cours de Ski Structurés",
       desc: "Enregistrés par des instructeurs certifiés. Convient pour le snowboard et le ski, du perfectionnement de la glisse de base au carving, park et sécurité hors-piste.",
       btnText: "Découvrir les cours sur l'App",
+      instructorLabel: "Moniteur",
+      lessonsLabel: "Leçons",
       list: [
-        { title: "Masterclass de Ski de Carving", instructor: "Coach Mike", lessons: 12, level: "Avancé", style: "Carving", price: "80 Jetons" },
-        { title: "Bases du Snowboard et Glisse", instructor: "Sarah Li", lessons: 8, level: "Débutant", style: "Glisse de Base", price: "50 Jetons" },
-        { title: "Hors-piste et Sécurité en Montagne", instructor: "Alex Zhang", lessons: 10, level: "Expert", style: "Freeride", price: "100 Jetons" }
+        { title: "Masterclass de Ski de Carving", instructor: "Marcus Vogt", lessons: 12, level: "Avancé", style: "Carving", price: "80 Jetons" },
+        { title: "Bases du Snowboard et Glisse", instructor: "Hannah Adams", lessons: 8, level: "Débutant", style: "Glisse de Base", price: "50 Jetons" },
+        { title: "Hors-piste et Sécurité en Montagne", instructor: "Sven Lindqvist", lessons: 10, level: "Expert", style: "Freeride", price: "100 Jetons" }
       ]
     },
     roadmap: {
@@ -634,10 +644,12 @@ export const translations = {
       title: "Systematische Ski- & Snowboardkurse",
       desc: "Aufgenommen von zertifizierten Trainern. Für Snowboard & Ski, von grundlegendem Fahren über Carving, Park bis hin zu Backcountry-Sicherheitskursen.",
       btnText: "Kurse in der App erkunden",
+      instructorLabel: "Skilehrer",
+      lessonsLabel: "Lektionen",
       list: [
-        { title: "Ski-Carving-Meisterklasse", instructor: "Coach Mike", lessons: 12, level: "Fortgeschritten", style: "Carving", price: "80 Token" },
-        { title: "Snowboard-Grundlagen & Core-Riding", instructor: "Sarah Li", lessons: 8, level: "Anfänger", style: "Grundlegendes Fahren", price: "50 Token" },
-        { title: "Backcountry & Freeride Sicherheit", instructor: "Alex Zhang", lessons: 10, level: "Experte", style: "Freeride", price: "100 Token" }
+        { title: "Ski-Carving-Meisterklasse", instructor: "Marcus Vogt", lessons: 12, level: "Fortgeschritten", style: "Carving", price: "80 Token" },
+        { title: "Snowboard-Grundlagen & Core-Riding", instructor: "Hannah Adams", lessons: 8, level: "Anfänger", style: "Grundlegendes Fahren", price: "50 Token" },
+        { title: "Backcountry & Freeride Sicherheit", instructor: "Sven Lindqvist", lessons: 10, level: "Experte", style: "Freeride", price: "100 Token" }
       ]
     },
     roadmap: {
