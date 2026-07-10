@@ -137,7 +137,7 @@ export const translations = {
       subtitle: "Connect with professional instructors. Improve your technique with professional video analysis. Carpooling, buddy finding, guiding, and community features coming soon.",
       ctaIos: "App Store",
       ctaIosNote: "Requires iOS 15+",
-      ctaAndroid: "Google Play",
+      ctaAndroid: "Android Download",
       stats: {
         coaches: "Certified Coaches",
         analysis: "Video Analyses",
@@ -206,7 +206,7 @@ export const translations = {
       title: "Ready to Level Up?",
       desc: "Join the Snow Pro community and experience professional video analysis. Download now to start your journey.",
       btnIos: "App Store",
-      btnAndroid: "Google Play"
+      btnAndroid: "Android Download"
     },
     verifyEmail: {
       verifying: "Verifying your email...",
@@ -257,7 +257,7 @@ export const translations = {
       subtitle: "プロのインストラクターとつながりましょう。ビデオ分析で技術を向上。相乗り、仲間探し、ゲレンデガイド、オンライン講座、ショップ、コミュニティ機能が充実し、究極のスキーエコシステムを提供します。",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 対応",
-      ctaAndroid: "Google Play",
+      ctaAndroid: "Android ダウンロード",
       stats: {
         coaches: "認定コーチ",
         analysis: "分析数",
@@ -325,7 +325,7 @@ export const translations = {
       title: "レベルアップの準備はできましたか？",
       desc: "Snow Proコミュニティに参加して、プロのビデオ分析を体験してください。",
       btnIos: "App Store",
-      btnAndroid: "Google Play"
+      btnAndroid: "Android ダウンロード"
     },
     verifyEmail: {
       verifying: "Verifying your email...",
@@ -376,7 +376,7 @@ export const translations = {
       subtitle: "전문 강사와 연결하세요. 비디오 분석으로 기술을 정교하게 다듬으세요. 카풀, 스키 버디, 가이드 라이딩, 커뮤니티 기능이 곧 출시됩니다.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ 지원",
-      ctaAndroid: "Google Play",
+      ctaAndroid: "Android 다운로드",
       stats: {
         coaches: "인증 코치",
         analysis: "비디오 분석",
@@ -445,7 +445,7 @@ export const translations = {
       title: "스키 실력을 레벨업할 준비가 되셨나요?",
       desc: "Snow Pro 커뮤니티에 가입하고 전문적인 분석을 경험해보세요.",
       btnIos: "App Store",
-      btnAndroid: "Google Play"
+      btnAndroid: "Android 다운로드"
     },
     verifyEmail: {
       verifying: "Verifying your email...",
@@ -496,7 +496,7 @@ export const translations = {
       subtitle: "Connectez-vous avec des instructeurs professionnels. Améliorez votre technique grâce à l'analyse vidéo. Covoiturage, guides et communauté bientôt disponibles.",
       ctaIos: "App Store",
       ctaIosNote: "iOS 15+ requis",
-      ctaAndroid: "Google Play",
+      ctaAndroid: "Télécharger pour Android",
       stats: {
         coaches: "Coachs Certifiés",
         analysis: "Analyses Vidéo",
@@ -565,7 +565,7 @@ export const translations = {
       title: "Prêt à progresser ?",
       desc: "Rejoignez la communauté Snow Pro et profitez d'une analyse vidéo professionnelle.",
       btnIos: "App Store",
-      btnAndroid: "Google Play"
+      btnAndroid: "Télécharger pour Android"
     },
     verifyEmail: {
       verifying: "Verifying your email...",
@@ -616,7 +616,7 @@ export const translations = {
       subtitle: "Verbinden Sie sich mit professionellen Skilehrern. Verbessern Sie Ihre Technik durch Videoanalyse. Fahrgemeinschaften, Ski-Guiding und Community folgen bald.",
       ctaIos: "App Store",
       ctaIosNote: "Benötigt iOS 15+",
-      ctaAndroid: "Google Play",
+      ctaAndroid: "Android Download",
       stats: {
         coaches: "Zertifizierte Trainer",
         analysis: "Videoanalysen",
@@ -685,7 +685,7 @@ export const translations = {
       title: "Bereit für den Aufstieg?",
       desc: "Treten Sie der Snow Pro-Community bei und erleben Sie professionelle Videoanalyse.",
       btnIos: "App Store",
-      btnAndroid: "Google Play"
+      btnAndroid: "Android Download"
     },
     verifyEmail: {
       verifying: "Verifying your email...",

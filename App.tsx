@@ -39,7 +39,7 @@ import { useLanguage } from './contexts/LanguageContext';
 const localT = {
   zh: {
     scanIos: "扫码下载 iOS 版",
-    scanGooglePlay: "扫码下载 Google Play 版",
+    scanGooglePlay: "扫码直接下载 APK",
     directApk: "直接下载 Android APK",
     iosLabel: "iPhone 用户",
     androidLabel: "Android 用户",
@@ -47,7 +47,7 @@ const localT = {
   },
   en: {
     scanIos: "Scan to download iOS app",
-    scanGooglePlay: "Scan to download Google Play",
+    scanGooglePlay: "Scan to download APK directly",
     directApk: "Direct APK Download",
     iosLabel: "iPhone Users",
     androidLabel: "Android Users",
@@ -55,7 +55,7 @@ const localT = {
   },
   ja: {
     scanIos: "QRコードでiOS版をダウンロード",
-    scanGooglePlay: "QRコードでGoogle Play版をダウンロード",
+    scanGooglePlay: "QRコードでAPKを直接ダウンロード",
     directApk: "Android APK 直接ダウンロード",
     iosLabel: "iPhone ユーザー",
     androidLabel: "Android ユーザー",
@@ -63,7 +63,7 @@ const localT = {
   },
   ko: {
     scanIos: "QR 코드로 iOS 앱 다운로드",
-    scanGooglePlay: "QR 코드로 Google Play 앱 다운로드",
+    scanGooglePlay: "QR 코드로 APK 직접 다운로드",
     directApk: "Android APK 직접 다운로드",
     iosLabel: "iPhone 사용자",
     androidLabel: "Android 사용자",
@@ -71,7 +71,7 @@ const localT = {
   },
   fr: {
     scanIos: "Scanner pour iOS App Store",
-    scanGooglePlay: "Scanner pour Google Play",
+    scanGooglePlay: "Scanner pour télécharger l'APK",
     directApk: "Téléchargement direct de l'APK",
     iosLabel: "Utilisateurs iPhone",
     androidLabel: "Utilisateurs Android",
@@ -79,7 +79,7 @@ const localT = {
   },
   de: {
     scanIos: "Scannen für iOS App Store",
-    scanGooglePlay: "Scannen für Google Play",
+    scanGooglePlay: "Scannen zum direkten APK-Download",
     directApk: "Direkter APK-Download",
     iosLabel: "iPhone-Nutzer",
     androidLabel: "Android-Nutzer",
@@ -159,14 +159,14 @@ function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.androidLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '在 Google Play 中下载或直接下载 APK 文件' : 'Download on Google Play or get the APK file directly'}
+                  {language === 'zh' ? '直接下载并安装 Android APK 文件' : 'Download and install the Android APK file directly'}
                 </p>
 
                 {/* QR Code Container */}
                 <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.googuar.snowpro"
-                    alt="Google Play Store QR Code"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fstorage.googleapis.com%2Fsnowpro-bucket-public%2Fsnowpro.apk"
+                    alt="Android APK QR Code"
                     className="w-[150px] h-[150px] rounded-lg opacity-90"
                     loading="lazy"
                   />
@@ -176,26 +176,10 @@ function HomePage() {
                   {currT.scanGooglePlay}
                 </span>
 
-                <div className="w-full space-y-3">
-                  <a 
-                    href="https://play.google.com/store/apps/details?id=com.googuar.snowpro"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border-0 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center hover:scale-[1.02]"
-                  >
-                    <Smartphone size={20} />
-                    {t.ctaBottom.btnAndroid}
-                  </a>
-                  
-                  <div className="flex items-center justify-center gap-3 py-1">
-                    <div className="h-px bg-slate-800 flex-1"></div>
-                    <span className="text-slate-500 text-xs uppercase tracking-wider font-light">{currT.or}</span>
-                    <div className="h-px bg-slate-800 flex-1"></div>
-                  </div>
-
+                <div className="w-full">
                   <a 
                     href="/download/android"
-                    className="w-full bg-slate-850 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border border-slate-700/80 transition-all duration-200 text-center hover:scale-[1.02]"
+                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border-0 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center hover:scale-[1.02]"
                   >
                     <Download size={20} />
                     {currT.directApk}
