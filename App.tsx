@@ -7,6 +7,7 @@ import VideoDemo from './components/VideoDemo';
 import Roadmap from './components/Roadmap';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
+import Courses from './components/Courses';
 import { LanguageProvider } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
@@ -96,6 +97,7 @@ function HomePage() {
       <main>
         <Hero />
         <VideoDemo />
+        <Courses />
         <Roadmap />
         <Testimonials />
         

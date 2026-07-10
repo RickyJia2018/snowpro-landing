@@ -10,10 +10,9 @@ const Roadmap: React.FC = () => {
   // 0: Carpooling (Car)
   // 1: Buddy (Users)
   // 2: Guiding (Compass)
-  // 3: Courses (PlayCircle)
-  // 4: Shop (ShoppingBag)
-  // 5: Community (MessageSquare)
-  const icons = [Car, Users, Compass, PlayCircle, ShoppingBag, MessageSquare];
+  // 3: Shop (ShoppingBag)
+  // 4: Community (MessageSquare)
+  const icons = [Car, Users, Compass, ShoppingBag, MessageSquare];
 
   const features = t.roadmap.features.map((f, i) => ({
     ...f,

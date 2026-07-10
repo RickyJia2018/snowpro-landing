@@ -40,6 +40,17 @@ export const translations = {
         { comment: "出弯过早，导致速度控制不稳，试着多向山下看。", type: "correction" }
       ]
     },
+    courses: {
+      tag: "核心功能",
+      title: "系统化滑雪视频课程",
+      desc: "由专业认证教练倾力打造。支持单板与双板，涵盖滑行基本功、刻滑、公园自由式及大山野雪，助您从零基础蜕变为雪场大神。",
+      btnText: "立即在 App 中探索课程",
+      list: [
+        { title: "双板高级刻滑进阶", instructor: "Coach Mike", lessons: 12, level: "高级", style: "刻滑", price: "80 代币" },
+        { title: "单板零基础滑行入门", instructor: "Sarah Li", lessons: 8, level: "初级", style: "滑行基础", price: "50 代币" },
+        { title: "大山野雪与安全进阶", instructor: "Alex Zhang", lessons: 10, level: "专家级", style: "野雪自由式", price: "100 代币" }
+      ]
+    },
     roadmap: {
       tag: "即将推出",
       title: "打造全方位滑雪生态",
@@ -49,7 +60,6 @@ export const translations = {
         { title: "雪场拼车", desc: "不再为独自去雪场发愁。一键发起或加入拼车行程，环保出行，结识新雪友。" },
         { title: "雪友陪滑", desc: "寻找技术相当的伙伴，或者预约大神陪滑指导。让滑雪不再孤单。" },
         { title: "雪场导滑", desc: "预约当地专业滑雪向导，带你避开人群、探索野雪与秘境路线，全方位保障滑雪安全。" },
-        { title: "在线课程", desc: "海量体系化滑雪教程，从小白入门到黑道大神，随时随地学习理论知识。" },
         { title: "滑雪装备店", desc: "精选全球顶尖滑雪装备与周边好物，正品保障，专业导购推荐。" },
         { title: "雪圈社区", desc: "分享滑雪日常，讨论装备测评，交流雪场攻略，打造最纯粹的滑雪爱好者论坛。" }
       ]
@@ -148,6 +158,17 @@ export const translations = {
         { comment: "Exiting turn too early, affecting speed control.", type: "correction" }
       ]
     },
+    courses: {
+      tag: "Core Feature",
+      title: "Structured Skiing Courses",
+      desc: "Recorded by certified instructors. Covers snowboard & ski, from basic riding to carving, park, and backcountry safety.",
+      btnText: "Explore Courses in App",
+      list: [
+        { title: "Ski Carving Masterclass", instructor: "Coach Mike", lessons: 12, level: "Advanced", style: "Carving", price: "80 Tokens" },
+        { title: "Snowboard Basics & Core Riding", instructor: "Sarah Li", lessons: 8, level: "Beginner", style: "Basic Riding", price: "50 Tokens" },
+        { title: "Backcountry & Freeride Safety", instructor: "Alex Zhang", lessons: 10, level: "Expert", style: "Freeride", price: "100 Tokens" }
+      ]
+    },
     roadmap: {
       tag: "Coming Soon",
       title: "The Complete Ski Ecosystem",
@@ -157,7 +178,6 @@ export const translations = {
         { title: "Carpooling", desc: "Find rides to the resort easily. Save money and meet new ski buddies." },
         { title: "Ski Buddy", desc: "Find partners of similar skill levels or book a pro for guided skiing." },
         { title: "Resort Guiding", desc: "Book professional local guides to escape the crowd, explore backcountry terrain and hidden routes, ensuring all-around skiing safety." },
-        { title: "Online Courses", desc: "Systematic tutorials from beginner to expert. Learn theory anytime, anywhere." },
         { title: "Gear Shop", desc: "Curated top-tier ski gear and merchandise. Authentic products with professional recommendations." },
         { title: "Community", desc: "Share daily runs, discuss gear, and exchange resort guides in a pure skier forum." }
       ]
@@ -256,6 +276,17 @@ export const translations = {
         { comment: "ターン出口が早すぎます。もっとフォールラインを見て。", type: "correction" }
       ]
     },
+    courses: {
+      tag: "コア機能",
+      title: "体系的なスキー・スノボ動画講座",
+      desc: "認定コーチが監修。スノーボードとスキーの両方に対応し、基本の滑りからカービング、パーク、バックカントリーの安全対策まで網羅しています。",
+      btnText: "アプリで講座を探索する",
+      list: [
+        { title: "スキー上級カービングマスター", instructor: "Coach Mike", lessons: 12, level: "上級", style: "カービング", price: "80 トークン" },
+        { title: "スノーボード初心者基本ライディング", instructor: "Sarah Li", lessons: 8, level: "初級", style: "基本滑走", price: "50 トークン" },
+        { title: "バックカントリー＆フリーライド安全対策", instructor: "Alex Zhang", lessons: 10, level: "エキスパート", style: "フリーライド", price: "100 トークン" }
+      ]
+    },
     roadmap: {
       tag: "近日公開",
       title: "究極のスキーエコシステム",
@@ -264,7 +295,6 @@ export const translations = {
       features: [
         { title: "相乗り (Carpool)", desc: "スキー場への移動手段を簡単に確保。環境に優しく、新しい仲間とも出会えます。" },
         { title: "スキー仲間", desc: "同じレベルの仲間を見つけたり、上級者のガイドを予約したりできます。" },
-        { title: "オンライン講座", desc: "初心者から上級者まで体系的なチュートリアル。いつでもどこでも理論を学べます。" },
         { title: "ギアショップ", desc: "厳選されたトップクラスのスキー用具とグッズ。プロの推奨する正規品を保証。" },
         { title: "コミュニティ", desc: "滑走記録の共有、ギアのレビュー、ゲレンデ情報の交換など、スキーヤーのためのフォーラム。" }
       ]
@@ -363,6 +393,17 @@ export const translations = {
         { comment: "턴 탈출이 너무 빠릅니다. 폴라인을 더 바라보세요.", type: "correction" }
       ]
     },
+    courses: {
+      tag: "핵심 기능",
+      title: "체계적인 스키 강좌",
+      desc: "인증된 강사들이 직접 제작했습니다. 스노보드 및 스키 지원, 기초 라이딩부터 카빙, 파크, 백컨트리 안전 가이드까지 지원합니다.",
+      btnText: "앱에서 강좌 더 보기",
+      list: [
+        { title: "스키 상급 카빙 마스터클래스", instructor: "Coach Mike", lessons: 12, level: "상급", style: "카빙", price: "80 토큰" },
+        { title: "스노보드 기초 및 코어 라이딩", instructor: "Sarah Li", lessons: 8, level: "초급", style: "기초 라이딩", price: "50 토큰" },
+        { title: "백컨트리 및 프리라이드 안전 가이드", instructor: "Alex Zhang", lessons: 10, level: "전문가", style: "프리라이드", price: "100 토큰" }
+      ]
+    },
     roadmap: {
       tag: "출시 예정",
       title: "올인원 스키 플랫폼",
@@ -372,7 +413,6 @@ export const translations = {
         { title: "스키장 카풀", desc: "스키장 가는 길이 더 이상 외롭지 않습니다. 카풀로 이동하고 새 친구도 사귀세요." },
         { title: "스키 버디", desc: "비슷한 실력의 친구를 찾거나 고수에게 동반 라이딩을 요청하세요." },
         { title: "가이드 라이딩", desc: "현지 전문 가이드를 예약하여 인파를 피하고 백컨트리나 숨겨진 슬로프를 탐험하며 안전한 스키를 즐기세요." },
-        { title: "온라인 강좌", desc: "입문부터 최상급까지 체계적인 스키 강좌. 언제 어디서나 이론을 학습하세요." },
         { title: "장비 샵", desc: "엄선된 최고급 스키 장비와 굿즈. 전문가가 추천하는 정품을 만나보세요." },
         { title: "커뮤니티", desc: "라이딩 일지 공유, 장비 리뷰, 스키장 공략 등 순수 스키어들을 위한 포럼." }
       ]
@@ -471,6 +511,17 @@ export const translations = {
         { comment: "Sortie de virage trop précoce, contrôlez votre vitesse.", type: "correction" }
       ]
     },
+    courses: {
+      tag: "Fonctionnalité Clé",
+      title: "Cours de Ski Structurés",
+      desc: "Enregistrés par des instructeurs certifiés. Convient pour le snowboard et le ski, du perfectionnement de la glisse de base au carving, park et sécurité hors-piste.",
+      btnText: "Découvrir les cours sur l'App",
+      list: [
+        { title: "Masterclass de Ski de Carving", instructor: "Coach Mike", lessons: 12, level: "Avancé", style: "Carving", price: "80 Jetons" },
+        { title: "Bases du Snowboard et Glisse", instructor: "Sarah Li", lessons: 8, level: "Débutant", style: "Glisse de Base", price: "50 Jetons" },
+        { title: "Hors-piste et Sécurité en Montagne", instructor: "Alex Zhang", lessons: 10, level: "Expert", style: "Freeride", price: "100 Jetons" }
+      ]
+    },
     roadmap: {
       tag: "Bientôt",
       title: "L'Écosystème Ski Complet",
@@ -480,7 +531,6 @@ export const translations = {
         { title: "Covoiturage", desc: "Trouvez facilement un trajet vers la station. Économique et convivial." },
         { title: "Partenaire de Ski", desc: "Trouvez des partenaires de même niveau ou réservez un pro." },
         { title: "Guides de Station", desc: "Réservez des guides locaux professionnels pour éviter la foule, explorer le hors-piste et les itinéraires cachés en toute sécurité." },
-        { title: "Cours en Ligne", desc: "Tutoriels systématiques du débutant à l'expert. Apprenez la théorie n'importe où." },
         { title: "Boutique", desc: "Matériel et produits dérivés sélectionnés. Produits authentiques recommandés par des pros." },
         { title: "Communauté", desc: "Partagez vos sessions, discutez matériel et échangez des conseils." }
       ]
@@ -579,6 +629,17 @@ export const translations = {
         { comment: "Kurvenausgang zu früh, Geschwindigkeit kontrollieren.", type: "correction" }
       ]
     },
+    courses: {
+      tag: "Kernfunktion",
+      title: "Systematische Ski- & Snowboardkurse",
+      desc: "Aufgenommen von zertifizierten Trainern. Für Snowboard & Ski, von grundlegendem Fahren über Carving, Park bis hin zu Backcountry-Sicherheitskursen.",
+      btnText: "Kurse in der App erkunden",
+      list: [
+        { title: "Ski-Carving-Meisterklasse", instructor: "Coach Mike", lessons: 12, level: "Fortgeschritten", style: "Carving", price: "80 Token" },
+        { title: "Snowboard-Grundlagen & Core-Riding", instructor: "Sarah Li", lessons: 8, level: "Anfänger", style: "Grundlegendes Fahren", price: "50 Token" },
+        { title: "Backcountry & Freeride Sicherheit", instructor: "Alex Zhang", lessons: 10, level: "Experte", style: "Freeride", price: "100 Token" }
+      ]
+    },
     roadmap: {
       tag: "Demnächst",
       title: "Das komplette Ski-Ökosystem",
@@ -588,7 +649,6 @@ export const translations = {
         { title: "Fahrgemeinschaften", desc: "Finden Sie einfach eine Mitfahrgelegenheit zum Skigebiet." },
         { title: "Ski-Buddy", desc: "Finden Sie Partner mit ähnlichem Können oder buchen Sie einen Profi." },
         { title: "Ski-Guiding", desc: "Buchen Sie professionelle lokale Guides, um Menschenmassen zu meiden, Freeride-Zonen zu erkunden und die Sicherheit zu gewährleisten." },
-        { title: "Online-Kurse", desc: "Systematische Tutorials vom Anfänger bis zum Experten." },
         { title: "Ausrüstungsshop", desc: "Ausgewählte Top-Ausrüstung und Merchandise. Authentische Produkte." },
         { title: "Community", desc: "Teilen Sie Ihre Läufe, diskutieren Sie über Ausrüstung und tauschen Sie Tipps aus." }
       ]
