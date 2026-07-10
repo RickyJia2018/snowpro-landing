@@ -270,22 +270,6 @@ const Hero: React.FC = () => {
           </button>
         </div>
 
-        <div className="mt-16 flex justify-center gap-8 text-slate-400 text-sm">
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-white">500+</span>
-            <span>{t.hero.stats.coaches}</span>
-          </div>
-          <div className="w-px h-10 bg-white/20"></div>
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-white">10k+</span>
-            <span>{t.hero.stats.analysis}</span>
-          </div>
-          <div className="w-px h-10 bg-white/20"></div>
-          <div className="flex flex-col items-center">
-            <span className="text-2xl font-bold text-white">4.9</span>
-            <span>{t.hero.stats.rating}</span>
-          </div>
-        </div>
       </div>
 
       {/* Scroll Indicator */}
