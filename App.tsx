@@ -165,7 +165,7 @@ function HomePage() {
                 {/* QR Code Container */}
                 <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fstorage.googleapis.com%2Fsnowpro-bucket-public%2Fsnowpro.apk"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fsnowpro-public-bucket.googuar.com%2Fsnowpro.apk"
                     alt="Android APK QR Code"
                     className="w-[150px] h-[150px] rounded-lg opacity-90"
                     loading="lazy"

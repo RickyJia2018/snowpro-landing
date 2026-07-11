@@ -22,7 +22,7 @@
   "redirects": [
     {
       "source": "/download/android",
-      "destination": "https://storage.googleapis.com/snowpro-bucket-public/snowpro.apk",
+      "destination": "https://snowpro-public-bucket.googuar.com/snowpro.apk",
       "permanent": false
     }
   ],
