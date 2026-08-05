@@ -61,10 +61,9 @@ export default function RechargeSuccessPage() {
       return;
     }
 
-    const maxRetries = 4;
-    const retryDelay = 2000;
+    const delays = [2000, 3000, 5000, 8000, 10000];
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    for (let attempt = 0; attempt < delays.length; attempt++) {
       try {
         const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
           method: 'POST',
@@ -90,17 +89,17 @@ export default function RechargeSuccessPage() {
           return;
         }
 
-        if (attempt < maxRetries) {
-          console.log(`[Snow Pro Recharge] Verification pending (attempt ${attempt}/${maxRetries}), retrying in ${retryDelay}ms...`);
-          await new Promise((resolve) => setTimeout(resolve, retryDelay));
+        if (attempt < delays.length - 1) {
+          console.log(`[Snow Pro Recharge] Verification pending (attempt ${attempt + 1}/${delays.length}), retrying in ${delays[attempt]}ms...`);
+          await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
         } else {
           setStatus('failed');
           setErrorMessage(data.message || (language === 'zh' ? '支付网络确认延迟，请稍后刷新 App 页面查看最新余额。' : 'Payment clearance delayed. Please check balance in App later.'));
         }
       } catch (err: any) {
-        console.error(`Order verification error (attempt ${attempt}/${maxRetries}):`, err);
-        if (attempt < maxRetries) {
-          await new Promise((resolve) => setTimeout(resolve, retryDelay));
+        console.error(`Order verification error (attempt ${attempt + 1}/${delays.length}):`, err);
+        if (attempt < delays.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
         } else {
           setStatus('failed');
           setErrorMessage(err.message || 'Verification error');
