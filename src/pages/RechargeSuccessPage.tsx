@@ -61,36 +61,51 @@ export default function RechargeSuccessPage() {
       return;
     }
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          session_id: sessionId
-        })
-      });
+    const maxRetries = 4;
+    const retryDelay = 2000;
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.message || "Fulfillment verification failed");
-      }
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            session_id: sessionId
+          })
+        });
 
-      const data = await response.json();
-      if (data.success) {
-        setTokenAmount(data.purchasedTokenAmount || data.purchased_token_amount || 0);
-        setStatus('success');
-        localStorage.removeItem('pending_stripe_session_id');
-      } else {
-        setStatus('failed');
-        setErrorMessage(data.message || 'Payment not cleared yet');
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.message || "Fulfillment verification failed");
+        }
+
+        const data = await response.json();
+        if (data.success) {
+          setTokenAmount(data.purchasedTokenAmount || data.purchased_token_amount || 0);
+          setStatus('success');
+          localStorage.removeItem('pending_stripe_session_id');
+          return;
+        }
+
+        if (attempt < maxRetries) {
+          console.log(`[Snow Pro Recharge] Verification pending (attempt ${attempt}/${maxRetries}), retrying in ${retryDelay}ms...`);
+          await new Promise((resolve) => setTimeout(resolve, retryDelay));
+        } else {
+          setStatus('failed');
+          setErrorMessage(data.message || (language === 'zh' ? '支付网络确认延迟，请稍后刷新 App 页面查看最新余额。' : 'Payment clearance delayed. Please check balance in App later.'));
+        }
+      } catch (err: any) {
+        console.error(`Order verification error (attempt ${attempt}/${maxRetries}):`, err);
+        if (attempt < maxRetries) {
+          await new Promise((resolve) => setTimeout(resolve, retryDelay));
+        } else {
+          setStatus('failed');
+          setErrorMessage(err.message || 'Verification error');
+        }
       }
-    } catch (err: any) {
-      console.error("Order verification error:", err);
-      setStatus('failed');
-      setErrorMessage(err.message || 'Verification error');
     }
   };
 

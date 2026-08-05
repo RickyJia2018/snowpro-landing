@@ -137,21 +137,23 @@ export default function RechargePage() {
         const data = await response.json();
         if (data.success) {
           const amt = data.purchasedTokenAmount || data.purchased_token_amount || 0;
-          // Successfully restored paid tokens
           alert(
             language === 'zh'
               ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
               : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
           );
-          // Reload user info to display latest balance
+          localStorage.removeItem('pending_stripe_session_id');
           fetchUserInfo(token);
+        } else {
+          // If order check is completed or invalid, remove stale pending session ID
+          localStorage.removeItem('pending_stripe_session_id');
         }
+      } else {
+        localStorage.removeItem('pending_stripe_session_id');
       }
-      // If it returned ok (either success or unpaid/not found), we clear the pending ID.
-      // If the API server failed/network error occurred, we keep it to try again next time.
-      localStorage.removeItem('pending_stripe_session_id');
     } catch (err) {
       console.error("Failed to restore pending purchase:", err);
+      localStorage.removeItem('pending_stripe_session_id');
     }
   };
 
