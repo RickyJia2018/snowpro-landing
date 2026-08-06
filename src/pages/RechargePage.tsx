@@ -118,43 +118,51 @@ export default function RechargePage() {
 
   // Check if there is any pending Stripe checkout session that needs restoration
   const checkPendingOrder = async (token: string) => {
+    let pendingSessions: string[] = [];
     const pendingSessionId = localStorage.getItem('pending_stripe_session_id');
-    if (!pendingSessionId) return;
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          session_id: pendingSessionId
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          const amt = data.purchasedTokenAmount || data.purchased_token_amount || 0;
-          alert(
-            language === 'zh'
-              ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
-              : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
-          );
-          localStorage.removeItem('pending_stripe_session_id');
-          fetchUserInfo(token);
-        } else {
-          // If order check is completed or invalid, remove stale pending session ID
-          localStorage.removeItem('pending_stripe_session_id');
-        }
-      } else {
-        localStorage.removeItem('pending_stripe_session_id');
-      }
-    } catch (err) {
-      console.error("Failed to restore pending purchase:", err);
-      localStorage.removeItem('pending_stripe_session_id');
+    const pendingSessionsJson = localStorage.getItem('pending_stripe_session_ids');
+    if (pendingSessionId) pendingSessions.push(pendingSessionId);
+    if (pendingSessionsJson) {
+      try {
+        const parsed = JSON.parse(pendingSessionsJson);
+        if (Array.isArray(parsed)) pendingSessions.push(...parsed);
+      } catch (_) {}
     }
+    // Deduplicate
+    pendingSessions = Array.from(new Set(pendingSessions));
+    if (pendingSessions.length === 0) return;
+
+    for (const sid of pendingSessions) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            session_id: sid
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            const amt = data.purchasedTokenAmount || data.purchased_token_amount || 0;
+            alert(
+              language === 'zh'
+                ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
+                : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
+            );
+            fetchUserInfo(token);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to restore pending purchase for session:", sid, err);
+      }
+    }
+    localStorage.removeItem('pending_stripe_session_id');
+    localStorage.removeItem('pending_stripe_session_ids');
   };
 
   // Fetch user info
@@ -178,7 +186,7 @@ export default function RechargePage() {
           id: data.user.id || '',
           email: data.user.email || '',
           nickname: data.user.nickname || '',
-          balance: (data.user.balance || 0) / 100,
+          balance: (Number(data.user.balance) || 0) / 100,
         });
         setIsLoggedIn(true);
         // Check for pending payments to restore on startup
@@ -256,7 +264,7 @@ export default function RechargePage() {
           id: data.user.id || '',
           email: data.user.email || '',
           nickname: data.user.nickname || '',
-          balance: (data.user.balance || 0) / 100,
+          balance: (Number(data.user.balance) || 0) / 100,
         });
         setIsLoggedIn(true);
         // Check for pending payments to restore on login
