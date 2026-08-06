@@ -86,6 +86,9 @@ export default function RechargeSuccessPage() {
           setTokenAmount(data.purchasedTokenAmount || data.purchased_token_amount || 0);
           setStatus('success');
           localStorage.removeItem('pending_stripe_session_id');
+          // Clean up URL parameter to prevent session_id exposure or re-trigger on refresh
+          const newUrl = window.location.pathname + window.location.hash;
+          window.history.replaceState({}, document.title, newUrl);
           return;
         }
 

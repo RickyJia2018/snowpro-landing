@@ -94,19 +94,7 @@ export default function RechargePage() {
   useEffect(() => {
     console.log("[Snow Pro Recharge] Connecting to API Base URL:", API_BASE_URL);
     
-    // Parse accessToken from URL query parameters (for app redirect bypass login)
-    const params = new URLSearchParams(window.location.search);
-    const urlToken = params.get('accessToken');
-    
-    let token = localStorage.getItem('accessToken');
-    
-    if (urlToken) {
-      token = urlToken;
-      localStorage.setItem('accessToken', urlToken);
-      // Clean up the URL parameter to protect the token from exposure
-      const newUrl = window.location.pathname + window.location.hash;
-      window.history.replaceState({}, document.title, newUrl);
-    }
+    const token = localStorage.getItem('accessToken');
 
     if (token) {
       fetchUserInfo(token);
