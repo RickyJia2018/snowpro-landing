@@ -120,6 +120,7 @@ export default function RechargePage() {
     pendingSessions = Array.from(new Set(pendingSessions));
     if (pendingSessions.length === 0) return;
 
+    const remainingSessions: string[] = [];
     for (const sid of pendingSessions) {
       try {
         const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
@@ -143,14 +144,27 @@ export default function RechargePage() {
                 : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
             );
             fetchUserInfo(token);
+          } else {
+            // Order is still pending / unpaid, retain for future check
+            remainingSessions.push(sid);
           }
+        } else {
+          // Transient network error or 5xx server error, retain for retry
+          remainingSessions.push(sid);
         }
       } catch (err) {
         console.error("Failed to restore pending purchase for session:", sid, err);
+        remainingSessions.push(sid);
       }
     }
-    localStorage.removeItem('pending_stripe_session_id');
-    localStorage.removeItem('pending_stripe_session_ids');
+
+    if (remainingSessions.length > 0) {
+      localStorage.setItem('pending_stripe_session_ids', JSON.stringify(remainingSessions));
+      localStorage.removeItem('pending_stripe_session_id');
+    } else {
+      localStorage.removeItem('pending_stripe_session_id');
+      localStorage.removeItem('pending_stripe_session_ids');
+    }
   };
 
   // Fetch user info
@@ -312,6 +326,10 @@ export default function RechargePage() {
       const data = await response.json();
       const checkoutUrl = data.stripeCheckoutUrl || data.stripe_checkout_url;
       if (checkoutUrl) {
+        // Validate Stripe URL domain before redirecting
+        if (!checkoutUrl.startsWith('https://checkout.stripe.com/')) {
+          throw new Error("Security Alert: Invalid checkout URL domain returned.");
+        }
         // Try to extract Stripe session_id to save in local storage for restore purpose
         const match = checkoutUrl.match(/(cs_(?:test|live)_[a-zA-Z0-9]+)/);
         if (match) {
