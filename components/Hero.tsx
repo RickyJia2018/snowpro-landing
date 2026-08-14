@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ChevronRight, Apple, Smartphone } from 'lucide-react';
+import { ChevronRight, Apple, Smartphone, Video, Car, GraduationCap, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero: React.FC = () => {
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // 2. Update and draw 3D snow particles
+      // Update and draw 3D snow particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -108,18 +108,15 @@ const Hero: React.FC = () => {
 
         // Interactive wind effect from cursor
         if (mouse.active) {
-          // Project mouse coordinates back into a virtual depth
           const scale = fov / (fov + p.z);
           const px = (mouse.x - centerX) / scale;
           const py = (mouse.y - centerY) / scale;
           
-          // Distance in 2D projected space
           const dx = p.x - px;
           const dy = p.y - py;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
           if (dist < 180) {
-            // Push particles away in 3D direction (wind gust)
             const force = (180 - dist) / 180 * 2.8;
             p.x += (dx / dist) * force;
             p.y += (dy / dist) * force;
@@ -141,13 +138,11 @@ const Hero: React.FC = () => {
 
         // Boundary recycling
         if (p.z <= 0) {
-          // Reached camera plane, respawn in far distance
           p.z = 1000;
           p.x = (Math.random() - 0.5) * 1600;
           p.y = (Math.random() - 0.5) * 1000 - 300;
         }
         if (p.y > 600) {
-          // Reached bottom, respawn at top
           p.y = -600;
           p.z = Math.random() * 1000;
           p.x = (Math.random() - 0.5) * 1600;
@@ -160,7 +155,6 @@ const Hero: React.FC = () => {
 
         // Render particle if on-screen
         if (sx >= 0 && sx <= width && sy >= 0 && sy <= height) {
-          // Depth factor (far is smaller and dimmer)
           const depthAlpha = (1000 - p.z) / 1000;
           const finalAlpha = p.alpha * depthAlpha * 0.8;
           const size = p.size * scale * 1.5;
@@ -170,14 +164,13 @@ const Hero: React.FC = () => {
           ctx.fillStyle = p.color;
           ctx.globalAlpha = finalAlpha;
           
-          // Far particles look regular, close ones have light glow
           if (p.z < 350) {
             ctx.shadowColor = p.color;
             ctx.shadowBlur = 10;
           }
           
           ctx.fill();
-          ctx.shadowBlur = 0; // Reset glow
+          ctx.shadowBlur = 0;
         }
       }
 
@@ -195,8 +188,15 @@ const Hero: React.FC = () => {
     };
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="relative h-screen min-h-[600px] w-full overflow-hidden flex items-center justify-center">
+    <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center pt-24 pb-16">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -205,7 +205,7 @@ const Hero: React.FC = () => {
           className="w-full h-full object-cover select-none"
         />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/40 to-slate-950/95"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/50 to-slate-950/98"></div>
         
         {/* Tech Grid Pattern */}
         <div 
@@ -216,7 +216,7 @@ const Hero: React.FC = () => {
           }}
         ></div>
 
-        {/* 3D Interactive Ski Trails & Snow Storm Canvas */}
+        {/* 3D Interactive Snow Storm Canvas */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full pointer-events-none"
@@ -229,43 +229,79 @@ const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto animate-fade-in-up">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-blue-200 mb-8">
-          <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse"></span>
-          <span className="text-sm font-medium tracking-wide">{t.hero.badge}</span>
+        
+        {/* Version Badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-blue-200 mb-8 shadow-lg shadow-blue-500/5">
+          <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span className="text-xs sm:text-sm font-medium tracking-wide">{t.hero.badge}</span>
         </div>
         
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 leading-tight">
+        {/* Title */}
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
           {t.hero.titlePre} <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-teal-300">
             {t.hero.titleHighlight}
           </span>
         </h1>
         
-        <p className="mt-4 text-xl text-slate-300 max-w-2xl mx-auto mb-10 font-light">
+        {/* Subtitle */}
+        <p className="mt-4 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
           {t.hero.subtitle}
         </p>
+
+        {/* 4 Core Features Quick Navigation Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+          <button 
+            onClick={() => scrollToSection('video-analysis')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-200 text-xs sm:text-sm font-medium transition-all hover:scale-105"
+          >
+            <Video size={15} className="text-blue-400" />
+            <span>{t.hero.pills.video}</span>
+          </button>
+
+          <button 
+            onClick={() => scrollToSection('carpool')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-200 text-xs sm:text-sm font-medium transition-all hover:scale-105"
+          >
+            <Car size={15} className="text-cyan-400" />
+            <span>{t.hero.pills.carpool}</span>
+          </button>
+
+          <button 
+            onClick={() => scrollToSection('courses')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 text-indigo-200 text-xs sm:text-sm font-medium transition-all hover:scale-105"
+          >
+            <GraduationCap size={15} className="text-indigo-400" />
+            <span>{t.hero.pills.courses}</span>
+          </button>
+
+          <button 
+            onClick={() => scrollToSection('skibuddy')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-200 text-xs sm:text-sm font-medium transition-all hover:scale-105"
+          >
+            <Users size={15} className="text-purple-400" />
+            <span>{t.hero.pills.skibuddy}</span>
+          </button>
+        </div>
+
+        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button 
             onClick={() => window.open('https://apps.apple.com/app/id6754150275', '_blank')}
-            className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+            className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_25px_rgba(255,255,255,0.25)]"
           >
-            <Apple size={24} className="fill-current" />
+            <Apple size={22} className="fill-current" />
             <span>{t.hero.ctaIos}</span>
-            <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-white whitespace-nowrap">
+            <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-slate-300 whitespace-nowrap">
               {t.hero.ctaIosNote}
             </div>
           </button>
           
           <button 
-            onClick={() => {
-              const el = document.getElementById('download');
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="group flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all hover:bg-white/20 hover:scale-105"
+            onClick={() => scrollToSection('download')}
+            className="group flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all hover:bg-white/20 hover:scale-105"
           >
-            <Smartphone size={24} />
+            <Smartphone size={22} />
             <span>{t.hero.ctaAndroid}</span>
           </button>
         </div>
@@ -273,8 +309,11 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
-        <ChevronRight size={32} className="rotate-90" />
+      <div 
+        onClick={() => scrollToSection('video-analysis')}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50 cursor-pointer hover:text-white transition-colors"
+      >
+        <ChevronRight size={28} className="rotate-90" />
       </div>
     </div>
   );

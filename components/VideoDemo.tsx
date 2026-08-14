@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, Maximize2, MessageCircle, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Play, Pause, Maximize2, MessageCircle, CheckCircle2, AlertCircle, Video } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const VideoDemo: React.FC = () => {
@@ -23,7 +23,7 @@ const VideoDemo: React.FC = () => {
   }, [isPlaying, demoPoints.length]);
 
   return (
-    <div className="py-24 bg-slate-950 border-t border-slate-900 relative overflow-hidden" id="core-feature">
+    <div className="py-24 bg-slate-950 border-t border-slate-900 relative overflow-hidden" id="video-analysis">
       {/* Decorative Glow Blob */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[160px] pointer-events-none"></div>
 
@@ -32,14 +32,17 @@ const VideoDemo: React.FC = () => {
           
           {/* Text Content */}
           <div className="order-2 lg:order-1">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 font-semibold text-sm mb-6">
-              {t.video.tag}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 font-semibold text-sm mb-6">
+              <Video size={16} />
+              <span>{t.video.tag}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
               {t.video.titlePre} <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">{t.video.titleHighlight}</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                {t.video.titleHighlight}
+              </span>
             </h2>
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed font-light">
+            <p className="text-lg text-slate-300 mb-8 leading-relaxed font-light">
               {t.video.desc}
             </p>
             
@@ -82,12 +85,12 @@ const VideoDemo: React.FC = () => {
 
           {/* Interactive UI Mockup */}
           <div className="order-1 lg:order-2 relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl blur-lg opacity-25 animate-pulse"></div>
-            <div className="relative bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800/80 aspect-[4/3] md:aspect-video">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-3xl blur-lg opacity-25 animate-pulse"></div>
+            <div className="relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800 aspect-[4/3] md:aspect-video">
               
               {/* Fake Video Header */}
               <div className="absolute top-0 w-full p-4 flex justify-between items-center z-20 bg-gradient-to-b from-black/80 to-transparent">
-                <div className="text-white font-medium text-xs font-mono opacity-80">2024-02-15 崇礼万龙.mp4</div>
+                <div className="text-white font-medium text-xs font-mono opacity-80">2026-02-15 崇礼万龙刻滑.mp4</div>
                 <Maximize2 className="text-white/80 w-4 h-4" />
               </div>
 
@@ -123,7 +126,7 @@ const VideoDemo: React.FC = () => {
 
               {/* Floating Comment Card */}
               <div className="absolute top-1/4 right-4 w-64 z-30 space-y-2">
-                {demoPoints.map((point, idx) => (
+                {demoPoints.map((point: any, idx: number) => (
                   <div 
                     key={idx}
                     className={`transform transition-all duration-500 ease-in-out
@@ -133,14 +136,14 @@ const VideoDemo: React.FC = () => {
                       }
                     `}
                   >
-                    <div className={`p-3 rounded-xl shadow-lg border-l-4 backdrop-blur-md text-xs
+                    <div className={`p-3 rounded-2xl shadow-lg border-l-4 backdrop-blur-md text-xs
                       ${point.type === 'correction' 
-                        ? 'bg-red-950/80 border-red-500 text-red-200' 
-                        : 'bg-green-950/80 border-green-500 text-green-200'
+                        ? 'bg-red-950/85 border-red-500 text-red-200' 
+                        : 'bg-emerald-950/85 border-emerald-500 text-emerald-200'
                       }
                     `}>
                       <div className="flex items-center gap-2 mb-1 opacity-90 font-mono text-[10px]">
-                        {point.type === 'correction' ? <AlertCircle size={10} /> : <CheckCircle2 size={10} />}
+                        {point.type === 'correction' ? <AlertCircle size={11} /> : <CheckCircle2 size={11} />}
                         <span>{timestamps[idx] || "00:00"}</span>
                       </div>
                       {point.comment}

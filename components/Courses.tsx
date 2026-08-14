@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Clock, Award, Coins, Sparkles, GraduationCap } from 'lucide-react';
+import { BookOpen, Clock, Award, Coins, Sparkles, GraduationCap, Video, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Courses: React.FC = () => {
@@ -20,17 +20,17 @@ const Courses: React.FC = () => {
   // Define level badge color helpers
   const getLevelStyles = (level: string) => {
     const l = level.toLowerCase();
-    if (l.includes('专家') || l.includes('expert') || l.includes('エキスパート')) {
+    if (l.includes('专家') || l.includes('expert') || l.includes('上級')) {
       return 'bg-rose-500/10 text-rose-300 border-rose-500/20';
     }
-    if (l.includes('高级') || l.includes('advanced') || l.includes('上級') || l.includes('avancé') || l.includes('fortgeschritten')) {
+    if (l.includes('高级') || l.includes('advanced') || l.includes('avancé') || l.includes('fortgeschritten')) {
       return 'bg-amber-500/10 text-amber-300 border-amber-500/20';
     }
     return 'bg-sky-500/10 text-sky-300 border-sky-500/20';
   };
 
   return (
-    <div className="bg-slate-950 py-24 border-t border-slate-900 relative overflow-hidden" id="courses">
+    <div className="bg-slate-900/40 py-24 border-t border-slate-800/80 relative overflow-hidden" id="courses">
       {/* Background Decorative Elements */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[140px] pointer-events-none"></div>
       <div className="absolute -top-10 right-10 w-72 h-72 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -38,7 +38,7 @@ const Courses: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header Block */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 text-cyan-300 font-semibold mb-4 bg-cyan-500/10 border border-cyan-500/20 px-4 py-1.5 rounded-full text-sm">
             <GraduationCap size={16} />
             <span>{t.courses.tag}</span>
@@ -46,9 +46,31 @@ const Courses: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 tracking-tight">
             {t.courses.title}
           </h2>
-          <p className="text-lg text-slate-400 font-light leading-relaxed">
+          <p className="text-lg text-slate-300 font-light leading-relaxed">
             {t.courses.desc}
           </p>
+
+          {/* Two-sided Value Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto text-left">
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-2xl flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 mt-0.5">
+                <Video size={18} />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">{t.courses.feature1Title}</h4>
+                <p className="text-slate-400 text-xs mt-0.5 font-light">{t.courses.feature1Desc}</p>
+              </div>
+            </div>
+            <div className="bg-slate-900/70 border border-slate-800 p-4 rounded-2xl flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 mt-0.5">
+                <CheckCircle2 size={18} />
+              </div>
+              <div>
+                <h4 className="font-bold text-white text-sm">{t.courses.feature2Title}</h4>
+                <p className="text-slate-400 text-xs mt-0.5 font-light">{t.courses.feature2Desc}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Course Cards Grid */}
@@ -56,7 +78,7 @@ const Courses: React.FC = () => {
           {t.courses.list.map((course: any, index: number) => (
             <div
               key={index}
-              className="group bg-slate-900/40 backdrop-blur-md p-8 rounded-3xl border border-slate-800/80 hover:border-blue-500/40 hover:shadow-[0_0_35px_rgba(59,130,246,0.15)] hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
+              className="group bg-slate-950/60 backdrop-blur-md p-8 rounded-3xl border border-slate-800/80 hover:border-blue-500/40 hover:shadow-[0_0_35px_rgba(59,130,246,0.15)] hover:-translate-y-1.5 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
             >
               {/* Card Gradient Hover Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>

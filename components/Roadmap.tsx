@@ -1,22 +1,20 @@
 import React from 'react';
-import { Clock, Car, Users, Compass, PlayCircle, ShoppingBag, MessageSquare } from 'lucide-react';
+import { Clock, Ticket, ShieldCheck, Award, ShoppingBag, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Roadmap: React.FC = () => {
   const { t } = useLanguage();
   
-  // Map the simple text array from translation to icons
-  // Order in translation file must match this order:
-  // 0: Carpooling (Car)
-  // 1: Buddy (Users)
-  // 2: Guiding (Compass)
-  // 3: Shop (ShoppingBag)
-  // 4: Community (MessageSquare)
-  const icons = [Car, Users, Compass, ShoppingBag, MessageSquare];
+  // Map icons for future roadmap features:
+  // 0: Discounted Lift Tickets (Ticket)
+  // 1: Gear Rental Deals (ShieldCheck)
+  // 2: Official Instructor Booking (Award)
+  // 3: Community & Gear Shop (ShoppingBag)
+  const icons = [Ticket, ShieldCheck, Award, ShoppingBag];
 
-  const features = t.roadmap.features.map((f, i) => ({
+  const features = t.roadmap.features.map((f: any, i: number) => ({
     ...f,
-    icon: icons[i]
+    icon: icons[i] || Sparkles
   }));
 
   return (
@@ -39,28 +37,31 @@ const Roadmap: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {features.map((feature: any, index: number) => (
             <div 
               key={index}
-              className="group bg-slate-950/40 backdrop-blur-md p-8 rounded-2xl border border-slate-800/80 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+              className="group bg-slate-950/50 backdrop-blur-md p-7 rounded-3xl border border-slate-800/80 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
             >
               {/* Decoration Circle */}
               <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full opacity-40 group-hover:scale-150 transition-transform duration-500"></div>
 
               <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-slate-900/80 border border-slate-800 text-blue-400 flex items-center justify-center mb-6 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all duration-300">
-                  <feature.icon size={26} />
+                <div className="w-13 h-13 rounded-2xl bg-slate-900 border border-slate-800 text-blue-400 flex items-center justify-center mb-6 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all duration-300">
+                  <feature.icon size={24} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">
+                <h3 className="text-lg font-bold text-white mb-3 leading-snug">
                   {feature.title}
                 </h3>
-                <p className="text-slate-400 leading-relaxed font-light text-sm">
+                <p className="text-slate-400 leading-relaxed font-light text-xs sm:text-sm">
                   {feature.desc}
                 </p>
-                <div className="mt-6 inline-block text-[10px] font-bold tracking-wider text-cyan-400 uppercase bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-md">
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-slate-800/60">
+                <span className="inline-block text-[10px] font-bold tracking-wider text-cyan-400 uppercase bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-md">
                   {t.roadmap.status}
-                </div>
+                </span>
               </div>
             </div>
           ))}

@@ -15,7 +15,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     // Detect system language
     const systemLang = navigator.language.split('-')[0];
-    if (['zh', 'ja', 'ko', 'fr', 'de'].includes(systemLang)) {
+    if (['zh', 'ja', 'ko', 'fr', 'de', 'es', 'ru'].includes(systemLang)) {
       setLanguage(systemLang as Language);
     } else {
       setLanguage('en');

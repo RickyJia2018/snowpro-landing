@@ -4,11 +4,13 @@ import { Apple, Smartphone, Download, QrCode } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VideoDemo from './components/VideoDemo';
+import CarpoolDemo from './components/CarpoolDemo';
+import Courses from './components/Courses';
+import SkiBuddyDemo from './components/SkiBuddyDemo';
 import Roadmap from './components/Roadmap';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
-import Courses from './components/Courses';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
@@ -34,9 +36,6 @@ function App() {
     </LanguageProvider>
   );
 }
-
-// Extract content to use the hook inside
-import { useLanguage } from './contexts/LanguageContext';
 
 const localT = {
   zh: {
@@ -86,6 +85,22 @@ const localT = {
     iosLabel: "iPhone-Nutzer",
     androidLabel: "Android-Nutzer",
     or: "oder",
+  },
+  es: {
+    scanIos: "Escanear para descargar en iOS",
+    scanGooglePlay: "Escanear para descargar APK",
+    directApk: "Descarga directa de APK",
+    iosLabel: "Usuarios iPhone",
+    androidLabel: "Usuarios Android",
+    or: "o",
+  },
+  ru: {
+    scanIos: "Сканируйте для загрузки iOS",
+    scanGooglePlay: "Сканируйте для загрузки APK",
+    directApk: "Прямая загрузка APK",
+    iosLabel: "Для пользователей iPhone",
+    androidLabel: "Для пользователей Android",
+    or: "или",
   }
 };
 
@@ -99,7 +114,9 @@ function HomePage() {
       <main>
         <Hero />
         <VideoDemo />
+        <CarpoolDemo />
         <Courses />
+        <SkiBuddyDemo />
         <Roadmap />
         <Testimonials />
         
@@ -126,7 +143,7 @@ function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.iosLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '在 App Store 中搜索 "Snow Pro" 或扫码下载' : 'Search "Snow Pro" in App Store or scan QR code'}
+                  {language === 'zh' ? '在 App Store 中搜索 "Snow Pro" 或扫码下载' : language === 'es' ? 'Busca "Snow Pro" en la App Store o escanea el QR' : language === 'ru' ? 'Ищите "Snow Pro" в App Store или сканируйте QR' : 'Search "Snow Pro" in App Store or scan QR code'}
                 </p>
                 
                 {/* QR Code Container */}
@@ -161,7 +178,7 @@ function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.androidLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '直接下载并安装 Android APK 文件' : 'Download and install the Android APK file directly'}
+                  {language === 'zh' ? '直接下载并安装 Android APK 文件' : language === 'es' ? 'Descarga e instala el archivo APK de Android directamente' : language === 'ru' ? 'Скачайте и установите APK-файл Android напрямую' : 'Download and install the Android APK file directly'}
                 </p>
 
                 {/* QR Code Container */}
@@ -180,7 +197,7 @@ function HomePage() {
 
                 <div className="w-full">
                   <a 
-                    href="/download/android"
+                    href="https://snowpro-public-bucket.googuar.com/snowpro.apk"
                     className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border-0 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center hover:scale-[1.02]"
                   >
                     <Download size={20} />
