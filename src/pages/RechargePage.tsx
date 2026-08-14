@@ -83,6 +83,7 @@ export default function RechargePage() {
   // Products & Payment State
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<string>('');
+  const [agreedPolicy, setAgreedPolicy] = useState<boolean>(false);
   
   // Loading & Error States
   const [authLoading, setAuthLoading] = useState(false);
@@ -94,7 +95,19 @@ export default function RechargePage() {
   useEffect(() => {
     console.log("[Snow Pro Recharge] Connecting to API Base URL:", API_BASE_URL);
     
-    const token = localStorage.getItem('accessToken');
+    // Accept the app handoff only from the URL fragment; query parameters leak to servers and logs.
+    let urlToken: string | null = null;
+    if (window.location.hash) {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      urlToken = hashParams.get('accessToken') || hashParams.get('token');
+    }
+    if (urlToken) {
+      localStorage.setItem('accessToken', urlToken);
+      // Remove the fragment immediately so the bearer token is not left in browser history.
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    const token = urlToken || localStorage.getItem('accessToken');
 
     if (token) {
       fetchUserInfo(token);
@@ -137,7 +150,8 @@ export default function RechargePage() {
         if (response.ok) {
           const data = await response.json();
           if (data.success) {
-            const amt = data.purchasedTokenAmount || data.purchased_token_amount || 0;
+            const rawAmt = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : (data.purchasedTokenAmount || data.purchased_token_amount || 0));
+            const amt = Number(rawAmt) > 0 ? (rawAmt >= 100 ? rawAmt / 100 : rawAmt) : 0;
             alert(
               language === 'zh'
                 ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
@@ -216,10 +230,13 @@ export default function RechargePage() {
           // Normalize snake_case from server to camelCase for frontend
           const normalized: Product[] = data.products.map((p: any) => {
             const priceVal = p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents;
-            const amountVal = p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount;
+            const amountInCentsVal = p.tokenAmountInCents !== undefined ? p.tokenAmountInCents : (p.token_amount_in_cents !== undefined ? p.token_amount_in_cents : (p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount));
+            const rawAmount = Number(amountInCentsVal) || 0;
+            // tokenAmountInCents is stored in cents (e.g. 10000 cents = 100.00 Tokens)
+            const tokenAmount = rawAmount / 100;
             return {
               productId: p.productId || p.product_id,
-              tokenAmount: Number(amountVal) || 0,
+              tokenAmount: tokenAmount,
               priceInCents: Number(priceVal) || 0,
               title: p.title,
               description: p.description,
@@ -313,6 +330,7 @@ export default function RechargePage() {
         body: JSON.stringify({
           product_id: selectedProductId,
           payment_type: 5, // PaymentType_STRIPE
+          agreed_token_policy: agreedPolicy,
           success_url: `${window.location.origin}/recharge/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${window.location.origin}/recharge`
         })
@@ -517,11 +535,29 @@ export default function RechargePage() {
                 })}
               </div>
 
+              {/* Policy Agreement Checkbox */}
+              <div className="flex items-start gap-2.5 pt-1 px-1">
+                <input
+                  id="policy-agree"
+                  type="checkbox"
+                  checked={agreedPolicy}
+                  onChange={(e) => setAgreedPolicy(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 rounded border-slate-700 bg-slate-950 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-900 cursor-pointer"
+                />
+                <label htmlFor="policy-agree" className="text-xs text-slate-400 cursor-pointer select-none">
+                  {lang === 'zh' ? (
+                    <>我已阅读并同意 <a href="/terms" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">《SnowCoin 代币充值与使用服务协议》</a></>
+                  ) : (
+                    <>I have read and agree to the <a href="/terms" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">Token Purchase & Usage Policy</a></>
+                  )}
+                </label>
+              </div>
+
               {/* Checkout CTA */}
               <button
                 onClick={handleRecharge}
-                disabled={paymentLoading || !selectedProductId}
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+                disabled={paymentLoading || !selectedProductId || !agreedPolicy}
+                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
               >
                 {paymentLoading ? (
                   <>

@@ -83,7 +83,9 @@ export default function RechargeSuccessPage() {
 
         const data = await response.json();
         if (data.success) {
-          setTokenAmount(data.purchasedTokenAmount || data.purchased_token_amount || 0);
+          const rawAmt = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : (data.purchasedTokenAmount || data.purchased_token_amount || 0));
+          const amt = Number(rawAmt) > 0 ? (rawAmt >= 100 ? rawAmt / 100 : rawAmt) : 0;
+          setTokenAmount(amt);
           setStatus('success');
           localStorage.removeItem('pending_stripe_session_id');
           // Clean up URL parameter to prevent session_id exposure or re-trigger on refresh

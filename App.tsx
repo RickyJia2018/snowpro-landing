@@ -12,6 +12,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
+import TokenPolicyPage from './src/pages/TokenPolicyPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
 import { API_BASE_URL } from './src/config/api';
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/recharge" element={<RechargePage />} />
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
+        <Route path="/terms" element={<TokenPolicyPage />} />
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
       </Routes>
     </LanguageProvider>
