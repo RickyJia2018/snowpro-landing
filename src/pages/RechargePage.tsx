@@ -24,21 +24,15 @@ interface UserInfo {
 const localTranslations = {
   zh: {
     title: "Snow Pro 账户充值",
-    loginTitle: "登录您的 Snow Pro 账号",
-    loginSubtitle: "登录以同步并充值您的滑雪代币",
-    emailLabel: "电子邮箱",
-    passwordLabel: "密码",
-    loginBtn: "登录",
-    logoutBtn: "退出登录",
+    handoffRequiredTitle: "请从 Snow Pro App 发起充值",
+    handoffRequiredSubtitle: "为了保障您的账户安全与限权保护，网页充值仅支持从 Snow Pro 移动端安全跳转授权。",
+    openAppBtn: "返回首页",
+    logoutBtn: "退出会话",
     balanceLabel: "当前余额",
     selectPack: "选择充值包",
     stripePayBtn: "使用 Stripe 支付",
     payWithAlipayWechat: "支持 信用卡 / 支付宝 / 微信支付",
-    emailPlaceholder: "请输入您的邮箱",
-    passwordPlaceholder: "请输入您的密码",
-    errorLogin: "登录失败，请检查邮箱和密码。",
     loading: "加载中...",
-    loggingIn: "正在登录...",
     initiatingPayment: "正在生成支付账单...",
     unknownError: "发生未知错误，请重试。",
     tokenUnit: "代币",
@@ -46,21 +40,15 @@ const localTranslations = {
   },
   en: {
     title: "Snow Pro Token Recharge",
-    loginTitle: "Log in to Snow Pro Account",
-    loginSubtitle: "Sign in to credit tokens to your account",
-    emailLabel: "Email Address",
-    passwordLabel: "Password",
-    loginBtn: "Log In",
-    logoutBtn: "Log Out",
+    handoffRequiredTitle: "Please Recharge via Snow Pro App",
+    handoffRequiredSubtitle: "For your account security and token scope isolation, web recharge is accessible only via secure handoff from the Snow Pro mobile app.",
+    openAppBtn: "Back to Home",
+    logoutBtn: "End Session",
     balanceLabel: "Current Balance",
     selectPack: "Select Token Pack",
     stripePayBtn: "Pay with Stripe",
     payWithAlipayWechat: "Supports Credit Card / Alipay / WeChat Pay",
-    emailPlaceholder: "Enter your email",
-    passwordPlaceholder: "Enter your password",
-    errorLogin: "Login failed. Please check your credentials.",
     loading: "Loading...",
-    loggingIn: "Logging in...",
     initiatingPayment: "Generating payment session...",
     unknownError: "An unknown error occurred. Please try again.",
     tokenUnit: "Tokens",
@@ -77,8 +65,6 @@ export default function RechargePage() {
 
   // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [user, setUser] = useState<UserInfo | null>(null);
   const [, setAccessToken] = useState<string | null>(() => getValidRechargeAccessToken());
   const [sessionId, setSessionId] = useState<string | null>(() => sessionStorage.getItem('recharge_session_id'));
@@ -89,28 +75,22 @@ export default function RechargePage() {
   const [agreedPolicy, setAgreedPolicy] = useState<boolean>(false);
   
   // Loading & Error States
-  const [authLoading, setAuthLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Check login state or exchange handoff code on mount
   useEffect(() => {
-    console.log("[Snow Pro Recharge] Connecting to API Base URL:", API_BASE_URL);
-    
-    // Read single-use handoff code from URL fragment (or query) and strip immediately
+    // Read single-use handoff code strictly from URL fragment (#code=... or #handoff_code=...)
     let handoffCode: string | null = null;
     if (window.location.hash) {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       handoffCode = hashParams.get('code') || hashParams.get('handoff_code');
     }
-    if (!handoffCode && window.location.search) {
-      const searchParams = new URLSearchParams(window.location.search);
-      handoffCode = searchParams.get('code') || searchParams.get('handoff_code');
-    }
+    // Query string (?code=...) is intentionally ignored to prevent token leakage in server logs / Referer
 
     if (handoffCode) {
-      // Remove sensitive code from URL immediately
+      // Remove sensitive code from URL fragment immediately
       window.history.replaceState({}, document.title, window.location.pathname);
       exchangeHandoffCode(handoffCode);
     } else {
@@ -315,56 +295,7 @@ export default function RechargePage() {
     }
   };
 
-  // Login handler
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthLoading(true);
-    setError(null);
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/login_user`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.message || tLocal.errorLogin);
-      }
-
-      const data = await response.json();
-      const token = data.accessToken || data.access_token;
-      const sid = data.sessionId || data.session_id;
-      const expiresAt = data.accessTokenExpiresAt || data.access_token_expires_at;
-
-      if (token && data.user && storeRechargeAccessToken(token, expiresAt)) {
-        setAccessToken(token);
-        setSessionId(sid || null);
-        if (sid) sessionStorage.setItem('recharge_session_id', sid);
-
-        setUser({
-          id: data.user.id || '',
-          email: data.user.email || '',
-          nickname: data.user.nickname || '',
-          balance: (Number(data.user.balance) || 0) / 100,
-        });
-        setIsLoggedIn(true);
-        // Check for pending payments to restore on login
-        checkPendingOrder(token);
-      } else {
-        console.error("[Snow Pro Login] Missing token or user in response data. Full response:", data);
-        throw new Error(tLocal.unknownError);
-      }
-    } catch (err: any) {
-      console.error("[Snow Pro Login] Login exception:", err);
-      setError(err.message || tLocal.errorLogin);
-    } finally {
-      setAuthLoading(false);
-    }
-  };
 
   // Logout handler - Revokes session on server
   const handleLogout = async () => {
@@ -501,62 +432,33 @@ export default function RechargePage() {
       {/* Main Content Area */}
       <main className="max-w-md w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center">
         {!isLoggedIn ? (
-          /* Login Card */
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+          /* Handoff Required Card */
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-center">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
             
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold text-white mb-2">{tLocal.loginTitle}</h2>
-              <p className="text-slate-400 text-sm">{tLocal.loginSubtitle}</p>
+            <div className="mx-auto w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400">
+              <ShieldCheck className="h-8 w-8" />
             </div>
 
+            <h2 className="text-2xl font-bold text-white mb-3">{tLocal.handoffRequiredTitle}</h2>
+            <p className="text-slate-400 text-sm leading-relaxed mb-8 max-w-sm mx-auto">
+              {tLocal.handoffRequiredSubtitle}
+            </p>
+
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex gap-2">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex gap-2 text-left">
                 <ShieldCheck className="h-5 w-5 shrink-0 text-red-400" />
                 <span>{error}</span>
               </div>
             )}
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">{tLocal.emailLabel}</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                  placeholder={tLocal.emailPlaceholder}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">{tLocal.passwordLabel}</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                  placeholder={tLocal.passwordPlaceholder}
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={authLoading}
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
-              >
-                {authLoading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>{tLocal.loggingIn}</span>
-                  </>
-                ) : (
-                  <span>{tLocal.loginBtn}</span>
-                )}
-              </button>
-            </form>
+            <button
+              onClick={() => navigate('/')}
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <span>{tLocal.openAppBtn}</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         ) : (
           /* Recharge Panel */
