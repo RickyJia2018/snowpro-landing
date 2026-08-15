@@ -18,7 +18,9 @@ const localTranslations = {
     failedTitle: "到账确认中...",
     failedMessage: "您的付款已成功提交！由于支付通道确认稍有延迟，代币可能需要 1~2 分钟入账。请放心，系统正在自动为您补单。您可以稍后返回 App 查看最新余额。",
     tokenFulfillSuccess: "您的代币已实时确认到账！本次共购得 {amount} 个代币。",
-    retryBtn: "重新校验到账状态"
+    retryBtn: "重新校验到账状态",
+    noSessionTitle: "未找到充值会话",
+    noSessionMessage: "未检测到有效的支付订单信息。如果您刚完成了支付，代币会在后台自动入账；或者您可以返回充值页面重新发起充值。"
   },
   en: {
     successTitle: "Recharge Successful!",
@@ -32,7 +34,9 @@ const localTranslations = {
     failedTitle: "Fulfillment Pending...",
     failedMessage: "Your payment was submitted! However, due to payment network latency, the tokens haven't credited yet. Don't worry, the system will automatically fulfill it in 1-2 minutes. You can return to the App and refresh later.",
     tokenFulfillSuccess: "Tokens credited successfully! You've received {amount} tokens.",
-    retryBtn: "Verify Status Again"
+    retryBtn: "Verify Status Again",
+    noSessionTitle: "No Active Recharge Session",
+    noSessionMessage: "No payment transaction was detected. If you just completed a payment, your tokens will be credited shortly; or you can return to the recharge page."
   }
 };
 
@@ -42,8 +46,8 @@ export default function RechargeSuccessPage() {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
   
-  const [status, setStatus] = React.useState<'idle' | 'verifying' | 'success' | 'failed'>(
-    sessionId ? 'verifying' : 'idle'
+  const [status, setStatus] = React.useState<'idle' | 'verifying' | 'success' | 'failed' | 'no_session'>(
+    sessionId ? 'verifying' : 'no_session'
   );
   const [tokenAmount, setTokenAmount] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
@@ -172,14 +176,14 @@ export default function RechargeSuccessPage() {
           </>
         )}
 
-        {/* State 4: Idle (Fallback Static Page) */}
-        {status === 'idle' && (
+        {/* State 4: No Session / Direct Visit */}
+        {status === 'no_session' && (
           <>
-            <div className="w-20 h-20 bg-green-500/15 border border-green-500/30 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg shadow-green-500/5">
-              <CheckCircle className="h-10 w-10 text-green-400" />
+            <div className="w-20 h-20 bg-slate-800/50 border border-slate-700/60 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <AlertCircle className="h-10 w-10 text-slate-400" />
             </div>
-            <h1 className="text-3xl font-black text-white mb-3 tracking-tight">{tLocal.successTitle}</h1>
-            <p className="text-slate-400 text-sm leading-relaxed mb-10">{tLocal.successMessage}</p>
+            <h1 className="text-2xl font-bold text-white mb-3 tracking-tight">{tLocal.noSessionTitle}</h1>
+            <p className="text-slate-400 text-sm leading-relaxed mb-8">{tLocal.noSessionMessage}</p>
           </>
         )}
 
@@ -195,7 +199,7 @@ export default function RechargeSuccessPage() {
             </button>
           )}
 
-          {status !== 'failed' && (
+          {status === 'success' && (
             <button 
               onClick={handleOpenApp}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 px-6 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
