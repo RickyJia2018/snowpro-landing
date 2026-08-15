@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { CheckCircle, ArrowRight, Home, Coins, Loader2, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '../config/api';
+import { getValidRechargeAccessToken } from '../lib/rechargeSession';
 
 const localTranslations = {
   zh: {
@@ -54,10 +55,10 @@ export default function RechargeSuccessPage() {
     setStatus('verifying');
     setErrorMessage('');
     
-    const token = sessionStorage.getItem('recharge_access_token');
+    const token = getValidRechargeAccessToken();
     if (!token) {
       setStatus('failed');
-      setErrorMessage(language === 'zh' ? '未找到有效充值会话，请返回重新发起充值。' : 'Valid recharge session not found, please return to recharge.');
+      setErrorMessage(language === 'zh' ? '充值会话已过期，请在 App 中重新点击充值。' : 'Your recharge session has expired. Please reopen recharge from the app.');
       return;
     }
 

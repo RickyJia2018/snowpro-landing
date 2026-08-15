@@ -4,6 +4,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } from 'lucide-react';
 
 import { API_BASE_URL } from '../config/api';
+import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
 
 interface Product {
   productId: string;
@@ -79,7 +80,7 @@ export default function RechargePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<UserInfo | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(() => sessionStorage.getItem('recharge_access_token'));
+  const [, setAccessToken] = useState<string | null>(() => getValidRechargeAccessToken());
   const [sessionId, setSessionId] = useState<string | null>(() => sessionStorage.getItem('recharge_session_id'));
   
   // Products & Payment State
@@ -113,7 +114,7 @@ export default function RechargePage() {
       window.history.replaceState({}, document.title, window.location.pathname);
       exchangeHandoffCode(handoffCode);
     } else {
-      const token = sessionStorage.getItem('recharge_access_token');
+      const token = getValidRechargeAccessToken();
       if (token) {
         setAccessToken(token);
         fetchUserInfo(token);
@@ -143,11 +144,11 @@ export default function RechargePage() {
       const data = await response.json();
       const token = data.accessToken || data.access_token;
       const sid = data.sessionId || data.session_id;
+      const expiresAt = data.accessTokenExpiresAt || data.access_token_expires_at;
 
-      if (token && data.user) {
+      if (token && data.user && storeRechargeAccessToken(token, expiresAt)) {
         setAccessToken(token);
         setSessionId(sid || null);
-        sessionStorage.setItem('recharge_access_token', token);
         if (sid) sessionStorage.setItem('recharge_session_id', sid);
 
         setUser({
@@ -163,7 +164,7 @@ export default function RechargePage() {
       }
     } catch (err) {
       console.error("[Snow Pro Recharge] Handoff exchange failed:", err);
-      sessionStorage.removeItem('recharge_access_token');
+      clearRechargeAccessToken();
       sessionStorage.removeItem('recharge_session_id');
       setAccessToken(null);
       setSessionId(null);
@@ -269,7 +270,7 @@ export default function RechargePage() {
       }
     } catch (err) {
       console.error("Auth verify failed, clearing tokens", err);
-      sessionStorage.removeItem('recharge_access_token');
+      clearRechargeAccessToken();
       sessionStorage.removeItem('recharge_session_id');
       setAccessToken(null);
       setSessionId(null);
@@ -337,11 +338,11 @@ export default function RechargePage() {
       const data = await response.json();
       const token = data.accessToken || data.access_token;
       const sid = data.sessionId || data.session_id;
+      const expiresAt = data.accessTokenExpiresAt || data.access_token_expires_at;
 
-      if (token && data.user) {
+      if (token && data.user && storeRechargeAccessToken(token, expiresAt)) {
         setAccessToken(token);
         setSessionId(sid || null);
-        sessionStorage.setItem('recharge_access_token', token);
         if (sid) sessionStorage.setItem('recharge_session_id', sid);
 
         setUser({
@@ -367,7 +368,7 @@ export default function RechargePage() {
 
   // Logout handler - Revokes session on server
   const handleLogout = async () => {
-    const token = accessToken || sessionStorage.getItem('recharge_access_token');
+    const token = getValidRechargeAccessToken();
     const sid = sessionId || sessionStorage.getItem('recharge_session_id');
 
     if (token) {
@@ -387,7 +388,7 @@ export default function RechargePage() {
       }
     }
 
-    sessionStorage.removeItem('recharge_access_token');
+    clearRechargeAccessToken();
     sessionStorage.removeItem('recharge_session_id');
     setAccessToken(null);
     setSessionId(null);
@@ -401,9 +402,14 @@ export default function RechargePage() {
     setPaymentLoading(true);
     setError(null);
 
-    const token = accessToken || sessionStorage.getItem('recharge_access_token');
+    const token = getValidRechargeAccessToken();
     if (!token) {
+      clearRechargeAccessToken();
+      sessionStorage.removeItem('recharge_session_id');
+      setAccessToken(null);
+      setSessionId(null);
       setIsLoggedIn(false);
+      setError(language === 'zh' ? '充值会话已过期，请在 App 中重新点击充值。' : 'Your recharge session has expired. Please reopen recharge from the app.');
       setPaymentLoading(false);
       return;
     }
