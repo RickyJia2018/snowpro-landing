@@ -79,6 +79,8 @@ export default function RechargePage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<UserInfo | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(() => sessionStorage.getItem('recharge_access_token'));
+  const [sessionId, setSessionId] = useState<string | null>(() => sessionStorage.getItem('recharge_session_id'));
   
   // Products & Payment State
   const [products, setProducts] = useState<Product[]>([]);
@@ -91,37 +93,92 @@ export default function RechargePage() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Check login state on mount
+  // Check login state or exchange handoff code on mount
   useEffect(() => {
     console.log("[Snow Pro Recharge] Connecting to API Base URL:", API_BASE_URL);
     
-    // Accept the app handoff only from the URL fragment; query parameters leak to servers and logs.
-    let urlToken: string | null = null;
+    // Read single-use handoff code from URL fragment (or query) and strip immediately
+    let handoffCode: string | null = null;
     if (window.location.hash) {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      urlToken = hashParams.get('accessToken') || hashParams.get('token');
+      handoffCode = hashParams.get('code') || hashParams.get('handoff_code');
     }
-    if (urlToken) {
-      localStorage.setItem('accessToken', urlToken);
-      // Remove the fragment immediately so the bearer token is not left in browser history.
+    if (!handoffCode && window.location.search) {
+      const searchParams = new URLSearchParams(window.location.search);
+      handoffCode = searchParams.get('code') || searchParams.get('handoff_code');
+    }
+
+    if (handoffCode) {
+      // Remove sensitive code from URL immediately
       window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
-    const token = urlToken || localStorage.getItem('accessToken');
-
-    if (token) {
-      fetchUserInfo(token);
+      exchangeHandoffCode(handoffCode);
     } else {
-      setPageLoading(false);
+      const token = sessionStorage.getItem('recharge_access_token');
+      if (token) {
+        setAccessToken(token);
+        fetchUserInfo(token);
+      } else {
+        setPageLoading(false);
+      }
     }
     fetchProducts();
   }, []);
 
+  // Exchange single-use handoff code for short-lived session
+  const exchangeHandoffCode = async (code: string) => {
+    setPageLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/v1/auth/exchange_handoff_code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ handoff_code: code }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to exchange handoff code');
+      }
+
+      const data = await response.json();
+      const token = data.accessToken || data.access_token;
+      const sid = data.sessionId || data.session_id;
+
+      if (token && data.user) {
+        setAccessToken(token);
+        setSessionId(sid || null);
+        sessionStorage.setItem('recharge_access_token', token);
+        if (sid) sessionStorage.setItem('recharge_session_id', sid);
+
+        setUser({
+          id: data.user.id || '',
+          email: data.user.email || '',
+          nickname: data.user.nickname || '',
+          balance: (Number(data.user.balance) || 0) / 100,
+        });
+        setIsLoggedIn(true);
+        checkPendingOrder(token);
+      } else {
+        throw new Error('Incomplete exchange response');
+      }
+    } catch (err) {
+      console.error("[Snow Pro Recharge] Handoff exchange failed:", err);
+      sessionStorage.removeItem('recharge_access_token');
+      sessionStorage.removeItem('recharge_session_id');
+      setAccessToken(null);
+      setSessionId(null);
+      setIsLoggedIn(false);
+      setUser(null);
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
   // Check if there is any pending Stripe checkout session that needs restoration
   const checkPendingOrder = async (token: string) => {
     let pendingSessions: string[] = [];
-    const pendingSessionId = localStorage.getItem('pending_stripe_session_id');
-    const pendingSessionsJson = localStorage.getItem('pending_stripe_session_ids');
+    const pendingSessionId = sessionStorage.getItem('pending_stripe_session_id');
+    const pendingSessionsJson = sessionStorage.getItem('pending_stripe_session_ids');
     if (pendingSessionId) pendingSessions.push(pendingSessionId);
     if (pendingSessionsJson) {
       try {
@@ -173,11 +230,11 @@ export default function RechargePage() {
     }
 
     if (remainingSessions.length > 0) {
-      localStorage.setItem('pending_stripe_session_ids', JSON.stringify(remainingSessions));
-      localStorage.removeItem('pending_stripe_session_id');
+      sessionStorage.setItem('pending_stripe_session_ids', JSON.stringify(remainingSessions));
+      sessionStorage.removeItem('pending_stripe_session_id');
     } else {
-      localStorage.removeItem('pending_stripe_session_id');
-      localStorage.removeItem('pending_stripe_session_ids');
+      sessionStorage.removeItem('pending_stripe_session_id');
+      sessionStorage.removeItem('pending_stripe_session_ids');
     }
   };
 
@@ -212,7 +269,10 @@ export default function RechargePage() {
       }
     } catch (err) {
       console.error("Auth verify failed, clearing tokens", err);
-      localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('recharge_access_token');
+      sessionStorage.removeItem('recharge_session_id');
+      setAccessToken(null);
+      setSessionId(null);
       setIsLoggedIn(false);
       setUser(null);
     } finally {
@@ -276,9 +336,14 @@ export default function RechargePage() {
 
       const data = await response.json();
       const token = data.accessToken || data.access_token;
+      const sid = data.sessionId || data.session_id;
 
       if (token && data.user) {
-        localStorage.setItem('accessToken', token);
+        setAccessToken(token);
+        setSessionId(sid || null);
+        sessionStorage.setItem('recharge_access_token', token);
+        if (sid) sessionStorage.setItem('recharge_session_id', sid);
+
         setUser({
           id: data.user.id || '',
           email: data.user.email || '',
@@ -300,9 +365,32 @@ export default function RechargePage() {
     }
   };
 
-  // Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+  // Logout handler - Revokes session on server
+  const handleLogout = async () => {
+    const token = accessToken || sessionStorage.getItem('recharge_access_token');
+    const sid = sessionId || sessionStorage.getItem('recharge_session_id');
+
+    if (token) {
+      try {
+        await fetch(`${API_BASE_URL}/logout_user`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            session_id: sid || '',
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to revoke session on server during logout", err);
+      }
+    }
+
+    sessionStorage.removeItem('recharge_access_token');
+    sessionStorage.removeItem('recharge_session_id');
+    setAccessToken(null);
+    setSessionId(null);
     setIsLoggedIn(false);
     setUser(null);
   };
@@ -313,7 +401,7 @@ export default function RechargePage() {
     setPaymentLoading(true);
     setError(null);
 
-    const token = localStorage.getItem('accessToken');
+    const token = accessToken || sessionStorage.getItem('recharge_access_token');
     if (!token) {
       setIsLoggedIn(false);
       setPaymentLoading(false);
@@ -348,10 +436,10 @@ export default function RechargePage() {
         if (!checkoutUrl.startsWith('https://checkout.stripe.com/')) {
           throw new Error("Security Alert: Invalid checkout URL domain returned.");
         }
-        // Try to extract Stripe session_id to save in local storage for restore purpose
+        // Try to extract Stripe session_id to save in session storage for restore purpose
         const match = checkoutUrl.match(/(cs_(?:test|live)_[a-zA-Z0-9]+)/);
         if (match) {
-          localStorage.setItem('pending_stripe_session_id', match[1]);
+          sessionStorage.setItem('pending_stripe_session_id', match[1]);
         }
         // Redirect user to Stripe Hosted Checkout Page
         window.location.href = checkoutUrl;
