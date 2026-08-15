@@ -54,10 +54,10 @@ export default function RechargeSuccessPage() {
     setStatus('verifying');
     setErrorMessage('');
     
-    const token = localStorage.getItem('accessToken');
+    const token = sessionStorage.getItem('recharge_access_token');
     if (!token) {
       setStatus('failed');
-      setErrorMessage(language === 'zh' ? '未找到登录 Token，请重新登录' : 'Session token not found, please log in again.');
+      setErrorMessage(language === 'zh' ? '未找到有效充值会话，请返回重新发起充值。' : 'Valid recharge session not found, please return to recharge.');
       return;
     }
 
@@ -87,7 +87,8 @@ export default function RechargeSuccessPage() {
           const amt = Number(rawAmt) > 0 ? (rawAmt >= 100 ? rawAmt / 100 : rawAmt) : 0;
           setTokenAmount(amt);
           setStatus('success');
-          localStorage.removeItem('pending_stripe_session_id');
+          sessionStorage.removeItem('pending_stripe_session_id');
+          sessionStorage.removeItem('pending_stripe_session_ids');
           // Clean up URL parameter to prevent session_id exposure or re-trigger on refresh
           const newUrl = window.location.pathname + window.location.hash;
           window.history.replaceState({}, document.title, newUrl);

@@ -9,12 +9,9 @@ const peakPalClient = new PeakPalClient(
     unaryInterceptors: [
       {
         intercept: <REQ, RESP>(request: Request<REQ, RESP>, invoker: (request: Request<REQ, RESP>) => Promise<UnaryResponse<REQ, RESP>>) => {
-          const token = localStorage.getItem('accessToken'); // Use 'accessToken'
+          const token = sessionStorage.getItem('recharge_access_token');
           if (token) {
             request.getMetadata().Authorization = `Bearer ${token}`;
-            console.log('Access token found and added to request metadata.'); // Update log message
-          } else {
-            console.log('Access token not found in localStorage.'); // Update log message
           }
           return invoker(request);
         },
@@ -23,12 +20,9 @@ const peakPalClient = new PeakPalClient(
     streamInterceptors: [
       {
         intercept: <REQ, RESP>(request: Request<REQ, RESP>, invoker: (request: Request<REQ, RESP>) => ClientReadableStream<RESP>) => {
-          const token = localStorage.getItem('accessToken'); // Use 'accessToken'
+          const token = sessionStorage.getItem('recharge_access_token');
           if (token) {
             request.getMetadata().Authorization = `Bearer ${token}`;
-            console.log('Access token found and added to request metadata.'); // Update log message
-          } else {
-            console.log('Access token not found in localStorage.'); // Update log message
           }
           return invoker(request);
         },
