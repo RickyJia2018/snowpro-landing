@@ -5,6 +5,7 @@ import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } fro
 
 import { API_BASE_URL } from '../config/api';
 import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
+import { parseTokenAmount } from '../lib/tokenConversion';
 
 interface Product {
   productId: string;
@@ -188,8 +189,7 @@ export default function RechargePage() {
         if (response.ok) {
           const data = await response.json();
           if (data.success) {
-            const rawCents = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : 0);
-            const amt = Number(rawCents) > 0 ? Number(rawCents) / 100 : 0;
+            const amt = parseTokenAmount(data);
             alert(
               language === 'zh'
                 ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`

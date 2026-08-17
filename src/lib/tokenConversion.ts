@@ -15,10 +15,6 @@ export function parseTokenAmount(data: any): number {
       ? data.tokenAmountInCents
       : data.token_amount_in_cents !== undefined
       ? data.token_amount_in_cents
-      : data.tokenAmount !== undefined
-      ? data.tokenAmount
-      : data.token_amount !== undefined
-      ? data.token_amount
       : 0;
 
   const numCents = Number(rawCents);

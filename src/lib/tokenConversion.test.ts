@@ -29,6 +29,12 @@ describe('Token Amount Conversion Utility Tests', () => {
     expect(parseTokenAmount(genericSnake)).toBe(5);
   });
 
+  it('ignores ambiguous legacy fields that do not declare cents', () => {
+    expect(parseTokenAmount({ tokenAmount: 5 })).toBe(0);
+    expect(parseTokenAmount({ token_amount: 5 })).toBe(0);
+    expect(parseTokenAmount({ purchasedTokenAmount: 5 })).toBe(0);
+  });
+
   it('handles invalid, zero, or null inputs gracefully without crashing', () => {
     expect(parseTokenAmount(null)).toBe(0);
     expect(parseTokenAmount(undefined)).toBe(0);
