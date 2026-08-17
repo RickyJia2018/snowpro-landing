@@ -4,6 +4,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { CheckCircle, ArrowRight, Home, Coins, Loader2, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '../config/api';
 import { getValidRechargeAccessToken } from '../lib/rechargeSession';
+import { parseTokenAmount } from '../lib/tokenConversion';
 
 const localTranslations = {
   zh: {
@@ -88,8 +89,7 @@ export default function RechargeSuccessPage() {
 
         const data = await response.json();
         if (data.success) {
-          const rawCents = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : 0);
-          const amt = Number(rawCents) > 0 ? Number(rawCents) / 100 : 0;
+          const amt = parseTokenAmount(data);
           setTokenAmount(amt);
           setStatus('success');
           sessionStorage.removeItem('pending_stripe_session_id');
