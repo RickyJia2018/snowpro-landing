@@ -188,8 +188,8 @@ export default function RechargePage() {
         if (response.ok) {
           const data = await response.json();
           if (data.success) {
-            const rawAmt = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : (data.purchasedTokenAmount || data.purchased_token_amount || 0));
-            const amt = Number(rawAmt) > 0 ? (rawAmt >= 100 ? rawAmt / 100 : rawAmt) : 0;
+            const rawCents = data.purchasedTokenAmountInCents !== undefined ? data.purchasedTokenAmountInCents : (data.purchased_token_amount_in_cents !== undefined ? data.purchased_token_amount_in_cents : 0);
+            const amt = Number(rawCents) > 0 ? Number(rawCents) / 100 : 0;
             alert(
               language === 'zh'
                 ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
