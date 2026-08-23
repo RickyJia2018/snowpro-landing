@@ -5,6 +5,7 @@ import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } fro
 
 import { API_BASE_URL } from '../config/api';
 import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
+import { addPendingStripeSessionId, readPendingStripeSessionIds, replacePendingStripeSessionIds } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
 interface Product {
@@ -158,18 +159,7 @@ export default function RechargePage() {
 
   // Check if there is any pending Stripe checkout session that needs restoration
   const checkPendingOrder = async (token: string) => {
-    let pendingSessions: string[] = [];
-    const pendingSessionId = sessionStorage.getItem('pending_stripe_session_id');
-    const pendingSessionsJson = sessionStorage.getItem('pending_stripe_session_ids');
-    if (pendingSessionId) pendingSessions.push(pendingSessionId);
-    if (pendingSessionsJson) {
-      try {
-        const parsed = JSON.parse(pendingSessionsJson);
-        if (Array.isArray(parsed)) pendingSessions.push(...parsed);
-      } catch (_) {}
-    }
-    // Deduplicate
-    pendingSessions = Array.from(new Set(pendingSessions));
+    const pendingSessions = readPendingStripeSessionIds();
     if (pendingSessions.length === 0) return;
 
     const remainingSessions: string[] = [];
@@ -210,13 +200,7 @@ export default function RechargePage() {
       }
     }
 
-    if (remainingSessions.length > 0) {
-      sessionStorage.setItem('pending_stripe_session_ids', JSON.stringify(remainingSessions));
-      sessionStorage.removeItem('pending_stripe_session_id');
-    } else {
-      sessionStorage.removeItem('pending_stripe_session_id');
-      sessionStorage.removeItem('pending_stripe_session_ids');
-    }
+    replacePendingStripeSessionIds(remainingSessions);
   };
 
   // Fetch user info
@@ -376,7 +360,7 @@ export default function RechargePage() {
         // Try to extract Stripe session_id to save in session storage for restore purpose
         const match = checkoutUrl.match(/(cs_(?:test|live)_[a-zA-Z0-9]+)/);
         if (match) {
-          sessionStorage.setItem('pending_stripe_session_id', match[1]);
+          addPendingStripeSessionId(match[1]);
         }
         // Redirect user to Stripe Hosted Checkout Page
         window.location.href = checkoutUrl;

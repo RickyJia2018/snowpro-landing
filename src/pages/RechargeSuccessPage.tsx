@@ -4,6 +4,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { CheckCircle, ArrowRight, Home, Coins, Loader2, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '../config/api';
 import { getValidRechargeAccessToken } from '../lib/rechargeSession';
+import { removePendingStripeSessionId } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
 const localTranslations = {
@@ -92,8 +93,7 @@ export default function RechargeSuccessPage() {
           const amt = parseTokenAmount(data);
           setTokenAmount(amt);
           setStatus('success');
-          sessionStorage.removeItem('pending_stripe_session_id');
-          sessionStorage.removeItem('pending_stripe_session_ids');
+          removePendingStripeSessionId(sessionId);
           // Clean up URL parameter to prevent session_id exposure or re-trigger on refresh
           const newUrl = window.location.pathname + window.location.hash;
           window.history.replaceState({}, document.title, newUrl);
