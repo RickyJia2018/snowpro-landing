@@ -23,6 +23,8 @@ interface UserInfo {
   balance: number;
 }
 
+type TokenPurchaseAvailability = 'loading' | 'enabled' | 'disabled' | 'unknown';
+
 const localTranslations = {
   zh: {
     title: "Snow Pro 账户充值",
@@ -39,6 +41,9 @@ const localTranslations = {
     unknownError: "发生未知错误，请重试。",
     tokenUnit: "代币",
     welcomeBack: "欢迎回来",
+    purchaseDisabled: "代币充值系统正在维护中，暂不接受新订单。已付款订单仍会继续到账。",
+    availabilityUnknown: "暂时无法确认充值通道状态，请稍后重试。",
+    purchaseDisabledButton: "充值维护中",
   },
   en: {
     title: "Snow Pro Token Recharge",
@@ -55,6 +60,9 @@ const localTranslations = {
     unknownError: "An unknown error occurred. Please try again.",
     tokenUnit: "Tokens",
     welcomeBack: "Welcome back",
+    purchaseDisabled: "Token recharge is under maintenance and is not accepting new orders. Existing payments will still be completed.",
+    availabilityUnknown: "Unable to confirm recharge availability. Please try again later.",
+    purchaseDisabledButton: "Recharge Unavailable",
   }
 };
 
@@ -75,6 +83,8 @@ export default function RechargePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<string>('');
   const [agreedPolicy, setAgreedPolicy] = useState<boolean>(false);
+  const [tokenPurchaseAvailability, setTokenPurchaseAvailability] =
+    useState<TokenPurchaseAvailability>('loading');
   
   // Loading & Error States
   const [pageLoading, setPageLoading] = useState(true);
@@ -104,8 +114,37 @@ export default function RechargePage() {
         setPageLoading(false);
       }
     }
+    fetchFeatureAvailability();
     fetchProducts();
   }, []);
+
+  const fetchFeatureAvailability = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/v1/feature_availability`, {
+        cache: 'no-store',
+      });
+      if (!response.ok) {
+        setTokenPurchaseAvailability('unknown');
+        return;
+      }
+      const data = await response.json();
+      const feature =
+        data.features?.token_purchase_enabled ??
+        data.features?.tokenPurchaseEnabled;
+      if (feature?.enabled === true) {
+        setTokenPurchaseAvailability('enabled');
+      } else if (feature?.enabled === false) {
+        setTokenPurchaseAvailability(
+          feature.reason === 'ADMIN_DISABLED' ? 'disabled' : 'unknown'
+        );
+      } else {
+        setTokenPurchaseAvailability('unknown');
+      }
+    } catch (err) {
+      console.error('Failed to fetch token purchase availability', err);
+      setTokenPurchaseAvailability('unknown');
+    }
+  };
 
   // Exchange single-use handoff code for short-lived session
   const exchangeHandoffCode = async (code: string) => {
@@ -314,6 +353,14 @@ export default function RechargePage() {
   // Recharge payment redirection handler
   const handleRecharge = async () => {
     if (!selectedProductId) return;
+    if (tokenPurchaseAvailability !== 'enabled') {
+      setError(
+        tokenPurchaseAvailability === 'disabled'
+          ? tLocal.purchaseDisabled
+          : tLocal.availabilityUnknown
+      );
+      return;
+    }
     setPaymentLoading(true);
     setError(null);
 
@@ -472,6 +519,17 @@ export default function RechargePage() {
             {/* Token Products List */}
             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{tLocal.selectPack}</h3>
+
+              {tokenPurchaseAvailability !== 'enabled' && (
+                <div
+                  role="alert"
+                  className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-4 rounded-2xl text-sm"
+                >
+                  {tokenPurchaseAvailability === 'disabled'
+                    ? tLocal.purchaseDisabled
+                    : tLocal.availabilityUnknown}
+                </div>
+              )}
               
               {error && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-xs">
@@ -487,8 +545,17 @@ export default function RechargePage() {
                   return (
                     <div
                       key={product.productId}
-                      onClick={() => setSelectedProductId(product.productId)}
-                      className={`cursor-pointer border-2 rounded-2xl p-4 flex items-center justify-between transition-all ${
+                      onClick={() => {
+                        if (tokenPurchaseAvailability === 'enabled') {
+                          setSelectedProductId(product.productId);
+                        }
+                      }}
+                      aria-disabled={tokenPurchaseAvailability !== 'enabled'}
+                      className={`border-2 rounded-2xl p-4 flex items-center justify-between transition-all ${
+                        tokenPurchaseAvailability === 'enabled'
+                          ? 'cursor-pointer'
+                          : 'cursor-not-allowed opacity-50'
+                      } ${
                         isSelected
                           ? 'border-blue-500 bg-blue-500/5'
                           : 'border-slate-800 hover:border-slate-700 bg-slate-950/45'
@@ -522,10 +589,11 @@ export default function RechargePage() {
                   type="checkbox"
                   checked={agreedPolicy}
                   onChange={(e) => setAgreedPolicy(e.target.checked)}
+                  disabled={tokenPurchaseAvailability !== 'enabled'}
                   className="mt-0.5 h-4 w-4 rounded border-slate-700 bg-slate-950 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-900 cursor-pointer"
                 />
                 <label htmlFor="policy-agree" className="text-xs text-slate-400 cursor-pointer select-none">
-                  {lang === 'zh' ? (
+                  {language === 'zh' ? (
                     <>我已阅读并同意 <a href="/terms" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">《SnowCoin 代币充值与使用服务协议》</a></>
                   ) : (
                     <>I have read and agree to the <a href="/terms" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">Token Purchase & Usage Policy</a></>
@@ -536,7 +604,12 @@ export default function RechargePage() {
               {/* Checkout CTA */}
               <button
                 onClick={handleRecharge}
-                disabled={paymentLoading || !selectedProductId || !agreedPolicy}
+                disabled={
+                  tokenPurchaseAvailability !== 'enabled' ||
+                  paymentLoading ||
+                  !selectedProductId ||
+                  !agreedPolicy
+                }
                 className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
               >
                 {paymentLoading ? (
@@ -547,7 +620,11 @@ export default function RechargePage() {
                 ) : (
                   <>
                     <CreditCard className="h-5 w-5" />
-                    <span>{tLocal.stripePayBtn}</span>
+                    <span>
+                      {tokenPurchaseAvailability === 'enabled'
+                        ? tLocal.stripePayBtn
+                        : tLocal.purchaseDisabledButton}
+                    </span>
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}
