@@ -232,13 +232,24 @@ export default function RechargePage() {
             // Order is still pending / unpaid, retain for future check
             remainingSessions.push(sid);
           }
+        } else if (response.status === 401) {
+          // 401 Unauthorized means the recharge access token has expired.
+          // The pending session is RETAINED so it can be restored when the user re-authenticates from the App!
+          remainingSessions.push(sid);
+          console.warn(`[Snow Pro Recharge] Auth token expired (401) while verifying pending session ${sid}, retaining session for next authenticated session.`);
+          clearRechargeAccessToken();
+          sessionStorage.removeItem('recharge_session_id');
+          setAccessToken(null);
+          setSessionId(null);
+          setIsLoggedIn(false);
+          setUser(null);
+          break;
         } else if (
           response.status === 400 ||
-          response.status === 401 ||
           response.status === 403 ||
           response.status === 404
         ) {
-          // Terminal error: Invalid session ID, unauthorized, belongs to another user, or not found.
+          // Terminal error: Invalid session ID, belongs to another user, or not found.
           // Drop from pending sessions immediately to avoid perpetual retries.
           console.warn(`[Snow Pro Recharge] Dropping terminal pending session ${sid} (HTTP ${response.status})`);
         } else {

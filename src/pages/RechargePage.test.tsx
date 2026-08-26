@@ -303,6 +303,75 @@ describe('RechargePage Client Recovery Robustness', () => {
     });
   });
 
+  it('retains pending session on 401 Unauthorized during verify_stripe and clears expired auth token', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    addPendingStripeSessionId('cs_auth_expired_401', 'user_123');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        // Return 401 Unauthorized (expired recharge token)
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Token expired' }), { status: 401 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Pending session MUST be retained for future restoration
+      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_auth_expired_401']);
+      // Expired access token must be wiped
+      expect(getValidRechargeAccessToken()).toBeNull();
+    });
+  });
+
+  it('restores pending session after re-authenticating with fresh token', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    addPendingStripeSessionId('cs_pending_restored', 'user_123');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        // Successfully verified
+        return Promise.resolve(new Response(JSON.stringify({ success: true, token_amount: 1000 }), { status: 200 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Successfully restored session is removed from pending
+      expect(readPendingStripeSessionIds('user_123')).toEqual([]);
+      expect(window.alert).toHaveBeenCalled();
+    });
+  });
+
   it('retains transient 500 / 429 pending session in storage for retry', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
     addPendingStripeSessionId('cs_transient_500', 'user_123');
