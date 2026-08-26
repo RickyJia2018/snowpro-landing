@@ -163,28 +163,74 @@ export function addPendingStripeSessionId(sessionId: string, userId?: string | n
 export function removePendingStripeSessionId(sessionId: string, userId?: string | number): void {
   if (!sessionId || typeof sessionId !== 'string') return;
   const normalizedSid = sessionId.trim();
-
-  // Clean from specified user key
-  const key = getStorageKey(userId);
-  const existingEntries = readPendingStripeSessionEntries(userId);
-  const remaining = existingEntries.filter((e) => e.sessionId !== normalizedSid);
+  if (normalizedSid.length === 0) return;
 
   if (typeof localStorage !== 'undefined') {
-    if (remaining.length === 0) {
-      safeRemoveItem(localStorage, key);
-    } else {
-      safeSetItem(localStorage, key, JSON.stringify(remaining));
-    }
+    try {
+      // 1. Clean from specific user key if provided
+      if (userId !== undefined && userId !== null && String(userId).trim().length > 0) {
+        const userKey = getStorageKey(userId);
+        const userEntries = readPendingStripeSessionEntries(userId);
+        const remaining = userEntries.filter((e) => e.sessionId !== normalizedSid);
+        if (remaining.length === 0) {
+          safeRemoveItem(localStorage, userKey);
+        } else {
+          safeSetItem(localStorage, userKey, JSON.stringify(remaining));
+        }
+      }
 
-    // If userId was provided, also clean from anonymous key if present
-    if (userId !== undefined && userId !== null) {
-      const anonKey = getStorageKey();
-      const anonEntries = readPendingStripeSessionEntries();
-      const anonRemaining = anonEntries.filter((e) => e.sessionId !== normalizedSid);
-      if (anonRemaining.length === 0) {
-        safeRemoveItem(localStorage, anonKey);
-      } else {
-        safeSetItem(localStorage, anonKey, JSON.stringify(anonRemaining));
+      // 2. Global purge: Iterate over all pending_stripe_sessions keys in localStorage
+      // to ensure no scope (anonymous, different user ids) retains this fulfilled session.
+      const keysToInspect: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(BASE_STORAGE_KEY)) {
+          keysToInspect.push(k);
+        }
+      }
+
+      for (const k of keysToInspect) {
+        const raw = safeGetItem(localStorage, k);
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            const remaining = parseRawEntries(parsed, Date.now(), DEFAULT_PENDING_SESSION_TTL_MS)
+              .filter((e) => e.sessionId !== normalizedSid);
+            if (remaining.length === 0) {
+              safeRemoveItem(localStorage, k);
+            } else {
+              safeSetItem(localStorage, k, JSON.stringify(remaining));
+            }
+          } catch {
+            // Ignore
+          }
+        }
+      }
+    } catch {
+      // Ignore
+    }
+  }
+
+  // 3. Backward compatibility: also ensure legacy sessionStorage is purged
+  if (typeof sessionStorage !== 'undefined') {
+    const legacySingle = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
+    if (legacySingle && legacySingle.trim() === normalizedSid) {
+      safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
+    }
+    const legacyArray = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
+    if (legacyArray) {
+      try {
+        const parsed = JSON.parse(legacyArray);
+        if (Array.isArray(parsed)) {
+          const remaining = parsed.filter((id) => String(id).trim() !== normalizedSid);
+          if (remaining.length === 0) {
+            safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
+          } else {
+            safeSetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY, JSON.stringify(remaining));
+          }
+        }
+      } catch {
+        // Ignore
       }
     }
   }

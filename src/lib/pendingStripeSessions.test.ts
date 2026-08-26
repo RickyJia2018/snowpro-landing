@@ -76,4 +76,16 @@ describe('pending Stripe sessions', () => {
 
     expect(localStorage.getItem('pending_stripe_sessions_user1')).toBeNull();
   });
+
+  it('removes pending session across all user scopes even when userId is omitted (e.g. on RechargeSuccessPage)', () => {
+    addPendingStripeSessionId('cs_test_target', 'user42');
+    addPendingStripeSessionId('cs_test_other', 'user42');
+    addPendingStripeSessionId('cs_test_target', 'anonymous');
+
+    // Called on RechargeSuccessPage without userId
+    removePendingStripeSessionId('cs_test_target');
+
+    expect(readPendingStripeSessionIds('user42')).toEqual(['cs_test_other']);
+    expect(readPendingStripeSessionIds()).toEqual([]);
+  });
 });
