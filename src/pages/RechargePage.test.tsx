@@ -338,6 +338,86 @@ describe('RechargePage Client Recovery Robustness', () => {
     });
   });
 
+  it('retains all subsequent pending sessions when first session hits 401 Unauthorized (multi-session queue)', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    // Queue: [A, B, C]
+    addPendingStripeSessionId('cs_multi_A', 'user_multi');
+    addPendingStripeSessionId('cs_multi_B', 'user_multi');
+    addPendingStripeSessionId('cs_multi_C', 'user_multi');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_multi', email: 'multi@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        // A hits 401
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Token expired' }), { status: 401 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // All 3 sessions [A, B, C] MUST be retained in exact order!
+      expect(readPendingStripeSessionIds('user_multi')).toEqual(['cs_multi_A', 'cs_multi_B', 'cs_multi_C']);
+      expect(getValidRechargeAccessToken()).toBeNull();
+    });
+  });
+
+  it('removes first fulfilled session, but retains second (401) and third (unprocessed) sessions', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    // Queue: [A, B, C]
+    addPendingStripeSessionId('cs_queue_A', 'user_partial');
+    addPendingStripeSessionId('cs_queue_B', 'user_partial');
+    addPendingStripeSessionId('cs_queue_C', 'user_partial');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input, init) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_partial', email: 'partial@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        const body = JSON.parse(String(init?.body || '{}'));
+        if (body.session_id === 'cs_queue_A') {
+          // A succeeds
+          return Promise.resolve(new Response(JSON.stringify({ success: true, token_amount: 500 }), { status: 200 }));
+        }
+        if (body.session_id === 'cs_queue_B') {
+          // B hits 401
+          return Promise.resolve(new Response(JSON.stringify({ message: 'Token expired' }), { status: 401 }));
+        }
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // A was fulfilled (removed), B and C are retained!
+      expect(readPendingStripeSessionIds('user_partial')).toEqual(['cs_queue_B', 'cs_queue_C']);
+    });
+  });
+
   it('restores pending session after re-authenticating with fresh token', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
     addPendingStripeSessionId('cs_pending_restored', 'user_123');
