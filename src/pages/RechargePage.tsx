@@ -172,14 +172,15 @@ export default function RechargePage() {
         setSessionId(sid || null);
         if (sid) sessionStorage.setItem('recharge_session_id', sid);
 
-        setUser({
-          id: data.user.id || '',
+        const userInfo: UserInfo = {
+          id: String(data.user.id || ''),
           email: data.user.email || '',
           nickname: data.user.nickname || '',
           balance: (Number(data.user.balance) || 0) / 100,
-        });
+        };
+        setUser(userInfo);
         setIsLoggedIn(true);
-        checkPendingOrder(token);
+        checkPendingOrder(userInfo.id, token);
       } else {
         throw new Error('Incomplete exchange response');
       }
@@ -197,8 +198,8 @@ export default function RechargePage() {
   };
 
   // Check if there is any pending Stripe checkout session that needs restoration
-  const checkPendingOrder = async (token: string) => {
-    const pendingSessions = readPendingStripeSessionIds();
+  const checkPendingOrder = async (userId: string, token: string) => {
+    const pendingSessions = readPendingStripeSessionIds(userId);
     if (pendingSessions.length === 0) return;
 
     const remainingSessions: string[] = [];
@@ -219,18 +220,29 @@ export default function RechargePage() {
           const data = await response.json();
           if (data.success) {
             const amt = parseTokenAmount(data);
-            alert(
-              language === 'zh'
-                ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
-                : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
-            );
-            fetchUserInfo(token);
+            if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+              window.alert(
+                language === 'zh'
+                  ? `检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 ${amt} 代币！`
+                  : `Found a pending purchase! Successfully restored and credited ${amt} tokens to your account.`
+              );
+            }
+            fetchUserInfo(token, false);
           } else {
             // Order is still pending / unpaid, retain for future check
             remainingSessions.push(sid);
           }
+        } else if (
+          response.status === 400 ||
+          response.status === 401 ||
+          response.status === 403 ||
+          response.status === 404
+        ) {
+          // Terminal error: Invalid session ID, unauthorized, belongs to another user, or not found.
+          // Drop from pending sessions immediately to avoid perpetual retries.
+          console.warn(`[Snow Pro Recharge] Dropping terminal pending session ${sid} (HTTP ${response.status})`);
         } else {
-          // Transient network error or 5xx server error, retain for retry
+          // Transient network error or 429/5xx server error, retain for retry
           remainingSessions.push(sid);
         }
       } catch (err) {
@@ -239,11 +251,11 @@ export default function RechargePage() {
       }
     }
 
-    replacePendingStripeSessionIds(remainingSessions);
+    replacePendingStripeSessionIds(remainingSessions, userId);
   };
 
   // Fetch user info
-  const fetchUserInfo = async (token: string) => {
+  const fetchUserInfo = async (token: string, triggerPendingCheck: boolean = true) => {
     try {
       const response = await fetch(`${API_BASE_URL}/get_user`, {
         method: 'GET',
@@ -253,32 +265,42 @@ export default function RechargePage() {
         }
       });
 
+      if (response.status === 401) {
+        console.error("Auth token expired or unauthorized (401), clearing tokens");
+        clearRechargeAccessToken();
+        sessionStorage.removeItem('recharge_session_id');
+        setAccessToken(null);
+        setSessionId(null);
+        setIsLoggedIn(false);
+        setUser(null);
+        return;
+      }
+
       if (!response.ok) {
-        throw new Error('Unauthorized');
+        // Transient network error or 5xx: do NOT wipe valid access token
+        throw new Error(`Failed to fetch user (HTTP ${response.status})`);
       }
 
       const data = await response.json();
       if (data.user) {
-        setUser({
-          id: data.user.id || '',
+        const userInfo: UserInfo = {
+          id: String(data.user.id || ''),
           email: data.user.email || '',
           nickname: data.user.nickname || '',
           balance: (Number(data.user.balance) || 0) / 100,
-        });
+        };
+        setUser(userInfo);
         setIsLoggedIn(true);
         // Check for pending payments to restore on startup
-        checkPendingOrder(token);
+        if (triggerPendingCheck) {
+          checkPendingOrder(userInfo.id, token);
+        }
       } else {
         throw new Error('No user data');
       }
-    } catch (err) {
-      console.error("Auth verify failed, clearing tokens", err);
-      clearRechargeAccessToken();
-      sessionStorage.removeItem('recharge_session_id');
-      setAccessToken(null);
-      setSessionId(null);
-      setIsLoggedIn(false);
-      setUser(null);
+    } catch (err: any) {
+      console.error("Failed to fetch user info:", err);
+      setError(err.message || tLocal.unknownError);
     } finally {
       setPageLoading(false);
     }
@@ -404,10 +426,10 @@ export default function RechargePage() {
         if (!checkoutUrl.startsWith('https://checkout.stripe.com/')) {
           throw new Error("Security Alert: Invalid checkout URL domain returned.");
         }
-        // Try to extract Stripe session_id to save in session storage for restore purpose
+        // Try to extract Stripe session_id to save in local storage for restore purpose
         const match = checkoutUrl.match(/(cs_(?:test|live)_[a-zA-Z0-9]+)/);
         if (match) {
-          addPendingStripeSessionId(match[1]);
+          addPendingStripeSessionId(match[1], user?.id);
         }
         // Redirect user to Stripe Hosted Checkout Page
         window.location.href = checkoutUrl;

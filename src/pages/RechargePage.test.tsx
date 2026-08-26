@@ -258,3 +258,132 @@ describe('RechargePage feature availability', () => {
     });
   });
 });
+
+describe('RechargePage Client Recovery Robustness', () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+    localStorage.clear();
+    vi.restoreAllMocks();
+    // Stub window.alert for tests
+    window.alert = vi.fn();
+    storeRechargeAccessToken('valid-test-token', {
+      seconds: Math.floor(Date.now() / 1000) + 600,
+    });
+  });
+
+  it('drops terminal 403 / 404 pending session and avoids perpetual retry', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    addPendingStripeSessionId('cs_terminal_403', 'user_123');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        // Return 403 Forbidden (cross-user or invalid)
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Forbidden' }), { status: 403 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(readPendingStripeSessionIds('user_123')).toEqual([]);
+    });
+  });
+
+  it('retains transient 500 / 429 pending session in storage for retry', async () => {
+    const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
+    addPendingStripeSessionId('cs_transient_500', 'user_123');
+
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+      }
+      if (url.includes('/token/purchases/verify_stripe')) {
+        // Return 500 Server Error
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Internal Error' }), { status: 500 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_transient_500']);
+    });
+  });
+
+  it('does not wipe valid recharge access token on transient 500 error in /get_user', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Database unreachable' }), { status: 500 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Access token must NOT be wiped on 5xx
+      expect(getValidRechargeAccessToken()).toBe('valid-test-token');
+    });
+  });
+
+  it('wipes access token on 401 Unauthorized in /get_user', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/v1/feature_availability')) {
+        return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
+      }
+      if (url.includes('/get_user')) {
+        return Promise.resolve(new Response(JSON.stringify({ message: 'Token expired' }), { status: 401 }));
+      }
+      return Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }));
+    });
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      // Access token MUST be wiped on 401
+      expect(getValidRechargeAccessToken()).toBeNull();
+    });
+  });
+});
