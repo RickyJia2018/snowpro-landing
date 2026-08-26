@@ -203,7 +203,8 @@ export default function RechargePage() {
     if (pendingSessions.length === 0) return;
 
     const remainingSessions: string[] = [];
-    for (const sid of pendingSessions) {
+    for (let i = 0; i < pendingSessions.length; i++) {
+      const sid = pendingSessions[i];
       try {
         const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
           method: 'POST',
@@ -234,8 +235,8 @@ export default function RechargePage() {
           }
         } else if (response.status === 401) {
           // 401 Unauthorized means the recharge access token has expired.
-          // The pending session is RETAINED so it can be restored when the user re-authenticates from the App!
-          remainingSessions.push(sid);
+          // The current session AND all remaining unprocessed sessions are retained!
+          remainingSessions.push(...pendingSessions.slice(i));
           console.warn(`[Snow Pro Recharge] Auth token expired (401) while verifying pending session ${sid}, retaining session for next authenticated session.`);
           clearRechargeAccessToken();
           sessionStorage.removeItem('recharge_session_id');
