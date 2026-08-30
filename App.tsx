@@ -16,6 +16,8 @@ import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 import TokenPolicyPage from './src/pages/TokenPolicyPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
+import CarpoolPassPage from './src/pages/CarpoolPassPage';
+import CarpoolPassSuccessPage from './src/pages/CarpoolPassSuccessPage';
 import { API_BASE_URL } from './src/config/api';
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/recharge" element={<RechargePage />} />
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
+        <Route path="/carpool-pass" element={<CarpoolPassPage />} />
+        <Route path="/carpool-pass/success" element={<CarpoolPassSuccessPage />} />
         <Route path="/terms" element={<TokenPolicyPage />} />
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
       </Routes>
