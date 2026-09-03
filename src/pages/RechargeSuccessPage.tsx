@@ -14,7 +14,6 @@ const localTranslations = {
     backHome: "返回官网首页",
     openApp: "打开 Snow Pro App",
     backToRecharge: "继续充值代币",
-    
     verifyingTitle: "正在确认到账...",
     verifyingMessage: "正在联系支付通道确认您的订单入账状态，请稍候...",
     failedTitle: "到账确认中...",
@@ -22,7 +21,9 @@ const localTranslations = {
     tokenFulfillSuccess: "您的代币已实时确认到账！本次共购得 {amount} 个代币。",
     retryBtn: "重新校验到账状态",
     noSessionTitle: "未找到充值会话",
-    noSessionMessage: "未检测到有效的支付订单信息。如果您刚完成了支付，代币会在后台自动入账；或者您可以返回充值页面重新发起充值。"
+    noSessionMessage: "未检测到有效的支付订单信息。如果您刚完成了支付，代币会在后台自动入账；或者您可以返回充值页面重新发起充值。",
+    sessionExpiredError: "充值会话已过期，请在 App 中重新点击充值。",
+    clearanceDelayed: "支付网络确认延迟，请稍后刷新 App 页面查看最新余额。",
   },
   en: {
     successTitle: "Recharge Successful!",
@@ -30,7 +31,6 @@ const localTranslations = {
     backHome: "Back to Home",
     openApp: "Open Snow Pro App",
     backToRecharge: "Buy More Tokens",
-    
     verifyingTitle: "Verifying Fulfill...",
     verifyingMessage: "Checking your payment status with the payment processor, please wait...",
     failedTitle: "Fulfillment Pending...",
@@ -38,8 +38,112 @@ const localTranslations = {
     tokenFulfillSuccess: "Tokens credited successfully! You've received {amount} tokens.",
     retryBtn: "Verify Status Again",
     noSessionTitle: "No Active Recharge Session",
-    noSessionMessage: "No payment transaction was detected. If you just completed a payment, your tokens will be credited shortly; or you can return to the recharge page."
-  }
+    noSessionMessage: "No payment transaction was detected. If you just completed a payment, your tokens will be credited shortly; or you can return to the recharge page.",
+    sessionExpiredError: "Your recharge session has expired. Please reopen recharge from the app.",
+    clearanceDelayed: "Payment clearance delayed. Please check balance in App later.",
+  },
+  ja: {
+    successTitle: "チャージ完了！",
+    successMessage: "トークンがアカウントに正常にチャージされました。Snow Pro アプリに戻って最新の残高をご確認ください。",
+    backHome: "トップページへ戻る",
+    openApp: "Snow Pro アプリを開く",
+    backToRecharge: "さらにトークンを購入",
+    verifyingTitle: "入金確認中...",
+    verifyingMessage: "決済代行機関と支払い状況を確認しています。少々お待ちください...",
+    failedTitle: "入金確認保留中...",
+    failedMessage: "お支払いは正常に送信されました。決済ネットワークの反映遅延により、トークンの付与に1〜2分程度かかる場合があります。システムが自動的に補正処理を行っておりますのでご安心ください。後ほどアプリで残高をご確認いただけます。",
+    tokenFulfillSuccess: "トークンの入金がリアルタイムで確認されました！今回は合計 {amount} トークンを購入しました。",
+    retryBtn: "入金状況を再確認する",
+    noSessionTitle: "アクティブなチャージセッションがありません",
+    noSessionMessage: "有効な支払い取引が検出されませんでした。お支払いが完了している場合、トークンはまもなくアカウントに反映されます。またはチャージページに戻って再試行してください。",
+    sessionExpiredError: "チャージセッションの有効期限が切れました。アプリから再度チャージを開いてください。",
+    clearanceDelayed: "決済ネットワークの確認が遅延しています。後ほどアプリで残高をご確認ください。",
+  },
+  ko: {
+    successTitle: "충전 성공!",
+    successMessage: "토큰이 계정에 성공적으로 충전되었습니다. 이제 Snow Pro 앱으로 돌아가 최신 잔액을 확인하실 수 있습니다.",
+    backHome: "홈으로 돌아가기",
+    openApp: "Snow Pro 앱 열기",
+    backToRecharge: "토큰 추가 충전",
+    verifyingTitle: "지급 확인 중...",
+    verifyingMessage: "결제 대행사와 주문 처리 상태를 확인하고 있습니다. 잠시만 기다려 주세요...",
+    failedTitle: "지급 처리 대기 중...",
+    failedMessage: "결제가 성공적으로 제출되었습니다! 결제망 지연으로 인해 토큰 지급에 1~2분 정도 소요될 수 있습니다. 시스템이 자동으로 보정하고 있으니 안심하세요. 잠시 후 앱에서 최신 잔액을 확인해 주세요.",
+    tokenFulfillSuccess: "토큰이 실시간으로 확인 및 지급되었습니다! 총 {amount}개의 토큰을 구매하셨습니다.",
+    retryBtn: "지급 상태 다시 확인",
+    noSessionTitle: "유효한 충전 세션이 없습니다",
+    noSessionMessage: "유효한 결제 거래가 감지되지 않았습니다. 방금 결제를 완료하셨다면 잠시 후 자동으로 지급됩니다. 또는 충전 페이지로 돌아가 다시 시도해 주세요.",
+    sessionExpiredError: "충전 세션이 만료되었습니다. 앱에서 다시 충전을 열어주세요.",
+    clearanceDelayed: "결제망 확인이 지연되고 있습니다. 잠시 후 앱에서 잔액을 확인해 주세요.",
+  },
+  fr: {
+    successTitle: "Recharge réussie !",
+    successMessage: "Vos jetons ont été crédités avec succès sur votre compte. Vous pouvez maintenant retourner dans l'application Snow Pro pour voir votre solde mis à jour.",
+    backHome: "Retour à l'accueil",
+    openApp: "Ouvrir l'application Snow Pro",
+    backToRecharge: "Acheter d'autres jetons",
+    verifyingTitle: "Vérification en cours...",
+    verifyingMessage: "Vérification du statut de votre paiement auprès du processeur, veuillez patienter...",
+    failedTitle: "Traitement en attente...",
+    failedMessage: "Votre paiement a été soumis ! En raison de la latence du réseau bancaire, les jetons peuvent prendre 1 à 2 minutes pour apparaître. Le système effectue le traitement automatique. Vous pourrez vérifier votre solde dans l'application un peu plus tard.",
+    tokenFulfillSuccess: "Jetons crédités avec succès ! Vous avez reçu {amount} jetons.",
+    retryBtn: "Revérifier le statut",
+    noSessionTitle: "Aucune session de recharge active",
+    noSessionMessage: "Aucune transaction de paiement détectée. Si vous venez d'effectuer un paiement, vos jetons seront crédités sous peu.",
+    sessionExpiredError: "Votre session de recharge a expiré. Veuillez rouvrir la recharge depuis l'application.",
+    clearanceDelayed: "Délai de confirmation du paiement. Veuillez vérifier votre solde dans l'application ultérieurement.",
+  },
+  de: {
+    successTitle: "Aufladung erfolgreich!",
+    successMessage: "Ihre Token wurden Ihrem Konto erfolgreich gutgeschrieben. Sie können jetzt zur Snow Pro App zurückkehren, um Ihr aktualisiertes Guthaben zu sehen.",
+    backHome: "Zurück zur Startseite",
+    openApp: "Snow Pro App öffnen",
+    backToRecharge: "Weitere Token kaufen",
+    verifyingTitle: "Gutschrift wird überprüft...",
+    verifyingMessage: "Zahlungsstatus wird beim Zahlungsdienstleister überprüft, bitte warten...",
+    failedTitle: "Bearbeitung ausstehend...",
+    failedMessage: "Ihre Zahlung wurde übermittelt! Aufgrund von Netzwerkverzögerungen kann es 1-2 Minuten dauern, bis die Token gutgeschrieben sind. Das System bucht diese automatisch nach. Sie können Ihr Guthaben in Kürze in der App überprüfen.",
+    tokenFulfillSuccess: "Token erfolgreich gutgeschrieben! Sie haben {amount} Token erhalten.",
+    retryBtn: "Status erneut prüfen",
+    noSessionTitle: "Keine aktive Aufladesitzung",
+    noSessionMessage: "Keine Zahlungstransaktion erkannt. Falls Sie gerade bezahlt haben, werden die Token in Kürze gutgeschrieben.",
+    sessionExpiredError: "Ihre Aufladesitzung ist abgelaufen. Bitte öffnen Sie die Aufladung erneut in der App.",
+    clearanceDelayed: "Zahlungsbestätigung verzögert. Bitte überprüfen Sie das Guthaben später in der App.",
+  },
+  es: {
+    successTitle: "¡Recarga exitosa!",
+    successMessage: "Sus tokens han sido acreditados exitosamente en su cuenta. Ya puede regresar a la app Snow Pro para ver su saldo actualizado.",
+    backHome: "Volver al inicio",
+    openApp: "Abrir app Snow Pro",
+    backToRecharge: "Comprar más tokens",
+    verifyingTitle: "Verificando acreditación...",
+    verifyingMessage: "Verificando el estado de su pago con la pasarela, por favor espere...",
+    failedTitle: "Acreditación pendiente...",
+    failedMessage: "¡Su pago fue enviado con éxito! Debido a la latencia de la red, los tokens pueden demorar 1-2 minutos en acreditarse. El sistema los acreditará automáticamente. Puede consultar su saldo en la app en unos momentos.",
+    tokenFulfillSuccess: "¡Tokens acreditados con éxito! Ha recibido {amount} tokens.",
+    retryBtn: "Verificar estado nuevamente",
+    noSessionTitle: "Sin sesión de recarga activa",
+    noSessionMessage: "No se detectó ninguna transacción de pago. Si acaba de pagar, sus tokens se acreditarán en breve.",
+    sessionExpiredError: "Su sesión de recarga ha caducado. Vuelva a abrir la recarga desde la aplicación.",
+    clearanceDelayed: "Confirmación de pago demorada. Por favor, verifique su saldo en la app más tarde.",
+  },
+  ru: {
+    successTitle: "Пополнение успешно!",
+    successMessage: "Токены успешно зачислены на ваш баланс. Вы можете вернуться в приложение Snow Pro, чтобы увидеть обновленный баланс.",
+    backHome: "На главную",
+    openApp: "Открыть Snow Pro",
+    backToRecharge: "Купить еще токены",
+    verifyingTitle: "Подтверждение зачисления...",
+    verifyingMessage: "Проверяем статус оплаты в платежной системе, пожалуйста, подождите...",
+    failedTitle: "Зачисление в процессе...",
+    failedMessage: "Ваш платеж успешно принят! Из-за задержки подтверждения платежной сети начисление токенов может занять 1-2 минуты. Система начислит их автоматически. Проверьте баланс в приложении чуть позже.",
+    tokenFulfillSuccess: "Токены успешно начислены! Вы получили {amount} токенов.",
+    retryBtn: "Проверить статус снова",
+    noSessionTitle: "Нет активного сеанса пополнения",
+    noSessionMessage: "Платежная транзакция не обнаружена. Если вы только что оплатили заказ, токены будут зачислены в ближайшее время.",
+    sessionExpiredError: "Срок действия сеанса пополнения истек. Пожалуйста, откройте пополнение заново из приложения.",
+    clearanceDelayed: "Подтверждение платежа задерживается. Пожалуйста, проверьте баланс в приложении позже.",
+  },
 };
 
 export default function RechargeSuccessPage() {
@@ -54,7 +158,7 @@ export default function RechargeSuccessPage() {
   const [tokenAmount, setTokenAmount] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
-  const tLocal = localTranslations[language === 'zh' ? 'zh' : 'en'];
+  const tLocal = localTranslations[language] || localTranslations.en;
 
   const verifyOrder = async () => {
     if (!sessionId) return;
@@ -64,7 +168,7 @@ export default function RechargeSuccessPage() {
     const token = getValidRechargeAccessToken();
     if (!token) {
       setStatus('failed');
-      setErrorMessage(language === 'zh' ? '充值会话已过期，请在 App 中重新点击充值。' : 'Your recharge session has expired. Please reopen recharge from the app.');
+      setErrorMessage(tLocal.sessionExpiredError);
       return;
     }
 
@@ -105,7 +209,7 @@ export default function RechargeSuccessPage() {
           await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
         } else {
           setStatus('failed');
-          setErrorMessage(data.message || (language === 'zh' ? '支付网络确认延迟，请稍后刷新 App 页面查看最新余额。' : 'Payment clearance delayed. Please check balance in App later.'));
+          setErrorMessage(data.message || tLocal.clearanceDelayed);
         }
       } catch (err: any) {
         console.error(`Order verification error (attempt ${attempt + 1}/${delays.length}):`, err);
