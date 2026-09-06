@@ -7,8 +7,8 @@ export class TokenProduct extends jspb.Message {
   getProductId(): string;
   setProductId(value: string): TokenProduct;
 
-  getTokenAmount(): number;
-  setTokenAmount(value: number): TokenProduct;
+  getTokenAmountInCents(): number;
+  setTokenAmountInCents(value: number): TokenProduct;
 
   getPriceInCents(): number;
   setPriceInCents(value: number): TokenProduct;
@@ -29,6 +29,9 @@ export class TokenProduct extends jspb.Message {
   hasUpdatedAt(): boolean;
   clearUpdatedAt(): TokenProduct;
 
+  getIsActive(): boolean;
+  setIsActive(value: boolean): TokenProduct;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TokenProduct.AsObject;
   static toObject(includeInstance: boolean, msg: TokenProduct): TokenProduct.AsObject;
@@ -40,12 +43,13 @@ export class TokenProduct extends jspb.Message {
 export namespace TokenProduct {
   export type AsObject = {
     productId: string;
-    tokenAmount: number;
+    tokenAmountInCents: number;
     priceInCents: number;
     title: string;
     description: string;
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    isActive: boolean;
   };
 }
 
@@ -53,8 +57,8 @@ export class CreateTokenProductRequest extends jspb.Message {
   getProductId(): string;
   setProductId(value: string): CreateTokenProductRequest;
 
-  getTokenAmount(): number;
-  setTokenAmount(value: number): CreateTokenProductRequest;
+  getTokenAmountInCents(): number;
+  setTokenAmountInCents(value: number): CreateTokenProductRequest;
 
   getPriceInCents(): number;
   setPriceInCents(value: number): CreateTokenProductRequest;
@@ -64,6 +68,11 @@ export class CreateTokenProductRequest extends jspb.Message {
 
   getDescription(): string;
   setDescription(value: string): CreateTokenProductRequest;
+
+  getIsActive(): boolean;
+  setIsActive(value: boolean): CreateTokenProductRequest;
+  hasIsActive(): boolean;
+  clearIsActive(): CreateTokenProductRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateTokenProductRequest.AsObject;
@@ -76,11 +85,17 @@ export class CreateTokenProductRequest extends jspb.Message {
 export namespace CreateTokenProductRequest {
   export type AsObject = {
     productId: string;
-    tokenAmount: number;
+    tokenAmountInCents: number;
     priceInCents: number;
     title: string;
     description: string;
+    isActive?: boolean;
   };
+
+  export enum IsActiveCase {
+    _IS_ACTIVE_NOT_SET = 0,
+    IS_ACTIVE = 6,
+  }
 }
 
 export class CreateTokenProductResponse extends jspb.Message {
@@ -107,10 +122,10 @@ export class UpdateTokenProductRequest extends jspb.Message {
   getProductId(): string;
   setProductId(value: string): UpdateTokenProductRequest;
 
-  getTokenAmount(): number;
-  setTokenAmount(value: number): UpdateTokenProductRequest;
-  hasTokenAmount(): boolean;
-  clearTokenAmount(): UpdateTokenProductRequest;
+  getTokenAmountInCents(): number;
+  setTokenAmountInCents(value: number): UpdateTokenProductRequest;
+  hasTokenAmountInCents(): boolean;
+  clearTokenAmountInCents(): UpdateTokenProductRequest;
 
   getPriceInCents(): number;
   setPriceInCents(value: number): UpdateTokenProductRequest;
@@ -127,6 +142,11 @@ export class UpdateTokenProductRequest extends jspb.Message {
   hasDescription(): boolean;
   clearDescription(): UpdateTokenProductRequest;
 
+  getIsActive(): boolean;
+  setIsActive(value: boolean): UpdateTokenProductRequest;
+  hasIsActive(): boolean;
+  clearIsActive(): UpdateTokenProductRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateTokenProductRequest.AsObject;
   static toObject(includeInstance: boolean, msg: UpdateTokenProductRequest): UpdateTokenProductRequest.AsObject;
@@ -138,15 +158,16 @@ export class UpdateTokenProductRequest extends jspb.Message {
 export namespace UpdateTokenProductRequest {
   export type AsObject = {
     productId: string;
-    tokenAmount?: number;
+    tokenAmountInCents?: number;
     priceInCents?: number;
     title?: string;
     description?: string;
+    isActive?: boolean;
   };
 
-  export enum TokenAmountCase {
-    _TOKEN_AMOUNT_NOT_SET = 0,
-    TOKEN_AMOUNT = 2,
+  export enum TokenAmountInCentsCase {
+    _TOKEN_AMOUNT_IN_CENTS_NOT_SET = 0,
+    TOKEN_AMOUNT_IN_CENTS = 2,
   }
 
   export enum PriceInCentsCase {
@@ -162,6 +183,11 @@ export namespace UpdateTokenProductRequest {
   export enum DescriptionCase {
     _DESCRIPTION_NOT_SET = 0,
     DESCRIPTION = 5,
+  }
+
+  export enum IsActiveCase {
+    _IS_ACTIVE_NOT_SET = 0,
+    IS_ACTIVE = 6,
   }
 }
 

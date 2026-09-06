@@ -18,27 +18,41 @@
 import * as grpcWeb from 'grpc-web';
 
 import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb'; // proto import: "google/protobuf/empty.proto"
-import * as rpc_policy_pb from './rpc_policy_pb'; // proto import: "rpc_policy.proto"
-import * as rpc_authorize_user_pb from './rpc_authorize_user_pb'; // proto import: "rpc_authorize_user.proto"
 import * as rpc_token_system_pb from './rpc_token_system_pb'; // proto import: "rpc_token_system.proto"
+import * as rpc_policy_pb from './rpc_policy_pb'; // proto import: "rpc_policy.proto"
+import * as rpc_dispute_pb from './rpc_dispute_pb'; // proto import: "rpc_dispute.proto"
+import * as rpc_language_pb from './rpc_language_pb'; // proto import: "rpc_language.proto"
+import * as rpc_admin_announcements_and_audit_logs_pb from './rpc_admin_announcements_and_audit_logs_pb'; // proto import: "rpc_admin_announcements_and_audit_logs.proto"
 import * as rpc_file_system_pb from './rpc_file_system_pb'; // proto import: "rpc_file_system.proto"
+import * as rpc_course_pb from './rpc_course_pb'; // proto import: "rpc_course.proto"
+import * as rpc_carpool_pb from './rpc_carpool_pb'; // proto import: "rpc_carpool.proto"
+import * as rpc_authorize_user_pb from './rpc_authorize_user_pb'; // proto import: "rpc_authorize_user.proto"
+import * as rpc_login_user_pb from './rpc_login_user_pb'; // proto import: "rpc_login_user.proto"
+import * as rpc_user_pb from './rpc_user_pb'; // proto import: "rpc_user.proto"
+import * as rpc_instructor_pb from './rpc_instructor_pb'; // proto import: "rpc_instructor.proto"
+import * as rpc_chat_system_pb from './rpc_chat_system_pb'; // proto import: "rpc_chat_system.proto"
+import * as rpc_buddy_pb from './rpc_buddy_pb'; // proto import: "rpc_buddy.proto"
 import * as rpc_certificate_type_pb from './rpc_certificate_type_pb'; // proto import: "rpc_certificate_type.proto"
 import * as rpc_code_pb from './rpc_code_pb'; // proto import: "rpc_code.proto"
 import * as rpc_country_pb from './rpc_country_pb'; // proto import: "rpc_country.proto"
+import * as rpc_feedback_pb from './rpc_feedback_pb'; // proto import: "rpc_feedback.proto"
 import * as rpc_instructor_certificate_pb from './rpc_instructor_certificate_pb'; // proto import: "rpc_instructor_certificate.proto"
-import * as rpc_instructor_pb from './rpc_instructor_pb'; // proto import: "rpc_instructor.proto"
 import * as rpc_lesson_pb from './rpc_lesson_pb'; // proto import: "rpc_lesson.proto"
+import * as rpc_platform_earning_pb from './rpc_platform_earning_pb'; // proto import: "rpc_platform_earning.proto"
 import * as rpc_resort_pb from './rpc_resort_pb'; // proto import: "rpc_resort.proto"
 import * as rpc_review_pb from './rpc_review_pb'; // proto import: "rpc_review.proto"
 import * as rpc_token_product_pb from './rpc_token_product_pb'; // proto import: "rpc_token_product.proto"
-import * as rpc_user_pb from './rpc_user_pb'; // proto import: "rpc_user.proto"
 import * as rpc_delete_file_pb from './rpc_delete_file_pb'; // proto import: "rpc_delete_file.proto"
+import * as rpc_friend_pb from './rpc_friend_pb'; // proto import: "rpc_friend.proto"
 import * as rpc_forget_password_pb from './rpc_forget_password_pb'; // proto import: "rpc_forget_password.proto"
-import * as rpc_chat_system_pb from './rpc_chat_system_pb'; // proto import: "rpc_chat_system.proto"
-import * as rpc_login_user_pb from './rpc_login_user_pb'; // proto import: "rpc_login_user.proto"
+import * as rpc_get_app_version_pb from './rpc_get_app_version_pb'; // proto import: "rpc_get_app_version.proto"
+import * as rpc_system_config_pb from './rpc_system_config_pb'; // proto import: "rpc_system_config.proto"
+import * as rpc_transaction_pb from './rpc_transaction_pb'; // proto import: "rpc_transaction.proto"
 import * as rpc_refresh_token_pb from './rpc_refresh_token_pb'; // proto import: "rpc_refresh_token.proto"
+import * as rpc_delete_user_pb from './rpc_delete_user_pb'; // proto import: "rpc_delete_user.proto"
 import * as rpc_resend_verification_email_pb from './rpc_resend_verification_email_pb'; // proto import: "rpc_resend_verification_email.proto"
 import * as rpc_reset_password_pb from './rpc_reset_password_pb'; // proto import: "rpc_reset_password.proto"
+import * as rpc_test_pb from './rpc_test_pb'; // proto import: "rpc_test.proto"
 import * as rpc_verify_email_pb from './rpc_verify_email_pb'; // proto import: "rpc_verify_email.proto"
 
 
@@ -59,6 +73,135 @@ export class PeakPalClient {
     this.hostname_ = hostname.replace(/\/+$/, '');
     this.credentials_ = credentials;
     this.options_ = options;
+  }
+
+  methodDescriptorGetUploadPresignedUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetUploadPresignedUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.UploadPresignedUrlRequest,
+    rpc_file_system_pb.UploadPresignedUrlResponse,
+    (request: rpc_file_system_pb.UploadPresignedUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.UploadPresignedUrlResponse.deserializeBinary
+  );
+
+  getUploadPresignedUrl(
+    request: rpc_file_system_pb.UploadPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.UploadPresignedUrlResponse>;
+
+  getUploadPresignedUrl(
+    request: rpc_file_system_pb.UploadPresignedUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.UploadPresignedUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.UploadPresignedUrlResponse>;
+
+  getUploadPresignedUrl(
+    request: rpc_file_system_pb.UploadPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.UploadPresignedUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetUploadPresignedUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorGetUploadPresignedUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetUploadPresignedUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorGetUploadPresignedUrl);
+  }
+
+  methodDescriptorGetFetchPresignedUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetFetchPresignedUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.FetchPresignedUrlRequest,
+    rpc_file_system_pb.FetchPresignedUrlResponse,
+    (request: rpc_file_system_pb.FetchPresignedUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.FetchPresignedUrlResponse.deserializeBinary
+  );
+
+  getFetchPresignedUrl(
+    request: rpc_file_system_pb.FetchPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.FetchPresignedUrlResponse>;
+
+  getFetchPresignedUrl(
+    request: rpc_file_system_pb.FetchPresignedUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.FetchPresignedUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.FetchPresignedUrlResponse>;
+
+  getFetchPresignedUrl(
+    request: rpc_file_system_pb.FetchPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.FetchPresignedUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetFetchPresignedUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorGetFetchPresignedUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetFetchPresignedUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorGetFetchPresignedUrl);
+  }
+
+  methodDescriptorBatchGetFetchPresignedUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BatchGetFetchPresignedUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.BatchGetFetchPresignedUrlRequest,
+    rpc_file_system_pb.BatchGetFetchPresignedUrlResponse,
+    (request: rpc_file_system_pb.BatchGetFetchPresignedUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.BatchGetFetchPresignedUrlResponse.deserializeBinary
+  );
+
+  batchGetFetchPresignedUrl(
+    request: rpc_file_system_pb.BatchGetFetchPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.BatchGetFetchPresignedUrlResponse>;
+
+  batchGetFetchPresignedUrl(
+    request: rpc_file_system_pb.BatchGetFetchPresignedUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.BatchGetFetchPresignedUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.BatchGetFetchPresignedUrlResponse>;
+
+  batchGetFetchPresignedUrl(
+    request: rpc_file_system_pb.BatchGetFetchPresignedUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.BatchGetFetchPresignedUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BatchGetFetchPresignedUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorBatchGetFetchPresignedUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BatchGetFetchPresignedUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorBatchGetFetchPresignedUrl);
   }
 
   methodDescriptorGetGCSUploadPresignUrl = new grpcWeb.MethodDescriptor(
@@ -145,6 +288,49 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorGetGCSFetchPresignUrl);
+  }
+
+  methodDescriptorBatchGetGCSFetchPresignUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BatchGetGCSFetchPresignUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.BatchGetGCSFetchPresignUrlRequest,
+    rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse,
+    (request: rpc_file_system_pb.BatchGetGCSFetchPresignUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse.deserializeBinary
+  );
+
+  batchGetGCSFetchPresignUrl(
+    request: rpc_file_system_pb.BatchGetGCSFetchPresignUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse>;
+
+  batchGetGCSFetchPresignUrl(
+    request: rpc_file_system_pb.BatchGetGCSFetchPresignUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse>;
+
+  batchGetGCSFetchPresignUrl(
+    request: rpc_file_system_pb.BatchGetGCSFetchPresignUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.BatchGetGCSFetchPresignUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BatchGetGCSFetchPresignUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorBatchGetGCSFetchPresignUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BatchGetGCSFetchPresignUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorBatchGetGCSFetchPresignUrl);
   }
 
   methodDescriptorGCSDeleteFile = new grpcWeb.MethodDescriptor(
@@ -491,6 +677,135 @@ export class PeakPalClient {
     this.methodDescriptorListUsers);
   }
 
+  methodDescriptorBlockUser = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BlockUser',
+    grpcWeb.MethodType.UNARY,
+    rpc_user_pb.BlockUserRequest,
+    rpc_user_pb.BlockUserResponse,
+    (request: rpc_user_pb.BlockUserRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_user_pb.BlockUserResponse.deserializeBinary
+  );
+
+  blockUser(
+    request: rpc_user_pb.BlockUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_user_pb.BlockUserResponse>;
+
+  blockUser(
+    request: rpc_user_pb.BlockUserRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.BlockUserResponse) => void): grpcWeb.ClientReadableStream<rpc_user_pb.BlockUserResponse>;
+
+  blockUser(
+    request: rpc_user_pb.BlockUserRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.BlockUserResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BlockUser',
+        request,
+        metadata || {},
+        this.methodDescriptorBlockUser,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BlockUser',
+    request,
+    metadata || {},
+    this.methodDescriptorBlockUser);
+  }
+
+  methodDescriptorUnblockUser = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UnblockUser',
+    grpcWeb.MethodType.UNARY,
+    rpc_user_pb.UnblockUserRequest,
+    rpc_user_pb.UnblockUserResponse,
+    (request: rpc_user_pb.UnblockUserRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_user_pb.UnblockUserResponse.deserializeBinary
+  );
+
+  unblockUser(
+    request: rpc_user_pb.UnblockUserRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_user_pb.UnblockUserResponse>;
+
+  unblockUser(
+    request: rpc_user_pb.UnblockUserRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.UnblockUserResponse) => void): grpcWeb.ClientReadableStream<rpc_user_pb.UnblockUserResponse>;
+
+  unblockUser(
+    request: rpc_user_pb.UnblockUserRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.UnblockUserResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UnblockUser',
+        request,
+        metadata || {},
+        this.methodDescriptorUnblockUser,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UnblockUser',
+    request,
+    metadata || {},
+    this.methodDescriptorUnblockUser);
+  }
+
+  methodDescriptorListBlockedUsers = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListBlockedUsers',
+    grpcWeb.MethodType.UNARY,
+    rpc_user_pb.ListBlockedUsersRequest,
+    rpc_user_pb.ListBlockedUsersResponse,
+    (request: rpc_user_pb.ListBlockedUsersRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_user_pb.ListBlockedUsersResponse.deserializeBinary
+  );
+
+  listBlockedUsers(
+    request: rpc_user_pb.ListBlockedUsersRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_user_pb.ListBlockedUsersResponse>;
+
+  listBlockedUsers(
+    request: rpc_user_pb.ListBlockedUsersRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.ListBlockedUsersResponse) => void): grpcWeb.ClientReadableStream<rpc_user_pb.ListBlockedUsersResponse>;
+
+  listBlockedUsers(
+    request: rpc_user_pb.ListBlockedUsersRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.ListBlockedUsersResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListBlockedUsers',
+        request,
+        metadata || {},
+        this.methodDescriptorListBlockedUsers,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListBlockedUsers',
+    request,
+    metadata || {},
+    this.methodDescriptorListBlockedUsers);
+  }
+
   methodDescriptorUpdateUserLoginEmail = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/UpdateUserLoginEmail',
     grpcWeb.MethodType.UNARY,
@@ -620,6 +935,264 @@ export class PeakPalClient {
     this.methodDescriptorLoginUser);
   }
 
+  methodDescriptorLoginWithGoogle = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/LoginWithGoogle',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.LoginWithGoogleRequest,
+    rpc_login_user_pb.LoginUserResponse,
+    (request: rpc_login_user_pb.LoginWithGoogleRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.LoginUserResponse.deserializeBinary
+  );
+
+  loginWithGoogle(
+    request: rpc_login_user_pb.LoginWithGoogleRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.LoginUserResponse>;
+
+  loginWithGoogle(
+    request: rpc_login_user_pb.LoginWithGoogleRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.LoginUserResponse>;
+
+  loginWithGoogle(
+    request: rpc_login_user_pb.LoginWithGoogleRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/LoginWithGoogle',
+        request,
+        metadata || {},
+        this.methodDescriptorLoginWithGoogle,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/LoginWithGoogle',
+    request,
+    metadata || {},
+    this.methodDescriptorLoginWithGoogle);
+  }
+
+  methodDescriptorLoginWithApple = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/LoginWithApple',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.LoginWithAppleRequest,
+    rpc_login_user_pb.LoginUserResponse,
+    (request: rpc_login_user_pb.LoginWithAppleRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.LoginUserResponse.deserializeBinary
+  );
+
+  loginWithApple(
+    request: rpc_login_user_pb.LoginWithAppleRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.LoginUserResponse>;
+
+  loginWithApple(
+    request: rpc_login_user_pb.LoginWithAppleRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.LoginUserResponse>;
+
+  loginWithApple(
+    request: rpc_login_user_pb.LoginWithAppleRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/LoginWithApple',
+        request,
+        metadata || {},
+        this.methodDescriptorLoginWithApple,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/LoginWithApple',
+    request,
+    metadata || {},
+    this.methodDescriptorLoginWithApple);
+  }
+
+  methodDescriptorBeginPasskeyRegistration = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BeginPasskeyRegistration',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.BeginPasskeyRegistrationRequest,
+    rpc_login_user_pb.BeginPasskeyRegistrationResponse,
+    (request: rpc_login_user_pb.BeginPasskeyRegistrationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.BeginPasskeyRegistrationResponse.deserializeBinary
+  );
+
+  beginPasskeyRegistration(
+    request: rpc_login_user_pb.BeginPasskeyRegistrationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.BeginPasskeyRegistrationResponse>;
+
+  beginPasskeyRegistration(
+    request: rpc_login_user_pb.BeginPasskeyRegistrationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.BeginPasskeyRegistrationResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.BeginPasskeyRegistrationResponse>;
+
+  beginPasskeyRegistration(
+    request: rpc_login_user_pb.BeginPasskeyRegistrationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.BeginPasskeyRegistrationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BeginPasskeyRegistration',
+        request,
+        metadata || {},
+        this.methodDescriptorBeginPasskeyRegistration,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BeginPasskeyRegistration',
+    request,
+    metadata || {},
+    this.methodDescriptorBeginPasskeyRegistration);
+  }
+
+  methodDescriptorFinishPasskeyRegistration = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/FinishPasskeyRegistration',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.FinishPasskeyRegistrationRequest,
+    rpc_login_user_pb.FinishPasskeyRegistrationResponse,
+    (request: rpc_login_user_pb.FinishPasskeyRegistrationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.FinishPasskeyRegistrationResponse.deserializeBinary
+  );
+
+  finishPasskeyRegistration(
+    request: rpc_login_user_pb.FinishPasskeyRegistrationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.FinishPasskeyRegistrationResponse>;
+
+  finishPasskeyRegistration(
+    request: rpc_login_user_pb.FinishPasskeyRegistrationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.FinishPasskeyRegistrationResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.FinishPasskeyRegistrationResponse>;
+
+  finishPasskeyRegistration(
+    request: rpc_login_user_pb.FinishPasskeyRegistrationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.FinishPasskeyRegistrationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/FinishPasskeyRegistration',
+        request,
+        metadata || {},
+        this.methodDescriptorFinishPasskeyRegistration,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/FinishPasskeyRegistration',
+    request,
+    metadata || {},
+    this.methodDescriptorFinishPasskeyRegistration);
+  }
+
+  methodDescriptorBeginPasskeyLogin = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BeginPasskeyLogin',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.BeginPasskeyLoginRequest,
+    rpc_login_user_pb.BeginPasskeyLoginResponse,
+    (request: rpc_login_user_pb.BeginPasskeyLoginRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.BeginPasskeyLoginResponse.deserializeBinary
+  );
+
+  beginPasskeyLogin(
+    request: rpc_login_user_pb.BeginPasskeyLoginRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.BeginPasskeyLoginResponse>;
+
+  beginPasskeyLogin(
+    request: rpc_login_user_pb.BeginPasskeyLoginRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.BeginPasskeyLoginResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.BeginPasskeyLoginResponse>;
+
+  beginPasskeyLogin(
+    request: rpc_login_user_pb.BeginPasskeyLoginRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.BeginPasskeyLoginResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BeginPasskeyLogin',
+        request,
+        metadata || {},
+        this.methodDescriptorBeginPasskeyLogin,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BeginPasskeyLogin',
+    request,
+    metadata || {},
+    this.methodDescriptorBeginPasskeyLogin);
+  }
+
+  methodDescriptorFinishPasskeyLogin = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/FinishPasskeyLogin',
+    grpcWeb.MethodType.UNARY,
+    rpc_login_user_pb.FinishPasskeyLoginRequest,
+    rpc_login_user_pb.LoginUserResponse,
+    (request: rpc_login_user_pb.FinishPasskeyLoginRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_login_user_pb.LoginUserResponse.deserializeBinary
+  );
+
+  finishPasskeyLogin(
+    request: rpc_login_user_pb.FinishPasskeyLoginRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_login_user_pb.LoginUserResponse>;
+
+  finishPasskeyLogin(
+    request: rpc_login_user_pb.FinishPasskeyLoginRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void): grpcWeb.ClientReadableStream<rpc_login_user_pb.LoginUserResponse>;
+
+  finishPasskeyLogin(
+    request: rpc_login_user_pb.FinishPasskeyLoginRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_login_user_pb.LoginUserResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/FinishPasskeyLogin',
+        request,
+        metadata || {},
+        this.methodDescriptorFinishPasskeyLogin,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/FinishPasskeyLogin',
+    request,
+    metadata || {},
+    this.methodDescriptorFinishPasskeyLogin);
+  }
+
   methodDescriptorLogoutUser = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/LogoutUser',
     grpcWeb.MethodType.UNARY,
@@ -663,6 +1236,135 @@ export class PeakPalClient {
     this.methodDescriptorLogoutUser);
   }
 
+  methodDescriptorCreateWebHandoffCode = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateWebHandoffCode',
+    grpcWeb.MethodType.UNARY,
+    rpc_authorize_user_pb.CreateWebHandoffCodeRequest,
+    rpc_authorize_user_pb.CreateWebHandoffCodeResponse,
+    (request: rpc_authorize_user_pb.CreateWebHandoffCodeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_authorize_user_pb.CreateWebHandoffCodeResponse.deserializeBinary
+  );
+
+  createWebHandoffCode(
+    request: rpc_authorize_user_pb.CreateWebHandoffCodeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_authorize_user_pb.CreateWebHandoffCodeResponse>;
+
+  createWebHandoffCode(
+    request: rpc_authorize_user_pb.CreateWebHandoffCodeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.CreateWebHandoffCodeResponse) => void): grpcWeb.ClientReadableStream<rpc_authorize_user_pb.CreateWebHandoffCodeResponse>;
+
+  createWebHandoffCode(
+    request: rpc_authorize_user_pb.CreateWebHandoffCodeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.CreateWebHandoffCodeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateWebHandoffCode',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateWebHandoffCode,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateWebHandoffCode',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateWebHandoffCode);
+  }
+
+  methodDescriptorExchangeWebHandoffCode = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ExchangeWebHandoffCode',
+    grpcWeb.MethodType.UNARY,
+    rpc_authorize_user_pb.ExchangeWebHandoffCodeRequest,
+    rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse,
+    (request: rpc_authorize_user_pb.ExchangeWebHandoffCodeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse.deserializeBinary
+  );
+
+  exchangeWebHandoffCode(
+    request: rpc_authorize_user_pb.ExchangeWebHandoffCodeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse>;
+
+  exchangeWebHandoffCode(
+    request: rpc_authorize_user_pb.ExchangeWebHandoffCodeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse) => void): grpcWeb.ClientReadableStream<rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse>;
+
+  exchangeWebHandoffCode(
+    request: rpc_authorize_user_pb.ExchangeWebHandoffCodeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.ExchangeWebHandoffCodeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ExchangeWebHandoffCode',
+        request,
+        metadata || {},
+        this.methodDescriptorExchangeWebHandoffCode,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ExchangeWebHandoffCode',
+    request,
+    metadata || {},
+    this.methodDescriptorExchangeWebHandoffCode);
+  }
+
+  methodDescriptorListSessions = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListSessions',
+    grpcWeb.MethodType.UNARY,
+    rpc_authorize_user_pb.ListSessionsRequest,
+    rpc_authorize_user_pb.ListSessionsResponse,
+    (request: rpc_authorize_user_pb.ListSessionsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_authorize_user_pb.ListSessionsResponse.deserializeBinary
+  );
+
+  listSessions(
+    request: rpc_authorize_user_pb.ListSessionsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_authorize_user_pb.ListSessionsResponse>;
+
+  listSessions(
+    request: rpc_authorize_user_pb.ListSessionsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.ListSessionsResponse) => void): grpcWeb.ClientReadableStream<rpc_authorize_user_pb.ListSessionsResponse>;
+
+  listSessions(
+    request: rpc_authorize_user_pb.ListSessionsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_authorize_user_pb.ListSessionsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListSessions',
+        request,
+        metadata || {},
+        this.methodDescriptorListSessions,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListSessions',
+    request,
+    metadata || {},
+    this.methodDescriptorListSessions);
+  }
+
   methodDescriptorVerifyEmail = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/VerifyEmail',
     grpcWeb.MethodType.UNARY,
@@ -704,6 +1406,221 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorVerifyEmail);
+  }
+
+  methodDescriptorRequestAccountDeletion = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RequestAccountDeletion',
+    grpcWeb.MethodType.UNARY,
+    rpc_delete_user_pb.RequestAccountDeletionRequest,
+    rpc_delete_user_pb.RequestAccountDeletionResponse,
+    (request: rpc_delete_user_pb.RequestAccountDeletionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_delete_user_pb.RequestAccountDeletionResponse.deserializeBinary
+  );
+
+  requestAccountDeletion(
+    request: rpc_delete_user_pb.RequestAccountDeletionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_delete_user_pb.RequestAccountDeletionResponse>;
+
+  requestAccountDeletion(
+    request: rpc_delete_user_pb.RequestAccountDeletionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_delete_user_pb.RequestAccountDeletionResponse) => void): grpcWeb.ClientReadableStream<rpc_delete_user_pb.RequestAccountDeletionResponse>;
+
+  requestAccountDeletion(
+    request: rpc_delete_user_pb.RequestAccountDeletionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_delete_user_pb.RequestAccountDeletionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RequestAccountDeletion',
+        request,
+        metadata || {},
+        this.methodDescriptorRequestAccountDeletion,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RequestAccountDeletion',
+    request,
+    metadata || {},
+    this.methodDescriptorRequestAccountDeletion);
+  }
+
+  methodDescriptorRestoreAccount = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RestoreAccount',
+    grpcWeb.MethodType.UNARY,
+    rpc_delete_user_pb.RestoreAccountRequest,
+    rpc_delete_user_pb.RestoreAccountResponse,
+    (request: rpc_delete_user_pb.RestoreAccountRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_delete_user_pb.RestoreAccountResponse.deserializeBinary
+  );
+
+  restoreAccount(
+    request: rpc_delete_user_pb.RestoreAccountRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_delete_user_pb.RestoreAccountResponse>;
+
+  restoreAccount(
+    request: rpc_delete_user_pb.RestoreAccountRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_delete_user_pb.RestoreAccountResponse) => void): grpcWeb.ClientReadableStream<rpc_delete_user_pb.RestoreAccountResponse>;
+
+  restoreAccount(
+    request: rpc_delete_user_pb.RestoreAccountRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_delete_user_pb.RestoreAccountResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RestoreAccount',
+        request,
+        metadata || {},
+        this.methodDescriptorRestoreAccount,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RestoreAccount',
+    request,
+    metadata || {},
+    this.methodDescriptorRestoreAccount);
+  }
+
+  methodDescriptorGetUserOAuths = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetUserOAuths',
+    grpcWeb.MethodType.UNARY,
+    google_protobuf_empty_pb.Empty,
+    rpc_user_pb.GetUserOAuthsResponse,
+    (request: google_protobuf_empty_pb.Empty) => {
+      return request.serializeBinary();
+    },
+    rpc_user_pb.GetUserOAuthsResponse.deserializeBinary
+  );
+
+  getUserOAuths(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_user_pb.GetUserOAuthsResponse>;
+
+  getUserOAuths(
+    request: google_protobuf_empty_pb.Empty,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.GetUserOAuthsResponse) => void): grpcWeb.ClientReadableStream<rpc_user_pb.GetUserOAuthsResponse>;
+
+  getUserOAuths(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_user_pb.GetUserOAuthsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetUserOAuths',
+        request,
+        metadata || {},
+        this.methodDescriptorGetUserOAuths,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetUserOAuths',
+    request,
+    metadata || {},
+    this.methodDescriptorGetUserOAuths);
+  }
+
+  methodDescriptorLinkOAuth = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/LinkOAuth',
+    grpcWeb.MethodType.UNARY,
+    rpc_user_pb.LinkOAuthRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_user_pb.LinkOAuthRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  linkOAuth(
+    request: rpc_user_pb.LinkOAuthRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  linkOAuth(
+    request: rpc_user_pb.LinkOAuthRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  linkOAuth(
+    request: rpc_user_pb.LinkOAuthRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/LinkOAuth',
+        request,
+        metadata || {},
+        this.methodDescriptorLinkOAuth,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/LinkOAuth',
+    request,
+    metadata || {},
+    this.methodDescriptorLinkOAuth);
+  }
+
+  methodDescriptorUnlinkOAuth = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UnlinkOAuth',
+    grpcWeb.MethodType.UNARY,
+    rpc_user_pb.UnlinkOAuthRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_user_pb.UnlinkOAuthRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  unlinkOAuth(
+    request: rpc_user_pb.UnlinkOAuthRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  unlinkOAuth(
+    request: rpc_user_pb.UnlinkOAuthRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  unlinkOAuth(
+    request: rpc_user_pb.UnlinkOAuthRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UnlinkOAuth',
+        request,
+        metadata || {},
+        this.methodDescriptorUnlinkOAuth,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UnlinkOAuth',
+    request,
+    metadata || {},
+    this.methodDescriptorUnlinkOAuth);
   }
 
   methodDescriptorResendVerificationEmail = new grpcWeb.MethodDescriptor(
@@ -833,49 +1750,6 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorResetPassword);
-  }
-
-  methodDescriptorVerifyForgotPasswordToken = new grpcWeb.MethodDescriptor(
-    '/pb.PeakPal/VerifyForgotPasswordToken',
-    grpcWeb.MethodType.UNARY,
-    rpc_reset_password_pb.VerifyForgotPasswordTokenRequest,
-    rpc_reset_password_pb.VerifyForgotPasswordTokenResponse,
-    (request: rpc_reset_password_pb.VerifyForgotPasswordTokenRequest) => {
-      return request.serializeBinary();
-    },
-    rpc_reset_password_pb.VerifyForgotPasswordTokenResponse.deserializeBinary
-  );
-
-  verifyForgotPasswordToken(
-    request: rpc_reset_password_pb.VerifyForgotPasswordTokenRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<rpc_reset_password_pb.VerifyForgotPasswordTokenResponse>;
-
-  verifyForgotPasswordToken(
-    request: rpc_reset_password_pb.VerifyForgotPasswordTokenRequest,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: rpc_reset_password_pb.VerifyForgotPasswordTokenResponse) => void): grpcWeb.ClientReadableStream<rpc_reset_password_pb.VerifyForgotPasswordTokenResponse>;
-
-  verifyForgotPasswordToken(
-    request: rpc_reset_password_pb.VerifyForgotPasswordTokenRequest,
-    metadata?: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: rpc_reset_password_pb.VerifyForgotPasswordTokenResponse) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/pb.PeakPal/VerifyForgotPasswordToken',
-        request,
-        metadata || {},
-        this.methodDescriptorVerifyForgotPasswordToken,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/pb.PeakPal/VerifyForgotPasswordToken',
-    request,
-    metadata || {},
-    this.methodDescriptorVerifyForgotPasswordToken);
   }
 
   methodDescriptorAuthorizeUser = new grpcWeb.MethodDescriptor(
@@ -1177,6 +2051,178 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorDeleteCountry);
+  }
+
+  methodDescriptorAddUserLanguage = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AddUserLanguage',
+    grpcWeb.MethodType.UNARY,
+    rpc_language_pb.AddUserLanguageRequest,
+    rpc_language_pb.AddUserLanguageResponse,
+    (request: rpc_language_pb.AddUserLanguageRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_language_pb.AddUserLanguageResponse.deserializeBinary
+  );
+
+  addUserLanguage(
+    request: rpc_language_pb.AddUserLanguageRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_language_pb.AddUserLanguageResponse>;
+
+  addUserLanguage(
+    request: rpc_language_pb.AddUserLanguageRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.AddUserLanguageResponse) => void): grpcWeb.ClientReadableStream<rpc_language_pb.AddUserLanguageResponse>;
+
+  addUserLanguage(
+    request: rpc_language_pb.AddUserLanguageRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.AddUserLanguageResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AddUserLanguage',
+        request,
+        metadata || {},
+        this.methodDescriptorAddUserLanguage,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AddUserLanguage',
+    request,
+    metadata || {},
+    this.methodDescriptorAddUserLanguage);
+  }
+
+  methodDescriptorDeleteUserLanguage = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteUserLanguage',
+    grpcWeb.MethodType.UNARY,
+    rpc_language_pb.DeleteUserLanguageRequest,
+    rpc_language_pb.DeleteUserLanguageResponse,
+    (request: rpc_language_pb.DeleteUserLanguageRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_language_pb.DeleteUserLanguageResponse.deserializeBinary
+  );
+
+  deleteUserLanguage(
+    request: rpc_language_pb.DeleteUserLanguageRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_language_pb.DeleteUserLanguageResponse>;
+
+  deleteUserLanguage(
+    request: rpc_language_pb.DeleteUserLanguageRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.DeleteUserLanguageResponse) => void): grpcWeb.ClientReadableStream<rpc_language_pb.DeleteUserLanguageResponse>;
+
+  deleteUserLanguage(
+    request: rpc_language_pb.DeleteUserLanguageRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.DeleteUserLanguageResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteUserLanguage',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteUserLanguage,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteUserLanguage',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteUserLanguage);
+  }
+
+  methodDescriptorListLanguages = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListLanguages',
+    grpcWeb.MethodType.UNARY,
+    rpc_language_pb.ListLanguagesRequest,
+    rpc_language_pb.ListLanguagesResponse,
+    (request: rpc_language_pb.ListLanguagesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_language_pb.ListLanguagesResponse.deserializeBinary
+  );
+
+  listLanguages(
+    request: rpc_language_pb.ListLanguagesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_language_pb.ListLanguagesResponse>;
+
+  listLanguages(
+    request: rpc_language_pb.ListLanguagesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.ListLanguagesResponse) => void): grpcWeb.ClientReadableStream<rpc_language_pb.ListLanguagesResponse>;
+
+  listLanguages(
+    request: rpc_language_pb.ListLanguagesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.ListLanguagesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListLanguages',
+        request,
+        metadata || {},
+        this.methodDescriptorListLanguages,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListLanguages',
+    request,
+    metadata || {},
+    this.methodDescriptorListLanguages);
+  }
+
+  methodDescriptorGetLanguageByUserID = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetLanguageByUserID',
+    grpcWeb.MethodType.UNARY,
+    rpc_language_pb.GetLanguageByUserIDRequest,
+    rpc_language_pb.GetLanguageByUserIDResponse,
+    (request: rpc_language_pb.GetLanguageByUserIDRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_language_pb.GetLanguageByUserIDResponse.deserializeBinary
+  );
+
+  getLanguageByUserID(
+    request: rpc_language_pb.GetLanguageByUserIDRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_language_pb.GetLanguageByUserIDResponse>;
+
+  getLanguageByUserID(
+    request: rpc_language_pb.GetLanguageByUserIDRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.GetLanguageByUserIDResponse) => void): grpcWeb.ClientReadableStream<rpc_language_pb.GetLanguageByUserIDResponse>;
+
+  getLanguageByUserID(
+    request: rpc_language_pb.GetLanguageByUserIDRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_language_pb.GetLanguageByUserIDResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetLanguageByUserID',
+        request,
+        metadata || {},
+        this.methodDescriptorGetLanguageByUserID,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetLanguageByUserID',
+    request,
+    metadata || {},
+    this.methodDescriptorGetLanguageByUserID);
   }
 
   methodDescriptorfetchResort = new grpcWeb.MethodDescriptor(
@@ -1867,6 +2913,49 @@ export class PeakPalClient {
     this.methodDescriptorUpdateInstructor);
   }
 
+  methodDescriptorCancelInstructorApplication = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CancelInstructorApplication',
+    grpcWeb.MethodType.UNARY,
+    rpc_instructor_pb.CancelInstructorApplicationRequest,
+    rpc_instructor_pb.CancelInstructorApplicationResponse,
+    (request: rpc_instructor_pb.CancelInstructorApplicationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_instructor_pb.CancelInstructorApplicationResponse.deserializeBinary
+  );
+
+  cancelInstructorApplication(
+    request: rpc_instructor_pb.CancelInstructorApplicationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_pb.CancelInstructorApplicationResponse>;
+
+  cancelInstructorApplication(
+    request: rpc_instructor_pb.CancelInstructorApplicationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.CancelInstructorApplicationResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_pb.CancelInstructorApplicationResponse>;
+
+  cancelInstructorApplication(
+    request: rpc_instructor_pb.CancelInstructorApplicationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.CancelInstructorApplicationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CancelInstructorApplication',
+        request,
+        metadata || {},
+        this.methodDescriptorCancelInstructorApplication,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CancelInstructorApplication',
+    request,
+    metadata || {},
+    this.methodDescriptorCancelInstructorApplication);
+  }
+
   methodDescriptorUpdateApplicationStatus = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/UpdateApplicationStatus',
     grpcWeb.MethodType.UNARY,
@@ -1908,6 +2997,49 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorUpdateApplicationStatus);
+  }
+
+  methodDescriptorListInstructorApplications = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListInstructorApplications',
+    grpcWeb.MethodType.UNARY,
+    rpc_instructor_pb.ListInstructorApplicationsRequest,
+    rpc_instructor_pb.ListInstructorApplicationsResponse,
+    (request: rpc_instructor_pb.ListInstructorApplicationsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_instructor_pb.ListInstructorApplicationsResponse.deserializeBinary
+  );
+
+  listInstructorApplications(
+    request: rpc_instructor_pb.ListInstructorApplicationsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_pb.ListInstructorApplicationsResponse>;
+
+  listInstructorApplications(
+    request: rpc_instructor_pb.ListInstructorApplicationsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.ListInstructorApplicationsResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_pb.ListInstructorApplicationsResponse>;
+
+  listInstructorApplications(
+    request: rpc_instructor_pb.ListInstructorApplicationsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.ListInstructorApplicationsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListInstructorApplications',
+        request,
+        metadata || {},
+        this.methodDescriptorListInstructorApplications,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListInstructorApplications',
+    request,
+    metadata || {},
+    this.methodDescriptorListInstructorApplications);
   }
 
   methodDescriptorDeleteInstructor = new grpcWeb.MethodDescriptor(
@@ -2039,47 +3171,47 @@ export class PeakPalClient {
     this.methodDescriptorListInstructorCertificates);
   }
 
-  methodDescriptorUpdateInstructorCertApprove = new grpcWeb.MethodDescriptor(
-    '/pb.PeakPal/UpdateInstructorCertApprove',
+  methodDescriptorUpdateInstructorCertificateStatus = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateInstructorCertificateStatus',
     grpcWeb.MethodType.UNARY,
-    rpc_instructor_certificate_pb.UpdateInstructorCertApproveRequest,
-    rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse,
-    (request: rpc_instructor_certificate_pb.UpdateInstructorCertApproveRequest) => {
+    rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusRequest,
+    rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse,
+    (request: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusRequest) => {
       return request.serializeBinary();
     },
-    rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse.deserializeBinary
+    rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse.deserializeBinary
   );
 
-  updateInstructorCertApprove(
-    request: rpc_instructor_certificate_pb.UpdateInstructorCertApproveRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse>;
+  updateInstructorCertificateStatus(
+    request: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse>;
 
-  updateInstructorCertApprove(
-    request: rpc_instructor_certificate_pb.UpdateInstructorCertApproveRequest,
+  updateInstructorCertificateStatus(
+    request: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse>;
+               response: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse>;
 
-  updateInstructorCertApprove(
-    request: rpc_instructor_certificate_pb.UpdateInstructorCertApproveRequest,
+  updateInstructorCertificateStatus(
+    request: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: rpc_instructor_certificate_pb.UpdateInstructorCertApproveResponse) => void) {
+               response: rpc_instructor_certificate_pb.UpdateInstructorCertificateStatusResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/pb.PeakPal/UpdateInstructorCertApprove',
+          '/pb.PeakPal/UpdateInstructorCertificateStatus',
         request,
         metadata || {},
-        this.methodDescriptorUpdateInstructorCertApprove,
+        this.methodDescriptorUpdateInstructorCertificateStatus,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/pb.PeakPal/UpdateInstructorCertApprove',
+      '/pb.PeakPal/UpdateInstructorCertificateStatus',
     request,
     metadata || {},
-    this.methodDescriptorUpdateInstructorCertApprove);
+    this.methodDescriptorUpdateInstructorCertificateStatus);
   }
 
   methodDescriptorDeleteInstructorCertificate = new grpcWeb.MethodDescriptor(
@@ -2166,6 +3298,350 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorGetAllMessage);
+  }
+
+  methodDescriptorListConversations = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListConversations',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.ListConversationsRequest,
+    rpc_chat_system_pb.ListConversationsResponse,
+    (request: rpc_chat_system_pb.ListConversationsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.ListConversationsResponse.deserializeBinary
+  );
+
+  listConversations(
+    request: rpc_chat_system_pb.ListConversationsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.ListConversationsResponse>;
+
+  listConversations(
+    request: rpc_chat_system_pb.ListConversationsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ListConversationsResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.ListConversationsResponse>;
+
+  listConversations(
+    request: rpc_chat_system_pb.ListConversationsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ListConversationsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListConversations',
+        request,
+        metadata || {},
+        this.methodDescriptorListConversations,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListConversations',
+    request,
+    metadata || {},
+    this.methodDescriptorListConversations);
+  }
+
+  methodDescriptorMarkAsRead = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/MarkAsRead',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.MarkAsReadRequest,
+    rpc_chat_system_pb.MarkAsReadResponse,
+    (request: rpc_chat_system_pb.MarkAsReadRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.MarkAsReadResponse.deserializeBinary
+  );
+
+  markAsRead(
+    request: rpc_chat_system_pb.MarkAsReadRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.MarkAsReadResponse>;
+
+  markAsRead(
+    request: rpc_chat_system_pb.MarkAsReadRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.MarkAsReadResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.MarkAsReadResponse>;
+
+  markAsRead(
+    request: rpc_chat_system_pb.MarkAsReadRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.MarkAsReadResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/MarkAsRead',
+        request,
+        metadata || {},
+        this.methodDescriptorMarkAsRead,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/MarkAsRead',
+    request,
+    metadata || {},
+    this.methodDescriptorMarkAsRead);
+  }
+
+  methodDescriptorJoinCarpoolGroup = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/JoinCarpoolGroup',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.JoinCarpoolGroupRequest,
+    rpc_chat_system_pb.JoinCarpoolGroupResponse,
+    (request: rpc_chat_system_pb.JoinCarpoolGroupRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.JoinCarpoolGroupResponse.deserializeBinary
+  );
+
+  joinCarpoolGroup(
+    request: rpc_chat_system_pb.JoinCarpoolGroupRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.JoinCarpoolGroupResponse>;
+
+  joinCarpoolGroup(
+    request: rpc_chat_system_pb.JoinCarpoolGroupRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.JoinCarpoolGroupResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.JoinCarpoolGroupResponse>;
+
+  joinCarpoolGroup(
+    request: rpc_chat_system_pb.JoinCarpoolGroupRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.JoinCarpoolGroupResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/JoinCarpoolGroup',
+        request,
+        metadata || {},
+        this.methodDescriptorJoinCarpoolGroup,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/JoinCarpoolGroup',
+    request,
+    metadata || {},
+    this.methodDescriptorJoinCarpoolGroup);
+  }
+
+  methodDescriptorRevokeMessage = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RevokeMessage',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.RevokeMessageRequest,
+    rpc_chat_system_pb.RevokeMessageResponse,
+    (request: rpc_chat_system_pb.RevokeMessageRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.RevokeMessageResponse.deserializeBinary
+  );
+
+  revokeMessage(
+    request: rpc_chat_system_pb.RevokeMessageRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.RevokeMessageResponse>;
+
+  revokeMessage(
+    request: rpc_chat_system_pb.RevokeMessageRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.RevokeMessageResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.RevokeMessageResponse>;
+
+  revokeMessage(
+    request: rpc_chat_system_pb.RevokeMessageRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.RevokeMessageResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RevokeMessage',
+        request,
+        metadata || {},
+        this.methodDescriptorRevokeMessage,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RevokeMessage',
+    request,
+    metadata || {},
+    this.methodDescriptorRevokeMessage);
+  }
+
+  methodDescriptorDeleteConversation = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteConversation',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.DeleteConversationRequest,
+    rpc_chat_system_pb.DeleteConversationResponse,
+    (request: rpc_chat_system_pb.DeleteConversationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.DeleteConversationResponse.deserializeBinary
+  );
+
+  deleteConversation(
+    request: rpc_chat_system_pb.DeleteConversationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.DeleteConversationResponse>;
+
+  deleteConversation(
+    request: rpc_chat_system_pb.DeleteConversationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.DeleteConversationResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.DeleteConversationResponse>;
+
+  deleteConversation(
+    request: rpc_chat_system_pb.DeleteConversationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.DeleteConversationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteConversation',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteConversation,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteConversation',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteConversation);
+  }
+
+  methodDescriptorToggleConversationPin = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ToggleConversationPin',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.ToggleConversationPinRequest,
+    rpc_chat_system_pb.ToggleConversationPinResponse,
+    (request: rpc_chat_system_pb.ToggleConversationPinRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.ToggleConversationPinResponse.deserializeBinary
+  );
+
+  toggleConversationPin(
+    request: rpc_chat_system_pb.ToggleConversationPinRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.ToggleConversationPinResponse>;
+
+  toggleConversationPin(
+    request: rpc_chat_system_pb.ToggleConversationPinRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ToggleConversationPinResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.ToggleConversationPinResponse>;
+
+  toggleConversationPin(
+    request: rpc_chat_system_pb.ToggleConversationPinRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ToggleConversationPinResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ToggleConversationPin',
+        request,
+        metadata || {},
+        this.methodDescriptorToggleConversationPin,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ToggleConversationPin',
+    request,
+    metadata || {},
+    this.methodDescriptorToggleConversationPin);
+  }
+
+  methodDescriptorToggleConversationMute = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ToggleConversationMute',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.ToggleConversationMuteRequest,
+    rpc_chat_system_pb.ToggleConversationMuteResponse,
+    (request: rpc_chat_system_pb.ToggleConversationMuteRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.ToggleConversationMuteResponse.deserializeBinary
+  );
+
+  toggleConversationMute(
+    request: rpc_chat_system_pb.ToggleConversationMuteRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.ToggleConversationMuteResponse>;
+
+  toggleConversationMute(
+    request: rpc_chat_system_pb.ToggleConversationMuteRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ToggleConversationMuteResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.ToggleConversationMuteResponse>;
+
+  toggleConversationMute(
+    request: rpc_chat_system_pb.ToggleConversationMuteRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ToggleConversationMuteResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ToggleConversationMute',
+        request,
+        metadata || {},
+        this.methodDescriptorToggleConversationMute,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ToggleConversationMute',
+    request,
+    metadata || {},
+    this.methodDescriptorToggleConversationMute);
+  }
+
+  methodDescriptorClearChatHistory = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ClearChatHistory',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.ClearChatHistoryRequest,
+    rpc_chat_system_pb.ClearChatHistoryResponse,
+    (request: rpc_chat_system_pb.ClearChatHistoryRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.ClearChatHistoryResponse.deserializeBinary
+  );
+
+  clearChatHistory(
+    request: rpc_chat_system_pb.ClearChatHistoryRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.ClearChatHistoryResponse>;
+
+  clearChatHistory(
+    request: rpc_chat_system_pb.ClearChatHistoryRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ClearChatHistoryResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.ClearChatHistoryResponse>;
+
+  clearChatHistory(
+    request: rpc_chat_system_pb.ClearChatHistoryRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.ClearChatHistoryResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ClearChatHistory',
+        request,
+        metadata || {},
+        this.methodDescriptorClearChatHistory,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ClearChatHistory',
+    request,
+    metadata || {},
+    this.methodDescriptorClearChatHistory);
   }
 
   methodDescriptorGetLesson = new grpcWeb.MethodDescriptor(
@@ -2340,6 +3816,49 @@ export class PeakPalClient {
     this.methodDescriptorListLessons);
   }
 
+  methodDescriptorMarkLessonAsRead = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/MarkLessonAsRead',
+    grpcWeb.MethodType.UNARY,
+    rpc_lesson_pb.MarkLessonAsReadRequest,
+    rpc_lesson_pb.MarkLessonAsReadResponse,
+    (request: rpc_lesson_pb.MarkLessonAsReadRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_lesson_pb.MarkLessonAsReadResponse.deserializeBinary
+  );
+
+  markLessonAsRead(
+    request: rpc_lesson_pb.MarkLessonAsReadRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_lesson_pb.MarkLessonAsReadResponse>;
+
+  markLessonAsRead(
+    request: rpc_lesson_pb.MarkLessonAsReadRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_lesson_pb.MarkLessonAsReadResponse) => void): grpcWeb.ClientReadableStream<rpc_lesson_pb.MarkLessonAsReadResponse>;
+
+  markLessonAsRead(
+    request: rpc_lesson_pb.MarkLessonAsReadRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_lesson_pb.MarkLessonAsReadResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/MarkLessonAsRead',
+        request,
+        metadata || {},
+        this.methodDescriptorMarkLessonAsRead,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/MarkLessonAsRead',
+    request,
+    metadata || {},
+    this.methodDescriptorMarkLessonAsRead);
+  }
+
   methodDescriptorCreateLessonComment = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/CreateLessonComment',
     grpcWeb.MethodType.UNARY,
@@ -2424,6 +3943,49 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorListLessonComments);
+  }
+
+  methodDescriptorDeleteLessonComment = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteLessonComment',
+    grpcWeb.MethodType.UNARY,
+    rpc_lesson_pb.DeleteLessonCommentRequest,
+    rpc_lesson_pb.DeleteLessonCommentResponse,
+    (request: rpc_lesson_pb.DeleteLessonCommentRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_lesson_pb.DeleteLessonCommentResponse.deserializeBinary
+  );
+
+  deleteLessonComment(
+    request: rpc_lesson_pb.DeleteLessonCommentRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_lesson_pb.DeleteLessonCommentResponse>;
+
+  deleteLessonComment(
+    request: rpc_lesson_pb.DeleteLessonCommentRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_lesson_pb.DeleteLessonCommentResponse) => void): grpcWeb.ClientReadableStream<rpc_lesson_pb.DeleteLessonCommentResponse>;
+
+  deleteLessonComment(
+    request: rpc_lesson_pb.DeleteLessonCommentRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_lesson_pb.DeleteLessonCommentResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteLessonComment',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteLessonComment,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteLessonComment',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteLessonComment);
   }
 
   methodDescriptorCreateTokenProduct = new grpcWeb.MethodDescriptor(
@@ -2641,6 +4203,49 @@ export class PeakPalClient {
     this.methodDescriptorInitiateTokenPurchase);
   }
 
+  methodDescriptorVerifyStripeOrder = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/VerifyStripeOrder',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.VerifyStripeOrderRequest,
+    rpc_token_system_pb.VerifyStripeOrderResponse,
+    (request: rpc_token_system_pb.VerifyStripeOrderRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.VerifyStripeOrderResponse.deserializeBinary
+  );
+
+  verifyStripeOrder(
+    request: rpc_token_system_pb.VerifyStripeOrderRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.VerifyStripeOrderResponse>;
+
+  verifyStripeOrder(
+    request: rpc_token_system_pb.VerifyStripeOrderRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.VerifyStripeOrderResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.VerifyStripeOrderResponse>;
+
+  verifyStripeOrder(
+    request: rpc_token_system_pb.VerifyStripeOrderRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.VerifyStripeOrderResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/VerifyStripeOrder',
+        request,
+        metadata || {},
+        this.methodDescriptorVerifyStripeOrder,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/VerifyStripeOrder',
+    request,
+    metadata || {},
+    this.methodDescriptorVerifyStripeOrder);
+  }
+
   methodDescriptorVerifyReceipt = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/VerifyReceipt',
     grpcWeb.MethodType.UNARY,
@@ -2682,6 +4287,92 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorVerifyReceipt);
+  }
+
+  methodDescriptorHandleAppleNotification = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/HandleAppleNotification',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.HandleAppleNotificationRequest,
+    rpc_token_system_pb.HandleAppleNotificationResponse,
+    (request: rpc_token_system_pb.HandleAppleNotificationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.HandleAppleNotificationResponse.deserializeBinary
+  );
+
+  handleAppleNotification(
+    request: rpc_token_system_pb.HandleAppleNotificationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.HandleAppleNotificationResponse>;
+
+  handleAppleNotification(
+    request: rpc_token_system_pb.HandleAppleNotificationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.HandleAppleNotificationResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.HandleAppleNotificationResponse>;
+
+  handleAppleNotification(
+    request: rpc_token_system_pb.HandleAppleNotificationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.HandleAppleNotificationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/HandleAppleNotification',
+        request,
+        metadata || {},
+        this.methodDescriptorHandleAppleNotification,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/HandleAppleNotification',
+    request,
+    metadata || {},
+    this.methodDescriptorHandleAppleNotification);
+  }
+
+  methodDescriptorHandleGoogleNotification = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/HandleGoogleNotification',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.HandleGoogleNotificationRequest,
+    rpc_token_system_pb.HandleGoogleNotificationResponse,
+    (request: rpc_token_system_pb.HandleGoogleNotificationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.HandleGoogleNotificationResponse.deserializeBinary
+  );
+
+  handleGoogleNotification(
+    request: rpc_token_system_pb.HandleGoogleNotificationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.HandleGoogleNotificationResponse>;
+
+  handleGoogleNotification(
+    request: rpc_token_system_pb.HandleGoogleNotificationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.HandleGoogleNotificationResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.HandleGoogleNotificationResponse>;
+
+  handleGoogleNotification(
+    request: rpc_token_system_pb.HandleGoogleNotificationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.HandleGoogleNotificationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/HandleGoogleNotification',
+        request,
+        metadata || {},
+        this.methodDescriptorHandleGoogleNotification,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/HandleGoogleNotification',
+    request,
+    metadata || {},
+    this.methodDescriptorHandleGoogleNotification);
   }
 
   methodDescriptorCancelTokenPurchase = new grpcWeb.MethodDescriptor(
@@ -2727,47 +4418,1122 @@ export class PeakPalClient {
     this.methodDescriptorCancelTokenPurchase);
   }
 
-  methodDescriptorPaypalPayout = new grpcWeb.MethodDescriptor(
-    '/pb.PeakPal/PaypalPayout',
+  methodDescriptorAdminListTokenPurchases = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListTokenPurchases',
     grpcWeb.MethodType.UNARY,
-    google_protobuf_empty_pb.Empty,
-    rpc_token_system_pb.PayoutResponse,
-    (request: google_protobuf_empty_pb.Empty) => {
+    rpc_token_system_pb.AdminListTokenPurchasesRequest,
+    rpc_token_system_pb.AdminListTokenPurchasesResponse,
+    (request: rpc_token_system_pb.AdminListTokenPurchasesRequest) => {
       return request.serializeBinary();
     },
-    rpc_token_system_pb.PayoutResponse.deserializeBinary
+    rpc_token_system_pb.AdminListTokenPurchasesResponse.deserializeBinary
   );
 
-  paypalPayout(
-    request: google_protobuf_empty_pb.Empty,
-    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.PayoutResponse>;
+  adminListTokenPurchases(
+    request: rpc_token_system_pb.AdminListTokenPurchasesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminListTokenPurchasesResponse>;
 
-  paypalPayout(
-    request: google_protobuf_empty_pb.Empty,
+  adminListTokenPurchases(
+    request: rpc_token_system_pb.AdminListTokenPurchasesRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: rpc_token_system_pb.PayoutResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.PayoutResponse>;
+               response: rpc_token_system_pb.AdminListTokenPurchasesResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminListTokenPurchasesResponse>;
 
-  paypalPayout(
-    request: google_protobuf_empty_pb.Empty,
+  adminListTokenPurchases(
+    request: rpc_token_system_pb.AdminListTokenPurchasesRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: rpc_token_system_pb.PayoutResponse) => void) {
+               response: rpc_token_system_pb.AdminListTokenPurchasesResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/pb.PeakPal/PaypalPayout',
+          '/pb.PeakPal/AdminListTokenPurchases',
         request,
         metadata || {},
-        this.methodDescriptorPaypalPayout,
+        this.methodDescriptorAdminListTokenPurchases,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/pb.PeakPal/PaypalPayout',
+      '/pb.PeakPal/AdminListTokenPurchases',
     request,
     metadata || {},
-    this.methodDescriptorPaypalPayout);
+    this.methodDescriptorAdminListTokenPurchases);
+  }
+
+  methodDescriptorAdminListIAPNotifications = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListIAPNotifications',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AdminListIAPNotificationsRequest,
+    rpc_token_system_pb.AdminListIAPNotificationsResponse,
+    (request: rpc_token_system_pb.AdminListIAPNotificationsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.AdminListIAPNotificationsResponse.deserializeBinary
+  );
+
+  adminListIAPNotifications(
+    request: rpc_token_system_pb.AdminListIAPNotificationsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminListIAPNotificationsResponse>;
+
+  adminListIAPNotifications(
+    request: rpc_token_system_pb.AdminListIAPNotificationsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminListIAPNotificationsResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminListIAPNotificationsResponse>;
+
+  adminListIAPNotifications(
+    request: rpc_token_system_pb.AdminListIAPNotificationsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminListIAPNotificationsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListIAPNotifications',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListIAPNotifications,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListIAPNotifications',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListIAPNotifications);
+  }
+
+  methodDescriptorAdminAdjustUserBalance = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminAdjustUserBalance',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AdminAdjustUserBalanceRequest,
+    rpc_token_system_pb.AdminAdjustUserBalanceResponse,
+    (request: rpc_token_system_pb.AdminAdjustUserBalanceRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.AdminAdjustUserBalanceResponse.deserializeBinary
+  );
+
+  adminAdjustUserBalance(
+    request: rpc_token_system_pb.AdminAdjustUserBalanceRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminAdjustUserBalanceResponse>;
+
+  adminAdjustUserBalance(
+    request: rpc_token_system_pb.AdminAdjustUserBalanceRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminAdjustUserBalanceResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminAdjustUserBalanceResponse>;
+
+  adminAdjustUserBalance(
+    request: rpc_token_system_pb.AdminAdjustUserBalanceRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminAdjustUserBalanceResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminAdjustUserBalance',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminAdjustUserBalance,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminAdjustUserBalance',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminAdjustUserBalance);
+  }
+
+  methodDescriptorListTransactions = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListTransactions',
+    grpcWeb.MethodType.UNARY,
+    rpc_transaction_pb.ListTransactionsRequest,
+    rpc_transaction_pb.ListTransactionsResponse,
+    (request: rpc_transaction_pb.ListTransactionsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_transaction_pb.ListTransactionsResponse.deserializeBinary
+  );
+
+  listTransactions(
+    request: rpc_transaction_pb.ListTransactionsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_transaction_pb.ListTransactionsResponse>;
+
+  listTransactions(
+    request: rpc_transaction_pb.ListTransactionsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.ListTransactionsResponse) => void): grpcWeb.ClientReadableStream<rpc_transaction_pb.ListTransactionsResponse>;
+
+  listTransactions(
+    request: rpc_transaction_pb.ListTransactionsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.ListTransactionsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListTransactions',
+        request,
+        metadata || {},
+        this.methodDescriptorListTransactions,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListTransactions',
+    request,
+    metadata || {},
+    this.methodDescriptorListTransactions);
+  }
+
+  methodDescriptorGetTransaction = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetTransaction',
+    grpcWeb.MethodType.UNARY,
+    rpc_transaction_pb.GetTransactionRequest,
+    rpc_transaction_pb.GetTransactionResponse,
+    (request: rpc_transaction_pb.GetTransactionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_transaction_pb.GetTransactionResponse.deserializeBinary
+  );
+
+  getTransaction(
+    request: rpc_transaction_pb.GetTransactionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_transaction_pb.GetTransactionResponse>;
+
+  getTransaction(
+    request: rpc_transaction_pb.GetTransactionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.GetTransactionResponse) => void): grpcWeb.ClientReadableStream<rpc_transaction_pb.GetTransactionResponse>;
+
+  getTransaction(
+    request: rpc_transaction_pb.GetTransactionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.GetTransactionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetTransaction',
+        request,
+        metadata || {},
+        this.methodDescriptorGetTransaction,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetTransaction',
+    request,
+    metadata || {},
+    this.methodDescriptorGetTransaction);
+  }
+
+  methodDescriptorGetUserLedger = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetUserLedger',
+    grpcWeb.MethodType.UNARY,
+    rpc_transaction_pb.GetUserLedgerRequest,
+    rpc_transaction_pb.GetUserLedgerResponse,
+    (request: rpc_transaction_pb.GetUserLedgerRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_transaction_pb.GetUserLedgerResponse.deserializeBinary
+  );
+
+  getUserLedger(
+    request: rpc_transaction_pb.GetUserLedgerRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_transaction_pb.GetUserLedgerResponse>;
+
+  getUserLedger(
+    request: rpc_transaction_pb.GetUserLedgerRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.GetUserLedgerResponse) => void): grpcWeb.ClientReadableStream<rpc_transaction_pb.GetUserLedgerResponse>;
+
+  getUserLedger(
+    request: rpc_transaction_pb.GetUserLedgerRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_transaction_pb.GetUserLedgerResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetUserLedger',
+        request,
+        metadata || {},
+        this.methodDescriptorGetUserLedger,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetUserLedger',
+    request,
+    metadata || {},
+    this.methodDescriptorGetUserLedger);
+  }
+
+  methodDescriptorListPlatformEarnings = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListPlatformEarnings',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.ListPlatformEarningsRequest,
+    rpc_platform_earning_pb.ListPlatformEarningsResponse,
+    (request: rpc_platform_earning_pb.ListPlatformEarningsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.ListPlatformEarningsResponse.deserializeBinary
+  );
+
+  listPlatformEarnings(
+    request: rpc_platform_earning_pb.ListPlatformEarningsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.ListPlatformEarningsResponse>;
+
+  listPlatformEarnings(
+    request: rpc_platform_earning_pb.ListPlatformEarningsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListPlatformEarningsResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.ListPlatformEarningsResponse>;
+
+  listPlatformEarnings(
+    request: rpc_platform_earning_pb.ListPlatformEarningsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListPlatformEarningsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListPlatformEarnings',
+        request,
+        metadata || {},
+        this.methodDescriptorListPlatformEarnings,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListPlatformEarnings',
+    request,
+    metadata || {},
+    this.methodDescriptorListPlatformEarnings);
+  }
+
+  methodDescriptorGetPlatformEarningsSummary = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetPlatformEarningsSummary',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.GetPlatformEarningsSummaryRequest,
+    rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse,
+    (request: rpc_platform_earning_pb.GetPlatformEarningsSummaryRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse.deserializeBinary
+  );
+
+  getPlatformEarningsSummary(
+    request: rpc_platform_earning_pb.GetPlatformEarningsSummaryRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse>;
+
+  getPlatformEarningsSummary(
+    request: rpc_platform_earning_pb.GetPlatformEarningsSummaryRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse>;
+
+  getPlatformEarningsSummary(
+    request: rpc_platform_earning_pb.GetPlatformEarningsSummaryRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.GetPlatformEarningsSummaryResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetPlatformEarningsSummary',
+        request,
+        metadata || {},
+        this.methodDescriptorGetPlatformEarningsSummary,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetPlatformEarningsSummary',
+    request,
+    metadata || {},
+    this.methodDescriptorGetPlatformEarningsSummary);
+  }
+
+  methodDescriptorCreatePlatformWithdrawal = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreatePlatformWithdrawal',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.CreatePlatformWithdrawalRequest,
+    rpc_platform_earning_pb.CreatePlatformWithdrawalResponse,
+    (request: rpc_platform_earning_pb.CreatePlatformWithdrawalRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.CreatePlatformWithdrawalResponse.deserializeBinary
+  );
+
+  createPlatformWithdrawal(
+    request: rpc_platform_earning_pb.CreatePlatformWithdrawalRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.CreatePlatformWithdrawalResponse>;
+
+  createPlatformWithdrawal(
+    request: rpc_platform_earning_pb.CreatePlatformWithdrawalRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.CreatePlatformWithdrawalResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.CreatePlatformWithdrawalResponse>;
+
+  createPlatformWithdrawal(
+    request: rpc_platform_earning_pb.CreatePlatformWithdrawalRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.CreatePlatformWithdrawalResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreatePlatformWithdrawal',
+        request,
+        metadata || {},
+        this.methodDescriptorCreatePlatformWithdrawal,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreatePlatformWithdrawal',
+    request,
+    metadata || {},
+    this.methodDescriptorCreatePlatformWithdrawal);
+  }
+
+  methodDescriptorRecordPlatformBankCashMovement = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RecordPlatformBankCashMovement',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.RecordPlatformBankCashMovementRequest,
+    rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse,
+    (request: rpc_platform_earning_pb.RecordPlatformBankCashMovementRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse.deserializeBinary
+  );
+
+  recordPlatformBankCashMovement(
+    request: rpc_platform_earning_pb.RecordPlatformBankCashMovementRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse>;
+
+  recordPlatformBankCashMovement(
+    request: rpc_platform_earning_pb.RecordPlatformBankCashMovementRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse>;
+
+  recordPlatformBankCashMovement(
+    request: rpc_platform_earning_pb.RecordPlatformBankCashMovementRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.RecordPlatformBankCashMovementResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RecordPlatformBankCashMovement',
+        request,
+        metadata || {},
+        this.methodDescriptorRecordPlatformBankCashMovement,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RecordPlatformBankCashMovement',
+    request,
+    metadata || {},
+    this.methodDescriptorRecordPlatformBankCashMovement);
+  }
+
+  methodDescriptorListPlatformBankCashMovements = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListPlatformBankCashMovements',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.ListPlatformBankCashMovementsRequest,
+    rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse,
+    (request: rpc_platform_earning_pb.ListPlatformBankCashMovementsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse.deserializeBinary
+  );
+
+  listPlatformBankCashMovements(
+    request: rpc_platform_earning_pb.ListPlatformBankCashMovementsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse>;
+
+  listPlatformBankCashMovements(
+    request: rpc_platform_earning_pb.ListPlatformBankCashMovementsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse>;
+
+  listPlatformBankCashMovements(
+    request: rpc_platform_earning_pb.ListPlatformBankCashMovementsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListPlatformBankCashMovementsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListPlatformBankCashMovements',
+        request,
+        metadata || {},
+        this.methodDescriptorListPlatformBankCashMovements,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListPlatformBankCashMovements',
+    request,
+    metadata || {},
+    this.methodDescriptorListPlatformBankCashMovements);
+  }
+
+  methodDescriptorRunFinancialReconciliation = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RunFinancialReconciliation',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.RunFinancialReconciliationRequest,
+    rpc_platform_earning_pb.RunFinancialReconciliationResponse,
+    (request: rpc_platform_earning_pb.RunFinancialReconciliationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.RunFinancialReconciliationResponse.deserializeBinary
+  );
+
+  runFinancialReconciliation(
+    request: rpc_platform_earning_pb.RunFinancialReconciliationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.RunFinancialReconciliationResponse>;
+
+  runFinancialReconciliation(
+    request: rpc_platform_earning_pb.RunFinancialReconciliationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.RunFinancialReconciliationResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.RunFinancialReconciliationResponse>;
+
+  runFinancialReconciliation(
+    request: rpc_platform_earning_pb.RunFinancialReconciliationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.RunFinancialReconciliationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RunFinancialReconciliation',
+        request,
+        metadata || {},
+        this.methodDescriptorRunFinancialReconciliation,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RunFinancialReconciliation',
+    request,
+    metadata || {},
+    this.methodDescriptorRunFinancialReconciliation);
+  }
+
+  methodDescriptorGetTrialBalanceReport = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetTrialBalanceReport',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.GetTrialBalanceReportRequest,
+    rpc_platform_earning_pb.GetTrialBalanceReportResponse,
+    (request: rpc_platform_earning_pb.GetTrialBalanceReportRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.GetTrialBalanceReportResponse.deserializeBinary
+  );
+
+  getTrialBalanceReport(
+    request: rpc_platform_earning_pb.GetTrialBalanceReportRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.GetTrialBalanceReportResponse>;
+
+  getTrialBalanceReport(
+    request: rpc_platform_earning_pb.GetTrialBalanceReportRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.GetTrialBalanceReportResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.GetTrialBalanceReportResponse>;
+
+  getTrialBalanceReport(
+    request: rpc_platform_earning_pb.GetTrialBalanceReportRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.GetTrialBalanceReportResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetTrialBalanceReport',
+        request,
+        metadata || {},
+        this.methodDescriptorGetTrialBalanceReport,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetTrialBalanceReport',
+    request,
+    metadata || {},
+    this.methodDescriptorGetTrialBalanceReport);
+  }
+
+  methodDescriptorImportProviderStatement = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ImportProviderStatement',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.ImportProviderStatementRequest,
+    rpc_platform_earning_pb.ImportProviderStatementResponse,
+    (request: rpc_platform_earning_pb.ImportProviderStatementRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.ImportProviderStatementResponse.deserializeBinary
+  );
+
+  importProviderStatement(
+    request: rpc_platform_earning_pb.ImportProviderStatementRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.ImportProviderStatementResponse>;
+
+  importProviderStatement(
+    request: rpc_platform_earning_pb.ImportProviderStatementRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ImportProviderStatementResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.ImportProviderStatementResponse>;
+
+  importProviderStatement(
+    request: rpc_platform_earning_pb.ImportProviderStatementRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ImportProviderStatementResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ImportProviderStatement',
+        request,
+        metadata || {},
+        this.methodDescriptorImportProviderStatement,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ImportProviderStatement',
+    request,
+    metadata || {},
+    this.methodDescriptorImportProviderStatement);
+  }
+
+  methodDescriptorListProviderStatements = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListProviderStatements',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.ListProviderStatementsRequest,
+    rpc_platform_earning_pb.ListProviderStatementsResponse,
+    (request: rpc_platform_earning_pb.ListProviderStatementsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.ListProviderStatementsResponse.deserializeBinary
+  );
+
+  listProviderStatements(
+    request: rpc_platform_earning_pb.ListProviderStatementsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.ListProviderStatementsResponse>;
+
+  listProviderStatements(
+    request: rpc_platform_earning_pb.ListProviderStatementsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListProviderStatementsResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.ListProviderStatementsResponse>;
+
+  listProviderStatements(
+    request: rpc_platform_earning_pb.ListProviderStatementsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListProviderStatementsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListProviderStatements',
+        request,
+        metadata || {},
+        this.methodDescriptorListProviderStatements,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListProviderStatements',
+    request,
+    metadata || {},
+    this.methodDescriptorListProviderStatements);
+  }
+
+  methodDescriptorListProviderStatementLines = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListProviderStatementLines',
+    grpcWeb.MethodType.UNARY,
+    rpc_platform_earning_pb.ListProviderStatementLinesRequest,
+    rpc_platform_earning_pb.ListProviderStatementLinesResponse,
+    (request: rpc_platform_earning_pb.ListProviderStatementLinesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_platform_earning_pb.ListProviderStatementLinesResponse.deserializeBinary
+  );
+
+  listProviderStatementLines(
+    request: rpc_platform_earning_pb.ListProviderStatementLinesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_platform_earning_pb.ListProviderStatementLinesResponse>;
+
+  listProviderStatementLines(
+    request: rpc_platform_earning_pb.ListProviderStatementLinesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListProviderStatementLinesResponse) => void): grpcWeb.ClientReadableStream<rpc_platform_earning_pb.ListProviderStatementLinesResponse>;
+
+  listProviderStatementLines(
+    request: rpc_platform_earning_pb.ListProviderStatementLinesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_platform_earning_pb.ListProviderStatementLinesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListProviderStatementLines',
+        request,
+        metadata || {},
+        this.methodDescriptorListProviderStatementLines,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListProviderStatementLines',
+    request,
+    metadata || {},
+    this.methodDescriptorListProviderStatementLines);
+  }
+
+  methodDescriptorAdminListBalanceAdjustments = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListBalanceAdjustments',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AdminListBalanceAdjustmentsRequest,
+    rpc_token_system_pb.AdminListBalanceAdjustmentsResponse,
+    (request: rpc_token_system_pb.AdminListBalanceAdjustmentsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.AdminListBalanceAdjustmentsResponse.deserializeBinary
+  );
+
+  adminListBalanceAdjustments(
+    request: rpc_token_system_pb.AdminListBalanceAdjustmentsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminListBalanceAdjustmentsResponse>;
+
+  adminListBalanceAdjustments(
+    request: rpc_token_system_pb.AdminListBalanceAdjustmentsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminListBalanceAdjustmentsResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminListBalanceAdjustmentsResponse>;
+
+  adminListBalanceAdjustments(
+    request: rpc_token_system_pb.AdminListBalanceAdjustmentsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminListBalanceAdjustmentsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListBalanceAdjustments',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListBalanceAdjustments,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListBalanceAdjustments',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListBalanceAdjustments);
+  }
+
+  methodDescriptorAdminReplayIAPNotification = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminReplayIAPNotification',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AdminReplayIAPNotificationRequest,
+    rpc_token_system_pb.AdminReplayIAPNotificationResponse,
+    (request: rpc_token_system_pb.AdminReplayIAPNotificationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.AdminReplayIAPNotificationResponse.deserializeBinary
+  );
+
+  adminReplayIAPNotification(
+    request: rpc_token_system_pb.AdminReplayIAPNotificationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminReplayIAPNotificationResponse>;
+
+  adminReplayIAPNotification(
+    request: rpc_token_system_pb.AdminReplayIAPNotificationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminReplayIAPNotificationResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminReplayIAPNotificationResponse>;
+
+  adminReplayIAPNotification(
+    request: rpc_token_system_pb.AdminReplayIAPNotificationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminReplayIAPNotificationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminReplayIAPNotification',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminReplayIAPNotification,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminReplayIAPNotification',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminReplayIAPNotification);
+  }
+
+  methodDescriptorAdminTriggerPayoutReconciliation = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminTriggerPayoutReconciliation',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AdminTriggerPayoutReconciliationRequest,
+    rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse,
+    (request: rpc_token_system_pb.AdminTriggerPayoutReconciliationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse.deserializeBinary
+  );
+
+  adminTriggerPayoutReconciliation(
+    request: rpc_token_system_pb.AdminTriggerPayoutReconciliationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse>;
+
+  adminTriggerPayoutReconciliation(
+    request: rpc_token_system_pb.AdminTriggerPayoutReconciliationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse>;
+
+  adminTriggerPayoutReconciliation(
+    request: rpc_token_system_pb.AdminTriggerPayoutReconciliationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.AdminTriggerPayoutReconciliationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminTriggerPayoutReconciliation',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminTriggerPayoutReconciliation,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminTriggerPayoutReconciliation',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminTriggerPayoutReconciliation);
+  }
+
+  methodDescriptorEstimatePayoutFee = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/EstimatePayoutFee',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.EstimatePayoutFeeRequest,
+    rpc_token_system_pb.EstimatePayoutFeeResponse,
+    (request: rpc_token_system_pb.EstimatePayoutFeeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.EstimatePayoutFeeResponse.deserializeBinary
+  );
+
+  estimatePayoutFee(
+    request: rpc_token_system_pb.EstimatePayoutFeeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.EstimatePayoutFeeResponse>;
+
+  estimatePayoutFee(
+    request: rpc_token_system_pb.EstimatePayoutFeeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.EstimatePayoutFeeResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.EstimatePayoutFeeResponse>;
+
+  estimatePayoutFee(
+    request: rpc_token_system_pb.EstimatePayoutFeeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.EstimatePayoutFeeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/EstimatePayoutFee',
+        request,
+        metadata || {},
+        this.methodDescriptorEstimatePayoutFee,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/EstimatePayoutFee',
+    request,
+    metadata || {},
+    this.methodDescriptorEstimatePayoutFee);
+  }
+
+  methodDescriptorRequestPayout = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RequestPayout',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.RequestPayoutRequest,
+    rpc_token_system_pb.RequestPayoutResponse,
+    (request: rpc_token_system_pb.RequestPayoutRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.RequestPayoutResponse.deserializeBinary
+  );
+
+  requestPayout(
+    request: rpc_token_system_pb.RequestPayoutRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.RequestPayoutResponse>;
+
+  requestPayout(
+    request: rpc_token_system_pb.RequestPayoutRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.RequestPayoutResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.RequestPayoutResponse>;
+
+  requestPayout(
+    request: rpc_token_system_pb.RequestPayoutRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.RequestPayoutResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RequestPayout',
+        request,
+        metadata || {},
+        this.methodDescriptorRequestPayout,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RequestPayout',
+    request,
+    metadata || {},
+    this.methodDescriptorRequestPayout);
+  }
+
+  methodDescriptorGetPayoutList = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetPayoutList',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.GetPayoutListRequest,
+    rpc_token_system_pb.GetPayoutListResponse,
+    (request: rpc_token_system_pb.GetPayoutListRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.GetPayoutListResponse.deserializeBinary
+  );
+
+  getPayoutList(
+    request: rpc_token_system_pb.GetPayoutListRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.GetPayoutListResponse>;
+
+  getPayoutList(
+    request: rpc_token_system_pb.GetPayoutListRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutListResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.GetPayoutListResponse>;
+
+  getPayoutList(
+    request: rpc_token_system_pb.GetPayoutListRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutListResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetPayoutList',
+        request,
+        metadata || {},
+        this.methodDescriptorGetPayoutList,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetPayoutList',
+    request,
+    metadata || {},
+    this.methodDescriptorGetPayoutList);
+  }
+
+  methodDescriptorApprovePayout = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ApprovePayout',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.ApprovePayoutRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_token_system_pb.ApprovePayoutRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  approvePayout(
+    request: rpc_token_system_pb.ApprovePayoutRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  approvePayout(
+    request: rpc_token_system_pb.ApprovePayoutRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  approvePayout(
+    request: rpc_token_system_pb.ApprovePayoutRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ApprovePayout',
+        request,
+        metadata || {},
+        this.methodDescriptorApprovePayout,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ApprovePayout',
+    request,
+    metadata || {},
+    this.methodDescriptorApprovePayout);
+  }
+
+  methodDescriptorRejectPayout = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RejectPayout',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.RejectPayoutRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_token_system_pb.RejectPayoutRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  rejectPayout(
+    request: rpc_token_system_pb.RejectPayoutRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  rejectPayout(
+    request: rpc_token_system_pb.RejectPayoutRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  rejectPayout(
+    request: rpc_token_system_pb.RejectPayoutRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RejectPayout',
+        request,
+        metadata || {},
+        this.methodDescriptorRejectPayout,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RejectPayout',
+    request,
+    metadata || {},
+    this.methodDescriptorRejectPayout);
+  }
+
+  methodDescriptorGetPayoutBatchSummary = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetPayoutBatchSummary',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.GetPayoutBatchSummaryRequest,
+    rpc_token_system_pb.GetPayoutBatchSummaryResponse,
+    (request: rpc_token_system_pb.GetPayoutBatchSummaryRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.GetPayoutBatchSummaryResponse.deserializeBinary
+  );
+
+  getPayoutBatchSummary(
+    request: rpc_token_system_pb.GetPayoutBatchSummaryRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.GetPayoutBatchSummaryResponse>;
+
+  getPayoutBatchSummary(
+    request: rpc_token_system_pb.GetPayoutBatchSummaryRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutBatchSummaryResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.GetPayoutBatchSummaryResponse>;
+
+  getPayoutBatchSummary(
+    request: rpc_token_system_pb.GetPayoutBatchSummaryRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutBatchSummaryResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetPayoutBatchSummary',
+        request,
+        metadata || {},
+        this.methodDescriptorGetPayoutBatchSummary,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetPayoutBatchSummary',
+    request,
+    metadata || {},
+    this.methodDescriptorGetPayoutBatchSummary);
+  }
+
+  methodDescriptorExecuteBatchPayout = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ExecuteBatchPayout',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.ExecuteBatchPayoutRequest,
+    rpc_token_system_pb.ExecuteBatchPayoutResponse,
+    (request: rpc_token_system_pb.ExecuteBatchPayoutRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.ExecuteBatchPayoutResponse.deserializeBinary
+  );
+
+  executeBatchPayout(
+    request: rpc_token_system_pb.ExecuteBatchPayoutRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.ExecuteBatchPayoutResponse>;
+
+  executeBatchPayout(
+    request: rpc_token_system_pb.ExecuteBatchPayoutRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.ExecuteBatchPayoutResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.ExecuteBatchPayoutResponse>;
+
+  executeBatchPayout(
+    request: rpc_token_system_pb.ExecuteBatchPayoutRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.ExecuteBatchPayoutResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ExecuteBatchPayout',
+        request,
+        metadata || {},
+        this.methodDescriptorExecuteBatchPayout,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ExecuteBatchPayout',
+    request,
+    metadata || {},
+    this.methodDescriptorExecuteBatchPayout);
   }
 
   methodDescriptorLinkPaypalAccount = new grpcWeb.MethodDescriptor(
@@ -2856,6 +5622,135 @@ export class PeakPalClient {
     this.methodDescriptorUnlinkPaypalAccount);
   }
 
+  methodDescriptorUnlinkStripeAccount = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UnlinkStripeAccount',
+    grpcWeb.MethodType.UNARY,
+    google_protobuf_empty_pb.Empty,
+    google_protobuf_empty_pb.Empty,
+    (request: google_protobuf_empty_pb.Empty) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  unlinkStripeAccount(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  unlinkStripeAccount(
+    request: google_protobuf_empty_pb.Empty,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  unlinkStripeAccount(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UnlinkStripeAccount',
+        request,
+        metadata || {},
+        this.methodDescriptorUnlinkStripeAccount,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UnlinkStripeAccount',
+    request,
+    metadata || {},
+    this.methodDescriptorUnlinkStripeAccount);
+  }
+
+  methodDescriptorGetPayoutAccountSummary = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetPayoutAccountSummary',
+    grpcWeb.MethodType.UNARY,
+    google_protobuf_empty_pb.Empty,
+    rpc_token_system_pb.GetPayoutAccountSummaryResponse,
+    (request: google_protobuf_empty_pb.Empty) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.GetPayoutAccountSummaryResponse.deserializeBinary
+  );
+
+  getPayoutAccountSummary(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.GetPayoutAccountSummaryResponse>;
+
+  getPayoutAccountSummary(
+    request: google_protobuf_empty_pb.Empty,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutAccountSummaryResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.GetPayoutAccountSummaryResponse>;
+
+  getPayoutAccountSummary(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetPayoutAccountSummaryResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetPayoutAccountSummary',
+        request,
+        metadata || {},
+        this.methodDescriptorGetPayoutAccountSummary,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetPayoutAccountSummary',
+    request,
+    metadata || {},
+    this.methodDescriptorGetPayoutAccountSummary);
+  }
+
+  methodDescriptorAcceptInstructorPayoutAgreement = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AcceptInstructorPayoutAgreement',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.AcceptInstructorPayoutAgreementRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_token_system_pb.AcceptInstructorPayoutAgreementRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  acceptInstructorPayoutAgreement(
+    request: rpc_token_system_pb.AcceptInstructorPayoutAgreementRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  acceptInstructorPayoutAgreement(
+    request: rpc_token_system_pb.AcceptInstructorPayoutAgreementRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  acceptInstructorPayoutAgreement(
+    request: rpc_token_system_pb.AcceptInstructorPayoutAgreementRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AcceptInstructorPayoutAgreement',
+        request,
+        metadata || {},
+        this.methodDescriptorAcceptInstructorPayoutAgreement,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AcceptInstructorPayoutAgreement',
+    request,
+    metadata || {},
+    this.methodDescriptorAcceptInstructorPayoutAgreement);
+  }
+
   methodDescriptorGetLinkPaypalUrl = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/GetLinkPaypalUrl',
     grpcWeb.MethodType.UNARY,
@@ -2897,6 +5792,92 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorGetLinkPaypalUrl);
+  }
+
+  methodDescriptorGetStripeOnboardingUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetStripeOnboardingUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.GetStripeOnboardingUrlRequest,
+    rpc_token_system_pb.GetStripeOnboardingUrlResponse,
+    (request: rpc_token_system_pb.GetStripeOnboardingUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_token_system_pb.GetStripeOnboardingUrlResponse.deserializeBinary
+  );
+
+  getStripeOnboardingUrl(
+    request: rpc_token_system_pb.GetStripeOnboardingUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_token_system_pb.GetStripeOnboardingUrlResponse>;
+
+  getStripeOnboardingUrl(
+    request: rpc_token_system_pb.GetStripeOnboardingUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetStripeOnboardingUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_token_system_pb.GetStripeOnboardingUrlResponse>;
+
+  getStripeOnboardingUrl(
+    request: rpc_token_system_pb.GetStripeOnboardingUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_token_system_pb.GetStripeOnboardingUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetStripeOnboardingUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorGetStripeOnboardingUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetStripeOnboardingUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorGetStripeOnboardingUrl);
+  }
+
+  methodDescriptorBindWisePayoutMethod = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/BindWisePayoutMethod',
+    grpcWeb.MethodType.UNARY,
+    rpc_token_system_pb.BindWisePayoutMethodRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_token_system_pb.BindWisePayoutMethodRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  bindWisePayoutMethod(
+    request: rpc_token_system_pb.BindWisePayoutMethodRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  bindWisePayoutMethod(
+    request: rpc_token_system_pb.BindWisePayoutMethodRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  bindWisePayoutMethod(
+    request: rpc_token_system_pb.BindWisePayoutMethodRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/BindWisePayoutMethod',
+        request,
+        metadata || {},
+        this.methodDescriptorBindWisePayoutMethod,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/BindWisePayoutMethod',
+    request,
+    metadata || {},
+    this.methodDescriptorBindWisePayoutMethod);
   }
 
   methodDescriptorGetCode = new grpcWeb.MethodDescriptor(
@@ -3114,6 +6095,135 @@ export class PeakPalClient {
     this.methodDescriptorListCodes);
   }
 
+  methodDescriptorCreateInstructorInvitationCode = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateInstructorInvitationCode',
+    grpcWeb.MethodType.UNARY,
+    rpc_instructor_pb.CreateInstructorInvitationCodeRequest,
+    rpc_instructor_pb.InstructorInvitationCode,
+    (request: rpc_instructor_pb.CreateInstructorInvitationCodeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_instructor_pb.InstructorInvitationCode.deserializeBinary
+  );
+
+  createInstructorInvitationCode(
+    request: rpc_instructor_pb.CreateInstructorInvitationCodeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_pb.InstructorInvitationCode>;
+
+  createInstructorInvitationCode(
+    request: rpc_instructor_pb.CreateInstructorInvitationCodeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.InstructorInvitationCode) => void): grpcWeb.ClientReadableStream<rpc_instructor_pb.InstructorInvitationCode>;
+
+  createInstructorInvitationCode(
+    request: rpc_instructor_pb.CreateInstructorInvitationCodeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.InstructorInvitationCode) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateInstructorInvitationCode',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateInstructorInvitationCode,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateInstructorInvitationCode',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateInstructorInvitationCode);
+  }
+
+  methodDescriptorVerifyInstructorInvitationCode = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/VerifyInstructorInvitationCode',
+    grpcWeb.MethodType.UNARY,
+    rpc_instructor_pb.VerifyInstructorInvitationCodeRequest,
+    rpc_instructor_pb.VerifyInstructorInvitationCodeResponse,
+    (request: rpc_instructor_pb.VerifyInstructorInvitationCodeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_instructor_pb.VerifyInstructorInvitationCodeResponse.deserializeBinary
+  );
+
+  verifyInstructorInvitationCode(
+    request: rpc_instructor_pb.VerifyInstructorInvitationCodeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_pb.VerifyInstructorInvitationCodeResponse>;
+
+  verifyInstructorInvitationCode(
+    request: rpc_instructor_pb.VerifyInstructorInvitationCodeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.VerifyInstructorInvitationCodeResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_pb.VerifyInstructorInvitationCodeResponse>;
+
+  verifyInstructorInvitationCode(
+    request: rpc_instructor_pb.VerifyInstructorInvitationCodeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.VerifyInstructorInvitationCodeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/VerifyInstructorInvitationCode',
+        request,
+        metadata || {},
+        this.methodDescriptorVerifyInstructorInvitationCode,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/VerifyInstructorInvitationCode',
+    request,
+    metadata || {},
+    this.methodDescriptorVerifyInstructorInvitationCode);
+  }
+
+  methodDescriptorGetReferralDetails = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetReferralDetails',
+    grpcWeb.MethodType.UNARY,
+    rpc_instructor_pb.GetReferralDetailsRequest,
+    rpc_instructor_pb.GetReferralDetailsResponse,
+    (request: rpc_instructor_pb.GetReferralDetailsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_instructor_pb.GetReferralDetailsResponse.deserializeBinary
+  );
+
+  getReferralDetails(
+    request: rpc_instructor_pb.GetReferralDetailsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_instructor_pb.GetReferralDetailsResponse>;
+
+  getReferralDetails(
+    request: rpc_instructor_pb.GetReferralDetailsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.GetReferralDetailsResponse) => void): grpcWeb.ClientReadableStream<rpc_instructor_pb.GetReferralDetailsResponse>;
+
+  getReferralDetails(
+    request: rpc_instructor_pb.GetReferralDetailsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_instructor_pb.GetReferralDetailsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetReferralDetails',
+        request,
+        metadata || {},
+        this.methodDescriptorGetReferralDetails,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetReferralDetails',
+    request,
+    metadata || {},
+    this.methodDescriptorGetReferralDetails);
+  }
+
   methodDescriptorCreateReview = new grpcWeb.MethodDescriptor(
     '/pb.PeakPal/CreateReview',
     grpcWeb.MethodType.UNARY,
@@ -3241,6 +6351,49 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorGetLessonReview);
+  }
+
+  methodDescriptorListCourseReviews = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseReviews',
+    grpcWeb.MethodType.UNARY,
+    rpc_review_pb.ListCourseReviewsRequest,
+    rpc_review_pb.ListReviewsResponse,
+    (request: rpc_review_pb.ListCourseReviewsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_review_pb.ListReviewsResponse.deserializeBinary
+  );
+
+  listCourseReviews(
+    request: rpc_review_pb.ListCourseReviewsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_review_pb.ListReviewsResponse>;
+
+  listCourseReviews(
+    request: rpc_review_pb.ListCourseReviewsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_review_pb.ListReviewsResponse) => void): grpcWeb.ClientReadableStream<rpc_review_pb.ListReviewsResponse>;
+
+  listCourseReviews(
+    request: rpc_review_pb.ListCourseReviewsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_review_pb.ListReviewsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseReviews',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseReviews,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseReviews',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseReviews);
   }
 
   methodDescriptorListReviews = new grpcWeb.MethodDescriptor(
@@ -3542,6 +6695,4478 @@ export class PeakPalClient {
     request,
     metadata || {},
     this.methodDescriptorAcceptPolicy);
+  }
+
+  methodDescriptorTestNotification = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/TestNotification',
+    grpcWeb.MethodType.UNARY,
+    rpc_test_pb.TestNotificationRequest,
+    rpc_test_pb.TestNotificationResponse,
+    (request: rpc_test_pb.TestNotificationRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_test_pb.TestNotificationResponse.deserializeBinary
+  );
+
+  testNotification(
+    request: rpc_test_pb.TestNotificationRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_test_pb.TestNotificationResponse>;
+
+  testNotification(
+    request: rpc_test_pb.TestNotificationRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_test_pb.TestNotificationResponse) => void): grpcWeb.ClientReadableStream<rpc_test_pb.TestNotificationResponse>;
+
+  testNotification(
+    request: rpc_test_pb.TestNotificationRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_test_pb.TestNotificationResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/TestNotification',
+        request,
+        metadata || {},
+        this.methodDescriptorTestNotification,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/TestNotification',
+    request,
+    metadata || {},
+    this.methodDescriptorTestNotification);
+  }
+
+  methodDescriptorGetAppVersion = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetAppVersion',
+    grpcWeb.MethodType.UNARY,
+    rpc_get_app_version_pb.GetAppVersionRequest,
+    rpc_get_app_version_pb.GetAppVersionResponse,
+    (request: rpc_get_app_version_pb.GetAppVersionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_get_app_version_pb.GetAppVersionResponse.deserializeBinary
+  );
+
+  getAppVersion(
+    request: rpc_get_app_version_pb.GetAppVersionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_get_app_version_pb.GetAppVersionResponse>;
+
+  getAppVersion(
+    request: rpc_get_app_version_pb.GetAppVersionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_get_app_version_pb.GetAppVersionResponse) => void): grpcWeb.ClientReadableStream<rpc_get_app_version_pb.GetAppVersionResponse>;
+
+  getAppVersion(
+    request: rpc_get_app_version_pb.GetAppVersionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_get_app_version_pb.GetAppVersionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetAppVersion',
+        request,
+        metadata || {},
+        this.methodDescriptorGetAppVersion,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetAppVersion',
+    request,
+    metadata || {},
+    this.methodDescriptorGetAppVersion);
+  }
+
+  methodDescriptorCreateDispute = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateDispute',
+    grpcWeb.MethodType.UNARY,
+    rpc_dispute_pb.CreateDisputeRequest,
+    rpc_dispute_pb.CreateDisputeResponse,
+    (request: rpc_dispute_pb.CreateDisputeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_dispute_pb.CreateDisputeResponse.deserializeBinary
+  );
+
+  createDispute(
+    request: rpc_dispute_pb.CreateDisputeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_dispute_pb.CreateDisputeResponse>;
+
+  createDispute(
+    request: rpc_dispute_pb.CreateDisputeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.CreateDisputeResponse) => void): grpcWeb.ClientReadableStream<rpc_dispute_pb.CreateDisputeResponse>;
+
+  createDispute(
+    request: rpc_dispute_pb.CreateDisputeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.CreateDisputeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateDispute',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateDispute,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateDispute',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateDispute);
+  }
+
+  methodDescriptorGetDispute = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetDispute',
+    grpcWeb.MethodType.UNARY,
+    rpc_dispute_pb.GetDisputeRequest,
+    rpc_dispute_pb.GetDisputeResponse,
+    (request: rpc_dispute_pb.GetDisputeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_dispute_pb.GetDisputeResponse.deserializeBinary
+  );
+
+  getDispute(
+    request: rpc_dispute_pb.GetDisputeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_dispute_pb.GetDisputeResponse>;
+
+  getDispute(
+    request: rpc_dispute_pb.GetDisputeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.GetDisputeResponse) => void): grpcWeb.ClientReadableStream<rpc_dispute_pb.GetDisputeResponse>;
+
+  getDispute(
+    request: rpc_dispute_pb.GetDisputeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.GetDisputeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetDispute',
+        request,
+        metadata || {},
+        this.methodDescriptorGetDispute,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetDispute',
+    request,
+    metadata || {},
+    this.methodDescriptorGetDispute);
+  }
+
+  methodDescriptorListDisputes = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListDisputes',
+    grpcWeb.MethodType.UNARY,
+    rpc_dispute_pb.ListDisputesRequest,
+    rpc_dispute_pb.ListDisputesResponse,
+    (request: rpc_dispute_pb.ListDisputesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_dispute_pb.ListDisputesResponse.deserializeBinary
+  );
+
+  listDisputes(
+    request: rpc_dispute_pb.ListDisputesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_dispute_pb.ListDisputesResponse>;
+
+  listDisputes(
+    request: rpc_dispute_pb.ListDisputesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.ListDisputesResponse) => void): grpcWeb.ClientReadableStream<rpc_dispute_pb.ListDisputesResponse>;
+
+  listDisputes(
+    request: rpc_dispute_pb.ListDisputesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.ListDisputesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListDisputes',
+        request,
+        metadata || {},
+        this.methodDescriptorListDisputes,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListDisputes',
+    request,
+    metadata || {},
+    this.methodDescriptorListDisputes);
+  }
+
+  methodDescriptorAddDisputeMessage = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AddDisputeMessage',
+    grpcWeb.MethodType.UNARY,
+    rpc_dispute_pb.AddDisputeMessageRequest,
+    rpc_dispute_pb.AddDisputeMessageResponse,
+    (request: rpc_dispute_pb.AddDisputeMessageRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_dispute_pb.AddDisputeMessageResponse.deserializeBinary
+  );
+
+  addDisputeMessage(
+    request: rpc_dispute_pb.AddDisputeMessageRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_dispute_pb.AddDisputeMessageResponse>;
+
+  addDisputeMessage(
+    request: rpc_dispute_pb.AddDisputeMessageRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.AddDisputeMessageResponse) => void): grpcWeb.ClientReadableStream<rpc_dispute_pb.AddDisputeMessageResponse>;
+
+  addDisputeMessage(
+    request: rpc_dispute_pb.AddDisputeMessageRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.AddDisputeMessageResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AddDisputeMessage',
+        request,
+        metadata || {},
+        this.methodDescriptorAddDisputeMessage,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AddDisputeMessage',
+    request,
+    metadata || {},
+    this.methodDescriptorAddDisputeMessage);
+  }
+
+  methodDescriptorResolveDispute = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ResolveDispute',
+    grpcWeb.MethodType.UNARY,
+    rpc_dispute_pb.ResolveDisputeRequest,
+    rpc_dispute_pb.ResolveDisputeResponse,
+    (request: rpc_dispute_pb.ResolveDisputeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_dispute_pb.ResolveDisputeResponse.deserializeBinary
+  );
+
+  resolveDispute(
+    request: rpc_dispute_pb.ResolveDisputeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_dispute_pb.ResolveDisputeResponse>;
+
+  resolveDispute(
+    request: rpc_dispute_pb.ResolveDisputeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.ResolveDisputeResponse) => void): grpcWeb.ClientReadableStream<rpc_dispute_pb.ResolveDisputeResponse>;
+
+  resolveDispute(
+    request: rpc_dispute_pb.ResolveDisputeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_dispute_pb.ResolveDisputeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ResolveDispute',
+        request,
+        metadata || {},
+        this.methodDescriptorResolveDispute,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ResolveDispute',
+    request,
+    metadata || {},
+    this.methodDescriptorResolveDispute);
+  }
+
+  methodDescriptorCreateFeedback = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateFeedback',
+    grpcWeb.MethodType.UNARY,
+    rpc_feedback_pb.CreateFeedbackRequest,
+    rpc_feedback_pb.CreateFeedbackResponse,
+    (request: rpc_feedback_pb.CreateFeedbackRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_feedback_pb.CreateFeedbackResponse.deserializeBinary
+  );
+
+  createFeedback(
+    request: rpc_feedback_pb.CreateFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_feedback_pb.CreateFeedbackResponse>;
+
+  createFeedback(
+    request: rpc_feedback_pb.CreateFeedbackRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.CreateFeedbackResponse) => void): grpcWeb.ClientReadableStream<rpc_feedback_pb.CreateFeedbackResponse>;
+
+  createFeedback(
+    request: rpc_feedback_pb.CreateFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.CreateFeedbackResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateFeedback',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateFeedback,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateFeedback',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateFeedback);
+  }
+
+  methodDescriptorListFeedbacks = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListFeedbacks',
+    grpcWeb.MethodType.UNARY,
+    rpc_feedback_pb.ListFeedbacksRequest,
+    rpc_feedback_pb.ListFeedbacksResponse,
+    (request: rpc_feedback_pb.ListFeedbacksRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_feedback_pb.ListFeedbacksResponse.deserializeBinary
+  );
+
+  listFeedbacks(
+    request: rpc_feedback_pb.ListFeedbacksRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_feedback_pb.ListFeedbacksResponse>;
+
+  listFeedbacks(
+    request: rpc_feedback_pb.ListFeedbacksRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ListFeedbacksResponse) => void): grpcWeb.ClientReadableStream<rpc_feedback_pb.ListFeedbacksResponse>;
+
+  listFeedbacks(
+    request: rpc_feedback_pb.ListFeedbacksRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ListFeedbacksResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListFeedbacks',
+        request,
+        metadata || {},
+        this.methodDescriptorListFeedbacks,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListFeedbacks',
+    request,
+    metadata || {},
+    this.methodDescriptorListFeedbacks);
+  }
+
+  methodDescriptorResolveFeedback = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ResolveFeedback',
+    grpcWeb.MethodType.UNARY,
+    rpc_feedback_pb.ResolveFeedbackRequest,
+    rpc_feedback_pb.ResolveFeedbackResponse,
+    (request: rpc_feedback_pb.ResolveFeedbackRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_feedback_pb.ResolveFeedbackResponse.deserializeBinary
+  );
+
+  resolveFeedback(
+    request: rpc_feedback_pb.ResolveFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_feedback_pb.ResolveFeedbackResponse>;
+
+  resolveFeedback(
+    request: rpc_feedback_pb.ResolveFeedbackRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ResolveFeedbackResponse) => void): grpcWeb.ClientReadableStream<rpc_feedback_pb.ResolveFeedbackResponse>;
+
+  resolveFeedback(
+    request: rpc_feedback_pb.ResolveFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ResolveFeedbackResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ResolveFeedback',
+        request,
+        metadata || {},
+        this.methodDescriptorResolveFeedback,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ResolveFeedback',
+    request,
+    metadata || {},
+    this.methodDescriptorResolveFeedback);
+  }
+
+  methodDescriptorReplyFeedback = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ReplyFeedback',
+    grpcWeb.MethodType.UNARY,
+    rpc_feedback_pb.ReplyFeedbackRequest,
+    rpc_feedback_pb.ReplyFeedbackResponse,
+    (request: rpc_feedback_pb.ReplyFeedbackRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_feedback_pb.ReplyFeedbackResponse.deserializeBinary
+  );
+
+  replyFeedback(
+    request: rpc_feedback_pb.ReplyFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_feedback_pb.ReplyFeedbackResponse>;
+
+  replyFeedback(
+    request: rpc_feedback_pb.ReplyFeedbackRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ReplyFeedbackResponse) => void): grpcWeb.ClientReadableStream<rpc_feedback_pb.ReplyFeedbackResponse>;
+
+  replyFeedback(
+    request: rpc_feedback_pb.ReplyFeedbackRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_feedback_pb.ReplyFeedbackResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ReplyFeedback',
+        request,
+        metadata || {},
+        this.methodDescriptorReplyFeedback,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ReplyFeedback',
+    request,
+    metadata || {},
+    this.methodDescriptorReplyFeedback);
+  }
+
+  methodDescriptorGetCoachCommissions = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCoachCommissions',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCoachCommissionsRequest,
+    rpc_course_pb.GetCoachCommissionsResponse,
+    (request: rpc_course_pb.GetCoachCommissionsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCoachCommissionsResponse.deserializeBinary
+  );
+
+  getCoachCommissions(
+    request: rpc_course_pb.GetCoachCommissionsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCoachCommissionsResponse>;
+
+  getCoachCommissions(
+    request: rpc_course_pb.GetCoachCommissionsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCoachCommissionsResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCoachCommissionsResponse>;
+
+  getCoachCommissions(
+    request: rpc_course_pb.GetCoachCommissionsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCoachCommissionsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCoachCommissions',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCoachCommissions,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCoachCommissions',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCoachCommissions);
+  }
+
+  methodDescriptorUpdateCoachCommission = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCoachCommission',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCoachCommissionRequest,
+    rpc_course_pb.UpdateCoachCommissionResponse,
+    (request: rpc_course_pb.UpdateCoachCommissionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateCoachCommissionResponse.deserializeBinary
+  );
+
+  updateCoachCommission(
+    request: rpc_course_pb.UpdateCoachCommissionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateCoachCommissionResponse>;
+
+  updateCoachCommission(
+    request: rpc_course_pb.UpdateCoachCommissionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCoachCommissionResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateCoachCommissionResponse>;
+
+  updateCoachCommission(
+    request: rpc_course_pb.UpdateCoachCommissionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCoachCommissionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCoachCommission',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCoachCommission,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCoachCommission',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCoachCommission);
+  }
+
+  methodDescriptorCreateCourse = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateCourse',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.CreateCourseRequest,
+    rpc_course_pb.CreateCourseResponse,
+    (request: rpc_course_pb.CreateCourseRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.CreateCourseResponse.deserializeBinary
+  );
+
+  createCourse(
+    request: rpc_course_pb.CreateCourseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.CreateCourseResponse>;
+
+  createCourse(
+    request: rpc_course_pb.CreateCourseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.CreateCourseResponse>;
+
+  createCourse(
+    request: rpc_course_pb.CreateCourseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateCourse',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateCourse,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateCourse',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateCourse);
+  }
+
+  methodDescriptorUpdateCourse = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCourse',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCourseRequest,
+    rpc_course_pb.UpdateCourseResponse,
+    (request: rpc_course_pb.UpdateCourseRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateCourseResponse.deserializeBinary
+  );
+
+  updateCourse(
+    request: rpc_course_pb.UpdateCourseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateCourseResponse>;
+
+  updateCourse(
+    request: rpc_course_pb.UpdateCourseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateCourseResponse>;
+
+  updateCourse(
+    request: rpc_course_pb.UpdateCourseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCourse',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCourse,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCourse',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCourse);
+  }
+
+  methodDescriptorDeleteCourse = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteCourse',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.DeleteCourseRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.DeleteCourseRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  deleteCourse(
+    request: rpc_course_pb.DeleteCourseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  deleteCourse(
+    request: rpc_course_pb.DeleteCourseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  deleteCourse(
+    request: rpc_course_pb.DeleteCourseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteCourse',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteCourse,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteCourse',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteCourse);
+  }
+
+  methodDescriptorDeleteCourseVideo = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteCourseVideo',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.DeleteCourseVideoRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.DeleteCourseVideoRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  deleteCourseVideo(
+    request: rpc_course_pb.DeleteCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  deleteCourseVideo(
+    request: rpc_course_pb.DeleteCourseVideoRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  deleteCourseVideo(
+    request: rpc_course_pb.DeleteCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteCourseVideo',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteCourseVideo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteCourseVideo',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteCourseVideo);
+  }
+
+  methodDescriptorSearchCourses = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SearchCourses',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.SearchCoursesRequest,
+    rpc_course_pb.ListCoursesResponse,
+    (request: rpc_course_pb.SearchCoursesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCoursesResponse.deserializeBinary
+  );
+
+  searchCourses(
+    request: rpc_course_pb.SearchCoursesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCoursesResponse>;
+
+  searchCourses(
+    request: rpc_course_pb.SearchCoursesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCoursesResponse>;
+
+  searchCourses(
+    request: rpc_course_pb.SearchCoursesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SearchCourses',
+        request,
+        metadata || {},
+        this.methodDescriptorSearchCourses,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SearchCourses',
+    request,
+    metadata || {},
+    this.methodDescriptorSearchCourses);
+  }
+
+  methodDescriptorListInstructorCourses = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListInstructorCourses',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCoursesRequest,
+    rpc_course_pb.ListCoursesResponse,
+    (request: rpc_course_pb.ListCoursesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCoursesResponse.deserializeBinary
+  );
+
+  listInstructorCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCoursesResponse>;
+
+  listInstructorCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCoursesResponse>;
+
+  listInstructorCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListInstructorCourses',
+        request,
+        metadata || {},
+        this.methodDescriptorListInstructorCourses,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListInstructorCourses',
+    request,
+    metadata || {},
+    this.methodDescriptorListInstructorCourses);
+  }
+
+  methodDescriptorListCourseMeta = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseMeta',
+    grpcWeb.MethodType.UNARY,
+    google_protobuf_empty_pb.Empty,
+    rpc_course_pb.ListCourseMetaResponse,
+    (request: google_protobuf_empty_pb.Empty) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseMetaResponse.deserializeBinary
+  );
+
+  listCourseMeta(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseMetaResponse>;
+
+  listCourseMeta(
+    request: google_protobuf_empty_pb.Empty,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseMetaResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseMetaResponse>;
+
+  listCourseMeta(
+    request: google_protobuf_empty_pb.Empty,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseMetaResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseMeta',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseMeta,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseMeta',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseMeta);
+  }
+
+  methodDescriptorCreateCourseMetaItem = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateCourseMetaItem',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.CreateCourseMetaItemRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.CreateCourseMetaItemRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  createCourseMetaItem(
+    request: rpc_course_pb.CreateCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  createCourseMetaItem(
+    request: rpc_course_pb.CreateCourseMetaItemRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  createCourseMetaItem(
+    request: rpc_course_pb.CreateCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateCourseMetaItem',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateCourseMetaItem,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateCourseMetaItem',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateCourseMetaItem);
+  }
+
+  methodDescriptorUpdateCourseMetaItem = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCourseMetaItem',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCourseMetaItemRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.UpdateCourseMetaItemRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  updateCourseMetaItem(
+    request: rpc_course_pb.UpdateCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  updateCourseMetaItem(
+    request: rpc_course_pb.UpdateCourseMetaItemRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  updateCourseMetaItem(
+    request: rpc_course_pb.UpdateCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCourseMetaItem',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCourseMetaItem,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCourseMetaItem',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCourseMetaItem);
+  }
+
+  methodDescriptorDeleteCourseMetaItem = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteCourseMetaItem',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.DeleteCourseMetaItemRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.DeleteCourseMetaItemRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  deleteCourseMetaItem(
+    request: rpc_course_pb.DeleteCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  deleteCourseMetaItem(
+    request: rpc_course_pb.DeleteCourseMetaItemRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  deleteCourseMetaItem(
+    request: rpc_course_pb.DeleteCourseMetaItemRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteCourseMetaItem',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteCourseMetaItem,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteCourseMetaItem',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteCourseMetaItem);
+  }
+
+  methodDescriptorCreateCourseVideo = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateCourseVideo',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.CreateCourseVideoRequest,
+    rpc_course_pb.CreateCourseVideoResponse,
+    (request: rpc_course_pb.CreateCourseVideoRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.CreateCourseVideoResponse.deserializeBinary
+  );
+
+  createCourseVideo(
+    request: rpc_course_pb.CreateCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.CreateCourseVideoResponse>;
+
+  createCourseVideo(
+    request: rpc_course_pb.CreateCourseVideoRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseVideoResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.CreateCourseVideoResponse>;
+
+  createCourseVideo(
+    request: rpc_course_pb.CreateCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseVideoResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateCourseVideo',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateCourseVideo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateCourseVideo',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateCourseVideo);
+  }
+
+  methodDescriptorUpdateCourseVideo = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCourseVideo',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCourseVideoRequest,
+    rpc_course_pb.UpdateCourseVideoResponse,
+    (request: rpc_course_pb.UpdateCourseVideoRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateCourseVideoResponse.deserializeBinary
+  );
+
+  updateCourseVideo(
+    request: rpc_course_pb.UpdateCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateCourseVideoResponse>;
+
+  updateCourseVideo(
+    request: rpc_course_pb.UpdateCourseVideoRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseVideoResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateCourseVideoResponse>;
+
+  updateCourseVideo(
+    request: rpc_course_pb.UpdateCourseVideoRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseVideoResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCourseVideo',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCourseVideo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCourseVideo',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCourseVideo);
+  }
+
+  methodDescriptorGetCourse = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCourse',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCourseRequest,
+    rpc_course_pb.GetCourseResponse,
+    (request: rpc_course_pb.GetCourseRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCourseResponse.deserializeBinary
+  );
+
+  getCourse(
+    request: rpc_course_pb.GetCourseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCourseResponse>;
+
+  getCourse(
+    request: rpc_course_pb.GetCourseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCourseResponse>;
+
+  getCourse(
+    request: rpc_course_pb.GetCourseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCourse',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCourse,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCourse',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCourse);
+  }
+
+  methodDescriptorListCourseVideos = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseVideos',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCourseVideosRequest,
+    rpc_course_pb.ListCourseVideosResponse,
+    (request: rpc_course_pb.ListCourseVideosRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseVideosResponse.deserializeBinary
+  );
+
+  listCourseVideos(
+    request: rpc_course_pb.ListCourseVideosRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseVideosResponse>;
+
+  listCourseVideos(
+    request: rpc_course_pb.ListCourseVideosRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseVideosResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseVideosResponse>;
+
+  listCourseVideos(
+    request: rpc_course_pb.ListCourseVideosRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseVideosResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseVideos',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseVideos,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseVideos',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseVideos);
+  }
+
+  methodDescriptorUpdateCourseStatus = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCourseStatus',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCourseStatusRequest,
+    rpc_course_pb.UpdateCourseStatusResponse,
+    (request: rpc_course_pb.UpdateCourseStatusRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateCourseStatusResponse.deserializeBinary
+  );
+
+  updateCourseStatus(
+    request: rpc_course_pb.UpdateCourseStatusRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateCourseStatusResponse>;
+
+  updateCourseStatus(
+    request: rpc_course_pb.UpdateCourseStatusRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseStatusResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateCourseStatusResponse>;
+
+  updateCourseStatus(
+    request: rpc_course_pb.UpdateCourseStatusRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseStatusResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCourseStatus',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCourseStatus,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCourseStatus',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCourseStatus);
+  }
+
+  methodDescriptorListCourses = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourses',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCoursesRequest,
+    rpc_course_pb.ListCoursesResponse,
+    (request: rpc_course_pb.ListCoursesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCoursesResponse.deserializeBinary
+  );
+
+  listCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCoursesResponse>;
+
+  listCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCoursesResponse>;
+
+  listCourses(
+    request: rpc_course_pb.ListCoursesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourses',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourses,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourses',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourses);
+  }
+
+  methodDescriptorListUnreviewedVideos = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListUnreviewedVideos',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListUnreviewedVideosRequest,
+    rpc_course_pb.ListUnreviewedVideosResponse,
+    (request: rpc_course_pb.ListUnreviewedVideosRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListUnreviewedVideosResponse.deserializeBinary
+  );
+
+  listUnreviewedVideos(
+    request: rpc_course_pb.ListUnreviewedVideosRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListUnreviewedVideosResponse>;
+
+  listUnreviewedVideos(
+    request: rpc_course_pb.ListUnreviewedVideosRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListUnreviewedVideosResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListUnreviewedVideosResponse>;
+
+  listUnreviewedVideos(
+    request: rpc_course_pb.ListUnreviewedVideosRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListUnreviewedVideosResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListUnreviewedVideos',
+        request,
+        metadata || {},
+        this.methodDescriptorListUnreviewedVideos,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListUnreviewedVideos',
+    request,
+    metadata || {},
+    this.methodDescriptorListUnreviewedVideos);
+  }
+
+  methodDescriptorListCourseVideoProcessingJobs = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseVideoProcessingJobs',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCourseVideoProcessingJobsRequest,
+    rpc_course_pb.ListCourseVideoProcessingJobsResponse,
+    (request: rpc_course_pb.ListCourseVideoProcessingJobsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseVideoProcessingJobsResponse.deserializeBinary
+  );
+
+  listCourseVideoProcessingJobs(
+    request: rpc_course_pb.ListCourseVideoProcessingJobsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseVideoProcessingJobsResponse>;
+
+  listCourseVideoProcessingJobs(
+    request: rpc_course_pb.ListCourseVideoProcessingJobsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseVideoProcessingJobsResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseVideoProcessingJobsResponse>;
+
+  listCourseVideoProcessingJobs(
+    request: rpc_course_pb.ListCourseVideoProcessingJobsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseVideoProcessingJobsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseVideoProcessingJobs',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseVideoProcessingJobs,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseVideoProcessingJobs',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseVideoProcessingJobs);
+  }
+
+  methodDescriptorRetryCourseVideoProcessingJob = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RetryCourseVideoProcessingJob',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.RetryCourseVideoProcessingJobRequest,
+    rpc_course_pb.RetryCourseVideoProcessingJobResponse,
+    (request: rpc_course_pb.RetryCourseVideoProcessingJobRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.RetryCourseVideoProcessingJobResponse.deserializeBinary
+  );
+
+  retryCourseVideoProcessingJob(
+    request: rpc_course_pb.RetryCourseVideoProcessingJobRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.RetryCourseVideoProcessingJobResponse>;
+
+  retryCourseVideoProcessingJob(
+    request: rpc_course_pb.RetryCourseVideoProcessingJobRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.RetryCourseVideoProcessingJobResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.RetryCourseVideoProcessingJobResponse>;
+
+  retryCourseVideoProcessingJob(
+    request: rpc_course_pb.RetryCourseVideoProcessingJobRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.RetryCourseVideoProcessingJobResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RetryCourseVideoProcessingJob',
+        request,
+        metadata || {},
+        this.methodDescriptorRetryCourseVideoProcessingJob,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RetryCourseVideoProcessingJob',
+    request,
+    metadata || {},
+    this.methodDescriptorRetryCourseVideoProcessingJob);
+  }
+
+  methodDescriptorListCoursePurchases = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCoursePurchases',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCoursePurchasesRequest,
+    rpc_course_pb.ListCoursePurchasesResponse,
+    (request: rpc_course_pb.ListCoursePurchasesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCoursePurchasesResponse.deserializeBinary
+  );
+
+  listCoursePurchases(
+    request: rpc_course_pb.ListCoursePurchasesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCoursePurchasesResponse>;
+
+  listCoursePurchases(
+    request: rpc_course_pb.ListCoursePurchasesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursePurchasesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCoursePurchasesResponse>;
+
+  listCoursePurchases(
+    request: rpc_course_pb.ListCoursePurchasesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCoursePurchasesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCoursePurchases',
+        request,
+        metadata || {},
+        this.methodDescriptorListCoursePurchases,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCoursePurchases',
+    request,
+    metadata || {},
+    this.methodDescriptorListCoursePurchases);
+  }
+
+  methodDescriptorPurchaseCourse = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/PurchaseCourse',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.PurchaseCourseRequest,
+    rpc_course_pb.PurchaseCourseResponse,
+    (request: rpc_course_pb.PurchaseCourseRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.PurchaseCourseResponse.deserializeBinary
+  );
+
+  purchaseCourse(
+    request: rpc_course_pb.PurchaseCourseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.PurchaseCourseResponse>;
+
+  purchaseCourse(
+    request: rpc_course_pb.PurchaseCourseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.PurchaseCourseResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.PurchaseCourseResponse>;
+
+  purchaseCourse(
+    request: rpc_course_pb.PurchaseCourseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.PurchaseCourseResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/PurchaseCourse',
+        request,
+        metadata || {},
+        this.methodDescriptorPurchaseCourse,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/PurchaseCourse',
+    request,
+    metadata || {},
+    this.methodDescriptorPurchaseCourse);
+  }
+
+  methodDescriptorUpdateVideoSubtitleText = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateVideoSubtitleText',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateVideoSubtitleTextRequest,
+    rpc_course_pb.UpdateVideoSubtitleTextResponse,
+    (request: rpc_course_pb.UpdateVideoSubtitleTextRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateVideoSubtitleTextResponse.deserializeBinary
+  );
+
+  updateVideoSubtitleText(
+    request: rpc_course_pb.UpdateVideoSubtitleTextRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateVideoSubtitleTextResponse>;
+
+  updateVideoSubtitleText(
+    request: rpc_course_pb.UpdateVideoSubtitleTextRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateVideoSubtitleTextResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateVideoSubtitleTextResponse>;
+
+  updateVideoSubtitleText(
+    request: rpc_course_pb.UpdateVideoSubtitleTextRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateVideoSubtitleTextResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateVideoSubtitleText',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateVideoSubtitleText,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateVideoSubtitleText',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateVideoSubtitleText);
+  }
+
+  methodDescriptorGetHLSEncryptionKey = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetHLSEncryptionKey',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetHLSEncryptionKeyRequest,
+    rpc_course_pb.GetHLSEncryptionKeyResponse,
+    (request: rpc_course_pb.GetHLSEncryptionKeyRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetHLSEncryptionKeyResponse.deserializeBinary
+  );
+
+  getHLSEncryptionKey(
+    request: rpc_course_pb.GetHLSEncryptionKeyRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetHLSEncryptionKeyResponse>;
+
+  getHLSEncryptionKey(
+    request: rpc_course_pb.GetHLSEncryptionKeyRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetHLSEncryptionKeyResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetHLSEncryptionKeyResponse>;
+
+  getHLSEncryptionKey(
+    request: rpc_course_pb.GetHLSEncryptionKeyRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetHLSEncryptionKeyResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetHLSEncryptionKey',
+        request,
+        metadata || {},
+        this.methodDescriptorGetHLSEncryptionKey,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetHLSEncryptionKey',
+    request,
+    metadata || {},
+    this.methodDescriptorGetHLSEncryptionKey);
+  }
+
+  methodDescriptorGetCoursePlaybackInfo = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCoursePlaybackInfo',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCoursePlaybackInfoRequest,
+    rpc_course_pb.GetCoursePlaybackInfoResponse,
+    (request: rpc_course_pb.GetCoursePlaybackInfoRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCoursePlaybackInfoResponse.deserializeBinary
+  );
+
+  getCoursePlaybackInfo(
+    request: rpc_course_pb.GetCoursePlaybackInfoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCoursePlaybackInfoResponse>;
+
+  getCoursePlaybackInfo(
+    request: rpc_course_pb.GetCoursePlaybackInfoRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCoursePlaybackInfoResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCoursePlaybackInfoResponse>;
+
+  getCoursePlaybackInfo(
+    request: rpc_course_pb.GetCoursePlaybackInfoRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCoursePlaybackInfoResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCoursePlaybackInfo',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCoursePlaybackInfo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCoursePlaybackInfo',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCoursePlaybackInfo);
+  }
+
+  methodDescriptorSubmitCourseHomework = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SubmitCourseHomework',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.SubmitCourseHomeworkRequest,
+    rpc_course_pb.SubmitCourseHomeworkResponse,
+    (request: rpc_course_pb.SubmitCourseHomeworkRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.SubmitCourseHomeworkResponse.deserializeBinary
+  );
+
+  submitCourseHomework(
+    request: rpc_course_pb.SubmitCourseHomeworkRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.SubmitCourseHomeworkResponse>;
+
+  submitCourseHomework(
+    request: rpc_course_pb.SubmitCourseHomeworkRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.SubmitCourseHomeworkResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.SubmitCourseHomeworkResponse>;
+
+  submitCourseHomework(
+    request: rpc_course_pb.SubmitCourseHomeworkRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.SubmitCourseHomeworkResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SubmitCourseHomework',
+        request,
+        metadata || {},
+        this.methodDescriptorSubmitCourseHomework,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SubmitCourseHomework',
+    request,
+    metadata || {},
+    this.methodDescriptorSubmitCourseHomework);
+  }
+
+  methodDescriptorRequestCourseRefund = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/RequestCourseRefund',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.RequestCourseRefundRequest,
+    rpc_course_pb.RequestCourseRefundResponse,
+    (request: rpc_course_pb.RequestCourseRefundRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.RequestCourseRefundResponse.deserializeBinary
+  );
+
+  requestCourseRefund(
+    request: rpc_course_pb.RequestCourseRefundRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.RequestCourseRefundResponse>;
+
+  requestCourseRefund(
+    request: rpc_course_pb.RequestCourseRefundRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.RequestCourseRefundResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.RequestCourseRefundResponse>;
+
+  requestCourseRefund(
+    request: rpc_course_pb.RequestCourseRefundRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.RequestCourseRefundResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/RequestCourseRefund',
+        request,
+        metadata || {},
+        this.methodDescriptorRequestCourseRefund,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/RequestCourseRefund',
+    request,
+    metadata || {},
+    this.methodDescriptorRequestCourseRefund);
+  }
+
+  methodDescriptorGetMyCoursePurchaseStatus = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetMyCoursePurchaseStatus',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetMyCoursePurchaseStatusRequest,
+    rpc_course_pb.GetMyCoursePurchaseStatusResponse,
+    (request: rpc_course_pb.GetMyCoursePurchaseStatusRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetMyCoursePurchaseStatusResponse.deserializeBinary
+  );
+
+  getMyCoursePurchaseStatus(
+    request: rpc_course_pb.GetMyCoursePurchaseStatusRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetMyCoursePurchaseStatusResponse>;
+
+  getMyCoursePurchaseStatus(
+    request: rpc_course_pb.GetMyCoursePurchaseStatusRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetMyCoursePurchaseStatusResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetMyCoursePurchaseStatusResponse>;
+
+  getMyCoursePurchaseStatus(
+    request: rpc_course_pb.GetMyCoursePurchaseStatusRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetMyCoursePurchaseStatusResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetMyCoursePurchaseStatus',
+        request,
+        metadata || {},
+        this.methodDescriptorGetMyCoursePurchaseStatus,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetMyCoursePurchaseStatus',
+    request,
+    metadata || {},
+    this.methodDescriptorGetMyCoursePurchaseStatus);
+  }
+
+  methodDescriptorGetCourseCertificate = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCourseCertificate',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCourseCertificateRequest,
+    rpc_course_pb.GetCourseCertificateResponse,
+    (request: rpc_course_pb.GetCourseCertificateRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCourseCertificateResponse.deserializeBinary
+  );
+
+  getCourseCertificate(
+    request: rpc_course_pb.GetCourseCertificateRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCourseCertificateResponse>;
+
+  getCourseCertificate(
+    request: rpc_course_pb.GetCourseCertificateRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseCertificateResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCourseCertificateResponse>;
+
+  getCourseCertificate(
+    request: rpc_course_pb.GetCourseCertificateRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseCertificateResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCourseCertificate',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCourseCertificate,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCourseCertificate',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCourseCertificate);
+  }
+
+  methodDescriptorClaimSocialReward = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ClaimSocialReward',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ClaimSocialRewardRequest,
+    rpc_course_pb.ClaimSocialRewardResponse,
+    (request: rpc_course_pb.ClaimSocialRewardRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ClaimSocialRewardResponse.deserializeBinary
+  );
+
+  claimSocialReward(
+    request: rpc_course_pb.ClaimSocialRewardRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ClaimSocialRewardResponse>;
+
+  claimSocialReward(
+    request: rpc_course_pb.ClaimSocialRewardRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ClaimSocialRewardResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ClaimSocialRewardResponse>;
+
+  claimSocialReward(
+    request: rpc_course_pb.ClaimSocialRewardRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ClaimSocialRewardResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ClaimSocialReward',
+        request,
+        metadata || {},
+        this.methodDescriptorClaimSocialReward,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ClaimSocialReward',
+    request,
+    metadata || {},
+    this.methodDescriptorClaimSocialReward);
+  }
+
+  methodDescriptorCreateCourseQAMessage = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateCourseQAMessage',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.CreateCourseQAMessageRequest,
+    rpc_course_pb.CreateCourseQAMessageResponse,
+    (request: rpc_course_pb.CreateCourseQAMessageRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.CreateCourseQAMessageResponse.deserializeBinary
+  );
+
+  createCourseQAMessage(
+    request: rpc_course_pb.CreateCourseQAMessageRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.CreateCourseQAMessageResponse>;
+
+  createCourseQAMessage(
+    request: rpc_course_pb.CreateCourseQAMessageRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseQAMessageResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.CreateCourseQAMessageResponse>;
+
+  createCourseQAMessage(
+    request: rpc_course_pb.CreateCourseQAMessageRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.CreateCourseQAMessageResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateCourseQAMessage',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateCourseQAMessage,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateCourseQAMessage',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateCourseQAMessage);
+  }
+
+  methodDescriptorListCourseQAMessages = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseQAMessages',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCourseQAMessagesRequest,
+    rpc_course_pb.ListCourseQAMessagesResponse,
+    (request: rpc_course_pb.ListCourseQAMessagesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseQAMessagesResponse.deserializeBinary
+  );
+
+  listCourseQAMessages(
+    request: rpc_course_pb.ListCourseQAMessagesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseQAMessagesResponse>;
+
+  listCourseQAMessages(
+    request: rpc_course_pb.ListCourseQAMessagesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseQAMessagesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseQAMessagesResponse>;
+
+  listCourseQAMessages(
+    request: rpc_course_pb.ListCourseQAMessagesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseQAMessagesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseQAMessages',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseQAMessages,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseQAMessages',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseQAMessages);
+  }
+
+  methodDescriptorToggleCourseVideoLike = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ToggleCourseVideoLike',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ToggleCourseVideoLikeRequest,
+    rpc_course_pb.ToggleCourseVideoLikeResponse,
+    (request: rpc_course_pb.ToggleCourseVideoLikeRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ToggleCourseVideoLikeResponse.deserializeBinary
+  );
+
+  toggleCourseVideoLike(
+    request: rpc_course_pb.ToggleCourseVideoLikeRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ToggleCourseVideoLikeResponse>;
+
+  toggleCourseVideoLike(
+    request: rpc_course_pb.ToggleCourseVideoLikeRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ToggleCourseVideoLikeResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ToggleCourseVideoLikeResponse>;
+
+  toggleCourseVideoLike(
+    request: rpc_course_pb.ToggleCourseVideoLikeRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ToggleCourseVideoLikeResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ToggleCourseVideoLike',
+        request,
+        metadata || {},
+        this.methodDescriptorToggleCourseVideoLike,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ToggleCourseVideoLike',
+    request,
+    metadata || {},
+    this.methodDescriptorToggleCourseVideoLike);
+  }
+
+  methodDescriptorGetCourseVideoLikeInfo = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCourseVideoLikeInfo',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCourseVideoLikeInfoRequest,
+    rpc_course_pb.GetCourseVideoLikeInfoResponse,
+    (request: rpc_course_pb.GetCourseVideoLikeInfoRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCourseVideoLikeInfoResponse.deserializeBinary
+  );
+
+  getCourseVideoLikeInfo(
+    request: rpc_course_pb.GetCourseVideoLikeInfoRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCourseVideoLikeInfoResponse>;
+
+  getCourseVideoLikeInfo(
+    request: rpc_course_pb.GetCourseVideoLikeInfoRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseVideoLikeInfoResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCourseVideoLikeInfoResponse>;
+
+  getCourseVideoLikeInfo(
+    request: rpc_course_pb.GetCourseVideoLikeInfoRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseVideoLikeInfoResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCourseVideoLikeInfo',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCourseVideoLikeInfo,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCourseVideoLikeInfo',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCourseVideoLikeInfo);
+  }
+
+  methodDescriptorGetCourseVideoDecryptKey = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCourseVideoDecryptKey',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCourseVideoDecryptKeyRequest,
+    rpc_course_pb.GetCourseVideoDecryptKeyResponse,
+    (request: rpc_course_pb.GetCourseVideoDecryptKeyRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCourseVideoDecryptKeyResponse.deserializeBinary
+  );
+
+  getCourseVideoDecryptKey(
+    request: rpc_course_pb.GetCourseVideoDecryptKeyRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCourseVideoDecryptKeyResponse>;
+
+  getCourseVideoDecryptKey(
+    request: rpc_course_pb.GetCourseVideoDecryptKeyRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseVideoDecryptKeyResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCourseVideoDecryptKeyResponse>;
+
+  getCourseVideoDecryptKey(
+    request: rpc_course_pb.GetCourseVideoDecryptKeyRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseVideoDecryptKeyResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCourseVideoDecryptKey',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCourseVideoDecryptKey,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCourseVideoDecryptKey',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCourseVideoDecryptKey);
+  }
+
+  methodDescriptorConfirmCourseDownloaded = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ConfirmCourseDownloaded',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ConfirmCourseDownloadedRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_course_pb.ConfirmCourseDownloadedRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  confirmCourseDownloaded(
+    request: rpc_course_pb.ConfirmCourseDownloadedRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  confirmCourseDownloaded(
+    request: rpc_course_pb.ConfirmCourseDownloadedRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  confirmCourseDownloaded(
+    request: rpc_course_pb.ConfirmCourseDownloadedRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ConfirmCourseDownloaded',
+        request,
+        metadata || {},
+        this.methodDescriptorConfirmCourseDownloaded,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ConfirmCourseDownloaded',
+    request,
+    metadata || {},
+    this.methodDescriptorConfirmCourseDownloaded);
+  }
+
+  methodDescriptorUpdateCourseLearningProgress = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCourseLearningProgress',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.UpdateCourseLearningProgressRequest,
+    rpc_course_pb.UpdateCourseLearningProgressResponse,
+    (request: rpc_course_pb.UpdateCourseLearningProgressRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.UpdateCourseLearningProgressResponse.deserializeBinary
+  );
+
+  updateCourseLearningProgress(
+    request: rpc_course_pb.UpdateCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.UpdateCourseLearningProgressResponse>;
+
+  updateCourseLearningProgress(
+    request: rpc_course_pb.UpdateCourseLearningProgressRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseLearningProgressResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.UpdateCourseLearningProgressResponse>;
+
+  updateCourseLearningProgress(
+    request: rpc_course_pb.UpdateCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.UpdateCourseLearningProgressResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCourseLearningProgress',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCourseLearningProgress,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCourseLearningProgress',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCourseLearningProgress);
+  }
+
+  methodDescriptorGetCourseLearningProgress = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCourseLearningProgress',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetCourseLearningProgressRequest,
+    rpc_course_pb.GetCourseLearningProgressResponse,
+    (request: rpc_course_pb.GetCourseLearningProgressRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetCourseLearningProgressResponse.deserializeBinary
+  );
+
+  getCourseLearningProgress(
+    request: rpc_course_pb.GetCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetCourseLearningProgressResponse>;
+
+  getCourseLearningProgress(
+    request: rpc_course_pb.GetCourseLearningProgressRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseLearningProgressResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetCourseLearningProgressResponse>;
+
+  getCourseLearningProgress(
+    request: rpc_course_pb.GetCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetCourseLearningProgressResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCourseLearningProgress',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCourseLearningProgress,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCourseLearningProgress',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCourseLearningProgress);
+  }
+
+  methodDescriptorListCourseLearningProgress = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseLearningProgress',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCourseLearningProgressRequest,
+    rpc_course_pb.ListCourseLearningProgressResponse,
+    (request: rpc_course_pb.ListCourseLearningProgressRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseLearningProgressResponse.deserializeBinary
+  );
+
+  listCourseLearningProgress(
+    request: rpc_course_pb.ListCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseLearningProgressResponse>;
+
+  listCourseLearningProgress(
+    request: rpc_course_pb.ListCourseLearningProgressRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseLearningProgressResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseLearningProgressResponse>;
+
+  listCourseLearningProgress(
+    request: rpc_course_pb.ListCourseLearningProgressRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseLearningProgressResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseLearningProgress',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseLearningProgress,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseLearningProgress',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseLearningProgress);
+  }
+
+  methodDescriptorListMyPurchasedCourses = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListMyPurchasedCourses',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListMyPurchasedCoursesRequest,
+    rpc_course_pb.ListMyPurchasedCoursesResponse,
+    (request: rpc_course_pb.ListMyPurchasedCoursesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListMyPurchasedCoursesResponse.deserializeBinary
+  );
+
+  listMyPurchasedCourses(
+    request: rpc_course_pb.ListMyPurchasedCoursesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListMyPurchasedCoursesResponse>;
+
+  listMyPurchasedCourses(
+    request: rpc_course_pb.ListMyPurchasedCoursesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListMyPurchasedCoursesResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListMyPurchasedCoursesResponse>;
+
+  listMyPurchasedCourses(
+    request: rpc_course_pb.ListMyPurchasedCoursesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListMyPurchasedCoursesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListMyPurchasedCourses',
+        request,
+        metadata || {},
+        this.methodDescriptorListMyPurchasedCourses,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListMyPurchasedCourses',
+    request,
+    metadata || {},
+    this.methodDescriptorListMyPurchasedCourses);
+  }
+
+  methodDescriptorGetInstructorSalesSummary = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetInstructorSalesSummary',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.GetInstructorSalesSummaryRequest,
+    rpc_course_pb.GetInstructorSalesSummaryResponse,
+    (request: rpc_course_pb.GetInstructorSalesSummaryRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.GetInstructorSalesSummaryResponse.deserializeBinary
+  );
+
+  getInstructorSalesSummary(
+    request: rpc_course_pb.GetInstructorSalesSummaryRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.GetInstructorSalesSummaryResponse>;
+
+  getInstructorSalesSummary(
+    request: rpc_course_pb.GetInstructorSalesSummaryRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetInstructorSalesSummaryResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.GetInstructorSalesSummaryResponse>;
+
+  getInstructorSalesSummary(
+    request: rpc_course_pb.GetInstructorSalesSummaryRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.GetInstructorSalesSummaryResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetInstructorSalesSummary',
+        request,
+        metadata || {},
+        this.methodDescriptorGetInstructorSalesSummary,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetInstructorSalesSummary',
+    request,
+    metadata || {},
+    this.methodDescriptorGetInstructorSalesSummary);
+  }
+
+  methodDescriptorListInstructorSalesTransactions = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListInstructorSalesTransactions',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListInstructorSalesTransactionsRequest,
+    rpc_course_pb.ListInstructorSalesTransactionsResponse,
+    (request: rpc_course_pb.ListInstructorSalesTransactionsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListInstructorSalesTransactionsResponse.deserializeBinary
+  );
+
+  listInstructorSalesTransactions(
+    request: rpc_course_pb.ListInstructorSalesTransactionsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListInstructorSalesTransactionsResponse>;
+
+  listInstructorSalesTransactions(
+    request: rpc_course_pb.ListInstructorSalesTransactionsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListInstructorSalesTransactionsResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListInstructorSalesTransactionsResponse>;
+
+  listInstructorSalesTransactions(
+    request: rpc_course_pb.ListInstructorSalesTransactionsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListInstructorSalesTransactionsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListInstructorSalesTransactions',
+        request,
+        metadata || {},
+        this.methodDescriptorListInstructorSalesTransactions,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListInstructorSalesTransactions',
+    request,
+    metadata || {},
+    this.methodDescriptorListInstructorSalesTransactions);
+  }
+
+  methodDescriptorAuditCourseVideoReview = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AuditCourseVideoReview',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.AuditCourseVideoReviewRequest,
+    rpc_course_pb.AuditCourseVideoReviewResponse,
+    (request: rpc_course_pb.AuditCourseVideoReviewRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.AuditCourseVideoReviewResponse.deserializeBinary
+  );
+
+  auditCourseVideoReview(
+    request: rpc_course_pb.AuditCourseVideoReviewRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.AuditCourseVideoReviewResponse>;
+
+  auditCourseVideoReview(
+    request: rpc_course_pb.AuditCourseVideoReviewRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AuditCourseVideoReviewResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.AuditCourseVideoReviewResponse>;
+
+  auditCourseVideoReview(
+    request: rpc_course_pb.AuditCourseVideoReviewRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AuditCourseVideoReviewResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AuditCourseVideoReview',
+        request,
+        metadata || {},
+        this.methodDescriptorAuditCourseVideoReview,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AuditCourseVideoReview',
+    request,
+    metadata || {},
+    this.methodDescriptorAuditCourseVideoReview);
+  }
+
+  methodDescriptorListCourseReviewLogs = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCourseReviewLogs',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.ListCourseReviewLogsRequest,
+    rpc_course_pb.ListCourseReviewLogsResponse,
+    (request: rpc_course_pb.ListCourseReviewLogsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.ListCourseReviewLogsResponse.deserializeBinary
+  );
+
+  listCourseReviewLogs(
+    request: rpc_course_pb.ListCourseReviewLogsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.ListCourseReviewLogsResponse>;
+
+  listCourseReviewLogs(
+    request: rpc_course_pb.ListCourseReviewLogsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseReviewLogsResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.ListCourseReviewLogsResponse>;
+
+  listCourseReviewLogs(
+    request: rpc_course_pb.ListCourseReviewLogsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.ListCourseReviewLogsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCourseReviewLogs',
+        request,
+        metadata || {},
+        this.methodDescriptorListCourseReviewLogs,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCourseReviewLogs',
+    request,
+    metadata || {},
+    this.methodDescriptorListCourseReviewLogs);
+  }
+
+  methodDescriptorAdminRefundCoursePurchase = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminRefundCoursePurchase',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.AdminRefundCoursePurchaseRequest,
+    rpc_course_pb.AdminRefundCoursePurchaseResponse,
+    (request: rpc_course_pb.AdminRefundCoursePurchaseRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.AdminRefundCoursePurchaseResponse.deserializeBinary
+  );
+
+  adminRefundCoursePurchase(
+    request: rpc_course_pb.AdminRefundCoursePurchaseRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.AdminRefundCoursePurchaseResponse>;
+
+  adminRefundCoursePurchase(
+    request: rpc_course_pb.AdminRefundCoursePurchaseRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminRefundCoursePurchaseResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.AdminRefundCoursePurchaseResponse>;
+
+  adminRefundCoursePurchase(
+    request: rpc_course_pb.AdminRefundCoursePurchaseRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminRefundCoursePurchaseResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminRefundCoursePurchase',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminRefundCoursePurchase,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminRefundCoursePurchase',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminRefundCoursePurchase);
+  }
+
+  methodDescriptorAdminFreezeCourseEscrow = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminFreezeCourseEscrow',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.AdminFreezeCourseEscrowRequest,
+    rpc_course_pb.AdminFreezeCourseEscrowResponse,
+    (request: rpc_course_pb.AdminFreezeCourseEscrowRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.AdminFreezeCourseEscrowResponse.deserializeBinary
+  );
+
+  adminFreezeCourseEscrow(
+    request: rpc_course_pb.AdminFreezeCourseEscrowRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.AdminFreezeCourseEscrowResponse>;
+
+  adminFreezeCourseEscrow(
+    request: rpc_course_pb.AdminFreezeCourseEscrowRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminFreezeCourseEscrowResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.AdminFreezeCourseEscrowResponse>;
+
+  adminFreezeCourseEscrow(
+    request: rpc_course_pb.AdminFreezeCourseEscrowRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminFreezeCourseEscrowResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminFreezeCourseEscrow',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminFreezeCourseEscrow,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminFreezeCourseEscrow',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminFreezeCourseEscrow);
+  }
+
+  methodDescriptorAdminUnfreezeCourseEscrow = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminUnfreezeCourseEscrow',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.AdminUnfreezeCourseEscrowRequest,
+    rpc_course_pb.AdminUnfreezeCourseEscrowResponse,
+    (request: rpc_course_pb.AdminUnfreezeCourseEscrowRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.AdminUnfreezeCourseEscrowResponse.deserializeBinary
+  );
+
+  adminUnfreezeCourseEscrow(
+    request: rpc_course_pb.AdminUnfreezeCourseEscrowRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.AdminUnfreezeCourseEscrowResponse>;
+
+  adminUnfreezeCourseEscrow(
+    request: rpc_course_pb.AdminUnfreezeCourseEscrowRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminUnfreezeCourseEscrowResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.AdminUnfreezeCourseEscrowResponse>;
+
+  adminUnfreezeCourseEscrow(
+    request: rpc_course_pb.AdminUnfreezeCourseEscrowRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminUnfreezeCourseEscrowResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminUnfreezeCourseEscrow',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminUnfreezeCourseEscrow,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminUnfreezeCourseEscrow',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminUnfreezeCourseEscrow);
+  }
+
+  methodDescriptorAdminGetCoursePurchaseRefundDetails = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminGetCoursePurchaseRefundDetails',
+    grpcWeb.MethodType.UNARY,
+    rpc_course_pb.AdminGetCoursePurchaseRefundDetailsRequest,
+    rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse,
+    (request: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse.deserializeBinary
+  );
+
+  adminGetCoursePurchaseRefundDetails(
+    request: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse>;
+
+  adminGetCoursePurchaseRefundDetails(
+    request: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse) => void): grpcWeb.ClientReadableStream<rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse>;
+
+  adminGetCoursePurchaseRefundDetails(
+    request: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_course_pb.AdminGetCoursePurchaseRefundDetailsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminGetCoursePurchaseRefundDetails',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminGetCoursePurchaseRefundDetails,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminGetCoursePurchaseRefundDetails',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminGetCoursePurchaseRefundDetails);
+  }
+
+  methodDescriptorCreateCarpoolTrip = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateCarpoolTrip',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.CreateCarpoolTripRequest,
+    rpc_carpool_pb.CarpoolTrip,
+    (request: rpc_carpool_pb.CreateCarpoolTripRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolTrip.deserializeBinary
+  );
+
+  createCarpoolTrip(
+    request: rpc_carpool_pb.CreateCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolTrip>;
+
+  createCarpoolTrip(
+    request: rpc_carpool_pb.CreateCarpoolTripRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolTrip>;
+
+  createCarpoolTrip(
+    request: rpc_carpool_pb.CreateCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateCarpoolTrip',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateCarpoolTrip,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateCarpoolTrip',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateCarpoolTrip);
+  }
+
+  methodDescriptorGetMyCarpoolSubscription = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetMyCarpoolSubscription',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.GetMyCarpoolSubscriptionRequest,
+    rpc_carpool_pb.GetMyCarpoolSubscriptionResponse,
+    (request: rpc_carpool_pb.GetMyCarpoolSubscriptionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.GetMyCarpoolSubscriptionResponse.deserializeBinary
+  );
+
+  getMyCarpoolSubscription(
+    request: rpc_carpool_pb.GetMyCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.GetMyCarpoolSubscriptionResponse>;
+
+  getMyCarpoolSubscription(
+    request: rpc_carpool_pb.GetMyCarpoolSubscriptionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.GetMyCarpoolSubscriptionResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.GetMyCarpoolSubscriptionResponse>;
+
+  getMyCarpoolSubscription(
+    request: rpc_carpool_pb.GetMyCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.GetMyCarpoolSubscriptionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetMyCarpoolSubscription',
+        request,
+        metadata || {},
+        this.methodDescriptorGetMyCarpoolSubscription,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetMyCarpoolSubscription',
+    request,
+    metadata || {},
+    this.methodDescriptorGetMyCarpoolSubscription);
+  }
+
+  methodDescriptorClaimCarpoolAdReward = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ClaimCarpoolAdReward',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ClaimCarpoolAdRewardRequest,
+    rpc_carpool_pb.ClaimCarpoolAdRewardResponse,
+    (request: rpc_carpool_pb.ClaimCarpoolAdRewardRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.ClaimCarpoolAdRewardResponse.deserializeBinary
+  );
+
+  claimCarpoolAdReward(
+    request: rpc_carpool_pb.ClaimCarpoolAdRewardRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.ClaimCarpoolAdRewardResponse>;
+
+  claimCarpoolAdReward(
+    request: rpc_carpool_pb.ClaimCarpoolAdRewardRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ClaimCarpoolAdRewardResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.ClaimCarpoolAdRewardResponse>;
+
+  claimCarpoolAdReward(
+    request: rpc_carpool_pb.ClaimCarpoolAdRewardRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ClaimCarpoolAdRewardResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ClaimCarpoolAdReward',
+        request,
+        metadata || {},
+        this.methodDescriptorClaimCarpoolAdReward,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ClaimCarpoolAdReward',
+    request,
+    metadata || {},
+    this.methodDescriptorClaimCarpoolAdReward);
+  }
+
+  methodDescriptorPurchaseCarpoolSubscription = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/PurchaseCarpoolSubscription',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.PurchaseCarpoolSubscriptionRequest,
+    rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse,
+    (request: rpc_carpool_pb.PurchaseCarpoolSubscriptionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse.deserializeBinary
+  );
+
+  purchaseCarpoolSubscription(
+    request: rpc_carpool_pb.PurchaseCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse>;
+
+  purchaseCarpoolSubscription(
+    request: rpc_carpool_pb.PurchaseCarpoolSubscriptionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse>;
+
+  purchaseCarpoolSubscription(
+    request: rpc_carpool_pb.PurchaseCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.PurchaseCarpoolSubscriptionResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/PurchaseCarpoolSubscription',
+        request,
+        metadata || {},
+        this.methodDescriptorPurchaseCarpoolSubscription,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/PurchaseCarpoolSubscription',
+    request,
+    metadata || {},
+    this.methodDescriptorPurchaseCarpoolSubscription);
+  }
+
+  methodDescriptorInitiateCarpoolPassCheckout = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/InitiateCarpoolPassCheckout',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.InitiateCarpoolPassCheckoutRequest,
+    rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse,
+    (request: rpc_carpool_pb.InitiateCarpoolPassCheckoutRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse.deserializeBinary
+  );
+
+  initiateCarpoolPassCheckout(
+    request: rpc_carpool_pb.InitiateCarpoolPassCheckoutRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse>;
+
+  initiateCarpoolPassCheckout(
+    request: rpc_carpool_pb.InitiateCarpoolPassCheckoutRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse>;
+
+  initiateCarpoolPassCheckout(
+    request: rpc_carpool_pb.InitiateCarpoolPassCheckoutRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.InitiateCarpoolPassCheckoutResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/InitiateCarpoolPassCheckout',
+        request,
+        metadata || {},
+        this.methodDescriptorInitiateCarpoolPassCheckout,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/InitiateCarpoolPassCheckout',
+    request,
+    metadata || {},
+    this.methodDescriptorInitiateCarpoolPassCheckout);
+  }
+
+  methodDescriptorAdminGrantCarpoolSubscription = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminGrantCarpoolSubscription',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.AdminGrantCarpoolSubscriptionRequest,
+    rpc_carpool_pb.CarpoolSubscriptionEntitlement,
+    (request: rpc_carpool_pb.AdminGrantCarpoolSubscriptionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolSubscriptionEntitlement.deserializeBinary
+  );
+
+  adminGrantCarpoolSubscription(
+    request: rpc_carpool_pb.AdminGrantCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolSubscriptionEntitlement>;
+
+  adminGrantCarpoolSubscription(
+    request: rpc_carpool_pb.AdminGrantCarpoolSubscriptionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolSubscriptionEntitlement) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolSubscriptionEntitlement>;
+
+  adminGrantCarpoolSubscription(
+    request: rpc_carpool_pb.AdminGrantCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolSubscriptionEntitlement) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminGrantCarpoolSubscription',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminGrantCarpoolSubscription,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminGrantCarpoolSubscription',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminGrantCarpoolSubscription);
+  }
+
+  methodDescriptorAdminRevokeCarpoolSubscription = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminRevokeCarpoolSubscription',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.AdminRevokeCarpoolSubscriptionRequest,
+    rpc_carpool_pb.CarpoolSubscriptionEntitlement,
+    (request: rpc_carpool_pb.AdminRevokeCarpoolSubscriptionRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolSubscriptionEntitlement.deserializeBinary
+  );
+
+  adminRevokeCarpoolSubscription(
+    request: rpc_carpool_pb.AdminRevokeCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolSubscriptionEntitlement>;
+
+  adminRevokeCarpoolSubscription(
+    request: rpc_carpool_pb.AdminRevokeCarpoolSubscriptionRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolSubscriptionEntitlement) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolSubscriptionEntitlement>;
+
+  adminRevokeCarpoolSubscription(
+    request: rpc_carpool_pb.AdminRevokeCarpoolSubscriptionRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolSubscriptionEntitlement) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminRevokeCarpoolSubscription',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminRevokeCarpoolSubscription,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminRevokeCarpoolSubscription',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminRevokeCarpoolSubscription);
+  }
+
+  methodDescriptorAdminListCarpoolSubscriptions = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListCarpoolSubscriptions',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.AdminListCarpoolSubscriptionsRequest,
+    rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse,
+    (request: rpc_carpool_pb.AdminListCarpoolSubscriptionsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse.deserializeBinary
+  );
+
+  adminListCarpoolSubscriptions(
+    request: rpc_carpool_pb.AdminListCarpoolSubscriptionsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse>;
+
+  adminListCarpoolSubscriptions(
+    request: rpc_carpool_pb.AdminListCarpoolSubscriptionsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse>;
+
+  adminListCarpoolSubscriptions(
+    request: rpc_carpool_pb.AdminListCarpoolSubscriptionsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.AdminListCarpoolSubscriptionsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListCarpoolSubscriptions',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListCarpoolSubscriptions,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListCarpoolSubscriptions',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListCarpoolSubscriptions);
+  }
+
+  methodDescriptorListCarpoolTrips = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListCarpoolTrips',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ListCarpoolTripsRequest,
+    rpc_carpool_pb.ListCarpoolTripsResponse,
+    (request: rpc_carpool_pb.ListCarpoolTripsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.ListCarpoolTripsResponse.deserializeBinary
+  );
+
+  listCarpoolTrips(
+    request: rpc_carpool_pb.ListCarpoolTripsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.ListCarpoolTripsResponse>;
+
+  listCarpoolTrips(
+    request: rpc_carpool_pb.ListCarpoolTripsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListCarpoolTripsResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.ListCarpoolTripsResponse>;
+
+  listCarpoolTrips(
+    request: rpc_carpool_pb.ListCarpoolTripsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListCarpoolTripsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListCarpoolTrips',
+        request,
+        metadata || {},
+        this.methodDescriptorListCarpoolTrips,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListCarpoolTrips',
+    request,
+    metadata || {},
+    this.methodDescriptorListCarpoolTrips);
+  }
+
+  methodDescriptorGetCarpoolTripDetail = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetCarpoolTripDetail',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.GetCarpoolTripDetailRequest,
+    rpc_carpool_pb.TripDetailResponse,
+    (request: rpc_carpool_pb.GetCarpoolTripDetailRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.TripDetailResponse.deserializeBinary
+  );
+
+  getCarpoolTripDetail(
+    request: rpc_carpool_pb.GetCarpoolTripDetailRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.TripDetailResponse>;
+
+  getCarpoolTripDetail(
+    request: rpc_carpool_pb.GetCarpoolTripDetailRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.TripDetailResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.TripDetailResponse>;
+
+  getCarpoolTripDetail(
+    request: rpc_carpool_pb.GetCarpoolTripDetailRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.TripDetailResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetCarpoolTripDetail',
+        request,
+        metadata || {},
+        this.methodDescriptorGetCarpoolTripDetail,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetCarpoolTripDetail',
+    request,
+    metadata || {},
+    this.methodDescriptorGetCarpoolTripDetail);
+  }
+
+  methodDescriptorApplyCarpool = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ApplyCarpool',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ApplyCarpoolRequest,
+    rpc_carpool_pb.CarpoolBooking,
+    (request: rpc_carpool_pb.ApplyCarpoolRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolBooking.deserializeBinary
+  );
+
+  applyCarpool(
+    request: rpc_carpool_pb.ApplyCarpoolRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolBooking>;
+
+  applyCarpool(
+    request: rpc_carpool_pb.ApplyCarpoolRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolBooking>;
+
+  applyCarpool(
+    request: rpc_carpool_pb.ApplyCarpoolRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ApplyCarpool',
+        request,
+        metadata || {},
+        this.methodDescriptorApplyCarpool,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ApplyCarpool',
+    request,
+    metadata || {},
+    this.methodDescriptorApplyCarpool);
+  }
+
+  methodDescriptorHandleBooking = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/HandleBooking',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.HandleBookingRequest,
+    rpc_carpool_pb.CarpoolBooking,
+    (request: rpc_carpool_pb.HandleBookingRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolBooking.deserializeBinary
+  );
+
+  handleBooking(
+    request: rpc_carpool_pb.HandleBookingRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolBooking>;
+
+  handleBooking(
+    request: rpc_carpool_pb.HandleBookingRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolBooking>;
+
+  handleBooking(
+    request: rpc_carpool_pb.HandleBookingRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/HandleBooking',
+        request,
+        metadata || {},
+        this.methodDescriptorHandleBooking,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/HandleBooking',
+    request,
+    metadata || {},
+    this.methodDescriptorHandleBooking);
+  }
+
+  methodDescriptorReorderStopovers = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ReorderStopovers',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ReorderStopoversRequest,
+    google_protobuf_empty_pb.Empty,
+    (request: rpc_carpool_pb.ReorderStopoversRequest) => {
+      return request.serializeBinary();
+    },
+    google_protobuf_empty_pb.Empty.deserializeBinary
+  );
+
+  reorderStopovers(
+    request: rpc_carpool_pb.ReorderStopoversRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<google_protobuf_empty_pb.Empty>;
+
+  reorderStopovers(
+    request: rpc_carpool_pb.ReorderStopoversRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void): grpcWeb.ClientReadableStream<google_protobuf_empty_pb.Empty>;
+
+  reorderStopovers(
+    request: rpc_carpool_pb.ReorderStopoversRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: google_protobuf_empty_pb.Empty) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ReorderStopovers',
+        request,
+        metadata || {},
+        this.methodDescriptorReorderStopovers,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ReorderStopovers',
+    request,
+    metadata || {},
+    this.methodDescriptorReorderStopovers);
+  }
+
+  methodDescriptorSearchAddress = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SearchAddress',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.SearchAddressRequest,
+    rpc_carpool_pb.SearchAddressResponse,
+    (request: rpc_carpool_pb.SearchAddressRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.SearchAddressResponse.deserializeBinary
+  );
+
+  searchAddress(
+    request: rpc_carpool_pb.SearchAddressRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.SearchAddressResponse>;
+
+  searchAddress(
+    request: rpc_carpool_pb.SearchAddressRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.SearchAddressResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.SearchAddressResponse>;
+
+  searchAddress(
+    request: rpc_carpool_pb.SearchAddressRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.SearchAddressResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SearchAddress',
+        request,
+        metadata || {},
+        this.methodDescriptorSearchAddress,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SearchAddress',
+    request,
+    metadata || {},
+    this.methodDescriptorSearchAddress);
+  }
+
+  methodDescriptorListMyCarpoolTrips = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListMyCarpoolTrips',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ListMyCarpoolTripsRequest,
+    rpc_carpool_pb.ListMyCarpoolTripsResponse,
+    (request: rpc_carpool_pb.ListMyCarpoolTripsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.ListMyCarpoolTripsResponse.deserializeBinary
+  );
+
+  listMyCarpoolTrips(
+    request: rpc_carpool_pb.ListMyCarpoolTripsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.ListMyCarpoolTripsResponse>;
+
+  listMyCarpoolTrips(
+    request: rpc_carpool_pb.ListMyCarpoolTripsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListMyCarpoolTripsResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.ListMyCarpoolTripsResponse>;
+
+  listMyCarpoolTrips(
+    request: rpc_carpool_pb.ListMyCarpoolTripsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListMyCarpoolTripsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListMyCarpoolTrips',
+        request,
+        metadata || {},
+        this.methodDescriptorListMyCarpoolTrips,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListMyCarpoolTrips',
+    request,
+    metadata || {},
+    this.methodDescriptorListMyCarpoolTrips);
+  }
+
+  methodDescriptorListMyCarpoolBookings = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListMyCarpoolBookings',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.ListMyCarpoolBookingsRequest,
+    rpc_carpool_pb.ListMyCarpoolBookingsResponse,
+    (request: rpc_carpool_pb.ListMyCarpoolBookingsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.ListMyCarpoolBookingsResponse.deserializeBinary
+  );
+
+  listMyCarpoolBookings(
+    request: rpc_carpool_pb.ListMyCarpoolBookingsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.ListMyCarpoolBookingsResponse>;
+
+  listMyCarpoolBookings(
+    request: rpc_carpool_pb.ListMyCarpoolBookingsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListMyCarpoolBookingsResponse) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.ListMyCarpoolBookingsResponse>;
+
+  listMyCarpoolBookings(
+    request: rpc_carpool_pb.ListMyCarpoolBookingsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.ListMyCarpoolBookingsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListMyCarpoolBookings',
+        request,
+        metadata || {},
+        this.methodDescriptorListMyCarpoolBookings,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListMyCarpoolBookings',
+    request,
+    metadata || {},
+    this.methodDescriptorListMyCarpoolBookings);
+  }
+
+  methodDescriptorCancelCarpoolTrip = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CancelCarpoolTrip',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.CancelCarpoolTripRequest,
+    rpc_carpool_pb.CarpoolTrip,
+    (request: rpc_carpool_pb.CancelCarpoolTripRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolTrip.deserializeBinary
+  );
+
+  cancelCarpoolTrip(
+    request: rpc_carpool_pb.CancelCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolTrip>;
+
+  cancelCarpoolTrip(
+    request: rpc_carpool_pb.CancelCarpoolTripRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolTrip>;
+
+  cancelCarpoolTrip(
+    request: rpc_carpool_pb.CancelCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CancelCarpoolTrip',
+        request,
+        metadata || {},
+        this.methodDescriptorCancelCarpoolTrip,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CancelCarpoolTrip',
+    request,
+    metadata || {},
+    this.methodDescriptorCancelCarpoolTrip);
+  }
+
+  methodDescriptorCancelCarpoolBooking = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CancelCarpoolBooking',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.CancelCarpoolBookingRequest,
+    rpc_carpool_pb.CarpoolBooking,
+    (request: rpc_carpool_pb.CancelCarpoolBookingRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolBooking.deserializeBinary
+  );
+
+  cancelCarpoolBooking(
+    request: rpc_carpool_pb.CancelCarpoolBookingRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolBooking>;
+
+  cancelCarpoolBooking(
+    request: rpc_carpool_pb.CancelCarpoolBookingRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolBooking>;
+
+  cancelCarpoolBooking(
+    request: rpc_carpool_pb.CancelCarpoolBookingRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolBooking) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CancelCarpoolBooking',
+        request,
+        metadata || {},
+        this.methodDescriptorCancelCarpoolBooking,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CancelCarpoolBooking',
+    request,
+    metadata || {},
+    this.methodDescriptorCancelCarpoolBooking);
+  }
+
+  methodDescriptorUpdateCarpoolTrip = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCarpoolTrip',
+    grpcWeb.MethodType.UNARY,
+    rpc_carpool_pb.UpdateCarpoolTripRequest,
+    rpc_carpool_pb.CarpoolTrip,
+    (request: rpc_carpool_pb.UpdateCarpoolTripRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_carpool_pb.CarpoolTrip.deserializeBinary
+  );
+
+  updateCarpoolTrip(
+    request: rpc_carpool_pb.UpdateCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_carpool_pb.CarpoolTrip>;
+
+  updateCarpoolTrip(
+    request: rpc_carpool_pb.UpdateCarpoolTripRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void): grpcWeb.ClientReadableStream<rpc_carpool_pb.CarpoolTrip>;
+
+  updateCarpoolTrip(
+    request: rpc_carpool_pb.UpdateCarpoolTripRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_carpool_pb.CarpoolTrip) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCarpoolTrip',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCarpoolTrip,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCarpoolTrip',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCarpoolTrip);
+  }
+
+  methodDescriptorUpdateChatContext = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateChatContext',
+    grpcWeb.MethodType.UNARY,
+    rpc_chat_system_pb.UpdateChatContextRequest,
+    rpc_chat_system_pb.UpdateChatContextResponse,
+    (request: rpc_chat_system_pb.UpdateChatContextRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_chat_system_pb.UpdateChatContextResponse.deserializeBinary
+  );
+
+  updateChatContext(
+    request: rpc_chat_system_pb.UpdateChatContextRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_chat_system_pb.UpdateChatContextResponse>;
+
+  updateChatContext(
+    request: rpc_chat_system_pb.UpdateChatContextRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.UpdateChatContextResponse) => void): grpcWeb.ClientReadableStream<rpc_chat_system_pb.UpdateChatContextResponse>;
+
+  updateChatContext(
+    request: rpc_chat_system_pb.UpdateChatContextRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_chat_system_pb.UpdateChatContextResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateChatContext',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateChatContext,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateChatContext',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateChatContext);
+  }
+
+  methodDescriptorCreateBuddyPost = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/CreateBuddyPost',
+    grpcWeb.MethodType.UNARY,
+    rpc_buddy_pb.CreateBuddyPostRequest,
+    rpc_buddy_pb.CreateBuddyPostResponse,
+    (request: rpc_buddy_pb.CreateBuddyPostRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_buddy_pb.CreateBuddyPostResponse.deserializeBinary
+  );
+
+  createBuddyPost(
+    request: rpc_buddy_pb.CreateBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_buddy_pb.CreateBuddyPostResponse>;
+
+  createBuddyPost(
+    request: rpc_buddy_pb.CreateBuddyPostRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.CreateBuddyPostResponse) => void): grpcWeb.ClientReadableStream<rpc_buddy_pb.CreateBuddyPostResponse>;
+
+  createBuddyPost(
+    request: rpc_buddy_pb.CreateBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.CreateBuddyPostResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/CreateBuddyPost',
+        request,
+        metadata || {},
+        this.methodDescriptorCreateBuddyPost,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/CreateBuddyPost',
+    request,
+    metadata || {},
+    this.methodDescriptorCreateBuddyPost);
+  }
+
+  methodDescriptorListBuddyPosts = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListBuddyPosts',
+    grpcWeb.MethodType.UNARY,
+    rpc_buddy_pb.ListBuddyPostsRequest,
+    rpc_buddy_pb.ListBuddyPostsResponse,
+    (request: rpc_buddy_pb.ListBuddyPostsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_buddy_pb.ListBuddyPostsResponse.deserializeBinary
+  );
+
+  listBuddyPosts(
+    request: rpc_buddy_pb.ListBuddyPostsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_buddy_pb.ListBuddyPostsResponse>;
+
+  listBuddyPosts(
+    request: rpc_buddy_pb.ListBuddyPostsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.ListBuddyPostsResponse) => void): grpcWeb.ClientReadableStream<rpc_buddy_pb.ListBuddyPostsResponse>;
+
+  listBuddyPosts(
+    request: rpc_buddy_pb.ListBuddyPostsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.ListBuddyPostsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListBuddyPosts',
+        request,
+        metadata || {},
+        this.methodDescriptorListBuddyPosts,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListBuddyPosts',
+    request,
+    metadata || {},
+    this.methodDescriptorListBuddyPosts);
+  }
+
+  methodDescriptorListMyBuddyPosts = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListMyBuddyPosts',
+    grpcWeb.MethodType.UNARY,
+    rpc_buddy_pb.ListMyBuddyPostsRequest,
+    rpc_buddy_pb.ListMyBuddyPostsResponse,
+    (request: rpc_buddy_pb.ListMyBuddyPostsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_buddy_pb.ListMyBuddyPostsResponse.deserializeBinary
+  );
+
+  listMyBuddyPosts(
+    request: rpc_buddy_pb.ListMyBuddyPostsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_buddy_pb.ListMyBuddyPostsResponse>;
+
+  listMyBuddyPosts(
+    request: rpc_buddy_pb.ListMyBuddyPostsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.ListMyBuddyPostsResponse) => void): grpcWeb.ClientReadableStream<rpc_buddy_pb.ListMyBuddyPostsResponse>;
+
+  listMyBuddyPosts(
+    request: rpc_buddy_pb.ListMyBuddyPostsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.ListMyBuddyPostsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListMyBuddyPosts',
+        request,
+        metadata || {},
+        this.methodDescriptorListMyBuddyPosts,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListMyBuddyPosts',
+    request,
+    metadata || {},
+    this.methodDescriptorListMyBuddyPosts);
+  }
+
+  methodDescriptorUpdateBuddyPost = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateBuddyPost',
+    grpcWeb.MethodType.UNARY,
+    rpc_buddy_pb.UpdateBuddyPostRequest,
+    rpc_buddy_pb.UpdateBuddyPostResponse,
+    (request: rpc_buddy_pb.UpdateBuddyPostRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_buddy_pb.UpdateBuddyPostResponse.deserializeBinary
+  );
+
+  updateBuddyPost(
+    request: rpc_buddy_pb.UpdateBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_buddy_pb.UpdateBuddyPostResponse>;
+
+  updateBuddyPost(
+    request: rpc_buddy_pb.UpdateBuddyPostRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.UpdateBuddyPostResponse) => void): grpcWeb.ClientReadableStream<rpc_buddy_pb.UpdateBuddyPostResponse>;
+
+  updateBuddyPost(
+    request: rpc_buddy_pb.UpdateBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.UpdateBuddyPostResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateBuddyPost',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateBuddyPost,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateBuddyPost',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateBuddyPost);
+  }
+
+  methodDescriptorDeleteBuddyPost = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteBuddyPost',
+    grpcWeb.MethodType.UNARY,
+    rpc_buddy_pb.DeleteBuddyPostRequest,
+    rpc_buddy_pb.DeleteBuddyPostResponse,
+    (request: rpc_buddy_pb.DeleteBuddyPostRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_buddy_pb.DeleteBuddyPostResponse.deserializeBinary
+  );
+
+  deleteBuddyPost(
+    request: rpc_buddy_pb.DeleteBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_buddy_pb.DeleteBuddyPostResponse>;
+
+  deleteBuddyPost(
+    request: rpc_buddy_pb.DeleteBuddyPostRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.DeleteBuddyPostResponse) => void): grpcWeb.ClientReadableStream<rpc_buddy_pb.DeleteBuddyPostResponse>;
+
+  deleteBuddyPost(
+    request: rpc_buddy_pb.DeleteBuddyPostRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_buddy_pb.DeleteBuddyPostResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteBuddyPost',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteBuddyPost,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteBuddyPost',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteBuddyPost);
+  }
+
+  methodDescriptorListSystemConfigs = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListSystemConfigs',
+    grpcWeb.MethodType.UNARY,
+    rpc_system_config_pb.ListSystemConfigsRequest,
+    rpc_system_config_pb.ListSystemConfigsResponse,
+    (request: rpc_system_config_pb.ListSystemConfigsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_system_config_pb.ListSystemConfigsResponse.deserializeBinary
+  );
+
+  listSystemConfigs(
+    request: rpc_system_config_pb.ListSystemConfigsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_system_config_pb.ListSystemConfigsResponse>;
+
+  listSystemConfigs(
+    request: rpc_system_config_pb.ListSystemConfigsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.ListSystemConfigsResponse) => void): grpcWeb.ClientReadableStream<rpc_system_config_pb.ListSystemConfigsResponse>;
+
+  listSystemConfigs(
+    request: rpc_system_config_pb.ListSystemConfigsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.ListSystemConfigsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListSystemConfigs',
+        request,
+        metadata || {},
+        this.methodDescriptorListSystemConfigs,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListSystemConfigs',
+    request,
+    metadata || {},
+    this.methodDescriptorListSystemConfigs);
+  }
+
+  methodDescriptorUpdateSystemConfig = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateSystemConfig',
+    grpcWeb.MethodType.UNARY,
+    rpc_system_config_pb.UpdateSystemConfigRequest,
+    rpc_system_config_pb.UpdateSystemConfigResponse,
+    (request: rpc_system_config_pb.UpdateSystemConfigRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_system_config_pb.UpdateSystemConfigResponse.deserializeBinary
+  );
+
+  updateSystemConfig(
+    request: rpc_system_config_pb.UpdateSystemConfigRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_system_config_pb.UpdateSystemConfigResponse>;
+
+  updateSystemConfig(
+    request: rpc_system_config_pb.UpdateSystemConfigRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.UpdateSystemConfigResponse) => void): grpcWeb.ClientReadableStream<rpc_system_config_pb.UpdateSystemConfigResponse>;
+
+  updateSystemConfig(
+    request: rpc_system_config_pb.UpdateSystemConfigRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.UpdateSystemConfigResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateSystemConfig',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateSystemConfig,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateSystemConfig',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateSystemConfig);
+  }
+
+  methodDescriptorGetFeatureAvailability = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/GetFeatureAvailability',
+    grpcWeb.MethodType.UNARY,
+    rpc_system_config_pb.GetFeatureAvailabilityRequest,
+    rpc_system_config_pb.GetFeatureAvailabilityResponse,
+    (request: rpc_system_config_pb.GetFeatureAvailabilityRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_system_config_pb.GetFeatureAvailabilityResponse.deserializeBinary
+  );
+
+  getFeatureAvailability(
+    request: rpc_system_config_pb.GetFeatureAvailabilityRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_system_config_pb.GetFeatureAvailabilityResponse>;
+
+  getFeatureAvailability(
+    request: rpc_system_config_pb.GetFeatureAvailabilityRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.GetFeatureAvailabilityResponse) => void): grpcWeb.ClientReadableStream<rpc_system_config_pb.GetFeatureAvailabilityResponse>;
+
+  getFeatureAvailability(
+    request: rpc_system_config_pb.GetFeatureAvailabilityRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_system_config_pb.GetFeatureAvailabilityResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/GetFeatureAvailability',
+        request,
+        metadata || {},
+        this.methodDescriptorGetFeatureAvailability,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/GetFeatureAvailability',
+    request,
+    metadata || {},
+    this.methodDescriptorGetFeatureAvailability);
+  }
+
+  methodDescriptorSearchUserByCustomId = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SearchUserByCustomId',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.SearchUserByCustomIdRequest,
+    rpc_friend_pb.SearchUserByCustomIdResponse,
+    (request: rpc_friend_pb.SearchUserByCustomIdRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.SearchUserByCustomIdResponse.deserializeBinary
+  );
+
+  searchUserByCustomId(
+    request: rpc_friend_pb.SearchUserByCustomIdRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.SearchUserByCustomIdResponse>;
+
+  searchUserByCustomId(
+    request: rpc_friend_pb.SearchUserByCustomIdRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SearchUserByCustomIdResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.SearchUserByCustomIdResponse>;
+
+  searchUserByCustomId(
+    request: rpc_friend_pb.SearchUserByCustomIdRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SearchUserByCustomIdResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SearchUserByCustomId',
+        request,
+        metadata || {},
+        this.methodDescriptorSearchUserByCustomId,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SearchUserByCustomId',
+    request,
+    metadata || {},
+    this.methodDescriptorSearchUserByCustomId);
+  }
+
+  methodDescriptorUpdateCustomId = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/UpdateCustomId',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.UpdateCustomIdRequest,
+    rpc_friend_pb.UpdateCustomIdResponse,
+    (request: rpc_friend_pb.UpdateCustomIdRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.UpdateCustomIdResponse.deserializeBinary
+  );
+
+  updateCustomId(
+    request: rpc_friend_pb.UpdateCustomIdRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.UpdateCustomIdResponse>;
+
+  updateCustomId(
+    request: rpc_friend_pb.UpdateCustomIdRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.UpdateCustomIdResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.UpdateCustomIdResponse>;
+
+  updateCustomId(
+    request: rpc_friend_pb.UpdateCustomIdRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.UpdateCustomIdResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/UpdateCustomId',
+        request,
+        metadata || {},
+        this.methodDescriptorUpdateCustomId,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/UpdateCustomId',
+    request,
+    metadata || {},
+    this.methodDescriptorUpdateCustomId);
+  }
+
+  methodDescriptorSendFriendRequest = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SendFriendRequest',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.SendFriendRequestRequest,
+    rpc_friend_pb.SendFriendRequestResponse,
+    (request: rpc_friend_pb.SendFriendRequestRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.SendFriendRequestResponse.deserializeBinary
+  );
+
+  sendFriendRequest(
+    request: rpc_friend_pb.SendFriendRequestRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.SendFriendRequestResponse>;
+
+  sendFriendRequest(
+    request: rpc_friend_pb.SendFriendRequestRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SendFriendRequestResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.SendFriendRequestResponse>;
+
+  sendFriendRequest(
+    request: rpc_friend_pb.SendFriendRequestRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SendFriendRequestResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SendFriendRequest',
+        request,
+        metadata || {},
+        this.methodDescriptorSendFriendRequest,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SendFriendRequest',
+    request,
+    metadata || {},
+    this.methodDescriptorSendFriendRequest);
+  }
+
+  methodDescriptorListFriendRequests = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListFriendRequests',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.ListFriendRequestsRequest,
+    rpc_friend_pb.ListFriendRequestsResponse,
+    (request: rpc_friend_pb.ListFriendRequestsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.ListFriendRequestsResponse.deserializeBinary
+  );
+
+  listFriendRequests(
+    request: rpc_friend_pb.ListFriendRequestsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.ListFriendRequestsResponse>;
+
+  listFriendRequests(
+    request: rpc_friend_pb.ListFriendRequestsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.ListFriendRequestsResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.ListFriendRequestsResponse>;
+
+  listFriendRequests(
+    request: rpc_friend_pb.ListFriendRequestsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.ListFriendRequestsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListFriendRequests',
+        request,
+        metadata || {},
+        this.methodDescriptorListFriendRequests,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListFriendRequests',
+    request,
+    metadata || {},
+    this.methodDescriptorListFriendRequests);
+  }
+
+  methodDescriptorHandleFriendRequest = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/HandleFriendRequest',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.HandleFriendRequestRequest,
+    rpc_friend_pb.HandleFriendRequestResponse,
+    (request: rpc_friend_pb.HandleFriendRequestRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.HandleFriendRequestResponse.deserializeBinary
+  );
+
+  handleFriendRequest(
+    request: rpc_friend_pb.HandleFriendRequestRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.HandleFriendRequestResponse>;
+
+  handleFriendRequest(
+    request: rpc_friend_pb.HandleFriendRequestRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.HandleFriendRequestResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.HandleFriendRequestResponse>;
+
+  handleFriendRequest(
+    request: rpc_friend_pb.HandleFriendRequestRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.HandleFriendRequestResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/HandleFriendRequest',
+        request,
+        metadata || {},
+        this.methodDescriptorHandleFriendRequest,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/HandleFriendRequest',
+    request,
+    metadata || {},
+    this.methodDescriptorHandleFriendRequest);
+  }
+
+  methodDescriptorListFriends = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/ListFriends',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.ListFriendsRequest,
+    rpc_friend_pb.ListFriendsResponse,
+    (request: rpc_friend_pb.ListFriendsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.ListFriendsResponse.deserializeBinary
+  );
+
+  listFriends(
+    request: rpc_friend_pb.ListFriendsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.ListFriendsResponse>;
+
+  listFriends(
+    request: rpc_friend_pb.ListFriendsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.ListFriendsResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.ListFriendsResponse>;
+
+  listFriends(
+    request: rpc_friend_pb.ListFriendsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.ListFriendsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/ListFriends',
+        request,
+        metadata || {},
+        this.methodDescriptorListFriends,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/ListFriends',
+    request,
+    metadata || {},
+    this.methodDescriptorListFriends);
+  }
+
+  methodDescriptorSetFriendRemark = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/SetFriendRemark',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.SetFriendRemarkRequest,
+    rpc_friend_pb.SetFriendRemarkResponse,
+    (request: rpc_friend_pb.SetFriendRemarkRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.SetFriendRemarkResponse.deserializeBinary
+  );
+
+  setFriendRemark(
+    request: rpc_friend_pb.SetFriendRemarkRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.SetFriendRemarkResponse>;
+
+  setFriendRemark(
+    request: rpc_friend_pb.SetFriendRemarkRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SetFriendRemarkResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.SetFriendRemarkResponse>;
+
+  setFriendRemark(
+    request: rpc_friend_pb.SetFriendRemarkRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.SetFriendRemarkResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/SetFriendRemark',
+        request,
+        metadata || {},
+        this.methodDescriptorSetFriendRemark,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/SetFriendRemark',
+    request,
+    metadata || {},
+    this.methodDescriptorSetFriendRemark);
+  }
+
+  methodDescriptorDeleteFriend = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/DeleteFriend',
+    grpcWeb.MethodType.UNARY,
+    rpc_friend_pb.DeleteFriendRequest,
+    rpc_friend_pb.DeleteFriendResponse,
+    (request: rpc_friend_pb.DeleteFriendRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_friend_pb.DeleteFriendResponse.deserializeBinary
+  );
+
+  deleteFriend(
+    request: rpc_friend_pb.DeleteFriendRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_friend_pb.DeleteFriendResponse>;
+
+  deleteFriend(
+    request: rpc_friend_pb.DeleteFriendRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.DeleteFriendResponse) => void): grpcWeb.ClientReadableStream<rpc_friend_pb.DeleteFriendResponse>;
+
+  deleteFriend(
+    request: rpc_friend_pb.DeleteFriendRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_friend_pb.DeleteFriendResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/DeleteFriend',
+        request,
+        metadata || {},
+        this.methodDescriptorDeleteFriend,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/DeleteFriend',
+    request,
+    metadata || {},
+    this.methodDescriptorDeleteFriend);
+  }
+
+  methodDescriptorAdminListUploadedFiles = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListUploadedFiles',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.AdminListUploadedFilesRequest,
+    rpc_file_system_pb.AdminListUploadedFilesResponse,
+    (request: rpc_file_system_pb.AdminListUploadedFilesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.AdminListUploadedFilesResponse.deserializeBinary
+  );
+
+  adminListUploadedFiles(
+    request: rpc_file_system_pb.AdminListUploadedFilesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.AdminListUploadedFilesResponse>;
+
+  adminListUploadedFiles(
+    request: rpc_file_system_pb.AdminListUploadedFilesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminListUploadedFilesResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.AdminListUploadedFilesResponse>;
+
+  adminListUploadedFiles(
+    request: rpc_file_system_pb.AdminListUploadedFilesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminListUploadedFilesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListUploadedFiles',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListUploadedFiles,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListUploadedFiles',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListUploadedFiles);
+  }
+
+  methodDescriptorAdminGetStorageStatistics = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminGetStorageStatistics',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.AdminGetStorageStatisticsRequest,
+    rpc_file_system_pb.AdminGetStorageStatisticsResponse,
+    (request: rpc_file_system_pb.AdminGetStorageStatisticsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.AdminGetStorageStatisticsResponse.deserializeBinary
+  );
+
+  adminGetStorageStatistics(
+    request: rpc_file_system_pb.AdminGetStorageStatisticsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.AdminGetStorageStatisticsResponse>;
+
+  adminGetStorageStatistics(
+    request: rpc_file_system_pb.AdminGetStorageStatisticsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminGetStorageStatisticsResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.AdminGetStorageStatisticsResponse>;
+
+  adminGetStorageStatistics(
+    request: rpc_file_system_pb.AdminGetStorageStatisticsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminGetStorageStatisticsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminGetStorageStatistics',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminGetStorageStatistics,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminGetStorageStatistics',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminGetStorageStatistics);
+  }
+
+  methodDescriptorAdminGetFilePreviewUrl = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminGetFilePreviewUrl',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.AdminGetFilePreviewUrlRequest,
+    rpc_file_system_pb.AdminGetFilePreviewUrlResponse,
+    (request: rpc_file_system_pb.AdminGetFilePreviewUrlRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.AdminGetFilePreviewUrlResponse.deserializeBinary
+  );
+
+  adminGetFilePreviewUrl(
+    request: rpc_file_system_pb.AdminGetFilePreviewUrlRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.AdminGetFilePreviewUrlResponse>;
+
+  adminGetFilePreviewUrl(
+    request: rpc_file_system_pb.AdminGetFilePreviewUrlRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminGetFilePreviewUrlResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.AdminGetFilePreviewUrlResponse>;
+
+  adminGetFilePreviewUrl(
+    request: rpc_file_system_pb.AdminGetFilePreviewUrlRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminGetFilePreviewUrlResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminGetFilePreviewUrl',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminGetFilePreviewUrl,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminGetFilePreviewUrl',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminGetFilePreviewUrl);
+  }
+
+  methodDescriptorAdminDeleteFile = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminDeleteFile',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.AdminDeleteFileRequest,
+    rpc_file_system_pb.AdminDeleteFileResponse,
+    (request: rpc_file_system_pb.AdminDeleteFileRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.AdminDeleteFileResponse.deserializeBinary
+  );
+
+  adminDeleteFile(
+    request: rpc_file_system_pb.AdminDeleteFileRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.AdminDeleteFileResponse>;
+
+  adminDeleteFile(
+    request: rpc_file_system_pb.AdminDeleteFileRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminDeleteFileResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.AdminDeleteFileResponse>;
+
+  adminDeleteFile(
+    request: rpc_file_system_pb.AdminDeleteFileRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminDeleteFileResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminDeleteFile',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminDeleteFile,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminDeleteFile',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminDeleteFile);
+  }
+
+  methodDescriptorAdminTriggerCleanupExpiredFiles = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminTriggerCleanupExpiredFiles',
+    grpcWeb.MethodType.UNARY,
+    rpc_file_system_pb.AdminTriggerCleanupExpiredFilesRequest,
+    rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse,
+    (request: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse.deserializeBinary
+  );
+
+  adminTriggerCleanupExpiredFiles(
+    request: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse>;
+
+  adminTriggerCleanupExpiredFiles(
+    request: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse) => void): grpcWeb.ClientReadableStream<rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse>;
+
+  adminTriggerCleanupExpiredFiles(
+    request: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_file_system_pb.AdminTriggerCleanupExpiredFilesResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminTriggerCleanupExpiredFiles',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminTriggerCleanupExpiredFiles,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminTriggerCleanupExpiredFiles',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminTriggerCleanupExpiredFiles);
+  }
+
+  methodDescriptorAdminCreateAnnouncement = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminCreateAnnouncement',
+    grpcWeb.MethodType.UNARY,
+    rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementRequest,
+    rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse,
+    (request: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse.deserializeBinary
+  );
+
+  adminCreateAnnouncement(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse>;
+
+  adminCreateAnnouncement(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse) => void): grpcWeb.ClientReadableStream<rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse>;
+
+  adminCreateAnnouncement(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminCreateAnnouncementResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminCreateAnnouncement',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminCreateAnnouncement,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminCreateAnnouncement',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminCreateAnnouncement);
+  }
+
+  methodDescriptorAdminListAnnouncements = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListAnnouncements',
+    grpcWeb.MethodType.UNARY,
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsRequest,
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse,
+    (request: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse.deserializeBinary
+  );
+
+  adminListAnnouncements(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse>;
+
+  adminListAnnouncements(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse) => void): grpcWeb.ClientReadableStream<rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse>;
+
+  adminListAnnouncements(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminListAnnouncementsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListAnnouncements',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListAnnouncements,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListAnnouncements',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListAnnouncements);
+  }
+
+  methodDescriptorAdminListAuditLogs = new grpcWeb.MethodDescriptor(
+    '/pb.PeakPal/AdminListAuditLogs',
+    grpcWeb.MethodType.UNARY,
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsRequest,
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse,
+    (request: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsRequest) => {
+      return request.serializeBinary();
+    },
+    rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse.deserializeBinary
+  );
+
+  adminListAuditLogs(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse>;
+
+  adminListAuditLogs(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse) => void): grpcWeb.ClientReadableStream<rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse>;
+
+  adminListAuditLogs(
+    request: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsRequest,
+    metadata?: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: rpc_admin_announcements_and_audit_logs_pb.AdminListAuditLogsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/pb.PeakPal/AdminListAuditLogs',
+        request,
+        metadata || {},
+        this.methodDescriptorAdminListAuditLogs,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/pb.PeakPal/AdminListAuditLogs',
+    request,
+    metadata || {},
+    this.methodDescriptorAdminListAuditLogs);
   }
 
 }

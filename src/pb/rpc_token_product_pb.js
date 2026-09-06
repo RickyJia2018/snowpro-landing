@@ -204,12 +204,13 @@ proto.pb.TokenProduct.prototype.toObject = function(opt_includeInstance) {
 proto.pb.TokenProduct.toObject = function(includeInstance, msg) {
   var f, obj = {
 productId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-tokenAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+tokenAmountInCents: jspb.Message.getFieldWithDefault(msg, 2, 0),
 priceInCents: jspb.Message.getFieldWithDefault(msg, 3, 0),
 title: jspb.Message.getFieldWithDefault(msg, 4, ""),
 description: jspb.Message.getFieldWithDefault(msg, 5, ""),
 createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-updatedAt: (f = msg.getUpdatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
+updatedAt: (f = msg.getUpdatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+isActive: jspb.Message.getBooleanFieldWithDefault(msg, 8, false)
   };
 
   if (includeInstance) {
@@ -251,8 +252,8 @@ proto.pb.TokenProduct.deserializeBinaryFromReader = function(msg, reader) {
       msg.setProductId(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setTokenAmount(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTokenAmountInCents(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
@@ -275,6 +276,10 @@ proto.pb.TokenProduct.deserializeBinaryFromReader = function(msg, reader) {
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setUpdatedAt(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsActive(value);
       break;
     default:
       reader.skipField();
@@ -312,9 +317,9 @@ proto.pb.TokenProduct.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getTokenAmount();
+  f = message.getTokenAmountInCents();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeInt64(
       2,
       f
     );
@@ -356,6 +361,13 @@ proto.pb.TokenProduct.serializeBinaryToWriter = function(message, writer) {
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
+  f = message.getIsActive();
+  if (f) {
+    writer.writeBool(
+      8,
+      f
+    );
+  }
 };
 
 
@@ -378,10 +390,10 @@ proto.pb.TokenProduct.prototype.setProductId = function(value) {
 
 
 /**
- * optional int32 token_amount = 2;
+ * optional int64 token_amount_in_cents = 2;
  * @return {number}
  */
-proto.pb.TokenProduct.prototype.getTokenAmount = function() {
+proto.pb.TokenProduct.prototype.getTokenAmountInCents = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -390,7 +402,7 @@ proto.pb.TokenProduct.prototype.getTokenAmount = function() {
  * @param {number} value
  * @return {!proto.pb.TokenProduct} returns this
  */
-proto.pb.TokenProduct.prototype.setTokenAmount = function(value) {
+proto.pb.TokenProduct.prototype.setTokenAmountInCents = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -523,6 +535,24 @@ proto.pb.TokenProduct.prototype.hasUpdatedAt = function() {
 };
 
 
+/**
+ * optional bool is_active = 8;
+ * @return {boolean}
+ */
+proto.pb.TokenProduct.prototype.getIsActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 8, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.TokenProduct} returns this
+ */
+proto.pb.TokenProduct.prototype.setIsActive = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 8, value);
+};
+
+
 
 
 
@@ -556,10 +586,11 @@ proto.pb.CreateTokenProductRequest.prototype.toObject = function(opt_includeInst
 proto.pb.CreateTokenProductRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
 productId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-tokenAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+tokenAmountInCents: jspb.Message.getFieldWithDefault(msg, 2, 0),
 priceInCents: jspb.Message.getFieldWithDefault(msg, 3, 0),
 title: jspb.Message.getFieldWithDefault(msg, 4, ""),
-description: jspb.Message.getFieldWithDefault(msg, 5, "")
+description: jspb.Message.getFieldWithDefault(msg, 5, ""),
+isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -601,8 +632,8 @@ proto.pb.CreateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
       msg.setProductId(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setTokenAmount(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTokenAmountInCents(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
@@ -615,6 +646,10 @@ proto.pb.CreateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
     case 5:
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setDescription(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsActive(value);
       break;
     default:
       reader.skipField();
@@ -652,9 +687,9 @@ proto.pb.CreateTokenProductRequest.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getTokenAmount();
+  f = message.getTokenAmountInCents();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeInt64(
       2,
       f
     );
@@ -680,6 +715,13 @@ proto.pb.CreateTokenProductRequest.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 6));
+  if (f != null) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
 };
 
 
@@ -702,10 +744,10 @@ proto.pb.CreateTokenProductRequest.prototype.setProductId = function(value) {
 
 
 /**
- * optional int32 token_amount = 2;
+ * optional int64 token_amount_in_cents = 2;
  * @return {number}
  */
-proto.pb.CreateTokenProductRequest.prototype.getTokenAmount = function() {
+proto.pb.CreateTokenProductRequest.prototype.getTokenAmountInCents = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -714,7 +756,7 @@ proto.pb.CreateTokenProductRequest.prototype.getTokenAmount = function() {
  * @param {number} value
  * @return {!proto.pb.CreateTokenProductRequest} returns this
  */
-proto.pb.CreateTokenProductRequest.prototype.setTokenAmount = function(value) {
+proto.pb.CreateTokenProductRequest.prototype.setTokenAmountInCents = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
@@ -770,6 +812,42 @@ proto.pb.CreateTokenProductRequest.prototype.getDescription = function() {
  */
 proto.pb.CreateTokenProductRequest.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional bool is_active = 6;
+ * @return {boolean}
+ */
+proto.pb.CreateTokenProductRequest.prototype.getIsActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.CreateTokenProductRequest} returns this
+ */
+proto.pb.CreateTokenProductRequest.prototype.setIsActive = function(value) {
+  return jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.CreateTokenProductRequest} returns this
+ */
+proto.pb.CreateTokenProductRequest.prototype.clearIsActive = function() {
+  return jspb.Message.setField(this, 6, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.CreateTokenProductRequest.prototype.hasIsActive = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
@@ -957,10 +1035,11 @@ proto.pb.UpdateTokenProductRequest.prototype.toObject = function(opt_includeInst
 proto.pb.UpdateTokenProductRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
 productId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-tokenAmount: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f,
+tokenAmountInCents: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f,
 priceInCents: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f,
 title: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f,
-description: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
+description: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f,
+isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1002,8 +1081,8 @@ proto.pb.UpdateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
       msg.setProductId(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setTokenAmount(value);
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTokenAmountInCents(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
@@ -1016,6 +1095,10 @@ proto.pb.UpdateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
     case 5:
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setDescription(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsActive(value);
       break;
     default:
       reader.skipField();
@@ -1055,7 +1138,7 @@ proto.pb.UpdateTokenProductRequest.serializeBinaryToWriter = function(message, w
   }
   f = /** @type {number} */ (jspb.Message.getField(message, 2));
   if (f != null) {
-    writer.writeInt32(
+    writer.writeInt64(
       2,
       f
     );
@@ -1081,6 +1164,13 @@ proto.pb.UpdateTokenProductRequest.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 6));
+  if (f != null) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
 };
 
 
@@ -1103,10 +1193,10 @@ proto.pb.UpdateTokenProductRequest.prototype.setProductId = function(value) {
 
 
 /**
- * optional int32 token_amount = 2;
+ * optional int64 token_amount_in_cents = 2;
  * @return {number}
  */
-proto.pb.UpdateTokenProductRequest.prototype.getTokenAmount = function() {
+proto.pb.UpdateTokenProductRequest.prototype.getTokenAmountInCents = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -1115,7 +1205,7 @@ proto.pb.UpdateTokenProductRequest.prototype.getTokenAmount = function() {
  * @param {number} value
  * @return {!proto.pb.UpdateTokenProductRequest} returns this
  */
-proto.pb.UpdateTokenProductRequest.prototype.setTokenAmount = function(value) {
+proto.pb.UpdateTokenProductRequest.prototype.setTokenAmountInCents = function(value) {
   return jspb.Message.setField(this, 2, value);
 };
 
@@ -1124,7 +1214,7 @@ proto.pb.UpdateTokenProductRequest.prototype.setTokenAmount = function(value) {
  * Clears the field making it undefined.
  * @return {!proto.pb.UpdateTokenProductRequest} returns this
  */
-proto.pb.UpdateTokenProductRequest.prototype.clearTokenAmount = function() {
+proto.pb.UpdateTokenProductRequest.prototype.clearTokenAmountInCents = function() {
   return jspb.Message.setField(this, 2, undefined);
 };
 
@@ -1133,7 +1223,7 @@ proto.pb.UpdateTokenProductRequest.prototype.clearTokenAmount = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.pb.UpdateTokenProductRequest.prototype.hasTokenAmount = function() {
+proto.pb.UpdateTokenProductRequest.prototype.hasTokenAmountInCents = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
@@ -1243,6 +1333,42 @@ proto.pb.UpdateTokenProductRequest.prototype.clearDescription = function() {
  */
 proto.pb.UpdateTokenProductRequest.prototype.hasDescription = function() {
   return jspb.Message.getField(this, 5) != null;
+};
+
+
+/**
+ * optional bool is_active = 6;
+ * @return {boolean}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.getIsActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.setIsActive = function(value) {
+  return jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.clearIsActive = function() {
+  return jspb.Message.setField(this, 6, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.hasIsActive = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 

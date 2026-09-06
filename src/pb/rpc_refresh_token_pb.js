@@ -93,7 +93,8 @@ proto.pb.RefreshTokenRequest.prototype.toObject = function(opt_includeInstance) 
  */
 proto.pb.RefreshTokenRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-sessionId: jspb.Message.getFieldWithDefault(msg, 1, "")
+sessionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+refreshToken: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -134,6 +135,10 @@ proto.pb.RefreshTokenRequest.deserializeBinaryFromReader = function(msg, reader)
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setSessionId(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setRefreshToken(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -170,6 +175,13 @@ proto.pb.RefreshTokenRequest.serializeBinaryToWriter = function(message, writer)
       f
     );
   }
+  f = /** @type {string} */ (jspb.Message.getField(message, 2));
+  if (f != null) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -188,6 +200,42 @@ proto.pb.RefreshTokenRequest.prototype.getSessionId = function() {
  */
 proto.pb.RefreshTokenRequest.prototype.setSessionId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string refresh_token = 2;
+ * @return {string}
+ */
+proto.pb.RefreshTokenRequest.prototype.getRefreshToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.RefreshTokenRequest} returns this
+ */
+proto.pb.RefreshTokenRequest.prototype.setRefreshToken = function(value) {
+  return jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.RefreshTokenRequest} returns this
+ */
+proto.pb.RefreshTokenRequest.prototype.clearRefreshToken = function() {
+  return jspb.Message.setField(this, 2, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.RefreshTokenRequest.prototype.hasRefreshToken = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
@@ -224,7 +272,9 @@ proto.pb.RefreshTokenResponse.prototype.toObject = function(opt_includeInstance)
 proto.pb.RefreshTokenResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
 accessToken: jspb.Message.getFieldWithDefault(msg, 1, ""),
-accessTokenExpiresAt: (f = msg.getAccessTokenExpiresAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
+accessTokenExpiresAt: (f = msg.getAccessTokenExpiresAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+refreshToken: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f,
+refreshTokenExpiresAt: (f = msg.getRefreshTokenExpiresAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -270,6 +320,15 @@ proto.pb.RefreshTokenResponse.deserializeBinaryFromReader = function(msg, reader
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setAccessTokenExpiresAt(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setRefreshToken(value);
+      break;
+    case 4:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setRefreshTokenExpiresAt(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -310,6 +369,21 @@ proto.pb.RefreshTokenResponse.serializeBinaryToWriter = function(message, writer
   if (f != null) {
     writer.writeMessage(
       2,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getRefreshTokenExpiresAt();
+  if (f != null) {
+    writer.writeMessage(
+      4,
       f,
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
@@ -369,6 +443,79 @@ proto.pb.RefreshTokenResponse.prototype.clearAccessTokenExpiresAt = function() {
  */
 proto.pb.RefreshTokenResponse.prototype.hasAccessTokenExpiresAt = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string refresh_token = 3;
+ * @return {string}
+ */
+proto.pb.RefreshTokenResponse.prototype.getRefreshToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.RefreshTokenResponse} returns this
+ */
+proto.pb.RefreshTokenResponse.prototype.setRefreshToken = function(value) {
+  return jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.RefreshTokenResponse} returns this
+ */
+proto.pb.RefreshTokenResponse.prototype.clearRefreshToken = function() {
+  return jspb.Message.setField(this, 3, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.RefreshTokenResponse.prototype.hasRefreshToken = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional google.protobuf.Timestamp refresh_token_expires_at = 4;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.pb.RefreshTokenResponse.prototype.getRefreshTokenExpiresAt = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 4));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.pb.RefreshTokenResponse} returns this
+*/
+proto.pb.RefreshTokenResponse.prototype.setRefreshTokenExpiresAt = function(value) {
+  return jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.pb.RefreshTokenResponse} returns this
+ */
+proto.pb.RefreshTokenResponse.prototype.clearRefreshTokenExpiresAt = function() {
+  return this.setRefreshTokenExpiresAt(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.RefreshTokenResponse.prototype.hasRefreshTokenExpiresAt = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 

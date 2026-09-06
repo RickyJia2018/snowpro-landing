@@ -13,6 +13,16 @@ export class DeleteFileRequest extends jspb.Message {
   getOwnerUserId(): string;
   setOwnerUserId(value: string): DeleteFileRequest;
 
+  getForce(): boolean;
+  setForce(value: boolean): DeleteFileRequest;
+  hasForce(): boolean;
+  clearForce(): DeleteFileRequest;
+
+  getReason(): string;
+  setReason(value: string): DeleteFileRequest;
+  hasReason(): boolean;
+  clearReason(): DeleteFileRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteFileRequest.AsObject;
   static toObject(includeInstance: boolean, msg: DeleteFileRequest): DeleteFileRequest.AsObject;
@@ -26,7 +36,19 @@ export namespace DeleteFileRequest {
     isPrivateFile: boolean;
     objectName: string;
     ownerUserId: string;
+    force?: boolean;
+    reason?: string;
   };
+
+  export enum ForceCase {
+    _FORCE_NOT_SET = 0,
+    FORCE = 4,
+  }
+
+  export enum ReasonCase {
+    _REASON_NOT_SET = 0,
+    REASON = 5,
+  }
 }
 
 export class DeleteFileResponse extends jspb.Message {

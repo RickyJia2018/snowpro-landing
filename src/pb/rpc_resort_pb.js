@@ -315,10 +315,28 @@ proto.pb.Resort.toObject = function(includeInstance, msg) {
   var f, obj = {
 id: jspb.Message.getFieldWithDefault(msg, 1, 0),
 name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-countryCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
+nameZh: jspb.Message.getFieldWithDefault(msg, 3, ""),
+nameEn: jspb.Message.getFieldWithDefault(msg, 4, ""),
+countryCode: jspb.Message.getFieldWithDefault(msg, 5, ""),
+region: jspb.Message.getFieldWithDefault(msg, 6, ""),
+latitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 7, 0.0),
+longitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 8, 0.0),
+elevationM: jspb.Message.getFieldWithDefault(msg, 9, 0),
+skiableAreaKm2: jspb.Message.getFloatingPointFieldWithDefault(msg, 10, 0.0),
+numberOfRuns: jspb.Message.getFieldWithDefault(msg, 11, 0),
+longestRunKm: jspb.Message.getFloatingPointFieldWithDefault(msg, 12, 0.0),
+liftCount: jspb.Message.getFieldWithDefault(msg, 13, 0),
+runsEasy: jspb.Message.getFieldWithDefault(msg, 14, 0),
+runsIntermediate: jspb.Message.getFieldWithDefault(msg, 15, 0),
+runsAdvanced: jspb.Message.getFieldWithDefault(msg, 16, 0),
+runsExpert: jspb.Message.getFieldWithDefault(msg, 17, 0),
+description: jspb.Message.getFieldWithDefault(msg, 18, ""),
+imageUrl: jspb.Message.getFieldWithDefault(msg, 19, ""),
+timezone: jspb.Message.getFieldWithDefault(msg, 20, ""),
+source: jspb.Message.getFieldWithDefault(msg, 21, ""),
+isActive: jspb.Message.getBooleanFieldWithDefault(msg, 22, false),
 createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-latitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0),
-longitude: jspb.Message.getFloatingPointFieldWithDefault(msg, 6, 0.0)
+url: jspb.Message.getFieldWithDefault(msg, 24, "")
   };
 
   if (includeInstance) {
@@ -365,20 +383,92 @@ proto.pb.Resort.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 3:
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
-      msg.setCountryCode(value);
+      msg.setNameZh(value);
       break;
     case 4:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setNameEn(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setCountryCode(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setRegion(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setLatitude(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setLongitude(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setElevationM(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setSkiableAreaKm2(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setNumberOfRuns(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setLongestRunKm(value);
+      break;
+    case 13:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLiftCount(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRunsEasy(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRunsIntermediate(value);
+      break;
+    case 16:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRunsAdvanced(value);
+      break;
+    case 17:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRunsExpert(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setDescription(value);
+      break;
+    case 19:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setImageUrl(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setTimezone(value);
+      break;
+    case 21:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setSource(value);
+      break;
+    case 22:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsActive(value);
+      break;
+    case 23:
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setCreatedAt(value);
       break;
-    case 5:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setLatitude(value);
-      break;
-    case 6:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setLongitude(value);
+    case 24:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setUrl(value);
       break;
     default:
       reader.skipField();
@@ -423,32 +513,158 @@ proto.pb.Resort.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCountryCode();
+  f = message.getNameZh();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getCreatedAt();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getNameEn();
+  if (f.length > 0) {
+    writer.writeString(
       4,
-      f,
-      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+      f
+    );
+  }
+  f = message.getCountryCode();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getRegion();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
     );
   }
   f = message.getLatitude();
   if (f !== 0.0) {
     writer.writeDouble(
-      5,
+      7,
       f
     );
   }
   f = message.getLongitude();
   if (f !== 0.0) {
     writer.writeDouble(
-      6,
+      8,
+      f
+    );
+  }
+  f = message.getElevationM();
+  if (f !== 0) {
+    writer.writeInt32(
+      9,
+      f
+    );
+  }
+  f = message.getSkiableAreaKm2();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      10,
+      f
+    );
+  }
+  f = message.getNumberOfRuns();
+  if (f !== 0) {
+    writer.writeInt32(
+      11,
+      f
+    );
+  }
+  f = message.getLongestRunKm();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      12,
+      f
+    );
+  }
+  f = message.getLiftCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      13,
+      f
+    );
+  }
+  f = message.getRunsEasy();
+  if (f !== 0) {
+    writer.writeInt32(
+      14,
+      f
+    );
+  }
+  f = message.getRunsIntermediate();
+  if (f !== 0) {
+    writer.writeInt32(
+      15,
+      f
+    );
+  }
+  f = message.getRunsAdvanced();
+  if (f !== 0) {
+    writer.writeInt32(
+      16,
+      f
+    );
+  }
+  f = message.getRunsExpert();
+  if (f !== 0) {
+    writer.writeInt32(
+      17,
+      f
+    );
+  }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
+      f
+    );
+  }
+  f = message.getImageUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      19,
+      f
+    );
+  }
+  f = message.getTimezone();
+  if (f.length > 0) {
+    writer.writeString(
+      20,
+      f
+    );
+  }
+  f = message.getSource();
+  if (f.length > 0) {
+    writer.writeString(
+      21,
+      f
+    );
+  }
+  f = message.getIsActive();
+  if (f) {
+    writer.writeBool(
+      22,
+      f
+    );
+  }
+  f = message.getCreatedAt();
+  if (f != null) {
+    writer.writeMessage(
+      23,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      24,
       f
     );
   }
@@ -492,10 +708,10 @@ proto.pb.Resort.prototype.setName = function(value) {
 
 
 /**
- * optional string country_code = 3;
+ * optional string name_zh = 3;
  * @return {string}
  */
-proto.pb.Resort.prototype.getCountryCode = function() {
+proto.pb.Resort.prototype.getNameZh = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -504,18 +720,360 @@ proto.pb.Resort.prototype.getCountryCode = function() {
  * @param {string} value
  * @return {!proto.pb.Resort} returns this
  */
-proto.pb.Resort.prototype.setCountryCode = function(value) {
+proto.pb.Resort.prototype.setNameZh = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional google.protobuf.Timestamp created_at = 4;
+ * optional string name_en = 4;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getNameEn = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setNameEn = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string country_code = 5;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getCountryCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setCountryCode = function(value) {
+  return jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string region = 6;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getRegion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setRegion = function(value) {
+  return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional double latitude = 7;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getLatitude = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 7, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setLatitude = function(value) {
+  return jspb.Message.setProto3FloatField(this, 7, value);
+};
+
+
+/**
+ * optional double longitude = 8;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getLongitude = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 8, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setLongitude = function(value) {
+  return jspb.Message.setProto3FloatField(this, 8, value);
+};
+
+
+/**
+ * optional int32 elevation_m = 9;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getElevationM = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setElevationM = function(value) {
+  return jspb.Message.setProto3IntField(this, 9, value);
+};
+
+
+/**
+ * optional double skiable_area_km2 = 10;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getSkiableAreaKm2 = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 10, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setSkiableAreaKm2 = function(value) {
+  return jspb.Message.setProto3FloatField(this, 10, value);
+};
+
+
+/**
+ * optional int32 number_of_runs = 11;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getNumberOfRuns = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setNumberOfRuns = function(value) {
+  return jspb.Message.setProto3IntField(this, 11, value);
+};
+
+
+/**
+ * optional double longest_run_km = 12;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getLongestRunKm = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 12, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setLongestRunKm = function(value) {
+  return jspb.Message.setProto3FloatField(this, 12, value);
+};
+
+
+/**
+ * optional int32 lift_count = 13;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getLiftCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setLiftCount = function(value) {
+  return jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional int32 runs_easy = 14;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getRunsEasy = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setRunsEasy = function(value) {
+  return jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional int32 runs_intermediate = 15;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getRunsIntermediate = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setRunsIntermediate = function(value) {
+  return jspb.Message.setProto3IntField(this, 15, value);
+};
+
+
+/**
+ * optional int32 runs_advanced = 16;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getRunsAdvanced = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setRunsAdvanced = function(value) {
+  return jspb.Message.setProto3IntField(this, 16, value);
+};
+
+
+/**
+ * optional int32 runs_expert = 17;
+ * @return {number}
+ */
+proto.pb.Resort.prototype.getRunsExpert = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setRunsExpert = function(value) {
+  return jspb.Message.setProto3IntField(this, 17, value);
+};
+
+
+/**
+ * optional string description = 18;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setDescription = function(value) {
+  return jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
+ * optional string image_url = 19;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getImageUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setImageUrl = function(value) {
+  return jspb.Message.setProto3StringField(this, 19, value);
+};
+
+
+/**
+ * optional string timezone = 20;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getTimezone = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 20, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setTimezone = function(value) {
+  return jspb.Message.setProto3StringField(this, 20, value);
+};
+
+
+/**
+ * optional string source = 21;
+ * @return {string}
+ */
+proto.pb.Resort.prototype.getSource = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setSource = function(value) {
+  return jspb.Message.setProto3StringField(this, 21, value);
+};
+
+
+/**
+ * optional bool is_active = 22;
+ * @return {boolean}
+ */
+proto.pb.Resort.prototype.getIsActive = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 22, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.Resort} returns this
+ */
+proto.pb.Resort.prototype.setIsActive = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 22, value);
+};
+
+
+/**
+ * optional google.protobuf.Timestamp created_at = 23;
  * @return {?proto.google.protobuf.Timestamp}
  */
 proto.pb.Resort.prototype.getCreatedAt = function() {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 4));
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 23));
 };
 
 
@@ -524,7 +1082,7 @@ proto.pb.Resort.prototype.getCreatedAt = function() {
  * @return {!proto.pb.Resort} returns this
 */
 proto.pb.Resort.prototype.setCreatedAt = function(value) {
-  return jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 23, value);
 };
 
 
@@ -542,43 +1100,25 @@ proto.pb.Resort.prototype.clearCreatedAt = function() {
  * @return {boolean}
  */
 proto.pb.Resort.prototype.hasCreatedAt = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 23) != null;
 };
 
 
 /**
- * optional double latitude = 5;
- * @return {number}
+ * optional string url = 24;
+ * @return {string}
  */
-proto.pb.Resort.prototype.getLatitude = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
+proto.pb.Resort.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 24, ""));
 };
 
 
 /**
- * @param {number} value
+ * @param {string} value
  * @return {!proto.pb.Resort} returns this
  */
-proto.pb.Resort.prototype.setLatitude = function(value) {
-  return jspb.Message.setProto3FloatField(this, 5, value);
-};
-
-
-/**
- * optional double longitude = 6;
- * @return {number}
- */
-proto.pb.Resort.prototype.getLongitude = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 6, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.pb.Resort} returns this
- */
-proto.pb.Resort.prototype.setLongitude = function(value) {
-  return jspb.Message.setProto3FloatField(this, 6, value);
+proto.pb.Resort.prototype.setUrl = function(value) {
+  return jspb.Message.setProto3StringField(this, 24, value);
 };
 
 

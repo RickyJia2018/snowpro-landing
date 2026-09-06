@@ -92,7 +92,8 @@ proto.pb.VerifyEmailRequest.prototype.toObject = function(opt_includeInstance) {
 proto.pb.VerifyEmailRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
 emailId: jspb.Message.getFieldWithDefault(msg, 1, 0),
-secretCode: jspb.Message.getFieldWithDefault(msg, 2, "")
+secretCode: jspb.Message.getFieldWithDefault(msg, 2, ""),
+email: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -137,6 +138,10 @@ proto.pb.VerifyEmailRequest.deserializeBinaryFromReader = function(msg, reader) 
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setSecretCode(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setEmail(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -180,6 +185,13 @@ proto.pb.VerifyEmailRequest.serializeBinaryToWriter = function(message, writer) 
       f
     );
   }
+  f = /** @type {string} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -216,6 +228,42 @@ proto.pb.VerifyEmailRequest.prototype.getSecretCode = function() {
  */
 proto.pb.VerifyEmailRequest.prototype.setSecretCode = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string email = 3;
+ * @return {string}
+ */
+proto.pb.VerifyEmailRequest.prototype.getEmail = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.VerifyEmailRequest} returns this
+ */
+proto.pb.VerifyEmailRequest.prototype.setEmail = function(value) {
+  return jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.VerifyEmailRequest} returns this
+ */
+proto.pb.VerifyEmailRequest.prototype.clearEmail = function() {
+  return jspb.Message.setField(this, 3, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.VerifyEmailRequest.prototype.hasEmail = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 

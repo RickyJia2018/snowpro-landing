@@ -80,6 +80,11 @@ export class CreateUserRequest extends jspb.Message {
   getMainLanguageCode(): string;
   setMainLanguageCode(value: string): CreateUserRequest;
 
+  getTurnstileToken(): string;
+  setTurnstileToken(value: string): CreateUserRequest;
+  hasTurnstileToken(): boolean;
+  clearTurnstileToken(): CreateUserRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateUserRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateUserRequest): CreateUserRequest.AsObject;
@@ -96,7 +101,13 @@ export namespace CreateUserRequest {
     password: string;
     nickname: string;
     mainLanguageCode: string;
+    turnstileToken?: string;
   };
+
+  export enum TurnstileTokenCase {
+    _TURNSTILE_TOKEN_NOT_SET = 0,
+    TURNSTILE_TOKEN = 7,
+  }
 }
 
 export class CreateUserResponse extends jspb.Message {
@@ -211,6 +222,31 @@ export class UpdateUserRequest extends jspb.Message {
   hasIsBanned(): boolean;
   clearIsBanned(): UpdateUserRequest;
 
+  getPhone(): string;
+  setPhone(value: string): UpdateUserRequest;
+  hasPhone(): boolean;
+  clearPhone(): UpdateUserRequest;
+
+  getIsPhoneVerified(): boolean;
+  setIsPhoneVerified(value: boolean): UpdateUserRequest;
+  hasIsPhoneVerified(): boolean;
+  clearIsPhoneVerified(): UpdateUserRequest;
+
+  getNotifyMessage(): boolean;
+  setNotifyMessage(value: boolean): UpdateUserRequest;
+  hasNotifyMessage(): boolean;
+  clearNotifyMessage(): UpdateUserRequest;
+
+  getNotifyLesson(): boolean;
+  setNotifyLesson(value: boolean): UpdateUserRequest;
+  hasNotifyLesson(): boolean;
+  clearNotifyLesson(): UpdateUserRequest;
+
+  getBio(): string;
+  setBio(value: string): UpdateUserRequest;
+  hasBio(): boolean;
+  clearBio(): UpdateUserRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateUserRequest.AsObject;
   static toObject(includeInstance: boolean, msg: UpdateUserRequest): UpdateUserRequest.AsObject;
@@ -234,6 +270,11 @@ export namespace UpdateUserRequest {
     fcmToken?: string;
     jpushRegistrationId?: string;
     isBanned?: boolean;
+    phone?: string;
+    isPhoneVerified?: boolean;
+    notifyMessage?: boolean;
+    notifyLesson?: boolean;
+    bio?: string;
   };
 
   export enum FirstNameCase {
@@ -294,6 +335,31 @@ export namespace UpdateUserRequest {
   export enum IsBannedCase {
     _IS_BANNED_NOT_SET = 0,
     IS_BANNED = 13,
+  }
+
+  export enum PhoneCase {
+    _PHONE_NOT_SET = 0,
+    PHONE = 14,
+  }
+
+  export enum IsPhoneVerifiedCase {
+    _IS_PHONE_VERIFIED_NOT_SET = 0,
+    IS_PHONE_VERIFIED = 15,
+  }
+
+  export enum NotifyMessageCase {
+    _NOTIFY_MESSAGE_NOT_SET = 0,
+    NOTIFY_MESSAGE = 16,
+  }
+
+  export enum NotifyLessonCase {
+    _NOTIFY_LESSON_NOT_SET = 0,
+    NOTIFY_LESSON = 17,
+  }
+
+  export enum BioCase {
+    _BIO_NOT_SET = 0,
+    BIO = 18,
   }
 }
 
@@ -431,6 +497,184 @@ export class ListUsersResponse extends jspb.Message {
 }
 
 export namespace ListUsersResponse {
+  export type AsObject = {
+    usersList: Array<user_pb.User.AsObject>;
+    totalCount: number;
+  };
+}
+
+export class GetUserOAuthsResponse extends jspb.Message {
+  getOauthProvidersList(): Array<string>;
+  setOauthProvidersList(value: Array<string>): GetUserOAuthsResponse;
+  clearOauthProvidersList(): GetUserOAuthsResponse;
+  addOauthProviders(value: string, index?: number): GetUserOAuthsResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetUserOAuthsResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetUserOAuthsResponse): GetUserOAuthsResponse.AsObject;
+  static serializeBinaryToWriter(message: GetUserOAuthsResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetUserOAuthsResponse;
+  static deserializeBinaryFromReader(message: GetUserOAuthsResponse, reader: jspb.BinaryReader): GetUserOAuthsResponse;
+}
+
+export namespace GetUserOAuthsResponse {
+  export type AsObject = {
+    oauthProvidersList: Array<string>;
+  };
+}
+
+export class LinkOAuthRequest extends jspb.Message {
+  getProvider(): string;
+  setProvider(value: string): LinkOAuthRequest;
+
+  getToken(): string;
+  setToken(value: string): LinkOAuthRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): LinkOAuthRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: LinkOAuthRequest): LinkOAuthRequest.AsObject;
+  static serializeBinaryToWriter(message: LinkOAuthRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): LinkOAuthRequest;
+  static deserializeBinaryFromReader(message: LinkOAuthRequest, reader: jspb.BinaryReader): LinkOAuthRequest;
+}
+
+export namespace LinkOAuthRequest {
+  export type AsObject = {
+    provider: string;
+    token: string;
+  };
+}
+
+export class UnlinkOAuthRequest extends jspb.Message {
+  getProvider(): string;
+  setProvider(value: string): UnlinkOAuthRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UnlinkOAuthRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UnlinkOAuthRequest): UnlinkOAuthRequest.AsObject;
+  static serializeBinaryToWriter(message: UnlinkOAuthRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UnlinkOAuthRequest;
+  static deserializeBinaryFromReader(message: UnlinkOAuthRequest, reader: jspb.BinaryReader): UnlinkOAuthRequest;
+}
+
+export namespace UnlinkOAuthRequest {
+  export type AsObject = {
+    provider: string;
+  };
+}
+
+export class BlockUserRequest extends jspb.Message {
+  getTargetUserId(): number;
+  setTargetUserId(value: number): BlockUserRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): BlockUserRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: BlockUserRequest): BlockUserRequest.AsObject;
+  static serializeBinaryToWriter(message: BlockUserRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BlockUserRequest;
+  static deserializeBinaryFromReader(message: BlockUserRequest, reader: jspb.BinaryReader): BlockUserRequest;
+}
+
+export namespace BlockUserRequest {
+  export type AsObject = {
+    targetUserId: number;
+  };
+}
+
+export class BlockUserResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): BlockUserResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): BlockUserResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: BlockUserResponse): BlockUserResponse.AsObject;
+  static serializeBinaryToWriter(message: BlockUserResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): BlockUserResponse;
+  static deserializeBinaryFromReader(message: BlockUserResponse, reader: jspb.BinaryReader): BlockUserResponse;
+}
+
+export namespace BlockUserResponse {
+  export type AsObject = {
+    success: boolean;
+  };
+}
+
+export class UnblockUserRequest extends jspb.Message {
+  getTargetUserId(): number;
+  setTargetUserId(value: number): UnblockUserRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UnblockUserRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UnblockUserRequest): UnblockUserRequest.AsObject;
+  static serializeBinaryToWriter(message: UnblockUserRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UnblockUserRequest;
+  static deserializeBinaryFromReader(message: UnblockUserRequest, reader: jspb.BinaryReader): UnblockUserRequest;
+}
+
+export namespace UnblockUserRequest {
+  export type AsObject = {
+    targetUserId: number;
+  };
+}
+
+export class UnblockUserResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): UnblockUserResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UnblockUserResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UnblockUserResponse): UnblockUserResponse.AsObject;
+  static serializeBinaryToWriter(message: UnblockUserResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UnblockUserResponse;
+  static deserializeBinaryFromReader(message: UnblockUserResponse, reader: jspb.BinaryReader): UnblockUserResponse;
+}
+
+export namespace UnblockUserResponse {
+  export type AsObject = {
+    success: boolean;
+  };
+}
+
+export class ListBlockedUsersRequest extends jspb.Message {
+  getPageId(): number;
+  setPageId(value: number): ListBlockedUsersRequest;
+
+  getPageSize(): number;
+  setPageSize(value: number): ListBlockedUsersRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ListBlockedUsersRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ListBlockedUsersRequest): ListBlockedUsersRequest.AsObject;
+  static serializeBinaryToWriter(message: ListBlockedUsersRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ListBlockedUsersRequest;
+  static deserializeBinaryFromReader(message: ListBlockedUsersRequest, reader: jspb.BinaryReader): ListBlockedUsersRequest;
+}
+
+export namespace ListBlockedUsersRequest {
+  export type AsObject = {
+    pageId: number;
+    pageSize: number;
+  };
+}
+
+export class ListBlockedUsersResponse extends jspb.Message {
+  getUsersList(): Array<user_pb.User>;
+  setUsersList(value: Array<user_pb.User>): ListBlockedUsersResponse;
+  clearUsersList(): ListBlockedUsersResponse;
+  addUsers(value?: user_pb.User, index?: number): user_pb.User;
+
+  getTotalCount(): number;
+  setTotalCount(value: number): ListBlockedUsersResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ListBlockedUsersResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: ListBlockedUsersResponse): ListBlockedUsersResponse.AsObject;
+  static serializeBinaryToWriter(message: ListBlockedUsersResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ListBlockedUsersResponse;
+  static deserializeBinaryFromReader(message: ListBlockedUsersResponse, reader: jspb.BinaryReader): ListBlockedUsersResponse;
+}
+
+export namespace ListBlockedUsersResponse {
   export type AsObject = {
     usersList: Array<user_pb.User.AsObject>;
     totalCount: number;

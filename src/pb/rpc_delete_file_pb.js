@@ -95,7 +95,9 @@ proto.pb.DeleteFileRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
 isPrivateFile: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
 objectName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-ownerUserId: jspb.Message.getFieldWithDefault(msg, 3, "")
+ownerUserId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+force: (f = jspb.Message.getBooleanField(msg, 4)) == null ? undefined : f,
+reason: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -144,6 +146,14 @@ proto.pb.DeleteFileRequest.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setOwnerUserId(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setForce(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setReason(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -191,6 +201,20 @@ proto.pb.DeleteFileRequest.serializeBinaryToWriter = function(message, writer) {
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 4));
+  if (f != null) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 5));
+  if (f != null) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -248,6 +272,78 @@ proto.pb.DeleteFileRequest.prototype.getOwnerUserId = function() {
  */
 proto.pb.DeleteFileRequest.prototype.setOwnerUserId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool force = 4;
+ * @return {boolean}
+ */
+proto.pb.DeleteFileRequest.prototype.getForce = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.DeleteFileRequest} returns this
+ */
+proto.pb.DeleteFileRequest.prototype.setForce = function(value) {
+  return jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.DeleteFileRequest} returns this
+ */
+proto.pb.DeleteFileRequest.prototype.clearForce = function() {
+  return jspb.Message.setField(this, 4, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.DeleteFileRequest.prototype.hasForce = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional string reason = 5;
+ * @return {string}
+ */
+proto.pb.DeleteFileRequest.prototype.getReason = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.DeleteFileRequest} returns this
+ */
+proto.pb.DeleteFileRequest.prototype.setReason = function(value) {
+  return jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.DeleteFileRequest} returns this
+ */
+proto.pb.DeleteFileRequest.prototype.clearReason = function() {
+  return jspb.Message.setField(this, 5, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.DeleteFileRequest.prototype.hasReason = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

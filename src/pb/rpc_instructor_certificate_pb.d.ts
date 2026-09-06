@@ -22,8 +22,8 @@ export class Certificate extends jspb.Message {
   getProveImage(): string;
   setProveImage(value: string): Certificate;
 
-  getApproved(): boolean;
-  setApproved(value: boolean): Certificate;
+  getStatus(): number;
+  setStatus(value: number): Certificate;
 
   getAchievement(): string;
   setAchievement(value: string): Certificate;
@@ -32,6 +32,11 @@ export class Certificate extends jspb.Message {
 
   getCategory(): enums_pb.CertificateCategory;
   setCategory(value: enums_pb.CertificateCategory): Certificate;
+
+  getRejectReason(): string;
+  setRejectReason(value: string): Certificate;
+  hasRejectReason(): boolean;
+  clearRejectReason(): Certificate;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Certificate.AsObject;
@@ -48,9 +53,10 @@ export namespace Certificate {
     acronym: string;
     level?: number;
     proveImage: string;
-    approved: boolean;
+    status: number;
     achievement?: string;
     category: enums_pb.CertificateCategory;
+    rejectReason?: string;
   };
 
   export enum LevelCase {
@@ -61,6 +67,11 @@ export namespace Certificate {
   export enum AchievementCase {
     _ACHIEVEMENT_NOT_SET = 0,
     ACHIEVEMENT = 7,
+  }
+
+  export enum RejectReasonCase {
+    _REJECT_REASON_NOT_SET = 0,
+    REJECT_REASON = 9,
   }
 }
 
@@ -79,8 +90,8 @@ export class InstructorCertificate extends jspb.Message {
   hasLevel(): boolean;
   clearLevel(): InstructorCertificate;
 
-  getApproved(): boolean;
-  setApproved(value: boolean): InstructorCertificate;
+  getStatus(): number;
+  setStatus(value: number): InstructorCertificate;
 
   getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): InstructorCertificate;
@@ -102,6 +113,16 @@ export class InstructorCertificate extends jspb.Message {
   hasAchievement(): boolean;
   clearAchievement(): InstructorCertificate;
 
+  getRejectReason(): string;
+  setRejectReason(value: string): InstructorCertificate;
+  hasRejectReason(): boolean;
+  clearRejectReason(): InstructorCertificate;
+
+  getApplicationId(): number;
+  setApplicationId(value: number): InstructorCertificate;
+  hasApplicationId(): boolean;
+  clearApplicationId(): InstructorCertificate;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InstructorCertificate.AsObject;
   static toObject(includeInstance: boolean, msg: InstructorCertificate): InstructorCertificate.AsObject;
@@ -116,11 +137,13 @@ export namespace InstructorCertificate {
     userId: number;
     certificateTypeId: number;
     level?: number;
-    approved: boolean;
+    status: number;
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     proveImage?: string;
     achievement?: string;
+    rejectReason?: string;
+    applicationId?: number;
   };
 
   export enum LevelCase {
@@ -136,6 +159,16 @@ export namespace InstructorCertificate {
   export enum AchievementCase {
     _ACHIEVEMENT_NOT_SET = 0,
     ACHIEVEMENT = 9,
+  }
+
+  export enum RejectReasonCase {
+    _REJECT_REASON_NOT_SET = 0,
+    REJECT_REASON = 10,
+  }
+
+  export enum ApplicationIdCase {
+    _APPLICATION_ID_NOT_SET = 0,
+    APPLICATION_ID = 11,
   }
 }
 
@@ -268,6 +301,16 @@ export class ListInstructorCertificatesRequest extends jspb.Message {
   getOffset(): number;
   setOffset(value: number): ListInstructorCertificatesRequest;
 
+  getStatus(): number;
+  setStatus(value: number): ListInstructorCertificatesRequest;
+  hasStatus(): boolean;
+  clearStatus(): ListInstructorCertificatesRequest;
+
+  getApplicationId(): number;
+  setApplicationId(value: number): ListInstructorCertificatesRequest;
+  hasApplicationId(): boolean;
+  clearApplicationId(): ListInstructorCertificatesRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListInstructorCertificatesRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ListInstructorCertificatesRequest): ListInstructorCertificatesRequest.AsObject;
@@ -284,6 +327,8 @@ export namespace ListInstructorCertificatesRequest {
     orderBy?: OrderBy;
     limit: number;
     offset: number;
+    status?: number;
+    applicationId?: number;
   };
 
   export enum UserIdCase {
@@ -304,6 +349,16 @@ export namespace ListInstructorCertificatesRequest {
   export enum OrderByCase {
     _ORDER_BY_NOT_SET = 0,
     ORDER_BY = 4,
+  }
+
+  export enum StatusCase {
+    _STATUS_NOT_SET = 0,
+    STATUS = 7,
+  }
+
+  export enum ApplicationIdCase {
+    _APPLICATION_ID_NOT_SET = 0,
+    APPLICATION_ID = 8,
   }
 }
 
@@ -339,43 +394,54 @@ export namespace ListInstructorCertificatesResponse {
   };
 }
 
-export class UpdateInstructorCertApproveRequest extends jspb.Message {
+export class UpdateInstructorCertificateStatusRequest extends jspb.Message {
   getId(): number;
-  setId(value: number): UpdateInstructorCertApproveRequest;
+  setId(value: number): UpdateInstructorCertificateStatusRequest;
 
-  getApproved(): boolean;
-  setApproved(value: boolean): UpdateInstructorCertApproveRequest;
+  getStatus(): number;
+  setStatus(value: number): UpdateInstructorCertificateStatusRequest;
+
+  getRejectReason(): string;
+  setRejectReason(value: string): UpdateInstructorCertificateStatusRequest;
+  hasRejectReason(): boolean;
+  clearRejectReason(): UpdateInstructorCertificateStatusRequest;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): UpdateInstructorCertApproveRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: UpdateInstructorCertApproveRequest): UpdateInstructorCertApproveRequest.AsObject;
-  static serializeBinaryToWriter(message: UpdateInstructorCertApproveRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): UpdateInstructorCertApproveRequest;
-  static deserializeBinaryFromReader(message: UpdateInstructorCertApproveRequest, reader: jspb.BinaryReader): UpdateInstructorCertApproveRequest;
+  toObject(includeInstance?: boolean): UpdateInstructorCertificateStatusRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateInstructorCertificateStatusRequest): UpdateInstructorCertificateStatusRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdateInstructorCertificateStatusRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateInstructorCertificateStatusRequest;
+  static deserializeBinaryFromReader(message: UpdateInstructorCertificateStatusRequest, reader: jspb.BinaryReader): UpdateInstructorCertificateStatusRequest;
 }
 
-export namespace UpdateInstructorCertApproveRequest {
+export namespace UpdateInstructorCertificateStatusRequest {
   export type AsObject = {
     id: number;
-    approved: boolean;
+    status: number;
+    rejectReason?: string;
   };
+
+  export enum RejectReasonCase {
+    _REJECT_REASON_NOT_SET = 0,
+    REJECT_REASON = 3,
+  }
 }
 
-export class UpdateInstructorCertApproveResponse extends jspb.Message {
+export class UpdateInstructorCertificateStatusResponse extends jspb.Message {
   getCertificate(): InstructorCertificate | undefined;
-  setCertificate(value?: InstructorCertificate): UpdateInstructorCertApproveResponse;
+  setCertificate(value?: InstructorCertificate): UpdateInstructorCertificateStatusResponse;
   hasCertificate(): boolean;
-  clearCertificate(): UpdateInstructorCertApproveResponse;
+  clearCertificate(): UpdateInstructorCertificateStatusResponse;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): UpdateInstructorCertApproveResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: UpdateInstructorCertApproveResponse): UpdateInstructorCertApproveResponse.AsObject;
-  static serializeBinaryToWriter(message: UpdateInstructorCertApproveResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): UpdateInstructorCertApproveResponse;
-  static deserializeBinaryFromReader(message: UpdateInstructorCertApproveResponse, reader: jspb.BinaryReader): UpdateInstructorCertApproveResponse;
+  toObject(includeInstance?: boolean): UpdateInstructorCertificateStatusResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdateInstructorCertificateStatusResponse): UpdateInstructorCertificateStatusResponse.AsObject;
+  static serializeBinaryToWriter(message: UpdateInstructorCertificateStatusResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdateInstructorCertificateStatusResponse;
+  static deserializeBinaryFromReader(message: UpdateInstructorCertificateStatusResponse, reader: jspb.BinaryReader): UpdateInstructorCertificateStatusResponse;
 }
 
-export namespace UpdateInstructorCertApproveResponse {
+export namespace UpdateInstructorCertificateStatusResponse {
   export type AsObject = {
     certificate?: InstructorCertificate.AsObject;
   };
@@ -391,6 +457,11 @@ export class DeleteInstructorCertificateRequest extends jspb.Message {
   getLevel(): number;
   setLevel(value: number): DeleteInstructorCertificateRequest;
 
+  getId(): number;
+  setId(value: number): DeleteInstructorCertificateRequest;
+  hasId(): boolean;
+  clearId(): DeleteInstructorCertificateRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteInstructorCertificateRequest.AsObject;
   static toObject(includeInstance: boolean, msg: DeleteInstructorCertificateRequest): DeleteInstructorCertificateRequest.AsObject;
@@ -404,7 +475,13 @@ export namespace DeleteInstructorCertificateRequest {
     userId: number;
     certificateTypeId: number;
     level: number;
+    id?: number;
   };
+
+  export enum IdCase {
+    _ID_NOT_SET = 0,
+    ID = 4,
+  }
 }
 
 export enum OrderBy {

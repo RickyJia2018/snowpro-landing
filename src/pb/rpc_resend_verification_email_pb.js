@@ -69,7 +69,8 @@ proto.pb.ResendVerificationEmailRequest.prototype.toObject = function(opt_includ
  */
 proto.pb.ResendVerificationEmailRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-email: jspb.Message.getFieldWithDefault(msg, 1, "")
+email: jspb.Message.getFieldWithDefault(msg, 1, ""),
+turnstileToken: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -110,6 +111,10 @@ proto.pb.ResendVerificationEmailRequest.deserializeBinaryFromReader = function(m
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setEmail(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setTurnstileToken(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -146,6 +151,13 @@ proto.pb.ResendVerificationEmailRequest.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = /** @type {string} */ (jspb.Message.getField(message, 2));
+  if (f != null) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -164,6 +176,42 @@ proto.pb.ResendVerificationEmailRequest.prototype.getEmail = function() {
  */
 proto.pb.ResendVerificationEmailRequest.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string turnstile_token = 2;
+ * @return {string}
+ */
+proto.pb.ResendVerificationEmailRequest.prototype.getTurnstileToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.ResendVerificationEmailRequest} returns this
+ */
+proto.pb.ResendVerificationEmailRequest.prototype.setTurnstileToken = function(value) {
+  return jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.ResendVerificationEmailRequest} returns this
+ */
+proto.pb.ResendVerificationEmailRequest.prototype.clearTurnstileToken = function() {
+  return jspb.Message.setField(this, 2, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.ResendVerificationEmailRequest.prototype.hasTurnstileToken = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 

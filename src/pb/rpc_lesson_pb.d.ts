@@ -3,6 +3,8 @@ import * as jspb from 'google-protobuf'
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb'; // proto import: "google/protobuf/timestamp.proto"
 import * as user_pb from './user_pb'; // proto import: "user.proto"
 import * as rpc_review_pb from './rpc_review_pb'; // proto import: "rpc_review.proto"
+import * as rpc_dispute_pb from './rpc_dispute_pb'; // proto import: "rpc_dispute.proto"
+import * as rpc_language_pb from './rpc_language_pb'; // proto import: "rpc_language.proto"
 
 
 export class Lesson extends jspb.Message {
@@ -44,8 +46,32 @@ export class Lesson extends jspb.Message {
   clearCommentsList(): Lesson;
   addComments(value?: LessonComment, index?: number): LessonComment;
 
-  getLanguageId(): number;
-  setLanguageId(value: number): Lesson;
+  getLanguage(): rpc_language_pb.Language | undefined;
+  setLanguage(value?: rpc_language_pb.Language): Lesson;
+  hasLanguage(): boolean;
+  clearLanguage(): Lesson;
+
+  getStudentCommentLimit(): number;
+  setStudentCommentLimit(value: number): Lesson;
+
+  getRequirementsSnapshot(): string;
+  setRequirementsSnapshot(value: string): Lesson;
+  hasRequirementsSnapshot(): boolean;
+  clearRequirementsSnapshot(): Lesson;
+
+  getFinishedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setFinishedAt(value?: google_protobuf_timestamp_pb.Timestamp): Lesson;
+  hasFinishedAt(): boolean;
+  clearFinishedAt(): Lesson;
+
+  getStudentUnread(): boolean;
+  setStudentUnread(value: boolean): Lesson;
+
+  getInstructorUnread(): boolean;
+  setInstructorUnread(value: boolean): Lesson;
+
+  getThumbnailUrl(): string;
+  setThumbnailUrl(value: string): Lesson;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Lesson.AsObject;
@@ -67,8 +93,19 @@ export namespace Lesson {
     completedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     videoUrl: string;
     commentsList: Array<LessonComment.AsObject>;
-    languageId: number;
+    language?: rpc_language_pb.Language.AsObject;
+    studentCommentLimit: number;
+    requirementsSnapshot?: string;
+    finishedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    studentUnread: boolean;
+    instructorUnread: boolean;
+    thumbnailUrl: string;
   };
+
+  export enum RequirementsSnapshotCase {
+    _REQUIREMENTS_SNAPSHOT_NOT_SET = 0,
+    REQUIREMENTS_SNAPSHOT = 13,
+  }
 }
 
 export class LessonComment extends jspb.Message {
@@ -97,6 +134,41 @@ export class LessonComment extends jspb.Message {
   hasCreatedAt(): boolean;
   clearCreatedAt(): LessonComment;
 
+  getMediaWidth(): number;
+  setMediaWidth(value: number): LessonComment;
+  hasMediaWidth(): boolean;
+  clearMediaWidth(): LessonComment;
+
+  getMediaHeight(): number;
+  setMediaHeight(value: number): LessonComment;
+  hasMediaHeight(): boolean;
+  clearMediaHeight(): LessonComment;
+
+  getVideoTimestampMs(): number;
+  setVideoTimestampMs(value: number): LessonComment;
+  hasVideoTimestampMs(): boolean;
+  clearVideoTimestampMs(): LessonComment;
+
+  getAnnotationData(): string;
+  setAnnotationData(value: string): LessonComment;
+  hasAnnotationData(): boolean;
+  clearAnnotationData(): LessonComment;
+
+  getVideoDurationMs(): number;
+  setVideoDurationMs(value: number): LessonComment;
+  hasVideoDurationMs(): boolean;
+  clearVideoDurationMs(): LessonComment;
+
+  getAnnotationAudioUrl(): string;
+  setAnnotationAudioUrl(value: string): LessonComment;
+  hasAnnotationAudioUrl(): boolean;
+  clearAnnotationAudioUrl(): LessonComment;
+
+  getAnnotationAudioDurationMs(): number;
+  setAnnotationAudioDurationMs(value: number): LessonComment;
+  hasAnnotationAudioDurationMs(): boolean;
+  clearAnnotationAudioDurationMs(): LessonComment;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LessonComment.AsObject;
   static toObject(includeInstance: boolean, msg: LessonComment): LessonComment.AsObject;
@@ -114,11 +186,53 @@ export namespace LessonComment {
     content: string;
     mediaUrl?: string;
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    mediaWidth?: number;
+    mediaHeight?: number;
+    videoTimestampMs?: number;
+    annotationData?: string;
+    videoDurationMs?: number;
+    annotationAudioUrl?: string;
+    annotationAudioDurationMs?: number;
   };
 
   export enum MediaUrlCase {
     _MEDIA_URL_NOT_SET = 0,
     MEDIA_URL = 6,
+  }
+
+  export enum MediaWidthCase {
+    _MEDIA_WIDTH_NOT_SET = 0,
+    MEDIA_WIDTH = 8,
+  }
+
+  export enum MediaHeightCase {
+    _MEDIA_HEIGHT_NOT_SET = 0,
+    MEDIA_HEIGHT = 9,
+  }
+
+  export enum VideoTimestampMsCase {
+    _VIDEO_TIMESTAMP_MS_NOT_SET = 0,
+    VIDEO_TIMESTAMP_MS = 10,
+  }
+
+  export enum AnnotationDataCase {
+    _ANNOTATION_DATA_NOT_SET = 0,
+    ANNOTATION_DATA = 11,
+  }
+
+  export enum VideoDurationMsCase {
+    _VIDEO_DURATION_MS_NOT_SET = 0,
+    VIDEO_DURATION_MS = 12,
+  }
+
+  export enum AnnotationAudioUrlCase {
+    _ANNOTATION_AUDIO_URL_NOT_SET = 0,
+    ANNOTATION_AUDIO_URL = 13,
+  }
+
+  export enum AnnotationAudioDurationMsCase {
+    _ANNOTATION_AUDIO_DURATION_MS_NOT_SET = 0,
+    ANNOTATION_AUDIO_DURATION_MS = 14,
   }
 }
 
@@ -146,6 +260,16 @@ export class GetLessonResponse extends jspb.Message {
   hasLesson(): boolean;
   clearLesson(): GetLessonResponse;
 
+  getDispute(): rpc_dispute_pb.Dispute | undefined;
+  setDispute(value?: rpc_dispute_pb.Dispute): GetLessonResponse;
+  hasDispute(): boolean;
+  clearDispute(): GetLessonResponse;
+
+  getReview(): rpc_review_pb.Review | undefined;
+  setReview(value?: rpc_review_pb.Review): GetLessonResponse;
+  hasReview(): boolean;
+  clearReview(): GetLessonResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetLessonResponse.AsObject;
   static toObject(includeInstance: boolean, msg: GetLessonResponse): GetLessonResponse.AsObject;
@@ -157,7 +281,19 @@ export class GetLessonResponse extends jspb.Message {
 export namespace GetLessonResponse {
   export type AsObject = {
     lesson?: Lesson.AsObject;
+    dispute?: rpc_dispute_pb.Dispute.AsObject;
+    review?: rpc_review_pb.Review.AsObject;
   };
+
+  export enum DisputeCase {
+    _DISPUTE_NOT_SET = 0,
+    DISPUTE = 2,
+  }
+
+  export enum ReviewCase {
+    _REVIEW_NOT_SET = 0,
+    REVIEW = 3,
+  }
 }
 
 export class CreateLessonRequest extends jspb.Message {
@@ -183,6 +319,12 @@ export class CreateLessonRequest extends jspb.Message {
   hasMessage(): boolean;
   clearMessage(): CreateLessonRequest;
 
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): CreateLessonRequest;
+
+  getAgreedLessonPolicies(): boolean;
+  setAgreedLessonPolicies(value: boolean): CreateLessonRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateLessonRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateLessonRequest): CreateLessonRequest.AsObject;
@@ -199,6 +341,8 @@ export namespace CreateLessonRequest {
     videoUrl?: string;
     languageId: number;
     message?: string;
+    idempotencyKey: string;
+    agreedLessonPolicies: boolean;
   };
 
   export enum VideoUrlCase {
@@ -295,6 +439,26 @@ export class ListLessonRequest extends jspb.Message {
   hasLimit(): boolean;
   clearLimit(): ListLessonRequest;
 
+  getStatus(): LessonStatus;
+  setStatus(value: LessonStatus): ListLessonRequest;
+  hasStatus(): boolean;
+  clearStatus(): ListLessonRequest;
+
+  getCreatedAtStart(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAtStart(value?: google_protobuf_timestamp_pb.Timestamp): ListLessonRequest;
+  hasCreatedAtStart(): boolean;
+  clearCreatedAtStart(): ListLessonRequest;
+
+  getCreatedAtEnd(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAtEnd(value?: google_protobuf_timestamp_pb.Timestamp): ListLessonRequest;
+  hasCreatedAtEnd(): boolean;
+  clearCreatedAtEnd(): ListLessonRequest;
+
+  getSortOrder(): string;
+  setSortOrder(value: string): ListLessonRequest;
+  hasSortOrder(): boolean;
+  clearSortOrder(): ListLessonRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListLessonRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ListLessonRequest): ListLessonRequest.AsObject;
@@ -309,6 +473,10 @@ export namespace ListLessonRequest {
     instructorId?: number;
     offset?: number;
     limit?: number;
+    status?: LessonStatus;
+    createdAtStart?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    createdAtEnd?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    sortOrder?: string;
   };
 
   export enum StudentIdCase {
@@ -329,6 +497,26 @@ export namespace ListLessonRequest {
   export enum LimitCase {
     _LIMIT_NOT_SET = 0,
     LIMIT = 4,
+  }
+
+  export enum StatusCase {
+    _STATUS_NOT_SET = 0,
+    STATUS = 5,
+  }
+
+  export enum CreatedAtStartCase {
+    _CREATED_AT_START_NOT_SET = 0,
+    CREATED_AT_START = 6,
+  }
+
+  export enum CreatedAtEndCase {
+    _CREATED_AT_END_NOT_SET = 0,
+    CREATED_AT_END = 7,
+  }
+
+  export enum SortOrderCase {
+    _SORT_ORDER_NOT_SET = 0,
+    SORT_ORDER = 8,
   }
 }
 
@@ -353,6 +541,11 @@ export class LessonData extends jspb.Message {
   clearLessonCommentsList(): LessonData;
   addLessonComments(value?: LessonComment, index?: number): LessonComment;
 
+  getDispute(): rpc_dispute_pb.Dispute | undefined;
+  setDispute(value?: rpc_dispute_pb.Dispute): LessonData;
+  hasDispute(): boolean;
+  clearDispute(): LessonData;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LessonData.AsObject;
   static toObject(includeInstance: boolean, msg: LessonData): LessonData.AsObject;
@@ -367,7 +560,13 @@ export namespace LessonData {
     user?: user_pb.User.AsObject;
     review?: rpc_review_pb.Review.AsObject;
     lessonCommentsList: Array<LessonComment.AsObject>;
+    dispute?: rpc_dispute_pb.Dispute.AsObject;
   };
+
+  export enum DisputeCase {
+    _DISPUTE_NOT_SET = 0,
+    DISPUTE = 5,
+  }
 }
 
 export class ListLessonResponse extends jspb.Message {
@@ -406,6 +605,46 @@ export class CreateLessonCommentRequest extends jspb.Message {
   hasMediaUrl(): boolean;
   clearMediaUrl(): CreateLessonCommentRequest;
 
+  getMediaWidth(): number;
+  setMediaWidth(value: number): CreateLessonCommentRequest;
+  hasMediaWidth(): boolean;
+  clearMediaWidth(): CreateLessonCommentRequest;
+
+  getMediaHeight(): number;
+  setMediaHeight(value: number): CreateLessonCommentRequest;
+  hasMediaHeight(): boolean;
+  clearMediaHeight(): CreateLessonCommentRequest;
+
+  getVideoTimestampMs(): number;
+  setVideoTimestampMs(value: number): CreateLessonCommentRequest;
+  hasVideoTimestampMs(): boolean;
+  clearVideoTimestampMs(): CreateLessonCommentRequest;
+
+  getAnnotationData(): string;
+  setAnnotationData(value: string): CreateLessonCommentRequest;
+  hasAnnotationData(): boolean;
+  clearAnnotationData(): CreateLessonCommentRequest;
+
+  getVideoDurationMs(): number;
+  setVideoDurationMs(value: number): CreateLessonCommentRequest;
+  hasVideoDurationMs(): boolean;
+  clearVideoDurationMs(): CreateLessonCommentRequest;
+
+  getAnnotationAudioUrl(): string;
+  setAnnotationAudioUrl(value: string): CreateLessonCommentRequest;
+  hasAnnotationAudioUrl(): boolean;
+  clearAnnotationAudioUrl(): CreateLessonCommentRequest;
+
+  getAnnotationAudioDurationMs(): number;
+  setAnnotationAudioDurationMs(value: number): CreateLessonCommentRequest;
+  hasAnnotationAudioDurationMs(): boolean;
+  clearAnnotationAudioDurationMs(): CreateLessonCommentRequest;
+
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): CreateLessonCommentRequest;
+  hasIdempotencyKey(): boolean;
+  clearIdempotencyKey(): CreateLessonCommentRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateLessonCommentRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateLessonCommentRequest): CreateLessonCommentRequest.AsObject;
@@ -419,11 +658,59 @@ export namespace CreateLessonCommentRequest {
     lessonId: string;
     content: string;
     mediaUrl?: string;
+    mediaWidth?: number;
+    mediaHeight?: number;
+    videoTimestampMs?: number;
+    annotationData?: string;
+    videoDurationMs?: number;
+    annotationAudioUrl?: string;
+    annotationAudioDurationMs?: number;
+    idempotencyKey?: string;
   };
 
   export enum MediaUrlCase {
     _MEDIA_URL_NOT_SET = 0,
     MEDIA_URL = 3,
+  }
+
+  export enum MediaWidthCase {
+    _MEDIA_WIDTH_NOT_SET = 0,
+    MEDIA_WIDTH = 4,
+  }
+
+  export enum MediaHeightCase {
+    _MEDIA_HEIGHT_NOT_SET = 0,
+    MEDIA_HEIGHT = 5,
+  }
+
+  export enum VideoTimestampMsCase {
+    _VIDEO_TIMESTAMP_MS_NOT_SET = 0,
+    VIDEO_TIMESTAMP_MS = 6,
+  }
+
+  export enum AnnotationDataCase {
+    _ANNOTATION_DATA_NOT_SET = 0,
+    ANNOTATION_DATA = 7,
+  }
+
+  export enum VideoDurationMsCase {
+    _VIDEO_DURATION_MS_NOT_SET = 0,
+    VIDEO_DURATION_MS = 8,
+  }
+
+  export enum AnnotationAudioUrlCase {
+    _ANNOTATION_AUDIO_URL_NOT_SET = 0,
+    ANNOTATION_AUDIO_URL = 9,
+  }
+
+  export enum AnnotationAudioDurationMsCase {
+    _ANNOTATION_AUDIO_DURATION_MS_NOT_SET = 0,
+    ANNOTATION_AUDIO_DURATION_MS = 10,
+  }
+
+  export enum IdempotencyKeyCase {
+    _IDEMPOTENCY_KEY_NOT_SET = 0,
+    IDEMPOTENCY_KEY = 11,
   }
 }
 
@@ -508,6 +795,82 @@ export namespace ListLessonCommentsResponse {
   export type AsObject = {
     lessonCommentsList: Array<LessonComment.AsObject>;
     totalCount: number;
+  };
+}
+
+export class MarkLessonAsReadRequest extends jspb.Message {
+  getLessonId(): string;
+  setLessonId(value: string): MarkLessonAsReadRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): MarkLessonAsReadRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: MarkLessonAsReadRequest): MarkLessonAsReadRequest.AsObject;
+  static serializeBinaryToWriter(message: MarkLessonAsReadRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): MarkLessonAsReadRequest;
+  static deserializeBinaryFromReader(message: MarkLessonAsReadRequest, reader: jspb.BinaryReader): MarkLessonAsReadRequest;
+}
+
+export namespace MarkLessonAsReadRequest {
+  export type AsObject = {
+    lessonId: string;
+  };
+}
+
+export class MarkLessonAsReadResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): MarkLessonAsReadResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): MarkLessonAsReadResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: MarkLessonAsReadResponse): MarkLessonAsReadResponse.AsObject;
+  static serializeBinaryToWriter(message: MarkLessonAsReadResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): MarkLessonAsReadResponse;
+  static deserializeBinaryFromReader(message: MarkLessonAsReadResponse, reader: jspb.BinaryReader): MarkLessonAsReadResponse;
+}
+
+export namespace MarkLessonAsReadResponse {
+  export type AsObject = {
+    success: boolean;
+  };
+}
+
+export class DeleteLessonCommentRequest extends jspb.Message {
+  getLessonId(): string;
+  setLessonId(value: string): DeleteLessonCommentRequest;
+
+  getCommentId(): string;
+  setCommentId(value: string): DeleteLessonCommentRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteLessonCommentRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteLessonCommentRequest): DeleteLessonCommentRequest.AsObject;
+  static serializeBinaryToWriter(message: DeleteLessonCommentRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteLessonCommentRequest;
+  static deserializeBinaryFromReader(message: DeleteLessonCommentRequest, reader: jspb.BinaryReader): DeleteLessonCommentRequest;
+}
+
+export namespace DeleteLessonCommentRequest {
+  export type AsObject = {
+    lessonId: string;
+    commentId: string;
+  };
+}
+
+export class DeleteLessonCommentResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): DeleteLessonCommentResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): DeleteLessonCommentResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: DeleteLessonCommentResponse): DeleteLessonCommentResponse.AsObject;
+  static serializeBinaryToWriter(message: DeleteLessonCommentResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): DeleteLessonCommentResponse;
+  static deserializeBinaryFromReader(message: DeleteLessonCommentResponse, reader: jspb.BinaryReader): DeleteLessonCommentResponse;
+}
+
+export namespace DeleteLessonCommentResponse {
+  export type AsObject = {
+    success: boolean;
   };
 }
 

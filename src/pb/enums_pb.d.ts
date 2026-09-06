@@ -8,6 +8,7 @@ export enum ApplicationStatus {
   APPLICATION_STATUS_NEEDMOREINFO = 2,
   APPLICATION_STATUS_APPROVED = 3,
   APPLICATION_STATUS_BANED = 4,
+  APPLICATION_STATUS_CANCELLED = 5,
 }
 export enum CertificateCategory {
   TEACHING = 0,

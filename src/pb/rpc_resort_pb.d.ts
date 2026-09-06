@@ -10,19 +10,73 @@ export class Resort extends jspb.Message {
   getName(): string;
   setName(value: string): Resort;
 
+  getNameZh(): string;
+  setNameZh(value: string): Resort;
+
+  getNameEn(): string;
+  setNameEn(value: string): Resort;
+
   getCountryCode(): string;
   setCountryCode(value: string): Resort;
 
-  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Resort;
-  hasCreatedAt(): boolean;
-  clearCreatedAt(): Resort;
+  getRegion(): string;
+  setRegion(value: string): Resort;
 
   getLatitude(): number;
   setLatitude(value: number): Resort;
 
   getLongitude(): number;
   setLongitude(value: number): Resort;
+
+  getElevationM(): number;
+  setElevationM(value: number): Resort;
+
+  getSkiableAreaKm2(): number;
+  setSkiableAreaKm2(value: number): Resort;
+
+  getNumberOfRuns(): number;
+  setNumberOfRuns(value: number): Resort;
+
+  getLongestRunKm(): number;
+  setLongestRunKm(value: number): Resort;
+
+  getLiftCount(): number;
+  setLiftCount(value: number): Resort;
+
+  getRunsEasy(): number;
+  setRunsEasy(value: number): Resort;
+
+  getRunsIntermediate(): number;
+  setRunsIntermediate(value: number): Resort;
+
+  getRunsAdvanced(): number;
+  setRunsAdvanced(value: number): Resort;
+
+  getRunsExpert(): number;
+  setRunsExpert(value: number): Resort;
+
+  getDescription(): string;
+  setDescription(value: string): Resort;
+
+  getImageUrl(): string;
+  setImageUrl(value: string): Resort;
+
+  getTimezone(): string;
+  setTimezone(value: string): Resort;
+
+  getSource(): string;
+  setSource(value: string): Resort;
+
+  getIsActive(): boolean;
+  setIsActive(value: boolean): Resort;
+
+  getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): Resort;
+  hasCreatedAt(): boolean;
+  clearCreatedAt(): Resort;
+
+  getUrl(): string;
+  setUrl(value: string): Resort;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Resort.AsObject;
@@ -36,10 +90,28 @@ export namespace Resort {
   export type AsObject = {
     id: number;
     name: string;
+    nameZh: string;
+    nameEn: string;
     countryCode: string;
-    createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    region: string;
     latitude: number;
     longitude: number;
+    elevationM: number;
+    skiableAreaKm2: number;
+    numberOfRuns: number;
+    longestRunKm: number;
+    liftCount: number;
+    runsEasy: number;
+    runsIntermediate: number;
+    runsAdvanced: number;
+    runsExpert: number;
+    description: string;
+    imageUrl: string;
+    timezone: string;
+    source: string;
+    isActive: boolean;
+    createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    url: string;
   };
 }
 

@@ -30,6 +30,9 @@ export class Review extends jspb.Message {
   getRevieweeUsername(): string;
   setRevieweeUsername(value: string): Review;
 
+  getReviewerAvatarUrl(): string;
+  setReviewerAvatarUrl(value: string): Review;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Review.AsObject;
   static toObject(includeInstance: boolean, msg: Review): Review.AsObject;
@@ -48,6 +51,7 @@ export namespace Review {
     reviewerId: number;
     reviewerUsername: string;
     revieweeUsername: string;
+    reviewerAvatarUrl: string;
   };
 }
 
@@ -92,6 +96,9 @@ export class ListReviewsResponse extends jspb.Message {
   getTotal(): number;
   setTotal(value: number): ListReviewsResponse;
 
+  getStarCountsMap(): jspb.Map<number, number>;
+  clearStarCountsMap(): ListReviewsResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListReviewsResponse.AsObject;
   static toObject(includeInstance: boolean, msg: ListReviewsResponse): ListReviewsResponse.AsObject;
@@ -106,6 +113,7 @@ export namespace ListReviewsResponse {
     limit: number;
     offset: number;
     total: number;
+    starCountsMap: Array<[number, number]>;
   };
 }
 
@@ -210,6 +218,35 @@ export namespace GetLessonReviewResponse {
   };
 }
 
+export class ListCourseReviewsRequest extends jspb.Message {
+  getCourseId(): number;
+  setCourseId(value: number): ListCourseReviewsRequest;
+
+  getLimit(): number;
+  setLimit(value: number): ListCourseReviewsRequest;
+
+  getOffset(): number;
+  setOffset(value: number): ListCourseReviewsRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ListCourseReviewsRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ListCourseReviewsRequest): ListCourseReviewsRequest.AsObject;
+  static serializeBinaryToWriter(message: ListCourseReviewsRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ListCourseReviewsRequest;
+  static deserializeBinaryFromReader(message: ListCourseReviewsRequest, reader: jspb.BinaryReader): ListCourseReviewsRequest;
+}
+
+export namespace ListCourseReviewsRequest {
+  export type AsObject = {
+    courseId: number;
+    limit: number;
+    offset: number;
+  };
+}
+
 export enum ReviewType {
-  VIDEO_REVIEW_LESSON = 0,
+  LESSON_INSTRUCTOR_REVIEW = 0,
+  COURSE_REVIEW = 1,
+  CARPOOL_DRIVER_REVIEW = 2,
+  CARPOOL_PASSENGER_REVIEW = 3,
 }
