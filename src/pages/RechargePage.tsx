@@ -228,7 +228,21 @@ export default function RechargePage() {
   // Products & Payment State
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<string>('');
-  const [agreedPolicy, setAgreedPolicy] = useState<boolean>(false);
+  const [policy,setPolicy]=useState<{policyVersionId:string;languageCode:string;content:string;version:string}|null>(null);
+  const [policyError,setPolicyError]=useState(false);
+  const [policyReload,setPolicyReload]=useState(0);
+  useEffect(()=>{
+    let cancelled=false;setPolicy(null);setPolicyError(false);
+    const params=new URLSearchParams({policy_type:'TOKEN_POLICY',language_code:language});
+    fetch(`${API_BASE_URL}/policies/latest?${params}`).then(async response=>{
+      if(!response.ok)throw new Error('Policy unavailable');
+      const value=await response.json();
+      const document={policyVersionId:String(value.policyVersionId ?? value.policy_version_id ?? ''),languageCode:value.languageCode ?? value.language_code ?? '',content:value.content ?? '',version:value.version ?? ''};
+      if(!document.content || !document.languageCode || !/^[1-9][0-9]*$/.test(document.policyVersionId))throw new Error('Invalid policy');
+      if(!cancelled)setPolicy(document);
+    }).catch(()=>{if(!cancelled)setPolicyError(true);});
+    return ()=>{cancelled=true;};
+  },[language,policyReload]);
   const [tokenPurchaseAvailability, setTokenPurchaseAvailability] =
     useState<TokenPurchaseAvailability>('loading');
   
@@ -528,7 +542,7 @@ export default function RechargePage() {
 
   // Recharge payment redirection handler
   const handleRecharge = async () => {
-    if (!selectedProductId) return;
+    if (!selectedProductId || !policy) return;
     if (tokenPurchaseAvailability !== 'enabled') {
       setError(
         tokenPurchaseAvailability === 'disabled'
@@ -562,7 +576,7 @@ export default function RechargePage() {
         body: JSON.stringify({
           product_id: selectedProductId,
           payment_type: 5, // PaymentType_STRIPE
-          agreed_token_policy: agreedPolicy,
+          policy_consents:[{policy_version_id:policy.policyVersionId,language_code:policy.languageCode}],
           success_url: `${window.location.origin}/recharge/success?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${window.location.origin}/recharge`
         })
@@ -758,22 +772,12 @@ export default function RechargePage() {
                 })}
               </div>
 
-              {/* Policy Agreement Checkbox */}
-              <div className="flex items-start gap-2.5 pt-1 px-1">
-                <input
-                  id="policy-agree"
-                  type="checkbox"
-                  checked={agreedPolicy}
-                  onChange={(e) => setAgreedPolicy(e.target.checked)}
-                  disabled={tokenPurchaseAvailability !== 'enabled'}
-                  className="mt-0.5 h-4 w-4 rounded border-slate-700 bg-slate-950 text-blue-600 focus:ring-blue-500 focus:ring-offset-slate-900 cursor-pointer"
-                />
-                <label htmlFor="policy-agree" className="text-xs text-slate-400 cursor-pointer select-none">
-                  {tLocal.policyAgreePrefix}
-                  <a href="/terms" target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">
-                    {tLocal.policyAgreeLink}
-                  </a>
-                </label>
+              <div className="text-xs text-slate-400 pt-2">
+                {policy ? <details>
+                  <summary className="cursor-pointer">{language==='zh'?'点击支付即表示您已阅读并同意：':'By paying, you acknowledge that you have read and agree to: '}<span className="text-blue-400">{tLocal.policyAgreeLink} ({policy.version})</span></summary>
+                  <pre className="whitespace-pre-wrap max-h-72 overflow-y-auto mt-3 p-3 border border-slate-700 rounded">{policy.content}</pre>
+                </details> : <p>{policyError ? (language==='zh'?'协议加载失败':'Could not load policy') : (language==='zh'?'正在加载协议…':'Loading policy…')}</p>}
+                <button type="button" onClick={()=>setPolicyReload(value=>value+1)} className="text-blue-400 mt-2">{language==='zh'?'刷新协议':'Refresh policy'}</button>
               </div>
 
               {/* Checkout CTA */}
@@ -783,7 +787,7 @@ export default function RechargePage() {
                   tokenPurchaseAvailability !== 'enabled' ||
                   paymentLoading ||
                   !selectedProductId ||
-                  !agreedPolicy
+                  !policy
                 }
                 className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
               >
