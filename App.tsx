@@ -14,6 +14,7 @@ import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
+import RefundPolicyPage from './src/pages/RefundPolicyPage';
 import TokenPolicyPage from './src/pages/TokenPolicyPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
 import CarpoolPassPage from './src/pages/CarpoolPassPage';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
         <Route path="/carpool-pass" element={<CarpoolPassPage />} />
         <Route path="/carpool-pass/success" element={<CarpoolPassSuccessPage />} />
+        <Route path="/refunds" element={<RefundPolicyPage />} />
         <Route path="/terms" element={<TokenPolicyPage />} />
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
       </Routes>

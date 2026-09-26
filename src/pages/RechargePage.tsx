@@ -1,3 +1,4 @@
+import RefundNotice from '../components/RefundNotice';
 import PurchaseLogin from '../components/PurchaseLogin';
 import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
 import React, { useState, useEffect, useRef } from 'react';
@@ -803,6 +804,7 @@ export default function RechargePage() {
                 })}
               </div>
 
+              <RefundNotice zh={language === 'zh'} />
               <div className="text-xs text-slate-400 pt-2">
                 {policy ? <details>
                   <summary className="cursor-pointer">{language==='zh'?'点击支付即表示您已阅读并同意：':'By paying, you acknowledge that you have read and agree to: '}<span className="text-blue-400">{tLocal.policyAgreeLink} ({policy.version})</span></summary>

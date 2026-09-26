@@ -4,7 +4,7 @@ import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const productAnchors = [
     { label: t.footer.productLinks[0] || "视频分析", href: "#video-analysis" },
@@ -13,6 +13,7 @@ const Footer: React.FC = () => {
     { label: t.footer.productLinks[3] || "雪友招募", href: "#skibuddy" },
     { label: t.footer.productLinks[4] || "代币充值", href: "/recharge" },
     { label: "Carpool Pass", href: "/carpool-pass" },
+    { label: language === 'zh' ? '退款政策' : 'Refund policy', href: '/refunds' },
   ];
 
   return (

@@ -1,3 +1,4 @@
+import RefundNotice from '../components/RefundNotice';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -131,6 +132,7 @@ export default function CarpoolPassPage() {
         </label>)}
       </div>
       <p className="text-slate-300 mt-5">{zh ? '最终应付金额请在 Stripe 支付页确认。' : 'Review the final amount on Stripe before paying.'}</p>
+      <RefundNotice zh={zh} />
       <button disabled={authLoading || !token || loading || catalogLoading || !selected || catalogError} onClick={checkout} className="mt-5 bg-blue-500 px-4 py-2 rounded disabled:opacity-50">{loading ? (zh ? '正在打开支付…' : 'Opening checkout…') : (zh ? '前往 Stripe 支付' : 'Continue to Stripe')}</button>
     </section>
   </main>;
