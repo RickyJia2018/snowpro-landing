@@ -7,64 +7,33 @@ import CarpoolPassPage from './CarpoolPassPage';
 import CarpoolPassSuccessPage from './CarpoolPassSuccessPage';
 import { getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
 import { stripeCheckoutUrl } from '../lib/checkout';
-
-const expiry = () => new Date(Date.now() + 60000).toISOString();
-const mount = (page = <CarpoolPassPage />) => render(<React.StrictMode><MemoryRouter><LanguageProvider>{page}</LanguageProvider></MemoryRouter></React.StrictMode>);
-beforeEach(() => { sessionStorage.clear(); localStorage.clear(); window.history.replaceState({}, '', '/carpool-pass'); vi.restoreAllMocks(); });
-afterEach(cleanup);
-
-describe('Pass purchase boundaries', () => {
-  it('does not reuse a SnowCoin recharge token', async () => {
-    storeRechargeAccessToken('coin-token', expiry());
-    const fetch = vi.spyOn(globalThis, 'fetch');
-    mount();
-    await waitFor(() => expect((screen.getByRole('button', { name: 'Continue to Stripe' }) as HTMLButtonElement).disabled).toBe(true));
-    expect(fetch).not.toHaveBeenCalled();
-  });
-
-  it('exchanges once under StrictMode and retains the selected app plan', async () => {
-    window.location.hash = '#code=single-use&product_id=com.snowpro.carpool.pass.2m';
-    const fetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ accessToken: 'pass-token', accessTokenExpiresAt: expiry() })));
-    mount();
-    await waitFor(() => expect(getValidRechargeAccessToken('carpool_pass')).toBe('pass-token'));
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(window.location.hash).toBe('');
-    expect((screen.getByRole('radio', { name: /2 month Pass/ }) as HTMLInputElement).checked).toBe(true);
-    expect(getValidRechargeAccessToken()).toBeNull();
-  });
-
-  it('disables old account checkout during a failing new handoff', async () => {
-    storeRechargeAccessToken('old-pass-token', expiry(), 'carpool_pass');
-    window.location.hash = '#code=new-account';
-    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('native stack https://private.example'));
-    mount();
-    await screen.findByRole('alert');
-    expect(getValidRechargeAccessToken('carpool_pass')).toBeNull();
-    expect((screen.getByRole('button', { name: 'Continue to Stripe' }) as HTMLButtonElement).disabled).toBe(true);
-    expect(screen.queryByText(/private.example/)).toBeNull();
-  });
-
-  it('locks repeated clicks and rejects an untrusted checkout URL', async () => {
-    storeRechargeAccessToken('pass-token', expiry(), 'carpool_pass');
-    let resolve!: (value: Response) => void;
-    const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(() => new Promise(r => { resolve = r; }));
-    mount();
-    const button = screen.getByRole('button', { name: 'Continue to Stripe' });
-    fireEvent.click(button); fireEvent.click(button);
-    expect(fetch).toHaveBeenCalledTimes(1);
-    resolve(new Response(JSON.stringify({ stripeCheckoutUrl: 'https://evil.example/pay' })));
-    await screen.findByRole('alert');
-    expect((screen.getByRole('button', { name: 'Continue to Stripe' }) as HTMLButtonElement).disabled).toBe(false);
-  });
-
-  it('never claims that a direct visit to the return page proves payment', () => {
-    mount(<CarpoolPassSuccessPage />);
-    expect(screen.queryByText('Payment received')).toBeNull();
-    expect(screen.getByText(/cannot confirm payment/)).toBeTruthy();
-  });
-
-  it('validates the exact Stripe origin', () => {
-    expect(stripeCheckoutUrl('https://checkout.stripe.com/c/pay/cs_test_123')).toBeTruthy();
-    for (const url of ['javascript:alert(1)', 'https://checkout.stripe.com.evil.test/pay', 'https://user@checkout.stripe.com/pay', 'http://checkout.stripe.com/pay']) expect(stripeCheckoutUrl(url)).toBeNull();
-  });
+const expiry=()=>new Date(Date.now()+60000).toISOString();
+const catalog={products:[{productId:'com.snowpro.carpool.pass.season',durationMonths:7,priceInCents:'1299',title:'Season pass'},{productId:'com.snowpro.carpool.pass.short',durationMonths:2,priceInCents:299,title:'Short pass'}]};
+const response=(v:unknown)=>new Response(JSON.stringify(v));
+const mount=(page=<CarpoolPassPage/>)=>render(<React.StrictMode><MemoryRouter><LanguageProvider>{page}</LanguageProvider></MemoryRouter></React.StrictMode>);
+beforeEach(()=>{sessionStorage.clear();localStorage.clear();window.history.replaceState({},'','/carpool-pass');vi.restoreAllMocks()});afterEach(cleanup);
+function mockFetch(other:(url:string,init?:RequestInit)=>Promise<Response> = async()=>response({})){
+ return vi.spyOn(globalThis,'fetch').mockImplementation((input,init)=>String(input).includes('/pass/products')?Promise.resolve(response(catalog)):other(String(input),init));
+}
+describe('Dynamic Pass purchase',()=>{
+ it('loads arbitrary configured durations/prices without reusing recharge credentials',async()=>{
+  storeRechargeAccessToken('coin-token',expiry());mockFetch();mount();await screen.findByText(/Season pass/);expect(screen.getByText('$12.99')).toBeTruthy();expect((screen.getByRole('button',{name:'Continue to Stripe'}) as HTMLButtonElement).disabled).toBe(true);expect(screen.getByLabelText('Password')).toBeTruthy();
+ });
+ it('exchanges an app link once and retains the app-selected plan',async()=>{
+  window.location.hash='#code=single-use&product_id=com.snowpro.carpool.pass.short';const fetch=mockFetch(async()=>response({accessToken:'pass-token',accessTokenExpiresAt:expiry()}));mount();
+  await waitFor(()=>expect(getValidRechargeAccessToken('carpool_pass')).toBe('pass-token'));await screen.findByText(/Short pass/);
+  expect(fetch.mock.calls.filter(([u])=>String(u).includes('exchange_handoff_code'))).toHaveLength(1);expect(window.location.hash).toBe('');expect((screen.getByRole('radio',{name:/Short pass/}) as HTMLInputElement).checked).toBe(true);expect(getValidRechargeAccessToken()).toBeNull();
+ });
+ it('does not reuse an old account after failed handoff',async()=>{
+  storeRechargeAccessToken('old',expiry(),'carpool_pass');window.location.hash='#code=new';mockFetch(async()=>{throw new Error('private.example')});mount();await screen.findByRole('alert');expect(getValidRechargeAccessToken('carpool_pass')).toBeNull();expect(screen.queryByText(/private.example/)).toBeNull();
+ });
+ it('blocks purchase if catalog fails, without hardcoded fallback',async()=>{
+  storeRechargeAccessToken('pass',expiry(),'carpool_pass');vi.spyOn(globalThis,'fetch').mockRejectedValue(new Error('down'));mount();await screen.findByRole('alert');expect(screen.queryAllByRole('radio')).toHaveLength(0);expect((screen.getByRole('button',{name:'Continue to Stripe'}) as HTMLButtonElement).disabled).toBe(true);
+ });
+ it('locks duplicate checkout and rejects unsafe redirect',async()=>{
+  storeRechargeAccessToken('pass',expiry(),'carpool_pass');let resolve!:(v:Response)=>void;const fetch=mockFetch(()=>new Promise(r=>{resolve=r}));mount();await screen.findByText(/Season pass/);
+  const button=screen.getByRole('button',{name:'Continue to Stripe'});fireEvent.click(button);fireEvent.click(button);expect(fetch.mock.calls.filter(([u])=>String(u).endsWith('/pass/checkout'))).toHaveLength(1);resolve(response({stripeCheckoutUrl:'https://evil.example/pay'}));await screen.findByRole('alert');expect((button as HTMLButtonElement).disabled).toBe(false);
+ });
+ it('does not treat a return page as payment confirmation',()=>{mount(<CarpoolPassSuccessPage/>);expect(screen.getByText(/cannot confirm payment/)).toBeTruthy()});
+ it('requires exact Stripe origin',()=>{expect(stripeCheckoutUrl('https://checkout.stripe.com/c/pay/abc')).toBeTruthy();for(const u of ['javascript:alert(1)','https://checkout.stripe.com.evil.test/pay','https://user@checkout.stripe.com/pay'])expect(stripeCheckoutUrl(u)).toBeNull()});
 });

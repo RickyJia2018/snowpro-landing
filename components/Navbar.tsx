@@ -25,6 +25,7 @@ const Navbar: React.FC = () => {
     { label: t.nav.skibuddy, href: "#skibuddy" },
     { label: t.nav.roadmap, href: "#roadmap" },
     { label: t.nav.recharge, href: "/recharge" },
+    { label: "Carpool Pass", href: "/carpool-pass" },
   ];
 
   const languages: {code: Language, label: string}[] = [

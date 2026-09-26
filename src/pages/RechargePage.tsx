@@ -1,3 +1,4 @@
+import PurchaseLogin from '../components/PurchaseLogin';
 import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -690,10 +691,11 @@ export default function RechargePage() {
               <ShieldCheck className="h-8 w-8" />
             </div>
 
-            <h2 className="text-2xl font-bold text-white mb-3">{tLocal.handoffRequiredTitle}</h2>
-            <p className="text-slate-400 text-sm leading-relaxed mb-8 max-w-sm mx-auto">
-              {tLocal.handoffRequiredSubtitle}
-            </p>
+            <PurchaseLogin scope="recharge" zh={language==='zh'} onSuccess={data=>{
+              const purchaseToken=data.accessToken||data.access_token;
+              const info={id:String(data.user.id),email:data.user.email||'',nickname:data.user.nickname||'',balance:(Number(data.user.balance)||0)/100};
+              setAccessToken(purchaseToken);setSessionId(null);setUser(info);setIsLoggedIn(true);setError(null);checkPendingOrder(info.id,purchaseToken);
+            }}/>
 
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex gap-2 text-left">

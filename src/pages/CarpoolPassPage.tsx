@@ -5,12 +5,9 @@ import { API_BASE_URL } from '../config/api';
 import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
 import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
 
-const plans = [
-  { id: 'com.snowpro.carpool.pass.1m', months: 1, price: 'US$0.99' },
-  { id: 'com.snowpro.carpool.pass.2m', months: 2, price: 'US$1.99' },
-  { id: 'com.snowpro.carpool.pass.3m', months: 3, price: 'US$2.99' },
-  { id: 'com.snowpro.carpool.pass.4m', months: 4, price: 'US$3.99' },
-];
+import PurchaseLogin from '../components/PurchaseLogin';
+import { parsePassCatalog, PassPlan } from '../lib/passCatalog';
+
 const scope = 'carpool_pass';
 
 export default function CarpoolPassPage() {
@@ -20,10 +17,23 @@ export default function CarpoolPassPage() {
   const initialized = useRef(false);
   const mounted = useRef(false);
   const checkoutInFlight = useRef(false);
+  const [plans,setPlans]=useState<PassPlan[]>([]);
+  const [catalogLoading,setCatalogLoading]=useState(true);
+  const [catalogError,setCatalogError]=useState(false);
+  const [reload,setReload]=useState(0);
+  const requestedPlan=useRef(new URLSearchParams(window.location.hash.slice(1)).get('product_id'));
+  useEffect(()=>{
+    let canceled=false;setCatalogLoading(true);setCatalogError(false);
+    checkoutFetch(`${API_BASE_URL}/v1/carpools/pass/products`).then(async r=>{
+      if(!r.ok)throw new Error('Catalog unavailable');const list=parsePassCatalog(await r.json());
+      if(!canceled){setPlans(list);setSelected(old=>list.some(p=>p.id===old)?old:list.find(p=>p.id===requestedPlan.current)?.id??list.find(p=>p.recommended)?.id??list[0]?.id??'')}
+    }).catch(()=>{if(!canceled){setPlans([]);setSelected('');setCatalogError(true)}}).finally(()=>{if(!canceled)setCatalogLoading(false)});
+    return()=>{canceled=true};
+  },[reload]);
   const [token, setToken] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState(plans[3].id);
+  const [selected, setSelected] = useState('');
   const [error, setError] = useState<'session' | 'checkout' | null>(null);
 
   useEffect(() => {
@@ -37,7 +47,7 @@ export default function CarpoolPassPage() {
     const params = new URLSearchParams(window.location.hash.slice(1));
     const code = params.get('code') || params.get('handoff_code');
     const product = params.get('product_id');
-    if (plans.some(plan => plan.id === product)) setSelected(product!);
+    if (product) requestedPlan.current = product;
     if (!code) {
       setToken(getValidRechargeAccessToken(scope));
       setAuthLoading(false);
@@ -69,7 +79,7 @@ export default function CarpoolPassPage() {
   }, []);
 
   const checkout = async () => {
-    if (authLoading || checkoutInFlight.current) return;
+    if (authLoading || catalogLoading || !plans.some(p=>p.id===selected) || checkoutInFlight.current) return;
     const currentToken = getValidRechargeAccessToken(scope);
     if (!currentToken || currentToken !== token) { setToken(null); setError('session'); return; }
     checkoutInFlight.current = true;
@@ -108,17 +118,20 @@ export default function CarpoolPassPage() {
       <h1 className="text-4xl font-bold mt-8">{zh ? '拼车免广告通行卡' : 'Carpool ad-free Pass'}</h1>
       <p className="text-slate-300 mt-3">{zh ? '一次性购买，不自动续费。支付确认后生效；到期自动停止。此通行卡用于应用内免广告功能，不包含拼车车费。' : 'One-time purchase. No automatic renewal. Activated after payment confirmation; ends on expiry. Includes in-app ad-free features, not ride fares.'}</p>
       {authLoading && <p role="status" className="mt-5">{zh ? '正在验证购买链接…' : 'Checking your purchase link…'}</p>}
-      {!authLoading && !token && <p className="mt-5">{zh ? '请从 SnowPro App 的 Pass 购买入口重新打开此页面。' : 'Please reopen this page from the Pass purchase screen in the SnowPro app.'}</p>}
+      {!authLoading && !token && <PurchaseLogin scope={scope} zh={zh} onSuccess={data=>{setToken(data.accessToken||data.access_token);setError(null)}}/>}
       {error && <p role="alert" className="mt-5 text-red-300">{error === 'session' ? (zh ? '购买链接已过期或无效，请返回 App 重试。' : 'Your purchase link is expired or invalid. Please start again in the app.') : (zh ? '暂时无法打开支付页面，请稍后重试。' : 'Unable to open checkout. Please try again later.')}</p>}
+      {catalogLoading && <p role="status">{zh?'正在加载套餐…':'Loading passes…'}</p>}
+      {catalogError && <p role="alert">{zh?'套餐加载失败，请重试。':'Unable to load passes. Please retry.'} <button onClick={()=>setReload(n=>n+1)}>{zh?'重试':'Retry'}</button></p>}
+      {!catalogLoading&&!catalogError&&plans.length===0&&<p>{zh?'暂无可售套餐':'No passes are currently available.'}</p>}
       <div className="grid md:grid-cols-2 gap-4 mt-8">
         {plans.map(plan => <label key={plan.id} className="border border-slate-700 rounded-xl p-5">
           <input type="radio" name="pass-plan" value={plan.id} checked={selected === plan.id} onChange={() => setSelected(plan.id)} disabled={loading} />
-          <span className="text-xl font-semibold ml-3">{zh ? `${plan.months} 个月 Pass` : `${plan.months} month Pass`}</span>
-          <p className="text-2xl mt-3">{plan.price}</p>
+          <span className="text-xl font-semibold ml-3">{plan.title} · {zh ? `${plan.months} 个月` : `${plan.months} months`}</span>
+          <p className="text-2xl mt-3">{new Intl.NumberFormat(zh?'zh-CN':'en-US',{style:'currency',currency:'USD'}).format(plan.cents/100)}</p>
         </label>)}
       </div>
       <p className="text-slate-300 mt-5">{zh ? '最终应付金额请在 Stripe 支付页确认。' : 'Review the final amount on Stripe before paying.'}</p>
-      <button disabled={authLoading || !token || loading} onClick={checkout} className="mt-5 bg-blue-500 px-4 py-2 rounded disabled:opacity-50">{loading ? (zh ? '正在打开支付…' : 'Opening checkout…') : (zh ? '前往 Stripe 支付' : 'Continue to Stripe')}</button>
+      <button disabled={authLoading || !token || loading || catalogLoading || !selected || catalogError} onClick={checkout} className="mt-5 bg-blue-500 px-4 py-2 rounded disabled:opacity-50">{loading ? (zh ? '正在打开支付…' : 'Opening checkout…') : (zh ? '前往 Stripe 支付' : 'Continue to Stripe')}</button>
     </section>
   </main>;
 }

@@ -12,6 +12,7 @@ const Footer: React.FC = () => {
     { label: t.footer.productLinks[2] || "名师课程", href: "#courses" },
     { label: t.footer.productLinks[3] || "雪友招募", href: "#skibuddy" },
     { label: t.footer.productLinks[4] || "代币充值", href: "/recharge" },
+    { label: "Carpool Pass", href: "/carpool-pass" },
   ];
 
   return (

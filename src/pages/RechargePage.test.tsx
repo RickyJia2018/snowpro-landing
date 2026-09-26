@@ -22,7 +22,7 @@ describe('RechargePage Security & Handoff Isolation', () => {
     }
   });
 
-  it('renders without password login inputs and never exposes /login_user', async () => {
+  it('offers direct login but never sends credentials without submission', async () => {
     const fetchSpy = vi.spyOn(global, 'fetch').mockImplementation(() =>
       Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }))
     );
@@ -36,10 +36,10 @@ describe('RechargePage Security & Handoff Isolation', () => {
     );
 
     await waitFor(() => {
-      // Must NOT contain password field or email login field
-      expect(screen.queryByLabelText(/password/i)).toBeNull();
+      // Direct login is available, but no login request runs automatically.
+      expect(screen.getByLabelText(/password/i)).toBeTruthy();
       expect(screen.queryByPlaceholderText(/password/i)).toBeNull();
-      expect(document.querySelector('input[type="password"]')).toBeNull();
+      expect(document.querySelector('input[type="password"]')).toBeTruthy();
     });
 
     // Verify /login_user was never called
