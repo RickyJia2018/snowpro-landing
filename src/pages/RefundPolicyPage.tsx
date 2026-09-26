@@ -1,3 +1,4 @@
+import RefundRequestsPanel from '../components/RefundRequestsPanel';
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { API_BASE_URL } from '../config/api';
@@ -30,6 +31,7 @@ export default function RefundPolicyPage() {
       <p className="mt-4 text-sm leading-6">{zh ? '可直接联系我们，无需先联系银行。法定权利不受影响。发送明确的取消通知即可，不强制使用下方邮件模板。请勿发送密码或完整银行卡资料。' : 'Contact us directly; you do not need to contact your bank first. Your statutory rights remain unaffected. A clear cancellation notice is sufficient; the email template is optional. Do not send passwords or full card details.'}</p>
       <a className="mt-4 inline-block text-blue-300 underline" href={`mailto:contact@snowpro.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}>{zh ? '发送退款或撤销通知' : 'Email a refund or withdrawal request'}</a>
       <p className="mt-2 text-sm">contact@snowpro.app</p>
+      <RefundRequestsPanel zh={zh} />
       {policy && <><p className="mt-6 text-sm text-slate-400">{zh ? '版本' : 'Version'}: {policy.version}</p><div className="mt-6 whitespace-pre-wrap text-sm leading-7">{policy.content}</div></>}
       {!policy && !error && <p role="status" className="mt-6">{zh ? '正在加载政策…' : 'Loading policy…'}</p>}
       {error && <div role="alert" className="mt-6"><p>{zh ? '暂时无法加载政策。您仍可通过上方邮箱联系我们。' : 'The policy could not be loaded. You can still contact us at the email above.'}</p><button className="mt-3 text-blue-300 underline" onClick={() => setReload(value => value + 1)}>{zh ? '重试' : 'Retry'}</button></div>}
