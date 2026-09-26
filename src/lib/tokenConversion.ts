@@ -18,6 +18,6 @@ export function parseTokenAmount(data: any): number {
       : 0;
 
   const numCents = Number(rawCents);
-  if (isNaN(numCents) || numCents <= 0) return 0;
+  if (!Number.isSafeInteger(numCents) || numCents <= 0) return 0;
   return numCents / 100;
 }

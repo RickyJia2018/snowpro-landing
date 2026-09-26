@@ -1,5 +1,6 @@
-const accessTokenKey = 'recharge_access_token';
-const accessTokenExpiresAtKey = 'recharge_access_token_expires_at';
+export type PurchaseScope = 'recharge' | 'carpool_pass';
+const accessTokenKey = (scope: PurchaseScope) => `${scope}_access_token`;
+const accessTokenExpiresAtKey = (scope: PurchaseScope) => `${scope}_access_token_expires_at`;
 
 function expiryToMillis(value: unknown): number | null {
   if (typeof value === 'string') {
@@ -15,29 +16,29 @@ function expiryToMillis(value: unknown): number | null {
   return null;
 }
 
-export function storeRechargeAccessToken(token: string, expiresAt: unknown): boolean {
+export function storeRechargeAccessToken(token: string, expiresAt: unknown, scope: PurchaseScope = 'recharge'): boolean {
   const expiryMillis = expiryToMillis(expiresAt);
-  if (expiryMillis === null || expiryMillis <= Date.now()) {
-    clearRechargeAccessToken();
+  if (typeof token !== 'string' || !token.trim() || expiryMillis === null || expiryMillis <= Date.now()) {
+    clearRechargeAccessToken(scope);
     return false;
   }
 
-  sessionStorage.setItem(accessTokenKey, token);
-  sessionStorage.setItem(accessTokenExpiresAtKey, expiryMillis.toString());
+  sessionStorage.setItem(accessTokenKey(scope), token);
+  sessionStorage.setItem(accessTokenExpiresAtKey(scope), expiryMillis.toString());
   return true;
 }
 
-export function getValidRechargeAccessToken(): string | null {
-  const token = sessionStorage.getItem(accessTokenKey);
-  const expiryMillis = Number(sessionStorage.getItem(accessTokenExpiresAtKey));
+export function getValidRechargeAccessToken(scope: PurchaseScope = 'recharge'): string | null {
+  const token = sessionStorage.getItem(accessTokenKey(scope));
+  const expiryMillis = Number(sessionStorage.getItem(accessTokenExpiresAtKey(scope)));
   if (!token || !Number.isFinite(expiryMillis) || expiryMillis <= Date.now()) {
-    clearRechargeAccessToken();
+    clearRechargeAccessToken(scope);
     return null;
   }
   return token;
 }
 
-export function clearRechargeAccessToken(): void {
-  sessionStorage.removeItem(accessTokenKey);
-  sessionStorage.removeItem(accessTokenExpiresAtKey);
+export function clearRechargeAccessToken(scope: PurchaseScope = 'recharge'): void {
+  sessionStorage.removeItem(accessTokenKey(scope));
+  sessionStorage.removeItem(accessTokenExpiresAtKey(scope));
 }

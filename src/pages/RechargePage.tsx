@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } from 'lucide-react';
@@ -219,6 +220,11 @@ export default function RechargePage() {
   // Local translations fallback to English if the system language is unmapped
   const tLocal = localTranslations[language] || localTranslations.en;
 
+  const initialized = useRef(false);
+  const paymentInFlight = useRef(false);
+  const mounted = useRef(false);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+
   // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<UserInfo | null>(null);
@@ -234,7 +240,7 @@ export default function RechargePage() {
   useEffect(()=>{
     let cancelled=false;setPolicy(null);setPolicyError(false);
     const params=new URLSearchParams({policy_type:'TOKEN_POLICY',language_code:language});
-    fetch(`${API_BASE_URL}/policies/latest?${params}`).then(async response=>{
+    checkoutFetch(`${API_BASE_URL}/policies/latest?${params}`).then(async response=>{
       if(!response.ok)throw new Error('Policy unavailable');
       const value=await response.json();
       const document={policyVersionId:String(value.policyVersionId ?? value.policy_version_id ?? ''),languageCode:value.languageCode ?? value.language_code ?? '',content:value.content ?? '',version:value.version ?? ''};
@@ -253,6 +259,8 @@ export default function RechargePage() {
 
   // Check login state or exchange handoff code on mount
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
     // Read single-use handoff code strictly from URL fragment (#code=... or #handoff_code=...)
     let handoffCode: string | null = null;
     if (window.location.hash) {
@@ -264,6 +272,8 @@ export default function RechargePage() {
     if (handoffCode) {
       // Remove sensitive code from URL fragment immediately
       window.history.replaceState({}, document.title, window.location.pathname);
+      clearRechargeAccessToken();
+      sessionStorage.removeItem('recharge_session_id');
       exchangeHandoffCode(handoffCode);
     } else {
       const token = getValidRechargeAccessToken();
@@ -280,7 +290,7 @@ export default function RechargePage() {
 
   const fetchFeatureAvailability = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/v1/feature_availability`, {
+      const response = await checkoutFetch(`${API_BASE_URL}/v1/feature_availability`, {
         cache: 'no-store',
       });
       if (!response.ok) {
@@ -310,7 +320,7 @@ export default function RechargePage() {
   const exchangeHandoffCode = async (code: string) => {
     setPageLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/v1/auth/exchange_handoff_code`, {
+      const response = await checkoutFetch(`${API_BASE_URL}/v1/auth/exchange_handoff_code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -323,6 +333,7 @@ export default function RechargePage() {
       }
 
       const data = await response.json();
+      if (!mounted.current) return;
       const token = data.accessToken || data.access_token;
       const sid = data.sessionId || data.session_id;
       const expiresAt = data.accessTokenExpiresAt || data.access_token_expires_at;
@@ -366,7 +377,7 @@ export default function RechargePage() {
     for (let i = 0; i < pendingSessions.length; i++) {
       const sid = pendingSessions[i];
       try {
-        const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
+        const response = await checkoutFetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -377,8 +388,10 @@ export default function RechargePage() {
           })
         });
 
+        if (!mounted.current || getValidRechargeAccessToken() !== token) return;
         if (response.ok) {
           const data = await response.json();
+          if (!mounted.current || getValidRechargeAccessToken() !== token) return;
           if (data.success) {
             const amt = parseTokenAmount(data);
             if (typeof window !== 'undefined' && typeof window.alert === 'function') {
@@ -425,7 +438,7 @@ export default function RechargePage() {
   // Fetch user info
   const fetchUserInfo = async (token: string, triggerPendingCheck: boolean = true) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/get_user`, {
+      const response = await checkoutFetch(`${API_BASE_URL}/get_user`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -433,6 +446,7 @@ export default function RechargePage() {
         }
       });
 
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       if (response.status === 401) {
         console.error("Auth token expired or unauthorized (401), clearing tokens");
         clearRechargeAccessToken();
@@ -450,6 +464,7 @@ export default function RechargePage() {
       }
 
       const data = await response.json();
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       if (data.user) {
         const userInfo: UserInfo = {
           id: String(data.user.id || ''),
@@ -468,7 +483,7 @@ export default function RechargePage() {
       }
     } catch (err: any) {
       console.error("Failed to fetch user info:", err);
-      setError(err.message || tLocal.unknownError);
+      setError(tLocal.unknownError);
     } finally {
       setPageLoading(false);
     }
@@ -477,7 +492,7 @@ export default function RechargePage() {
   // Fetch token products
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/token/products`);
+      const response = await checkoutFetch(`${API_BASE_URL}/token/products`);
       if (response.ok) {
         const data = await response.json();
         if (data.products && data.products.length > 0) {
@@ -498,9 +513,10 @@ export default function RechargePage() {
           });
 
           // Sort products by price ascending
-          const sorted = [...normalized].sort((a, b) => a.priceInCents - b.priceInCents);
+          const valid = normalized.filter(p => typeof p.productId === 'string' && p.productId.trim() && Number.isSafeInteger(p.priceInCents) && p.priceInCents > 0 && Number.isFinite(p.tokenAmount) && p.tokenAmount > 0);
+          const sorted = [...valid].sort((a, b) => a.priceInCents - b.priceInCents);
           setProducts(sorted);
-          setSelectedProductId(sorted[0].productId);
+          setSelectedProductId(sorted[0]?.productId || '');
         }
       }
     } catch (err) {
@@ -515,9 +531,15 @@ export default function RechargePage() {
     const token = getValidRechargeAccessToken();
     const sid = sessionId || sessionStorage.getItem('recharge_session_id');
 
+    clearRechargeAccessToken();
+    sessionStorage.removeItem('recharge_session_id');
+    setAccessToken(null);
+    setSessionId(null);
+    setIsLoggedIn(false);
+    setUser(null);
     if (token) {
       try {
-        await fetch(`${API_BASE_URL}/logout_user`, {
+        await checkoutFetch(`${API_BASE_URL}/logout_user`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -532,17 +554,11 @@ export default function RechargePage() {
       }
     }
 
-    clearRechargeAccessToken();
-    sessionStorage.removeItem('recharge_session_id');
-    setAccessToken(null);
-    setSessionId(null);
-    setIsLoggedIn(false);
-    setUser(null);
   };
 
   // Recharge payment redirection handler
   const handleRecharge = async () => {
-    if (!selectedProductId || !policy) return;
+    if (paymentInFlight.current || !isLoggedIn || !selectedProductId || !policy) return;
     if (tokenPurchaseAvailability !== 'enabled') {
       setError(
         tokenPurchaseAvailability === 'disabled'
@@ -551,6 +567,7 @@ export default function RechargePage() {
       );
       return;
     }
+    paymentInFlight.current = true;
     setPaymentLoading(true);
     setError(null);
 
@@ -562,12 +579,14 @@ export default function RechargePage() {
       setSessionId(null);
       setIsLoggedIn(false);
       setError(tLocal.sessionExpiredError);
+      paymentInFlight.current = false;
       setPaymentLoading(false);
       return;
     }
 
+    let redirecting = false;
     try {
-      const response = await fetch(`${API_BASE_URL}/token/purchases`, {
+      const response = await checkoutFetch(`${API_BASE_URL}/token/purchases`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -582,13 +601,19 @@ export default function RechargePage() {
         })
       });
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.message || "Failed to initiate payment");
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
+      if (response.status === 401) {
+        clearRechargeAccessToken();
+        setIsLoggedIn(false);
+        setUser(null);
+        setError(tLocal.sessionExpiredError);
+        return;
       }
+      if (!response.ok) throw new Error('Checkout unavailable');
 
       const data = await response.json();
-      const checkoutUrl = data.stripeCheckoutUrl || data.stripe_checkout_url;
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
+      const checkoutUrl = stripeCheckoutUrl(data.stripeCheckoutUrl || data.stripe_checkout_url);
       if (checkoutUrl) {
         // Validate Stripe URL domain before redirecting
         if (!checkoutUrl.startsWith('https://checkout.stripe.com/')) {
@@ -601,14 +626,18 @@ export default function RechargePage() {
         }
         // Redirect user to Stripe Hosted Checkout Page
         window.location.href = checkoutUrl;
+        redirecting = true;
       } else {
         throw new Error("No Stripe checkout URL returned from server.");
       }
 
     } catch (err: any) {
-      setError(err.message || tLocal.unknownError);
+      setError(tLocal.unknownError);
     } finally {
-      setPaymentLoading(false);
+      if (!redirecting) {
+        paymentInFlight.current = false;
+        if (mounted.current) setPaymentLoading(false);
+      }
     }
   };
 

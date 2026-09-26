@@ -1,3 +1,4 @@
+import { checkoutFetch } from '../lib/checkout';
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -160,8 +161,14 @@ export default function RechargeSuccessPage() {
 
   const tLocal = localTranslations[language] || localTranslations.en;
 
+  const verificationInFlight = React.useRef(false);
+  const mounted = React.useRef(false);
+  React.useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+
   const verifyOrder = async () => {
-    if (!sessionId) return;
+    if (!sessionId || verificationInFlight.current) return;
+    verificationInFlight.current = true;
+    try {
     setStatus('verifying');
     setErrorMessage('');
     
@@ -175,8 +182,9 @@ export default function RechargeSuccessPage() {
     const delays = [2000, 3000, 5000, 8000, 10000];
 
     for (let attempt = 0; attempt < delays.length; attempt++) {
+      if (!mounted.current) return;
       try {
-        const response = await fetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
+        const response = await checkoutFetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -187,12 +195,19 @@ export default function RechargeSuccessPage() {
           })
         });
 
+        if (!mounted.current) return;
+        if (getValidRechargeAccessToken() !== token || response.status === 401) {
+          setStatus('failed');
+          setErrorMessage(tLocal.sessionExpiredError);
+          return;
+        }
         if (!response.ok) {
           const errData = await response.json().catch(() => ({}));
           throw new Error(errData.message || "Fulfillment verification failed");
         }
 
         const data = await response.json();
+        if (!mounted.current || getValidRechargeAccessToken() !== token) return;
         if (data.success) {
           const amt = parseTokenAmount(data);
           setTokenAmount(amt);
@@ -209,18 +224,20 @@ export default function RechargeSuccessPage() {
           await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
         } else {
           setStatus('failed');
-          setErrorMessage(data.message || tLocal.clearanceDelayed);
+          setErrorMessage(tLocal.clearanceDelayed);
         }
       } catch (err: any) {
+        if (!mounted.current) return;
         console.error(`Order verification error (attempt ${attempt + 1}/${delays.length}):`, err);
         if (attempt < delays.length - 1) {
           await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
         } else {
           setStatus('failed');
-          setErrorMessage(err.message || 'Verification error');
+          setErrorMessage(tLocal.clearanceDelayed);
         }
       }
     }
+    } finally { verificationInFlight.current = false; }
   };
 
   React.useEffect(() => {
@@ -274,7 +291,7 @@ export default function RechargeSuccessPage() {
             <p className="text-slate-400 text-sm leading-relaxed mb-4">{tLocal.failedMessage}</p>
             {errorMessage && (
               <p className="text-red-400/90 text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-left overflow-x-auto whitespace-pre-wrap leading-normal mb-8">
-                Error details: {errorMessage}
+                {errorMessage}
               </p>
             )}
           </>
