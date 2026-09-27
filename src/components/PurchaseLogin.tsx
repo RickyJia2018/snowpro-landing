@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { API_BASE_URL } from '../config/api';
 import { checkoutFetch } from '../lib/checkout';
-import { PurchaseScope, storeRechargeAccessToken } from '../lib/rechargeSession';
+import { PurchaseScope, rechargeUserId, storeRechargeAccessToken } from '../lib/rechargeSession';
 
 // Full login credentials stay in memory; only the short-lived purchase token is stored.
 export default function PurchaseLogin({ scope, zh, onSuccess, purpose = 'purchase' }: { scope: PurchaseScope; zh: boolean; purpose?: 'purchase' | 'refund'; onSuccess: (data: any) => void }) {
@@ -17,7 +17,7 @@ export default function PurchaseLogin({ scope, zh, onSuccess, purpose = 'purchas
    const handoff=await post('/v1/auth/web_handoff_code',{scope},fullToken);if(!active.current)return;
    const code=handoff.handoffCode||handoff.handoff_code;if(typeof code!=='string'||!code)throw new Error('Invalid handoff');
    const data=await post('/v1/auth/exchange_handoff_code',{handoff_code:code});if(!active.current)return;
-   if(scope==='recharge'&&(!data.user||!/^\d+$/.test(String(data.user.id))||!/[1-9]/.test(String(data.user.id))))throw new Error('Invalid user');
+   if(scope==='recharge'&&!rechargeUserId(data.user))throw new Error('Invalid user');
    if(!storeRechargeAccessToken(data.accessToken||data.access_token,data.accessTokenExpiresAt||data.access_token_expires_at,scope))throw new Error('Invalid session');
    onSuccess(data);
   }catch{if(active.current)setError(true)}finally{running.current=false;if(active.current){setBusy(false);setPassword('')}}

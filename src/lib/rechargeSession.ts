@@ -42,3 +42,18 @@ export function clearRechargeAccessToken(scope: PurchaseScope = 'recharge'): voi
   sessionStorage.removeItem(accessTokenKey(scope));
   sessionStorage.removeItem(accessTokenExpiresAtKey(scope));
 }
+
+/** Gateway uses proto field names (User.ID); older clients may return id. */
+export function rechargeUserId(user: unknown): string | null {
+  if (!user || typeof user !== 'object') return null;
+  const fields = user as Record<string, unknown>;
+  const values = [fields.ID, fields.id].filter(value => value !== undefined);
+  if (!values.length) return null;
+  const ids = values.map(value => {
+    if (typeof value === 'number' && !Number.isSafeInteger(value)) return null;
+    if (typeof value !== 'string' && typeof value !== 'number') return null;
+    const id = String(value);
+    return /^[1-9]\d*$/.test(id) && BigInt(id) <= 9223372036854775807n ? id : null;
+  });
+  return ids.every(id => id !== null && id === ids[0]) ? ids[0] : null;
+}

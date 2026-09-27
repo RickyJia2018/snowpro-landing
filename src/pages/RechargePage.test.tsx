@@ -87,7 +87,7 @@ describe('RechargePage Security & Handoff Isolation', () => {
               accessToken: 'mock_web_recharge_token',
               sessionId: 'sess_123',
               accessTokenExpiresAt: { seconds: Math.floor(Date.now() / 1000) + 600 },
-              user: { id: '1', email: 'test@example.com', nickname: 'Test', balance: 5000 },
+              user: { ID: '1', email: 'test@example.com', nickname: 'Test', balance: 5000 },
             }),
             { status: 200 }
           )
@@ -166,7 +166,7 @@ describe('RechargePage feature availability', () => {
         return Promise.resolve(
           new Response(
             JSON.stringify({
-              user: { id: '1', email: 'user@example.com', balance: 1000 },
+              user: { ID: '1', email: 'user@example.com', balance: 1000 },
             }),
             { status: 200 }
           )
@@ -234,7 +234,7 @@ describe('RechargePage feature availability', () => {
         return Promise.resolve(
           new Response(
             JSON.stringify({
-              user: { id: '1', email: 'user@example.com', balance: 1000 },
+              user: { ID: '1', email: 'user@example.com', balance: 1000 },
             }),
             { status: 200 }
           )
@@ -273,7 +273,7 @@ describe('RechargePage Client Recovery Robustness', () => {
 
   it('retains rejected verification evidence because 403 does not prove fulfillment', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
-    addPendingStripeSessionId('cs_terminal_403', 'user_123');
+    addPendingStripeSessionId('cs_terminal_403', '123');
 
     vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
@@ -281,7 +281,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { ID: '123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         // Return 403 Forbidden (cross-user or invalid)
@@ -300,13 +300,13 @@ describe('RechargePage Client Recovery Robustness', () => {
 
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes('/token/purchases/verify_stripe'))).toBe(true));
     await waitFor(() => {
-      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_terminal_403']);
+      expect(readPendingStripeSessionIds('123')).toEqual(['cs_terminal_403']);
     });
   });
 
   it('retains pending session on 401 Unauthorized during verify_stripe and clears expired auth token', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
-    addPendingStripeSessionId('cs_auth_expired_401', 'user_123');
+    addPendingStripeSessionId('cs_auth_expired_401', '123');
 
     vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
@@ -314,7 +314,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { ID: '123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         // Return 401 Unauthorized (expired recharge token)
@@ -333,7 +333,7 @@ describe('RechargePage Client Recovery Robustness', () => {
 
     await waitFor(() => {
       // Pending session MUST be retained for future restoration
-      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_auth_expired_401']);
+      expect(readPendingStripeSessionIds('123')).toEqual(['cs_auth_expired_401']);
       // Expired access token must be wiped
       expect(getValidRechargeAccessToken()).toBeNull();
     });
@@ -342,9 +342,9 @@ describe('RechargePage Client Recovery Robustness', () => {
   it('retains all subsequent pending sessions when first session hits 401 Unauthorized (multi-session queue)', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
     // Queue: [A, B, C]
-    addPendingStripeSessionId('cs_multi_A', 'user_multi');
-    addPendingStripeSessionId('cs_multi_B', 'user_multi');
-    addPendingStripeSessionId('cs_multi_C', 'user_multi');
+    addPendingStripeSessionId('cs_multi_A', '124');
+    addPendingStripeSessionId('cs_multi_B', '124');
+    addPendingStripeSessionId('cs_multi_C', '124');
 
     vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
@@ -352,7 +352,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_multi', email: 'multi@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: '124', email: 'multi@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         // A hits 401
@@ -371,7 +371,7 @@ describe('RechargePage Client Recovery Robustness', () => {
 
     await waitFor(() => {
       // All 3 sessions [A, B, C] MUST be retained in exact order!
-      expect(readPendingStripeSessionIds('user_multi')).toEqual(['cs_multi_A', 'cs_multi_B', 'cs_multi_C']);
+      expect(readPendingStripeSessionIds('124')).toEqual(['cs_multi_A', 'cs_multi_B', 'cs_multi_C']);
       expect(getValidRechargeAccessToken()).toBeNull();
     });
   });
@@ -379,9 +379,9 @@ describe('RechargePage Client Recovery Robustness', () => {
   it('removes first fulfilled session, but retains second (401) and third (unprocessed) sessions', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
     // Queue: [A, B, C]
-    addPendingStripeSessionId('cs_queue_A', 'user_partial');
-    addPendingStripeSessionId('cs_queue_B', 'user_partial');
-    addPendingStripeSessionId('cs_queue_C', 'user_partial');
+    addPendingStripeSessionId('cs_queue_A', '125');
+    addPendingStripeSessionId('cs_queue_B', '125');
+    addPendingStripeSessionId('cs_queue_C', '125');
 
     vi.spyOn(global, 'fetch').mockImplementation((input, init) => {
       const url = String(input);
@@ -389,7 +389,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_partial', email: 'partial@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { id: '125', email: 'partial@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         const body = JSON.parse(String(init?.body || '{}'));
@@ -415,13 +415,13 @@ describe('RechargePage Client Recovery Robustness', () => {
 
     await waitFor(() => {
       // A was fulfilled (removed), B and C are retained!
-      expect(readPendingStripeSessionIds('user_partial')).toEqual(['cs_queue_B', 'cs_queue_C']);
+      expect(readPendingStripeSessionIds('125')).toEqual(['cs_queue_B', 'cs_queue_C']);
     });
   });
 
   it('restores pending session after re-authenticating with fresh token', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
-    addPendingStripeSessionId('cs_pending_restored', 'user_123');
+    addPendingStripeSessionId('cs_pending_restored', '123');
 
     vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
@@ -429,7 +429,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { ID: '123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         // Successfully verified
@@ -448,14 +448,14 @@ describe('RechargePage Client Recovery Robustness', () => {
 
     await waitFor(() => {
       // Successfully restored session is removed from pending
-      expect(readPendingStripeSessionIds('user_123')).toEqual([]);
+      expect(readPendingStripeSessionIds('123')).toEqual([]);
       expect(window.alert).toHaveBeenCalled();
     });
   });
 
   it('retains transient 500 / 429 pending session in storage for retry', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
-    addPendingStripeSessionId('cs_transient_500', 'user_123');
+    addPendingStripeSessionId('cs_transient_500', '123');
 
     vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
@@ -463,7 +463,7 @@ describe('RechargePage Client Recovery Robustness', () => {
         return Promise.resolve(new Response(JSON.stringify({ features: { token_purchase_enabled: { enabled: true } } }), { status: 200 }));
       }
       if (url.includes('/get_user')) {
-        return Promise.resolve(new Response(JSON.stringify({ user: { id: 'user_123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
+        return Promise.resolve(new Response(JSON.stringify({ user: { ID: '123', email: 'u123@example.com', balance: 0 } }), { status: 200 }));
       }
       if (url.includes('/token/purchases/verify_stripe')) {
         // Return 500 Server Error
@@ -481,7 +481,7 @@ describe('RechargePage Client Recovery Robustness', () => {
     );
 
     await waitFor(() => {
-      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_transient_500']);
+      expect(readPendingStripeSessionIds('123')).toEqual(['cs_transient_500']);
     });
   });
 
@@ -538,22 +538,22 @@ describe('RechargePage Client Recovery Robustness', () => {
   });
   it.each([200, 400, 401, 403, 404, 500])('preserves a newer checkout while restoring an older one (HTTP %s)', async code => {
     storeRechargeAccessToken('owner-token', new Date(Date.now()+3600000).toISOString());
-    addPendingStripeSessionId('cs_old', 'race_owner');
+    addPendingStripeSessionId('cs_old', '126');
     addPendingStripeSessionId('cs_old', 'different_owner');
     let finish!: (response: Response) => void;
     const oldResponse = new Promise<Response>(resolve => { finish = resolve; });
     const fetcher = vi.spyOn(global, 'fetch').mockImplementation((input) => {
       const url = String(input);
-      if (url.includes('/get_user')) return Promise.resolve(new Response(JSON.stringify({user:{id:'race_owner',email:'race@example.com',balance:0}}), {status:200}));
+      if (url.includes('/get_user')) return Promise.resolve(new Response(JSON.stringify({user:{id:'126',email:'race@example.com',balance:0}}), {status:200}));
       if (url.includes('/token/purchases/verify_stripe')) return oldResponse;
       if (url.includes('/v1/feature_availability')) return Promise.resolve(new Response(JSON.stringify({features:{token_purchase_enabled:{enabled:true}}}),{status:200}));
       return Promise.resolve(new Response(JSON.stringify({products:[]}),{status:200}));
     });
     render(<MemoryRouter><LanguageProvider><RechargePage /></LanguageProvider></MemoryRouter>);
     await waitFor(() => expect(fetcher.mock.calls.some(([url]) => String(url).includes('/token/purchases/verify_stripe'))).toBe(true));
-    addPendingStripeSessionId('cs_new', 'race_owner');
+    addPendingStripeSessionId('cs_new', '126');
     await act(async () => { finish(new Response(JSON.stringify({success:code===200,token_amount_in_cents:100}),{status:code})); });
-    await waitFor(() => expect(readPendingStripeSessionIds('race_owner')).toEqual(code===200 ? ['cs_new'] : ['cs_old','cs_new']));
+    await waitFor(() => expect(readPendingStripeSessionIds('126')).toEqual(code===200 ? ['cs_new'] : ['cs_old','cs_new']));
     expect(readPendingStripeSessionIds('different_owner')).toEqual(['cs_old']);
   });
 

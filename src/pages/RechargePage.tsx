@@ -7,7 +7,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } from 'lucide-react';
 
 import { API_BASE_URL } from '../config/api';
-import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
+import { clearRechargeAccessToken, getValidRechargeAccessToken, rechargeUserId, storeRechargeAccessToken } from '../lib/rechargeSession';
 import { addPendingStripeSessionId, readPendingStripeSessionIds, removePendingStripeSessionForUser } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
@@ -340,13 +340,14 @@ export default function RechargePage() {
       const sid = data.sessionId || data.session_id;
       const expiresAt = data.accessTokenExpiresAt || data.access_token_expires_at;
 
-      if (token && data.user && storeRechargeAccessToken(token, expiresAt)) {
+      const userId = rechargeUserId(data.user);
+      if (token && userId && storeRechargeAccessToken(token, expiresAt)) {
         setAccessToken(token);
         setSessionId(sid || null);
         if (sid) sessionStorage.setItem('recharge_session_id', sid);
 
         const userInfo: UserInfo = {
-          id: String(data.user.id || ''),
+          id: userId,
           email: data.user.email || '',
           nickname: data.user.nickname || '',
           balance: (Number(data.user.balance) || 0) / 100,
@@ -457,9 +458,10 @@ export default function RechargePage() {
 
       const data = await response.json();
       if (!mounted.current || getValidRechargeAccessToken() !== token) return;
-      if (data.user) {
+      const userId = rechargeUserId(data.user);
+      if (userId) {
         const userInfo: UserInfo = {
-          id: String(data.user.id || ''),
+          id: userId,
           email: data.user.email || '',
           nickname: data.user.nickname || '',
           balance: (Number(data.user.balance) || 0) / 100,
@@ -684,7 +686,8 @@ export default function RechargePage() {
 
             <PurchaseLogin scope="recharge" zh={language==='zh'} onSuccess={data=>{
               const purchaseToken=data.accessToken||data.access_token;
-              const info={id:String(data.user.id),email:data.user.email||'',nickname:data.user.nickname||'',balance:(Number(data.user.balance)||0)/100};
+              const id=rechargeUserId(data.user);if(!id)return;
+              const info={id,email:data.user.email||'',nickname:data.user.nickname||'',balance:(Number(data.user.balance)||0)/100};
               setAccessToken(purchaseToken);setSessionId(null);setUser(info);setIsLoggedIn(true);setError(null);checkPendingOrder(info.id,purchaseToken);
             }}/>
 
