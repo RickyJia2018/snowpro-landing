@@ -48,8 +48,10 @@ function RefundAccount({ scope, zh }: { scope: PurchaseScope; zh: boolean }) {
       if (response.status === 401) { expire(); return; }
       if (!response.ok) throw new Error('unavailable');
       const data = await response.json();
-      if (!Array.isArray(data.requests) || data.requests.some((r: RefundCase) => !r || typeof r.id !== 'string' || typeof r.status !== 'string')) throw new Error('invalid response');
-      if (!canceled && current(token)) { setRows(data.requests); setNext(data.nextPageToken || data.next_page_token || ''); }
+      // Protobuf JSON omits empty repeated fields. A valid empty response is {}.
+      const requests = data.requests === undefined ? [] : data.requests;
+      if (!Array.isArray(requests) || requests.some((r: RefundCase) => !r || typeof r.id !== 'string' || typeof r.status !== 'string')) throw new Error('invalid response');
+      if (!canceled && current(token)) { setRows(requests); setNext(data.nextPageToken || data.next_page_token || ''); }
     }).catch(() => { if (!canceled && current(token)) setError(zh ? '申请记录加载失败，请重试或联系本页客服邮箱。' : 'Could not load requests. Retry or contact the support email on this page.'); }).finally(() => { if (!canceled) setLoading(false); });
     return () => { canceled = true; };
   }, [scope, token, cursor, reload, zh]);

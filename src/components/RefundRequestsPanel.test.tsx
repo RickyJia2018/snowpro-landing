@@ -48,3 +48,25 @@ describe('Refund request intake', () => {
     expect(screen.getByText('Sign in to submit or view refund requests')).toBeTruthy();
   });
 });
+
+
+it('accepts an omitted repeated field from the real protobuf gateway as empty history', async () => {
+  login(); vi.spyOn(globalThis, 'fetch').mockResolvedValue(json({}));
+  render(<RefundRequestsPanel zh={false} />);
+  expect(await screen.findByText('No requests found')).toBeTruthy();
+  expect(screen.queryByRole('alert')).toBeNull();
+});
+for (const body of [{ requests: null }, { requests: {} }, { requests: [{ id: 'bad' }] }]) {
+  it(`rejects malformed refund history ${JSON.stringify(body)}`, async () => {
+    login(); vi.spyOn(globalThis, 'fetch').mockResolvedValue(json(body));
+    render(<RefundRequestsPanel zh={false} />);
+    expect((await screen.findByRole('alert')).textContent).toContain('Could not load requests');
+    expect(screen.queryByText('No requests found')).toBeNull();
+  });
+}
+it('does not mistake a failed HTTP response for empty refund history', async () => {
+  login(); vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('{}', { status: 503 }));
+  render(<RefundRequestsPanel zh={false} />);
+  expect((await screen.findByRole('alert')).textContent).toContain('Could not load requests');
+  expect(screen.queryByText('No requests found')).toBeNull();
+});
