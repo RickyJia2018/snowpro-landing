@@ -224,6 +224,9 @@ export default function RechargePage() {
 
   const initialized = useRef(false);
   const paymentInFlight = useRef(false);
+  const recoveryInFlight = useRef(0);
+  const [isRestoring, setIsRestoring] = useState(false);
+  const [restoreMessage, setRestoreMessage] = useState<string | null>(null);
   const mounted = useRef(false);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
 
@@ -373,9 +376,13 @@ export default function RechargePage() {
 
   // Check if there is any pending Stripe checkout session that needs restoration
   const checkPendingOrder = async (userId: string, token: string) => {
+    setRestoreMessage(null);
     const pendingSessions = readPendingStripeSessionIds(userId);
     if (pendingSessions.length === 0) return;
 
+    recoveryInFlight.current += 1;
+    setIsRestoring(true);
+    try {
     for (let i = 0; i < pendingSessions.length; i++) {
       if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       const sid = pendingSessions[i];
@@ -398,10 +405,8 @@ export default function RechargePage() {
           if (data.success) {
             removePendingStripeSessionForUser(sid, userId);
             const amt = parseTokenAmount(data);
-            if (typeof window !== 'undefined' && typeof window.alert === 'function') {
-              window.alert(tLocal.restoreAlert.replace('{amount}', amt.toString()));
-            }
-            fetchUserInfo(token, false);
+            setRestoreMessage(tLocal.restoreAlert.replace('{amount}', amt.toString()));
+            await fetchUserInfo(token, false);
           } else {
             // Pending / unpaid: leave the original queue entry unchanged.
           }
@@ -425,6 +430,10 @@ export default function RechargePage() {
         console.error("Failed to restore pending purchase for session:", sid, err);
         // Retain the original queue entry.
       }
+    }
+    } finally {
+      recoveryInFlight.current -= 1;
+      if (mounted.current) setIsRestoring(recoveryInFlight.current > 0);
     }
   };
 
@@ -552,7 +561,7 @@ export default function RechargePage() {
 
   // Recharge payment redirection handler
   const handleRecharge = async () => {
-    if (paymentInFlight.current || !isLoggedIn || !selectedProductId || !policy) return;
+    if (recoveryInFlight.current > 0 || paymentInFlight.current || !isLoggedIn || !selectedProductId || !policy) return;
     if (tokenPurchaseAvailability !== 'enabled') {
       setError(
         tokenPurchaseAvailability === 'disabled'
@@ -806,12 +815,15 @@ export default function RechargePage() {
                 <button type="button" onClick={()=>setPolicyReload(value=>value+1)} className="text-blue-400 mt-2">{language==='zh'?'刷新协议':'Refresh policy'}</button>
               </div>
 
+              {isRestoring && <p role="status" className="text-sm text-blue-300">{language === 'zh' ? '正在核对之前的订单，请勿再次付款…' : 'Checking previous orders. Please do not pay again yet…'}</p>}
+              {restoreMessage && <p role="status" className="text-sm text-green-300">{restoreMessage}</p>}
               {/* Checkout CTA */}
               <button
                 onClick={handleRecharge}
                 disabled={
                   tokenPurchaseAvailability !== 'enabled' ||
                   paymentLoading ||
+                  isRestoring ||
                   !selectedProductId ||
                   !policy
                 }

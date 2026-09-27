@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import RechargePage from './RechargePage';
 import { LanguageProvider } from '../../contexts/LanguageContext';
@@ -449,7 +449,7 @@ describe('RechargePage Client Recovery Robustness', () => {
     await waitFor(() => {
       // Successfully restored session is removed from pending
       expect(readPendingStripeSessionIds('123')).toEqual([]);
-      expect(window.alert).toHaveBeenCalled();
+      expect(screen.getByText(/Successfully restored and credited/)).toBeTruthy();
     });
   });
 
@@ -557,4 +557,34 @@ describe('RechargePage Client Recovery Robustness', () => {
     expect(readPendingStripeSessionIds('different_owner')).toEqual(['cs_old']);
   });
 
+});
+
+
+it('automatically restores old orders before allowing a new checkout', async () => {
+  sessionStorage.clear(); localStorage.clear(); vi.restoreAllMocks();
+  storeRechargeAccessToken('recovery-token', new Date(Date.now()+60000).toISOString());
+  addPendingStripeSessionId('cs_recovery', '7');
+  let finish!: (r: Response) => void;
+  let credited = false;
+  const fetch = vi.spyOn(globalThis, 'fetch').mockImplementation(input => {
+    const url = String(input);
+    const json = (body: unknown) => Promise.resolve(new Response(JSON.stringify(body)));
+    if (url.includes('/verify_stripe')) return new Promise(resolve => { finish = resolve; });
+    if (url.includes('/get_user')) return json({ user: { ID: '7', balance: credited ? 100 : 0 } });
+    if (url.includes('/policies/latest')) return json({ policy_version_id: '1', language_code: 'en', content: 'Terms', version: 'v1' });
+    if (url.includes('/v1/feature_availability')) return json({ features: { token_purchase_enabled: { enabled: true } } });
+    return json({ products: [{ product_id: 'one', price_in_cents: 149, token_amount_in_cents: 100, title: '1 Token' }] });
+  });
+  render(<MemoryRouter><LanguageProvider><RechargePage /></LanguageProvider></MemoryRouter>);
+  expect(await screen.findByText(/Checking previous orders/)).toBeTruthy();
+  const pay = screen.getByRole('button', { name: 'Pay with Stripe' }) as HTMLButtonElement;
+  expect(pay.disabled).toBe(true);
+  fireEvent.click(pay);
+  expect(fetch.mock.calls.some(([url]) => String(url).endsWith('/token/purchases'))).toBe(false);
+  credited = true;
+  await act(async () => { finish(new Response(JSON.stringify({ success: true, token_amount_in_cents: 100 }))); });
+  await waitFor(() => expect(pay.disabled).toBe(false));
+  expect(screen.getByText(/Successfully restored and credited 1 tokens/)).toBeTruthy();
+  expect(readPendingStripeSessionIds('7')).toEqual([]);
+  expect(fetch.mock.calls.some(([url]) => String(url).endsWith('/token/purchases'))).toBe(false);
 });

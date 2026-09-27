@@ -4,7 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { CheckCircle, ArrowRight, Home, Coins, Loader2, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '../config/api';
-import { getValidRechargeAccessToken } from '../lib/rechargeSession';
+import PurchaseLogin from '../components/PurchaseLogin';
+import { clearRechargeAccessToken, getValidRechargeAccessToken } from '../lib/rechargeSession';
 import { removePendingStripeSessionId } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
@@ -18,12 +19,12 @@ const localTranslations = {
     verifyingTitle: "正在确认到账...",
     verifyingMessage: "正在联系支付通道确认您的订单入账状态，请稍候...",
     failedTitle: "到账确认中...",
-    failedMessage: "您的付款已成功提交！由于支付通道确认稍有延迟，代币可能需要 1~2 分钟入账。请放心，系统正在自动为您补单。您可以稍后返回 App 查看最新余额。",
+    failedMessage: "尚未确认这笔订单是否到账。请重试确认；如果已经付款，请勿重复购买。",
     tokenFulfillSuccess: "您的代币已实时确认到账！本次共购得 {amount} 个代币。",
     retryBtn: "重新校验到账状态",
     noSessionTitle: "未找到充值会话",
     noSessionMessage: "未检测到有效的支付订单信息。如果您刚完成了支付，代币会在后台自动入账；或者您可以返回充值页面重新发起充值。",
-    sessionExpiredError: "充值会话已过期，请在 App 中重新点击充值。",
+    sessionExpiredError: "登录已过期。请使用购买时的同一账户重新登录，继续确认原订单，无需再次付款。",
     clearanceDelayed: "支付网络确认延迟，请稍后刷新 App 页面查看最新余额。",
   },
   en: {
@@ -35,12 +36,12 @@ const localTranslations = {
     verifyingTitle: "Verifying Fulfill...",
     verifyingMessage: "Checking your payment status with the payment processor, please wait...",
     failedTitle: "Fulfillment Pending...",
-    failedMessage: "Your payment was submitted! However, due to payment network latency, the tokens haven't credited yet. Don't worry, the system will automatically fulfill it in 1-2 minutes. You can return to the App and refresh later.",
+    failedMessage: "We have not confirmed whether this order has been credited. Retry verification; if you have paid, do not purchase again.",
     tokenFulfillSuccess: "Tokens credited successfully! You've received {amount} tokens.",
     retryBtn: "Verify Status Again",
     noSessionTitle: "No Active Recharge Session",
     noSessionMessage: "No payment transaction was detected. If you just completed a payment, your tokens will be credited shortly; or you can return to the recharge page.",
-    sessionExpiredError: "Your recharge session has expired. Please reopen recharge from the app.",
+    sessionExpiredError: "Your sign-in has expired. Sign in with the same account to verify this order. Do not pay again.",
     clearanceDelayed: "Payment clearance delayed. Please check balance in App later.",
   },
   ja: {
@@ -52,12 +53,12 @@ const localTranslations = {
     verifyingTitle: "入金確認中...",
     verifyingMessage: "決済代行機関と支払い状況を確認しています。少々お待ちください...",
     failedTitle: "入金確認保留中...",
-    failedMessage: "お支払いは正常に送信されました。決済ネットワークの反映遅延により、トークンの付与に1〜2分程度かかる場合があります。システムが自動的に補正処理を行っておりますのでご安心ください。後ほどアプリで残高をご確認いただけます。",
+    failedMessage: "この注文の付与状況をまだ確認できません。再度確認してください。お支払い済みの場合は再購入しないでください。",
     tokenFulfillSuccess: "トークンの入金がリアルタイムで確認されました！今回は合計 {amount} トークンを購入しました。",
     retryBtn: "入金状況を再確認する",
     noSessionTitle: "アクティブなチャージセッションがありません",
     noSessionMessage: "有効な支払い取引が検出されませんでした。お支払いが完了している場合、トークンはまもなくアカウントに反映されます。またはチャージページに戻って再試行してください。",
-    sessionExpiredError: "チャージセッションの有効期限が切れました。アプリから再度チャージを開いてください。",
+    sessionExpiredError: "ログインの有効期限が切れました。同じアカウントで再ログインして、この注文を確認してください。再度お支払いいただく必要はありません。",
     clearanceDelayed: "決済ネットワークの確認が遅延しています。後ほどアプリで残高をご確認ください。",
   },
   ko: {
@@ -69,12 +70,12 @@ const localTranslations = {
     verifyingTitle: "지급 확인 중...",
     verifyingMessage: "결제 대행사와 주문 처리 상태를 확인하고 있습니다. 잠시만 기다려 주세요...",
     failedTitle: "지급 처리 대기 중...",
-    failedMessage: "결제가 성공적으로 제출되었습니다! 결제망 지연으로 인해 토큰 지급에 1~2분 정도 소요될 수 있습니다. 시스템이 자동으로 보정하고 있으니 안심하세요. 잠시 후 앱에서 최신 잔액을 확인해 주세요.",
+    failedMessage: "이 주문의 지급 여부를 아직 확인하지 못했습니다. 다시 확인하세요. 이미 결제했다면 다시 구매하지 마세요.",
     tokenFulfillSuccess: "토큰이 실시간으로 확인 및 지급되었습니다! 총 {amount}개의 토큰을 구매하셨습니다.",
     retryBtn: "지급 상태 다시 확인",
     noSessionTitle: "유효한 충전 세션이 없습니다",
     noSessionMessage: "유효한 결제 거래가 감지되지 않았습니다. 방금 결제를 완료하셨다면 잠시 후 자동으로 지급됩니다. 또는 충전 페이지로 돌아가 다시 시도해 주세요.",
-    sessionExpiredError: "충전 세션이 만료되었습니다. 앱에서 다시 충전을 열어주세요.",
+    sessionExpiredError: "로그인이 만료되었습니다. 같은 계정으로 다시 로그인하여 이 주문을 확인하세요. 다시 결제하지 마세요.",
     clearanceDelayed: "결제망 확인이 지연되고 있습니다. 잠시 후 앱에서 잔액을 확인해 주세요.",
   },
   fr: {
@@ -86,12 +87,12 @@ const localTranslations = {
     verifyingTitle: "Vérification en cours...",
     verifyingMessage: "Vérification du statut de votre paiement auprès du processeur, veuillez patienter...",
     failedTitle: "Traitement en attente...",
-    failedMessage: "Votre paiement a été soumis ! En raison de la latence du réseau bancaire, les jetons peuvent prendre 1 à 2 minutes pour apparaître. Le système effectue le traitement automatique. Vous pourrez vérifier votre solde dans l'application un peu plus tard.",
+    failedMessage: "Nous n’avons pas encore confirmé le crédit de cette commande. Réessayez la vérification. Si vous avez payé, ne rachetez pas.",
     tokenFulfillSuccess: "Jetons crédités avec succès ! Vous avez reçu {amount} jetons.",
     retryBtn: "Revérifier le statut",
     noSessionTitle: "Aucune session de recharge active",
     noSessionMessage: "Aucune transaction de paiement détectée. Si vous venez d'effectuer un paiement, vos jetons seront crédités sous peu.",
-    sessionExpiredError: "Votre session de recharge a expiré. Veuillez rouvrir la recharge depuis l'application.",
+    sessionExpiredError: "Votre connexion a expiré. Reconnectez-vous avec le même compte pour vérifier cette commande. Ne payez pas à nouveau.",
     clearanceDelayed: "Délai de confirmation du paiement. Veuillez vérifier votre solde dans l'application ultérieurement.",
   },
   de: {
@@ -103,12 +104,12 @@ const localTranslations = {
     verifyingTitle: "Gutschrift wird überprüft...",
     verifyingMessage: "Zahlungsstatus wird beim Zahlungsdienstleister überprüft, bitte warten...",
     failedTitle: "Bearbeitung ausstehend...",
-    failedMessage: "Ihre Zahlung wurde übermittelt! Aufgrund von Netzwerkverzögerungen kann es 1-2 Minuten dauern, bis die Token gutgeschrieben sind. Das System bucht diese automatisch nach. Sie können Ihr Guthaben in Kürze in der App überprüfen.",
+    failedMessage: "Die Gutschrift dieser Bestellung ist noch nicht bestätigt. Prüfen Sie erneut. Wenn Sie bezahlt haben, kaufen Sie nicht erneut.",
     tokenFulfillSuccess: "Token erfolgreich gutgeschrieben! Sie haben {amount} Token erhalten.",
     retryBtn: "Status erneut prüfen",
     noSessionTitle: "Keine aktive Aufladesitzung",
     noSessionMessage: "Keine Zahlungstransaktion erkannt. Falls Sie gerade bezahlt haben, werden die Token in Kürze gutgeschrieben.",
-    sessionExpiredError: "Ihre Aufladesitzung ist abgelaufen. Bitte öffnen Sie die Aufladung erneut in der App.",
+    sessionExpiredError: "Ihre Anmeldung ist abgelaufen. Melden Sie sich mit demselben Konto an, um diese Bestellung zu prüfen. Zahlen Sie nicht erneut.",
     clearanceDelayed: "Zahlungsbestätigung verzögert. Bitte überprüfen Sie das Guthaben später in der App.",
   },
   es: {
@@ -120,12 +121,12 @@ const localTranslations = {
     verifyingTitle: "Verificando acreditación...",
     verifyingMessage: "Verificando el estado de su pago con la pasarela, por favor espere...",
     failedTitle: "Acreditación pendiente...",
-    failedMessage: "¡Su pago fue enviado con éxito! Debido a la latencia de la red, los tokens pueden demorar 1-2 minutos en acreditarse. El sistema los acreditará automáticamente. Puede consultar su saldo en la app en unos momentos.",
+    failedMessage: "Aún no hemos confirmado el abono de este pedido. Vuelva a verificar. Si ya pagó, no vuelva a comprar.",
     tokenFulfillSuccess: "¡Tokens acreditados con éxito! Ha recibido {amount} tokens.",
     retryBtn: "Verificar estado nuevamente",
     noSessionTitle: "Sin sesión de recarga activa",
     noSessionMessage: "No se detectó ninguna transacción de pago. Si acaba de pagar, sus tokens se acreditarán en breve.",
-    sessionExpiredError: "Su sesión de recarga ha caducado. Vuelva a abrir la recarga desde la aplicación.",
+    sessionExpiredError: "Su sesión ha caducado. Inicie sesión con la misma cuenta para verificar este pedido. No vuelva a pagar.",
     clearanceDelayed: "Confirmación de pago demorada. Por favor, verifique su saldo en la app más tarde.",
   },
   ru: {
@@ -137,12 +138,12 @@ const localTranslations = {
     verifyingTitle: "Подтверждение зачисления...",
     verifyingMessage: "Проверяем статус оплаты в платежной системе, пожалуйста, подождите...",
     failedTitle: "Зачисление в процессе...",
-    failedMessage: "Ваш платеж успешно принят! Из-за задержки подтверждения платежной сети начисление токенов может занять 1-2 минуты. Система начислит их автоматически. Проверьте баланс в приложении чуть позже.",
+    failedMessage: "Зачисление по этому заказу ещё не подтверждено. Повторите проверку. Если вы уже оплатили, не покупайте повторно.",
     tokenFulfillSuccess: "Токены успешно начислены! Вы получили {amount} токенов.",
     retryBtn: "Проверить статус снова",
     noSessionTitle: "Нет активного сеанса пополнения",
     noSessionMessage: "Платежная транзакция не обнаружена. Если вы только что оплатили заказ, токены будут зачислены в ближайшее время.",
-    sessionExpiredError: "Срок действия сеанса пополнения истек. Пожалуйста, откройте пополнение заново из приложения.",
+    sessionExpiredError: "Срок действия входа истёк. Войдите в тот же аккаунт для проверки этого заказа. Не оплачивайте повторно.",
     clearanceDelayed: "Подтверждение платежа задерживается. Пожалуйста, проверьте баланс в приложении позже.",
   },
 };
@@ -156,6 +157,7 @@ export default function RechargeSuccessPage() {
   const [status, setStatus] = React.useState<'idle' | 'verifying' | 'success' | 'failed' | 'no_session'>(
     sessionId ? 'verifying' : 'no_session'
   );
+  const [needsLogin, setNeedsLogin] = React.useState(false);
   const [tokenAmount, setTokenAmount] = React.useState<number>(0);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
@@ -174,11 +176,13 @@ export default function RechargeSuccessPage() {
     
     const token = getValidRechargeAccessToken();
     if (!token) {
+      setNeedsLogin(true);
       setStatus('failed');
       setErrorMessage(tLocal.sessionExpiredError);
       return;
     }
 
+    setNeedsLogin(false);
     const delays = [2000, 3000, 5000, 8000, 10000];
 
     for (let attempt = 0; attempt < delays.length; attempt++) {
@@ -197,6 +201,8 @@ export default function RechargeSuccessPage() {
 
         if (!mounted.current) return;
         if (getValidRechargeAccessToken() !== token || response.status === 401) {
+          if (getValidRechargeAccessToken() === token) clearRechargeAccessToken();
+          setNeedsLogin(true);
           setStatus('failed');
           setErrorMessage(tLocal.sessionExpiredError);
           return;
@@ -288,8 +294,8 @@ export default function RechargeSuccessPage() {
               <AlertCircle className="h-10 w-10 text-amber-400" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-3 tracking-tight">{tLocal.failedTitle}</h1>
-            <p className="text-slate-400 text-sm leading-relaxed mb-4">{tLocal.failedMessage}</p>
-            {errorMessage && (
+            <p className="text-slate-400 text-sm leading-relaxed mb-4">{needsLogin ? tLocal.sessionExpiredError : tLocal.failedMessage}</p>
+            {errorMessage && !needsLogin && (
               <p className="text-red-400/90 text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800 text-left overflow-x-auto whitespace-pre-wrap leading-normal mb-8">
                 {errorMessage}
               </p>
@@ -308,9 +314,11 @@ export default function RechargeSuccessPage() {
           </>
         )}
 
+        {needsLogin && <PurchaseLogin scope="recharge" purpose="verify" zh={language === 'zh'} onSuccess={() => { setNeedsLogin(false); void verifyOrder(); }} />}
+
         {/* Action Buttons */}
         <div className="space-y-4">
-          {status === 'failed' && (
+          {status === 'failed' && !needsLogin && (
             <button 
               onClick={verifyOrder}
               className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 px-6 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
