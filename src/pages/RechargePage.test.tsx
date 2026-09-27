@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import RechargePage from './RechargePage';
 import { LanguageProvider } from '../../contexts/LanguageContext';
 import { storeRechargeAccessToken, getValidRechargeAccessToken } from '../lib/rechargeSession';
-import { addPendingStripeSessionId } from '../lib/pendingStripeSessions';
+import { addPendingStripeSessionId, readPendingStripeSessionIds } from '../lib/pendingStripeSessions';
 
 describe('RechargePage Security & Handoff Isolation', () => {
   beforeEach(() => {
@@ -271,7 +271,7 @@ describe('RechargePage Client Recovery Robustness', () => {
     });
   });
 
-  it('drops terminal 403 / 404 pending session and avoids perpetual retry', async () => {
+  it('retains rejected verification evidence because 403 does not prove fulfillment', async () => {
     const { addPendingStripeSessionId, readPendingStripeSessionIds } = await import('../lib/pendingStripeSessions');
     addPendingStripeSessionId('cs_terminal_403', 'user_123');
 
@@ -298,8 +298,9 @@ describe('RechargePage Client Recovery Robustness', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes('/token/purchases/verify_stripe'))).toBe(true));
     await waitFor(() => {
-      expect(readPendingStripeSessionIds('user_123')).toEqual([]);
+      expect(readPendingStripeSessionIds('user_123')).toEqual(['cs_terminal_403']);
     });
   });
 
@@ -535,4 +536,25 @@ describe('RechargePage Client Recovery Robustness', () => {
       expect(getValidRechargeAccessToken()).toBeNull();
     });
   });
+  it.each([200, 400, 401, 403, 404, 500])('preserves a newer checkout while restoring an older one (HTTP %s)', async code => {
+    storeRechargeAccessToken('owner-token', new Date(Date.now()+3600000).toISOString());
+    addPendingStripeSessionId('cs_old', 'race_owner');
+    addPendingStripeSessionId('cs_old', 'different_owner');
+    let finish!: (response: Response) => void;
+    const oldResponse = new Promise<Response>(resolve => { finish = resolve; });
+    const fetcher = vi.spyOn(global, 'fetch').mockImplementation((input) => {
+      const url = String(input);
+      if (url.includes('/get_user')) return Promise.resolve(new Response(JSON.stringify({user:{id:'race_owner',email:'race@example.com',balance:0}}), {status:200}));
+      if (url.includes('/token/purchases/verify_stripe')) return oldResponse;
+      if (url.includes('/v1/feature_availability')) return Promise.resolve(new Response(JSON.stringify({features:{token_purchase_enabled:{enabled:true}}}),{status:200}));
+      return Promise.resolve(new Response(JSON.stringify({products:[]}),{status:200}));
+    });
+    render(<MemoryRouter><LanguageProvider><RechargePage /></LanguageProvider></MemoryRouter>);
+    await waitFor(() => expect(fetcher.mock.calls.some(([url]) => String(url).includes('/token/purchases/verify_stripe'))).toBe(true));
+    addPendingStripeSessionId('cs_new', 'race_owner');
+    await act(async () => { finish(new Response(JSON.stringify({success:code===200,token_amount_in_cents:100}),{status:code})); });
+    await waitFor(() => expect(readPendingStripeSessionIds('race_owner')).toEqual(code===200 ? ['cs_new'] : ['cs_old','cs_new']));
+    expect(readPendingStripeSessionIds('different_owner')).toEqual(['cs_old']);
+  });
+
 });

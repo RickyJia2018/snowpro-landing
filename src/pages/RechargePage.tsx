@@ -8,7 +8,7 @@ import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } fro
 
 import { API_BASE_URL } from '../config/api';
 import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
-import { addPendingStripeSessionId, readPendingStripeSessionIds, replacePendingStripeSessionIds } from '../lib/pendingStripeSessions';
+import { addPendingStripeSessionId, readPendingStripeSessionIds, removePendingStripeSessionForUser } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
 interface Product {
@@ -375,8 +375,8 @@ export default function RechargePage() {
     const pendingSessions = readPendingStripeSessionIds(userId);
     if (pendingSessions.length === 0) return;
 
-    const remainingSessions: string[] = [];
     for (let i = 0; i < pendingSessions.length; i++) {
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       const sid = pendingSessions[i];
       try {
         const response = await checkoutFetch(`${API_BASE_URL}/token/purchases/verify_stripe`, {
@@ -395,19 +395,19 @@ export default function RechargePage() {
           const data = await response.json();
           if (!mounted.current || getValidRechargeAccessToken() !== token) return;
           if (data.success) {
+            removePendingStripeSessionForUser(sid, userId);
             const amt = parseTokenAmount(data);
             if (typeof window !== 'undefined' && typeof window.alert === 'function') {
               window.alert(tLocal.restoreAlert.replace('{amount}', amt.toString()));
             }
             fetchUserInfo(token, false);
           } else {
-            // Order is still pending / unpaid, retain for future check
-            remainingSessions.push(sid);
+            // Pending / unpaid: leave the original queue entry unchanged.
           }
         } else if (response.status === 401) {
           // 401 Unauthorized means the recharge access token has expired.
           // The current session AND all remaining unprocessed sessions are retained!
-          remainingSessions.push(...pendingSessions.slice(i));
+          // Unprocessed entries were never removed from durable storage.
           console.warn(`[Snow Pro Recharge] Auth token expired (401) while verifying pending session ${sid}, retaining session for next authenticated session.`);
           clearRechargeAccessToken();
           sessionStorage.removeItem('recharge_session_id');
@@ -416,25 +416,15 @@ export default function RechargePage() {
           setIsLoggedIn(false);
           setUser(null);
           break;
-        } else if (
-          response.status === 400 ||
-          response.status === 403 ||
-          response.status === 404
-        ) {
-          // Terminal error: Invalid session ID, belongs to another user, or not found.
-          // Drop from pending sessions immediately to avoid perpetual retries.
-          console.warn(`[Snow Pro Recharge] Dropping terminal pending session ${sid} (HTTP ${response.status})`);
         } else {
-          // Transient network error or 429/5xx server error, retain for retry
-          remainingSessions.push(sid);
+          // Rejection is not proof of fulfillment or refund. A 403 may be a
+          // temporary account restriction; retain evidence for later recovery.
         }
       } catch (err) {
         console.error("Failed to restore pending purchase for session:", sid, err);
-        remainingSessions.push(sid);
+        // Retain the original queue entry.
       }
     }
-
-    replacePendingStripeSessionIds(remainingSessions, userId);
   };
 
   // Fetch user info

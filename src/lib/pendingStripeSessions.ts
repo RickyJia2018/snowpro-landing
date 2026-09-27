@@ -265,3 +265,23 @@ export function replacePendingStripeSessionIds(
     }
   }
 }
+
+/** Remove only an observed result from this owner's current queue.
+ * Never replace a queue captured before an asynchronous provider verification.
+ */
+export function removePendingStripeSessionForUser(sessionId: string, userId: string): void {
+  if (!sessionId.trim() || !userId.trim() || typeof localStorage === 'undefined') return;
+  const key = getStorageKey(userId);
+  const raw = safeGetItem(localStorage, key);
+  if (!raw) return;
+  try {
+    const entries = JSON.parse(raw);
+    if (!Array.isArray(entries)) return;
+    const remaining = entries.filter(entry => {
+      const id = typeof entry === 'string' ? entry : entry?.sessionId;
+      return typeof id !== 'string' || id.trim() !== sessionId.trim();
+    });
+    if (remaining.length) safeSetItem(localStorage, key, JSON.stringify(remaining));
+    else safeRemoveItem(localStorage, key);
+  } catch { /* Preserve unrecognized recovery evidence. */ }
+}
