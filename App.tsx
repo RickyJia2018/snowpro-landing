@@ -17,6 +17,7 @@ import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 import RefundPolicyPage from './src/pages/RefundPolicyPage';
 import TokenPolicyPage from './src/pages/TokenPolicyPage';
 import InstructorSharePage from './src/pages/InstructorSharePage';
+import CourseSharePage from './src/pages/CourseSharePage';
 import CarpoolPassPage from './src/pages/CarpoolPassPage';
 import CarpoolPassSuccessPage from './src/pages/CarpoolPassSuccessPage';
 import { API_BASE_URL } from './src/config/api';
@@ -38,6 +39,7 @@ function App() {
         <Route path="/refunds" element={<RefundPolicyPage />} />
         <Route path="/terms" element={<TokenPolicyPage />} />
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
+        <Route path="/courses/:id" element={<CourseSharePage />} />
       </Routes>
     </LanguageProvider>
   );

@@ -57,6 +57,18 @@
   ],
   "rewrites": [
     {
+      "source": "/instructors/:id",
+      "destination": "/api/instructor-share?id=:id"
+    },
+    {
+      "source": "/apple-app-site-association",
+      "destination": "/.well-known/apple-app-site-association"
+    },
+    {
+      "source": "/courses/:id",
+      "destination": "/api/course-share?id=:id"
+    },
+    {
       "source": "/.well-known/apple-app-site-association",
       "destination": "/.well-known/apple-app-site-association"
     },
