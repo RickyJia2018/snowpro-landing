@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { API_BASE_URL } from '../config/api';
 import { clearRechargeAccessToken, getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
-import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
+import { checkoutFetch, stripeCheckoutUrl, purchaseProductChanged } from '../lib/checkout';
 
 import PurchaseLogin from '../components/PurchaseLogin';
 import { parsePassCatalog, PassPlan } from '../lib/passCatalog';
@@ -81,6 +81,8 @@ export default function CarpoolPassPage() {
 
   const checkout = async () => {
     if (authLoading || catalogLoading || !plans.some(p=>p.id===selected) || checkoutInFlight.current) return;
+    const confirmedPlan = plans.find(p => p.id === selected);
+    if (!confirmedPlan) return;
     const currentToken = getValidRechargeAccessToken(scope);
     if (!currentToken || currentToken !== token) { setToken(null); setError('session'); return; }
     checkoutInFlight.current = true;
@@ -90,13 +92,23 @@ export default function CarpoolPassPage() {
     try {
       const response = await checkoutFetch(`${API_BASE_URL}/v1/carpools/pass/checkout`, {
         method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${currentToken}` },
-        body: JSON.stringify({ product_id: selected }),
+        body: JSON.stringify({ product_id: confirmedPlan.id,
+          expected_duration_months: confirmedPlan.months,
+          expected_price_in_cents: String(confirmedPlan.cents),
+          expected_product_version: confirmedPlan.version }),
       });
       if (!mounted.current || getValidRechargeAccessToken(scope) !== currentToken) return;
       if (response.status === 401) {
         clearRechargeAccessToken(scope); setToken(null); setError('session'); return;
       }
-      if (!response.ok) throw new Error('Checkout unavailable');
+      if (!response.ok) {
+        const failure = await response.json();
+        if (!mounted.current || getValidRechargeAccessToken(scope) !== currentToken) return;
+        if (purchaseProductChanged(failure)) {
+          setPlans([]); setSelected(''); setCatalogError(true);
+        }
+        throw new Error('Checkout unavailable');
+      }
       const data = await response.json();
       if (!mounted.current || getValidRechargeAccessToken(scope) !== currentToken) return;
       const url = stripeCheckoutUrl(data.stripeCheckoutUrl || data.stripe_checkout_url);

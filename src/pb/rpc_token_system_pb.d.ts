@@ -1,5 +1,6 @@
 import * as jspb from 'google-protobuf'
 
+import * as rpc_policy_pb from './rpc_policy_pb'; // proto import: "rpc_policy.proto"
 import * as rpc_token_product_pb from './rpc_token_product_pb'; // proto import: "rpc_token_product.proto"
 
 
@@ -49,6 +50,11 @@ export namespace GetTokenProductsResponse {
 }
 
 export class InitiateTokenPurchaseRequest extends jspb.Message {
+  getPolicyConsentsList(): Array<rpc_policy_pb.PolicyConsent>;
+  setPolicyConsentsList(value: Array<rpc_policy_pb.PolicyConsent>): InitiateTokenPurchaseRequest;
+  clearPolicyConsentsList(): InitiateTokenPurchaseRequest;
+  addPolicyConsents(value?: rpc_policy_pb.PolicyConsent, index?: number): rpc_policy_pb.PolicyConsent;
+
   getProductId(): string;
   setProductId(value: string): InitiateTokenPurchaseRequest;
 
@@ -68,6 +74,16 @@ export class InitiateTokenPurchaseRequest extends jspb.Message {
   getAgreedTokenPolicy(): boolean;
   setAgreedTokenPolicy(value: boolean): InitiateTokenPurchaseRequest;
 
+  getExpectedTokenAmountInCents(): string;
+  setExpectedTokenAmountInCents(value: string): InitiateTokenPurchaseRequest;
+  hasExpectedTokenAmountInCents(): boolean;
+  clearExpectedTokenAmountInCents(): InitiateTokenPurchaseRequest;
+
+  getExpectedPriceInCents(): string;
+  setExpectedPriceInCents(value: string): InitiateTokenPurchaseRequest;
+  hasExpectedPriceInCents(): boolean;
+  clearExpectedPriceInCents(): InitiateTokenPurchaseRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InitiateTokenPurchaseRequest.AsObject;
   static toObject(includeInstance: boolean, msg: InitiateTokenPurchaseRequest): InitiateTokenPurchaseRequest.AsObject;
@@ -78,11 +94,14 @@ export class InitiateTokenPurchaseRequest extends jspb.Message {
 
 export namespace InitiateTokenPurchaseRequest {
   export type AsObject = {
+    policyConsentsList: Array<rpc_policy_pb.PolicyConsent.AsObject>;
     productId: string;
     paymentType: PaymentType;
     successUrl?: string;
     cancelUrl?: string;
     agreedTokenPolicy: boolean;
+    expectedTokenAmountInCents?: string;
+    expectedPriceInCents?: string;
   };
 
   export enum SuccessUrlCase {
@@ -93,6 +112,16 @@ export namespace InitiateTokenPurchaseRequest {
   export enum CancelUrlCase {
     _CANCEL_URL_NOT_SET = 0,
     CANCEL_URL = 4,
+  }
+
+  export enum ExpectedTokenAmountInCentsCase {
+    _EXPECTED_TOKEN_AMOUNT_IN_CENTS_NOT_SET = 0,
+    EXPECTED_TOKEN_AMOUNT_IN_CENTS = 6,
+  }
+
+  export enum ExpectedPriceInCentsCase {
+    _EXPECTED_PRICE_IN_CENTS_NOT_SET = 0,
+    EXPECTED_PRICE_IN_CENTS = 7,
   }
 }
 
@@ -338,6 +367,9 @@ export class RequestPayoutRequest extends jspb.Message {
   hasOauthToken(): boolean;
   clearOauthToken(): RequestPayoutRequest;
 
+  getExpectedQuoteFingerprint(): string;
+  setExpectedQuoteFingerprint(value: string): RequestPayoutRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RequestPayoutRequest.AsObject;
   static toObject(includeInstance: boolean, msg: RequestPayoutRequest): RequestPayoutRequest.AsObject;
@@ -353,6 +385,7 @@ export namespace RequestPayoutRequest {
     idempotencyKey: string;
     oauthProvider?: string;
     oauthToken?: string;
+    expectedQuoteFingerprint: string;
   };
 
   export enum OauthProviderCase {
@@ -455,6 +488,9 @@ export class PayoutInfo extends jspb.Message {
   getReturnedAmount(): number;
   setReturnedAmount(value: number): PayoutInfo;
 
+  getRequiresManualReview(): boolean;
+  setRequiresManualReview(value: boolean): PayoutInfo;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PayoutInfo.AsObject;
   static toObject(includeInstance: boolean, msg: PayoutInfo): PayoutInfo.AsObject;
@@ -487,6 +523,7 @@ export namespace PayoutInfo {
     agreementSignedAt: string;
     paypalItemId: string;
     returnedAmount: number;
+    requiresManualReview: boolean;
   };
 }
 
@@ -522,6 +559,11 @@ export class GetPayoutListRequest extends jspb.Message {
   hasPayoutMethod(): boolean;
   clearPayoutMethod(): GetPayoutListRequest;
 
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): GetPayoutListRequest;
+  hasIdempotencyKey(): boolean;
+  clearIdempotencyKey(): GetPayoutListRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetPayoutListRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetPayoutListRequest): GetPayoutListRequest.AsObject;
@@ -539,6 +581,7 @@ export namespace GetPayoutListRequest {
     year?: number;
     month?: number;
     payoutMethod?: string;
+    idempotencyKey?: string;
   };
 
   export enum UserIdCase {
@@ -564,6 +607,11 @@ export namespace GetPayoutListRequest {
   export enum PayoutMethodCase {
     _PAYOUT_METHOD_NOT_SET = 0,
     PAYOUT_METHOD = 7,
+  }
+
+  export enum IdempotencyKeyCase {
+    _IDEMPOTENCY_KEY_NOT_SET = 0,
+    IDEMPOTENCY_KEY = 8,
   }
 }
 
@@ -625,6 +673,12 @@ export class EstimatePayoutFeeResponse extends jspb.Message {
   getPayoutMethod(): string;
   setPayoutMethod(value: string): EstimatePayoutFeeResponse;
 
+  getQuoteFingerprint(): string;
+  setQuoteFingerprint(value: string): EstimatePayoutFeeResponse;
+
+  getPayoutDestination(): string;
+  setPayoutDestination(value: string): EstimatePayoutFeeResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): EstimatePayoutFeeResponse.AsObject;
   static toObject(includeInstance: boolean, msg: EstimatePayoutFeeResponse): EstimatePayoutFeeResponse.AsObject;
@@ -640,6 +694,8 @@ export namespace EstimatePayoutFeeResponse {
     netAmount: number;
     feeRate: string;
     payoutMethod: string;
+    quoteFingerprint: string;
+    payoutDestination: string;
   };
 }
 
@@ -1102,6 +1158,15 @@ export class GetPayoutAccountSummaryResponse extends jspb.Message {
   getAccountStatus(): string;
   setAccountStatus(value: string): GetPayoutAccountSummaryResponse;
 
+  getTotalTokenBalanceInCents(): number;
+  setTotalTokenBalanceInCents(value: number): GetPayoutAccountSummaryResponse;
+
+  getFrozenTokenRiskInCents(): number;
+  setFrozenTokenRiskInCents(value: number): GetPayoutAccountSummaryResponse;
+
+  getAvailableTokenBalanceInCents(): number;
+  setAvailableTokenBalanceInCents(value: number): GetPayoutAccountSummaryResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetPayoutAccountSummaryResponse.AsObject;
   static toObject(includeInstance: boolean, msg: GetPayoutAccountSummaryResponse): GetPayoutAccountSummaryResponse.AsObject;
@@ -1120,10 +1185,18 @@ export namespace GetPayoutAccountSummaryResponse {
     requestWindowOpen: boolean;
     payoutMethod: string;
     accountStatus: string;
+    totalTokenBalanceInCents: number;
+    frozenTokenRiskInCents: number;
+    availableTokenBalanceInCents: number;
   };
 }
 
 export class AcceptInstructorPayoutAgreementRequest extends jspb.Message {
+  getPolicyConsentsList(): Array<rpc_policy_pb.PolicyConsent>;
+  setPolicyConsentsList(value: Array<rpc_policy_pb.PolicyConsent>): AcceptInstructorPayoutAgreementRequest;
+  clearPolicyConsentsList(): AcceptInstructorPayoutAgreementRequest;
+  addPolicyConsents(value?: rpc_policy_pb.PolicyConsent, index?: number): rpc_policy_pb.PolicyConsent;
+
   getAgreementVersion(): string;
   setAgreementVersion(value: string): AcceptInstructorPayoutAgreementRequest;
 
@@ -1143,6 +1216,7 @@ export class AcceptInstructorPayoutAgreementRequest extends jspb.Message {
 
 export namespace AcceptInstructorPayoutAgreementRequest {
   export type AsObject = {
+    policyConsentsList: Array<rpc_policy_pb.PolicyConsent.AsObject>;
     agreementVersion: string;
     isUsTaxResident: boolean;
     isCaTaxResident: boolean;
@@ -1586,6 +1660,34 @@ export class AdminAdjustUserBalanceRequest extends jspb.Message {
   hasIdempotencyKey(): boolean;
   clearIdempotencyKey(): AdminAdjustUserBalanceRequest;
 
+  getCategory(): AdjustmentCategory;
+  setCategory(value: AdjustmentCategory): AdminAdjustUserBalanceRequest;
+
+  getRelatedEntityType(): string;
+  setRelatedEntityType(value: string): AdminAdjustUserBalanceRequest;
+  hasRelatedEntityType(): boolean;
+  clearRelatedEntityType(): AdminAdjustUserBalanceRequest;
+
+  getRelatedEntityId(): string;
+  setRelatedEntityId(value: string): AdminAdjustUserBalanceRequest;
+  hasRelatedEntityId(): boolean;
+  clearRelatedEntityId(): AdminAdjustUserBalanceRequest;
+
+  getCustomerNote(): string;
+  setCustomerNote(value: string): AdminAdjustUserBalanceRequest;
+  hasCustomerNote(): boolean;
+  clearCustomerNote(): AdminAdjustUserBalanceRequest;
+
+  getAdminPassword(): string;
+  setAdminPassword(value: string): AdminAdjustUserBalanceRequest;
+  hasAdminPassword(): boolean;
+  clearAdminPassword(): AdminAdjustUserBalanceRequest;
+
+  getEvidenceUrlsList(): Array<string>;
+  setEvidenceUrlsList(value: Array<string>): AdminAdjustUserBalanceRequest;
+  clearEvidenceUrlsList(): AdminAdjustUserBalanceRequest;
+  addEvidenceUrls(value: string, index?: number): AdminAdjustUserBalanceRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminAdjustUserBalanceRequest.AsObject;
   static toObject(includeInstance: boolean, msg: AdminAdjustUserBalanceRequest): AdminAdjustUserBalanceRequest.AsObject;
@@ -1601,6 +1703,12 @@ export namespace AdminAdjustUserBalanceRequest {
     reason: string;
     relatedOrderId?: string;
     idempotencyKey?: string;
+    category: AdjustmentCategory;
+    relatedEntityType?: string;
+    relatedEntityId?: string;
+    customerNote?: string;
+    adminPassword?: string;
+    evidenceUrlsList: Array<string>;
   };
 
   export enum RelatedOrderIdCase {
@@ -1611,6 +1719,26 @@ export namespace AdminAdjustUserBalanceRequest {
   export enum IdempotencyKeyCase {
     _IDEMPOTENCY_KEY_NOT_SET = 0,
     IDEMPOTENCY_KEY = 5,
+  }
+
+  export enum RelatedEntityTypeCase {
+    _RELATED_ENTITY_TYPE_NOT_SET = 0,
+    RELATED_ENTITY_TYPE = 7,
+  }
+
+  export enum RelatedEntityIdCase {
+    _RELATED_ENTITY_ID_NOT_SET = 0,
+    RELATED_ENTITY_ID = 8,
+  }
+
+  export enum CustomerNoteCase {
+    _CUSTOMER_NOTE_NOT_SET = 0,
+    CUSTOMER_NOTE = 9,
+  }
+
+  export enum AdminPasswordCase {
+    _ADMIN_PASSWORD_NOT_SET = 0,
+    ADMIN_PASSWORD = 10,
   }
 }
 
@@ -1627,6 +1755,12 @@ export class AdminAdjustUserBalanceResponse extends jspb.Message {
   getMessage(): string;
   setMessage(value: string): AdminAdjustUserBalanceResponse;
 
+  getStatus(): AdjustmentStatus;
+  setStatus(value: AdjustmentStatus): AdminAdjustUserBalanceResponse;
+
+  getAdjustmentId(): string;
+  setAdjustmentId(value: string): AdminAdjustUserBalanceResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminAdjustUserBalanceResponse.AsObject;
   static toObject(includeInstance: boolean, msg: AdminAdjustUserBalanceResponse): AdminAdjustUserBalanceResponse.AsObject;
@@ -1641,6 +1775,8 @@ export namespace AdminAdjustUserBalanceResponse {
     newBalanceInCents: number;
     transactionId: string;
     message: string;
+    status: AdjustmentStatus;
+    adjustmentId: string;
   };
 }
 
@@ -1684,6 +1820,58 @@ export class AdminBalanceAdjustmentItem extends jspb.Message {
   getCompletedAt(): string;
   setCompletedAt(value: string): AdminBalanceAdjustmentItem;
 
+  getCategory(): AdjustmentCategory;
+  setCategory(value: AdjustmentCategory): AdminBalanceAdjustmentItem;
+
+  getRelatedEntityType(): string;
+  setRelatedEntityType(value: string): AdminBalanceAdjustmentItem;
+
+  getRelatedEntityId(): string;
+  setRelatedEntityId(value: string): AdminBalanceAdjustmentItem;
+
+  getCustomerNote(): string;
+  setCustomerNote(value: string): AdminBalanceAdjustmentItem;
+
+  getStatus(): AdjustmentStatus;
+  setStatus(value: AdjustmentStatus): AdminBalanceAdjustmentItem;
+
+  getApproverAdminId(): number;
+  setApproverAdminId(value: number): AdminBalanceAdjustmentItem;
+  hasApproverAdminId(): boolean;
+  clearApproverAdminId(): AdminBalanceAdjustmentItem;
+
+  getApproverEmail(): string;
+  setApproverEmail(value: string): AdminBalanceAdjustmentItem;
+  hasApproverEmail(): boolean;
+  clearApproverEmail(): AdminBalanceAdjustmentItem;
+
+  getRejectionReason(): string;
+  setRejectionReason(value: string): AdminBalanceAdjustmentItem;
+  hasRejectionReason(): boolean;
+  clearRejectionReason(): AdminBalanceAdjustmentItem;
+
+  getEvidenceUrlsList(): Array<string>;
+  setEvidenceUrlsList(value: Array<string>): AdminBalanceAdjustmentItem;
+  clearEvidenceUrlsList(): AdminBalanceAdjustmentItem;
+  addEvidenceUrls(value: string, index?: number): AdminBalanceAdjustmentItem;
+
+  getIsReversed(): boolean;
+  setIsReversed(value: boolean): AdminBalanceAdjustmentItem;
+
+  getReversedAt(): string;
+  setReversedAt(value: string): AdminBalanceAdjustmentItem;
+
+  getReversedByAdminId(): number;
+  setReversedByAdminId(value: number): AdminBalanceAdjustmentItem;
+  hasReversedByAdminId(): boolean;
+  clearReversedByAdminId(): AdminBalanceAdjustmentItem;
+
+  getReversalAdjustmentId(): string;
+  setReversalAdjustmentId(value: string): AdminBalanceAdjustmentItem;
+
+  getReversalOfAdjustmentId(): string;
+  setReversalOfAdjustmentId(value: string): AdminBalanceAdjustmentItem;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminBalanceAdjustmentItem.AsObject;
   static toObject(includeInstance: boolean, msg: AdminBalanceAdjustmentItem): AdminBalanceAdjustmentItem.AsObject;
@@ -1707,7 +1895,41 @@ export namespace AdminBalanceAdjustmentItem {
     balanceAfterInCents: number;
     createdAt: string;
     completedAt: string;
+    category: AdjustmentCategory;
+    relatedEntityType: string;
+    relatedEntityId: string;
+    customerNote: string;
+    status: AdjustmentStatus;
+    approverAdminId?: number;
+    approverEmail?: string;
+    rejectionReason?: string;
+    evidenceUrlsList: Array<string>;
+    isReversed: boolean;
+    reversedAt: string;
+    reversedByAdminId?: number;
+    reversalAdjustmentId: string;
+    reversalOfAdjustmentId: string;
   };
+
+  export enum ApproverAdminIdCase {
+    _APPROVER_ADMIN_ID_NOT_SET = 0,
+    APPROVER_ADMIN_ID = 19,
+  }
+
+  export enum ApproverEmailCase {
+    _APPROVER_EMAIL_NOT_SET = 0,
+    APPROVER_EMAIL = 20,
+  }
+
+  export enum RejectionReasonCase {
+    _REJECTION_REASON_NOT_SET = 0,
+    REJECTION_REASON = 21,
+  }
+
+  export enum ReversedByAdminIdCase {
+    _REVERSED_BY_ADMIN_ID_NOT_SET = 0,
+    REVERSED_BY_ADMIN_ID = 25,
+  }
 }
 
 export class AdminListBalanceAdjustmentsRequest extends jspb.Message {
@@ -1722,6 +1944,21 @@ export class AdminListBalanceAdjustmentsRequest extends jspb.Message {
   hasTargetUserId(): boolean;
   clearTargetUserId(): AdminListBalanceAdjustmentsRequest;
 
+  getCategory(): AdjustmentCategory;
+  setCategory(value: AdjustmentCategory): AdminListBalanceAdjustmentsRequest;
+  hasCategory(): boolean;
+  clearCategory(): AdminListBalanceAdjustmentsRequest;
+
+  getStatus(): AdjustmentStatus;
+  setStatus(value: AdjustmentStatus): AdminListBalanceAdjustmentsRequest;
+  hasStatus(): boolean;
+  clearStatus(): AdminListBalanceAdjustmentsRequest;
+
+  getAdminUserId(): number;
+  setAdminUserId(value: number): AdminListBalanceAdjustmentsRequest;
+  hasAdminUserId(): boolean;
+  clearAdminUserId(): AdminListBalanceAdjustmentsRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminListBalanceAdjustmentsRequest.AsObject;
   static toObject(includeInstance: boolean, msg: AdminListBalanceAdjustmentsRequest): AdminListBalanceAdjustmentsRequest.AsObject;
@@ -1735,11 +1972,29 @@ export namespace AdminListBalanceAdjustmentsRequest {
     pageSize: number;
     pageId: number;
     targetUserId?: number;
+    category?: AdjustmentCategory;
+    status?: AdjustmentStatus;
+    adminUserId?: number;
   };
 
   export enum TargetUserIdCase {
     _TARGET_USER_ID_NOT_SET = 0,
     TARGET_USER_ID = 3,
+  }
+
+  export enum CategoryCase {
+    _CATEGORY_NOT_SET = 0,
+    CATEGORY = 4,
+  }
+
+  export enum StatusCase {
+    _STATUS_NOT_SET = 0,
+    STATUS = 5,
+  }
+
+  export enum AdminUserIdCase {
+    _ADMIN_USER_ID_NOT_SET = 0,
+    ADMIN_USER_ID = 6,
   }
 }
 
@@ -1874,6 +2129,357 @@ export namespace AdminTriggerPayoutReconciliationResponse {
   };
 }
 
+export class AdminGetUserAdjustmentStatsRequest extends jspb.Message {
+  getTargetUserId(): number;
+  setTargetUserId(value: number): AdminGetUserAdjustmentStatsRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminGetUserAdjustmentStatsRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminGetUserAdjustmentStatsRequest): AdminGetUserAdjustmentStatsRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminGetUserAdjustmentStatsRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminGetUserAdjustmentStatsRequest;
+  static deserializeBinaryFromReader(message: AdminGetUserAdjustmentStatsRequest, reader: jspb.BinaryReader): AdminGetUserAdjustmentStatsRequest;
+}
+
+export namespace AdminGetUserAdjustmentStatsRequest {
+  export type AsObject = {
+    targetUserId: number;
+  };
+}
+
+export class AdminGetUserAdjustmentStatsResponse extends jspb.Message {
+  getCount30d(): number;
+  setCount30d(value: number): AdminGetUserAdjustmentStatsResponse;
+
+  getTotalGrantedCents30d(): number;
+  setTotalGrantedCents30d(value: number): AdminGetUserAdjustmentStatsResponse;
+
+  getTotalDeductedCents30d(): number;
+  setTotalDeductedCents30d(value: number): AdminGetUserAdjustmentStatsResponse;
+
+  getRecentAdjustmentsList(): Array<AdminBalanceAdjustmentItem>;
+  setRecentAdjustmentsList(value: Array<AdminBalanceAdjustmentItem>): AdminGetUserAdjustmentStatsResponse;
+  clearRecentAdjustmentsList(): AdminGetUserAdjustmentStatsResponse;
+  addRecentAdjustments(value?: AdminBalanceAdjustmentItem, index?: number): AdminBalanceAdjustmentItem;
+
+  getAdminDailyQuotaCents(): number;
+  setAdminDailyQuotaCents(value: number): AdminGetUserAdjustmentStatsResponse;
+
+  getAdminDailyUsedCents(): number;
+  setAdminDailyUsedCents(value: number): AdminGetUserAdjustmentStatsResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminGetUserAdjustmentStatsResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminGetUserAdjustmentStatsResponse): AdminGetUserAdjustmentStatsResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminGetUserAdjustmentStatsResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminGetUserAdjustmentStatsResponse;
+  static deserializeBinaryFromReader(message: AdminGetUserAdjustmentStatsResponse, reader: jspb.BinaryReader): AdminGetUserAdjustmentStatsResponse;
+}
+
+export namespace AdminGetUserAdjustmentStatsResponse {
+  export type AsObject = {
+    count30d: number;
+    totalGrantedCents30d: number;
+    totalDeductedCents30d: number;
+    recentAdjustmentsList: Array<AdminBalanceAdjustmentItem.AsObject>;
+    adminDailyQuotaCents: number;
+    adminDailyUsedCents: number;
+  };
+}
+
+export class AdminFreezeUserTokensRequest extends jspb.Message {
+  getUserId(): number;
+  setUserId(value: number): AdminFreezeUserTokensRequest;
+
+  getTokenAmountInCents(): number;
+  setTokenAmountInCents(value: number): AdminFreezeUserTokensRequest;
+
+  getReason(): string;
+  setReason(value: string): AdminFreezeUserTokensRequest;
+
+  getAdminPassword(): string;
+  setAdminPassword(value: string): AdminFreezeUserTokensRequest;
+  hasAdminPassword(): boolean;
+  clearAdminPassword(): AdminFreezeUserTokensRequest;
+
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): AdminFreezeUserTokensRequest;
+  hasIdempotencyKey(): boolean;
+  clearIdempotencyKey(): AdminFreezeUserTokensRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminFreezeUserTokensRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminFreezeUserTokensRequest): AdminFreezeUserTokensRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminFreezeUserTokensRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminFreezeUserTokensRequest;
+  static deserializeBinaryFromReader(message: AdminFreezeUserTokensRequest, reader: jspb.BinaryReader): AdminFreezeUserTokensRequest;
+}
+
+export namespace AdminFreezeUserTokensRequest {
+  export type AsObject = {
+    userId: number;
+    tokenAmountInCents: number;
+    reason: string;
+    adminPassword?: string;
+    idempotencyKey?: string;
+  };
+
+  export enum AdminPasswordCase {
+    _ADMIN_PASSWORD_NOT_SET = 0,
+    ADMIN_PASSWORD = 4,
+  }
+
+  export enum IdempotencyKeyCase {
+    _IDEMPOTENCY_KEY_NOT_SET = 0,
+    IDEMPOTENCY_KEY = 5,
+  }
+}
+
+export class AdminFreezeUserTokensResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): AdminFreezeUserTokensResponse;
+
+  getNewBalanceInCents(): number;
+  setNewBalanceInCents(value: number): AdminFreezeUserTokensResponse;
+
+  getNewFrozenBalanceInCents(): number;
+  setNewFrozenBalanceInCents(value: number): AdminFreezeUserTokensResponse;
+
+  getMessage(): string;
+  setMessage(value: string): AdminFreezeUserTokensResponse;
+
+  getTransactionId(): string;
+  setTransactionId(value: string): AdminFreezeUserTokensResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminFreezeUserTokensResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminFreezeUserTokensResponse): AdminFreezeUserTokensResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminFreezeUserTokensResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminFreezeUserTokensResponse;
+  static deserializeBinaryFromReader(message: AdminFreezeUserTokensResponse, reader: jspb.BinaryReader): AdminFreezeUserTokensResponse;
+}
+
+export namespace AdminFreezeUserTokensResponse {
+  export type AsObject = {
+    success: boolean;
+    newBalanceInCents: number;
+    newFrozenBalanceInCents: number;
+    message: string;
+    transactionId: string;
+  };
+}
+
+export class AdminUnfreezeUserTokensRequest extends jspb.Message {
+  getUserId(): number;
+  setUserId(value: number): AdminUnfreezeUserTokensRequest;
+
+  getTokenAmountInCents(): number;
+  setTokenAmountInCents(value: number): AdminUnfreezeUserTokensRequest;
+
+  getReason(): string;
+  setReason(value: string): AdminUnfreezeUserTokensRequest;
+
+  getAdminPassword(): string;
+  setAdminPassword(value: string): AdminUnfreezeUserTokensRequest;
+  hasAdminPassword(): boolean;
+  clearAdminPassword(): AdminUnfreezeUserTokensRequest;
+
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): AdminUnfreezeUserTokensRequest;
+  hasIdempotencyKey(): boolean;
+  clearIdempotencyKey(): AdminUnfreezeUserTokensRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminUnfreezeUserTokensRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminUnfreezeUserTokensRequest): AdminUnfreezeUserTokensRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminUnfreezeUserTokensRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminUnfreezeUserTokensRequest;
+  static deserializeBinaryFromReader(message: AdminUnfreezeUserTokensRequest, reader: jspb.BinaryReader): AdminUnfreezeUserTokensRequest;
+}
+
+export namespace AdminUnfreezeUserTokensRequest {
+  export type AsObject = {
+    userId: number;
+    tokenAmountInCents: number;
+    reason: string;
+    adminPassword?: string;
+    idempotencyKey?: string;
+  };
+
+  export enum AdminPasswordCase {
+    _ADMIN_PASSWORD_NOT_SET = 0,
+    ADMIN_PASSWORD = 4,
+  }
+
+  export enum IdempotencyKeyCase {
+    _IDEMPOTENCY_KEY_NOT_SET = 0,
+    IDEMPOTENCY_KEY = 5,
+  }
+}
+
+export class AdminUnfreezeUserTokensResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): AdminUnfreezeUserTokensResponse;
+
+  getNewBalanceInCents(): number;
+  setNewBalanceInCents(value: number): AdminUnfreezeUserTokensResponse;
+
+  getNewFrozenBalanceInCents(): number;
+  setNewFrozenBalanceInCents(value: number): AdminUnfreezeUserTokensResponse;
+
+  getMessage(): string;
+  setMessage(value: string): AdminUnfreezeUserTokensResponse;
+
+  getTransactionId(): string;
+  setTransactionId(value: string): AdminUnfreezeUserTokensResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminUnfreezeUserTokensResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminUnfreezeUserTokensResponse): AdminUnfreezeUserTokensResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminUnfreezeUserTokensResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminUnfreezeUserTokensResponse;
+  static deserializeBinaryFromReader(message: AdminUnfreezeUserTokensResponse, reader: jspb.BinaryReader): AdminUnfreezeUserTokensResponse;
+}
+
+export namespace AdminUnfreezeUserTokensResponse {
+  export type AsObject = {
+    success: boolean;
+    newBalanceInCents: number;
+    newFrozenBalanceInCents: number;
+    message: string;
+    transactionId: string;
+  };
+}
+
+export class AdminReverseBalanceAdjustmentRequest extends jspb.Message {
+  getAdjustmentId(): string;
+  setAdjustmentId(value: string): AdminReverseBalanceAdjustmentRequest;
+
+  getReason(): string;
+  setReason(value: string): AdminReverseBalanceAdjustmentRequest;
+
+  getAdminPassword(): string;
+  setAdminPassword(value: string): AdminReverseBalanceAdjustmentRequest;
+
+  getIdempotencyKey(): string;
+  setIdempotencyKey(value: string): AdminReverseBalanceAdjustmentRequest;
+  hasIdempotencyKey(): boolean;
+  clearIdempotencyKey(): AdminReverseBalanceAdjustmentRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminReverseBalanceAdjustmentRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminReverseBalanceAdjustmentRequest): AdminReverseBalanceAdjustmentRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminReverseBalanceAdjustmentRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminReverseBalanceAdjustmentRequest;
+  static deserializeBinaryFromReader(message: AdminReverseBalanceAdjustmentRequest, reader: jspb.BinaryReader): AdminReverseBalanceAdjustmentRequest;
+}
+
+export namespace AdminReverseBalanceAdjustmentRequest {
+  export type AsObject = {
+    adjustmentId: string;
+    reason: string;
+    adminPassword: string;
+    idempotencyKey?: string;
+  };
+
+  export enum IdempotencyKeyCase {
+    _IDEMPOTENCY_KEY_NOT_SET = 0,
+    IDEMPOTENCY_KEY = 4,
+  }
+}
+
+export class AdminReverseBalanceAdjustmentResponse extends jspb.Message {
+  getSuccess(): boolean;
+  setSuccess(value: boolean): AdminReverseBalanceAdjustmentResponse;
+
+  getNewAdjustmentId(): string;
+  setNewAdjustmentId(value: string): AdminReverseBalanceAdjustmentResponse;
+
+  getTransactionId(): string;
+  setTransactionId(value: string): AdminReverseBalanceAdjustmentResponse;
+
+  getNewBalanceInCents(): number;
+  setNewBalanceInCents(value: number): AdminReverseBalanceAdjustmentResponse;
+
+  getMessage(): string;
+  setMessage(value: string): AdminReverseBalanceAdjustmentResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminReverseBalanceAdjustmentResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminReverseBalanceAdjustmentResponse): AdminReverseBalanceAdjustmentResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminReverseBalanceAdjustmentResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminReverseBalanceAdjustmentResponse;
+  static deserializeBinaryFromReader(message: AdminReverseBalanceAdjustmentResponse, reader: jspb.BinaryReader): AdminReverseBalanceAdjustmentResponse;
+}
+
+export namespace AdminReverseBalanceAdjustmentResponse {
+  export type AsObject = {
+    success: boolean;
+    newAdjustmentId: string;
+    transactionId: string;
+    newBalanceInCents: number;
+    message: string;
+  };
+}
+
+export class AdminCompleteReviewedPayoutRequest extends jspb.Message {
+  getPayoutId(): number;
+  setPayoutId(value: number): AdminCompleteReviewedPayoutRequest;
+
+  getOperationId(): string;
+  setOperationId(value: string): AdminCompleteReviewedPayoutRequest;
+
+  getProviderReference(): string;
+  setProviderReference(value: string): AdminCompleteReviewedPayoutRequest;
+
+  getReason(): string;
+  setReason(value: string): AdminCompleteReviewedPayoutRequest;
+
+  getAdminPassword(): string;
+  setAdminPassword(value: string): AdminCompleteReviewedPayoutRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminCompleteReviewedPayoutRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminCompleteReviewedPayoutRequest): AdminCompleteReviewedPayoutRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminCompleteReviewedPayoutRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminCompleteReviewedPayoutRequest;
+  static deserializeBinaryFromReader(message: AdminCompleteReviewedPayoutRequest, reader: jspb.BinaryReader): AdminCompleteReviewedPayoutRequest;
+}
+
+export namespace AdminCompleteReviewedPayoutRequest {
+  export type AsObject = {
+    payoutId: number;
+    operationId: string;
+    providerReference: string;
+    reason: string;
+    adminPassword: string;
+  };
+}
+
+export class AdminCompleteReviewedPayoutResponse extends jspb.Message {
+  getPayout(): PayoutInfo | undefined;
+  setPayout(value?: PayoutInfo): AdminCompleteReviewedPayoutResponse;
+  hasPayout(): boolean;
+  clearPayout(): AdminCompleteReviewedPayoutResponse;
+
+  getAlreadyProcessed(): boolean;
+  setAlreadyProcessed(value: boolean): AdminCompleteReviewedPayoutResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminCompleteReviewedPayoutResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminCompleteReviewedPayoutResponse): AdminCompleteReviewedPayoutResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminCompleteReviewedPayoutResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminCompleteReviewedPayoutResponse;
+  static deserializeBinaryFromReader(message: AdminCompleteReviewedPayoutResponse, reader: jspb.BinaryReader): AdminCompleteReviewedPayoutResponse;
+}
+
+export namespace AdminCompleteReviewedPayoutResponse {
+  export type AsObject = {
+    payout?: PayoutInfo.AsObject;
+    alreadyProcessed: boolean;
+  };
+}
+
 export enum TransactionType {
   PURCHASE = 0,
   ESCROW = 1,
@@ -1886,6 +2492,22 @@ export enum TransactionType {
   COURSE_RELEASE = 8,
   TRANSACTION_REFUND_REVERSAL = 9,
   PAYOUT_REVERSAL = 10,
+  ADMIN_ADJUSTMENT = 11,
+}
+export enum AdjustmentCategory {
+  ADJUSTMENT_CATEGORY_UNSPECIFIED = 0,
+  GOODWILL_COMPENSATION = 1,
+  DISPUTE_RESOLUTION = 2,
+  CAMPAIGN_REWARD = 3,
+  CHARGEBACK_CLAWBACK = 4,
+  FRAUD_PENALTY = 5,
+  SYSTEM_CORRECTION = 6,
+}
+export enum AdjustmentStatus {
+  ADJUSTMENT_STATUS_UNSPECIFIED = 0,
+  ADJUSTMENT_APPROVED = 1,
+  ADJUSTMENT_PENDING_APPROVAL = 2,
+  ADJUSTMENT_REJECTED = 3,
 }
 export enum EscrowType {
   PENDING = 0,

@@ -32,6 +32,15 @@ export class TokenProduct extends jspb.Message {
   getIsActive(): boolean;
   setIsActive(value: boolean): TokenProduct;
 
+  getIsRecommended(): boolean;
+  setIsRecommended(value: boolean): TokenProduct;
+
+  getRevision(): string;
+  setRevision(value: string): TokenProduct;
+
+  getGeneration(): string;
+  setGeneration(value: string): TokenProduct;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TokenProduct.AsObject;
   static toObject(includeInstance: boolean, msg: TokenProduct): TokenProduct.AsObject;
@@ -50,6 +59,9 @@ export namespace TokenProduct {
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     isActive: boolean;
+    isRecommended: boolean;
+    revision: string;
+    generation: string;
   };
 }
 
@@ -74,6 +86,11 @@ export class CreateTokenProductRequest extends jspb.Message {
   hasIsActive(): boolean;
   clearIsActive(): CreateTokenProductRequest;
 
+  getIsRecommended(): boolean;
+  setIsRecommended(value: boolean): CreateTokenProductRequest;
+  hasIsRecommended(): boolean;
+  clearIsRecommended(): CreateTokenProductRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateTokenProductRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateTokenProductRequest): CreateTokenProductRequest.AsObject;
@@ -90,11 +107,17 @@ export namespace CreateTokenProductRequest {
     title: string;
     description: string;
     isActive?: boolean;
+    isRecommended?: boolean;
   };
 
   export enum IsActiveCase {
     _IS_ACTIVE_NOT_SET = 0,
     IS_ACTIVE = 6,
+  }
+
+  export enum IsRecommendedCase {
+    _IS_RECOMMENDED_NOT_SET = 0,
+    IS_RECOMMENDED = 7,
   }
 }
 
@@ -147,6 +170,19 @@ export class UpdateTokenProductRequest extends jspb.Message {
   hasIsActive(): boolean;
   clearIsActive(): UpdateTokenProductRequest;
 
+  getIsRecommended(): boolean;
+  setIsRecommended(value: boolean): UpdateTokenProductRequest;
+  hasIsRecommended(): boolean;
+  clearIsRecommended(): UpdateTokenProductRequest;
+
+  getExpectedRevision(): string;
+  setExpectedRevision(value: string): UpdateTokenProductRequest;
+  hasExpectedRevision(): boolean;
+  clearExpectedRevision(): UpdateTokenProductRequest;
+
+  getExpectedGeneration(): string;
+  setExpectedGeneration(value: string): UpdateTokenProductRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateTokenProductRequest.AsObject;
   static toObject(includeInstance: boolean, msg: UpdateTokenProductRequest): UpdateTokenProductRequest.AsObject;
@@ -163,6 +199,9 @@ export namespace UpdateTokenProductRequest {
     title?: string;
     description?: string;
     isActive?: boolean;
+    isRecommended?: boolean;
+    expectedRevision?: string;
+    expectedGeneration: string;
   };
 
   export enum TokenAmountInCentsCase {
@@ -188,6 +227,16 @@ export namespace UpdateTokenProductRequest {
   export enum IsActiveCase {
     _IS_ACTIVE_NOT_SET = 0,
     IS_ACTIVE = 6,
+  }
+
+  export enum IsRecommendedCase {
+    _IS_RECOMMENDED_NOT_SET = 0,
+    IS_RECOMMENDED = 7,
+  }
+
+  export enum ExpectedRevisionCase {
+    _EXPECTED_REVISION_NOT_SET = 0,
+    EXPECTED_REVISION = 8,
   }
 }
 
@@ -215,6 +264,14 @@ export class DeleteTokenProductRequest extends jspb.Message {
   getProductId(): string;
   setProductId(value: string): DeleteTokenProductRequest;
 
+  getExpectedRevision(): string;
+  setExpectedRevision(value: string): DeleteTokenProductRequest;
+  hasExpectedRevision(): boolean;
+  clearExpectedRevision(): DeleteTokenProductRequest;
+
+  getExpectedGeneration(): string;
+  setExpectedGeneration(value: string): DeleteTokenProductRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteTokenProductRequest.AsObject;
   static toObject(includeInstance: boolean, msg: DeleteTokenProductRequest): DeleteTokenProductRequest.AsObject;
@@ -226,10 +283,22 @@ export class DeleteTokenProductRequest extends jspb.Message {
 export namespace DeleteTokenProductRequest {
   export type AsObject = {
     productId: string;
+    expectedRevision?: string;
+    expectedGeneration: string;
   };
+
+  export enum ExpectedRevisionCase {
+    _EXPECTED_REVISION_NOT_SET = 0,
+    EXPECTED_REVISION = 2,
+  }
 }
 
 export class DeleteTokenProductResponse extends jspb.Message {
+  getTokenProduct(): TokenProduct | undefined;
+  setTokenProduct(value?: TokenProduct): DeleteTokenProductResponse;
+  hasTokenProduct(): boolean;
+  clearTokenProduct(): DeleteTokenProductResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteTokenProductResponse.AsObject;
   static toObject(includeInstance: boolean, msg: DeleteTokenProductResponse): DeleteTokenProductResponse.AsObject;
@@ -240,6 +309,7 @@ export class DeleteTokenProductResponse extends jspb.Message {
 
 export namespace DeleteTokenProductResponse {
   export type AsObject = {
+    tokenProduct?: TokenProduct.AsObject;
   };
 }
 

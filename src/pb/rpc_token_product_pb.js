@@ -210,7 +210,10 @@ title: jspb.Message.getFieldWithDefault(msg, 4, ""),
 description: jspb.Message.getFieldWithDefault(msg, 5, ""),
 createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
 updatedAt: (f = msg.getUpdatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-isActive: jspb.Message.getBooleanFieldWithDefault(msg, 8, false)
+isActive: jspb.Message.getBooleanFieldWithDefault(msg, 8, false),
+isRecommended: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
+revision: jspb.Message.getFieldWithDefault(msg, 10, "0"),
+generation: jspb.Message.getFieldWithDefault(msg, 11, "")
   };
 
   if (includeInstance) {
@@ -280,6 +283,18 @@ proto.pb.TokenProduct.deserializeBinaryFromReader = function(msg, reader) {
     case 8:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsActive(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsRecommended(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readInt64String());
+      msg.setRevision(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setGeneration(value);
       break;
     default:
       reader.skipField();
@@ -365,6 +380,27 @@ proto.pb.TokenProduct.serializeBinaryToWriter = function(message, writer) {
   if (f) {
     writer.writeBool(
       8,
+      f
+    );
+  }
+  f = message.getIsRecommended();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
+    );
+  }
+  f = message.getRevision();
+  if (parseInt(f, 10) !== 0) {
+    writer.writeInt64String(
+      10,
+      f
+    );
+  }
+  f = message.getGeneration();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
       f
     );
   }
@@ -553,6 +589,60 @@ proto.pb.TokenProduct.prototype.setIsActive = function(value) {
 };
 
 
+/**
+ * optional bool is_recommended = 9;
+ * @return {boolean}
+ */
+proto.pb.TokenProduct.prototype.getIsRecommended = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 9, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.TokenProduct} returns this
+ */
+proto.pb.TokenProduct.prototype.setIsRecommended = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 9, value);
+};
+
+
+/**
+ * optional int64 revision = 10;
+ * @return {string}
+ */
+proto.pb.TokenProduct.prototype.getRevision = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, "0"));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.TokenProduct} returns this
+ */
+proto.pb.TokenProduct.prototype.setRevision = function(value) {
+  return jspb.Message.setProto3StringIntField(this, 10, value);
+};
+
+
+/**
+ * optional string generation = 11;
+ * @return {string}
+ */
+proto.pb.TokenProduct.prototype.getGeneration = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.TokenProduct} returns this
+ */
+proto.pb.TokenProduct.prototype.setGeneration = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
 
 
 
@@ -590,7 +680,8 @@ tokenAmountInCents: jspb.Message.getFieldWithDefault(msg, 2, 0),
 priceInCents: jspb.Message.getFieldWithDefault(msg, 3, 0),
 title: jspb.Message.getFieldWithDefault(msg, 4, ""),
 description: jspb.Message.getFieldWithDefault(msg, 5, ""),
-isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f
+isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f,
+isRecommended: (f = jspb.Message.getBooleanField(msg, 7)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -650,6 +741,10 @@ proto.pb.CreateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
     case 6:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsActive(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsRecommended(value);
       break;
     default:
       reader.skipField();
@@ -719,6 +814,13 @@ proto.pb.CreateTokenProductRequest.serializeBinaryToWriter = function(message, w
   if (f != null) {
     writer.writeBool(
       6,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 7));
+  if (f != null) {
+    writer.writeBool(
+      7,
       f
     );
   }
@@ -848,6 +950,42 @@ proto.pb.CreateTokenProductRequest.prototype.clearIsActive = function() {
  */
 proto.pb.CreateTokenProductRequest.prototype.hasIsActive = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional bool is_recommended = 7;
+ * @return {boolean}
+ */
+proto.pb.CreateTokenProductRequest.prototype.getIsRecommended = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.CreateTokenProductRequest} returns this
+ */
+proto.pb.CreateTokenProductRequest.prototype.setIsRecommended = function(value) {
+  return jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.CreateTokenProductRequest} returns this
+ */
+proto.pb.CreateTokenProductRequest.prototype.clearIsRecommended = function() {
+  return jspb.Message.setField(this, 7, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.CreateTokenProductRequest.prototype.hasIsRecommended = function() {
+  return jspb.Message.getField(this, 7) != null;
 };
 
 
@@ -1039,7 +1177,10 @@ tokenAmountInCents: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f,
 priceInCents: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f,
 title: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f,
 description: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f,
-isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f
+isActive: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f,
+isRecommended: (f = jspb.Message.getBooleanField(msg, 7)) == null ? undefined : f,
+expectedRevision: (f = jspb.Message.getField(msg, 8)) == null ? undefined : f,
+expectedGeneration: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -1099,6 +1240,18 @@ proto.pb.UpdateTokenProductRequest.deserializeBinaryFromReader = function(msg, r
     case 6:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsActive(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsRecommended(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readInt64String());
+      msg.setExpectedRevision(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setExpectedGeneration(value);
       break;
     default:
       reader.skipField();
@@ -1168,6 +1321,27 @@ proto.pb.UpdateTokenProductRequest.serializeBinaryToWriter = function(message, w
   if (f != null) {
     writer.writeBool(
       6,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 7));
+  if (f != null) {
+    writer.writeBool(
+      7,
+      f
+    );
+  }
+  f = /** @type {string} */ (jspb.Message.getField(message, 8));
+  if (f != null) {
+    writer.writeInt64String(
+      8,
+      f
+    );
+  }
+  f = message.getExpectedGeneration();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -1372,6 +1546,96 @@ proto.pb.UpdateTokenProductRequest.prototype.hasIsActive = function() {
 };
 
 
+/**
+ * optional bool is_recommended = 7;
+ * @return {boolean}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.getIsRecommended = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 7, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.setIsRecommended = function(value) {
+  return jspb.Message.setField(this, 7, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.clearIsRecommended = function() {
+  return jspb.Message.setField(this, 7, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.hasIsRecommended = function() {
+  return jspb.Message.getField(this, 7) != null;
+};
+
+
+/**
+ * optional int64 expected_revision = 8;
+ * @return {string}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.getExpectedRevision = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, "0"));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.setExpectedRevision = function(value) {
+  return jspb.Message.setField(this, 8, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.clearExpectedRevision = function() {
+  return jspb.Message.setField(this, 8, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.hasExpectedRevision = function() {
+  return jspb.Message.getField(this, 8) != null;
+};
+
+
+/**
+ * optional string expected_generation = 9;
+ * @return {string}
+ */
+proto.pb.UpdateTokenProductRequest.prototype.getExpectedGeneration = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.UpdateTokenProductRequest} returns this
+ */
+proto.pb.UpdateTokenProductRequest.prototype.setExpectedGeneration = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
 
 
 
@@ -1555,7 +1819,9 @@ proto.pb.DeleteTokenProductRequest.prototype.toObject = function(opt_includeInst
  */
 proto.pb.DeleteTokenProductRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-productId: jspb.Message.getFieldWithDefault(msg, 1, "")
+productId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+expectedRevision: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f,
+expectedGeneration: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1596,6 +1862,14 @@ proto.pb.DeleteTokenProductRequest.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readStringRequireUtf8());
       msg.setProductId(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readInt64String());
+      msg.setExpectedRevision(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readStringRequireUtf8());
+      msg.setExpectedGeneration(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1632,6 +1906,20 @@ proto.pb.DeleteTokenProductRequest.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = /** @type {string} */ (jspb.Message.getField(message, 2));
+  if (f != null) {
+    writer.writeInt64String(
+      2,
+      f
+    );
+  }
+  f = message.getExpectedGeneration();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -1650,6 +1938,60 @@ proto.pb.DeleteTokenProductRequest.prototype.getProductId = function() {
  */
 proto.pb.DeleteTokenProductRequest.prototype.setProductId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional int64 expected_revision = 2;
+ * @return {string}
+ */
+proto.pb.DeleteTokenProductRequest.prototype.getExpectedRevision = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, "0"));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.DeleteTokenProductRequest} returns this
+ */
+proto.pb.DeleteTokenProductRequest.prototype.setExpectedRevision = function(value) {
+  return jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.pb.DeleteTokenProductRequest} returns this
+ */
+proto.pb.DeleteTokenProductRequest.prototype.clearExpectedRevision = function() {
+  return jspb.Message.setField(this, 2, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.DeleteTokenProductRequest.prototype.hasExpectedRevision = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string expected_generation = 3;
+ * @return {string}
+ */
+proto.pb.DeleteTokenProductRequest.prototype.getExpectedGeneration = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.pb.DeleteTokenProductRequest} returns this
+ */
+proto.pb.DeleteTokenProductRequest.prototype.setExpectedGeneration = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1685,7 +2027,7 @@ proto.pb.DeleteTokenProductResponse.prototype.toObject = function(opt_includeIns
  */
 proto.pb.DeleteTokenProductResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+tokenProduct: (f = msg.getTokenProduct()) && proto.pb.TokenProduct.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1722,6 +2064,11 @@ proto.pb.DeleteTokenProductResponse.deserializeBinaryFromReader = function(msg, 
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = new proto.pb.TokenProduct;
+      reader.readMessage(value,proto.pb.TokenProduct.deserializeBinaryFromReader);
+      msg.setTokenProduct(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1751,6 +2098,51 @@ proto.pb.DeleteTokenProductResponse.prototype.serializeBinary = function() {
  */
 proto.pb.DeleteTokenProductResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getTokenProduct();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.pb.TokenProduct.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional TokenProduct token_product = 1;
+ * @return {?proto.pb.TokenProduct}
+ */
+proto.pb.DeleteTokenProductResponse.prototype.getTokenProduct = function() {
+  return /** @type{?proto.pb.TokenProduct} */ (
+    jspb.Message.getWrapperField(this, proto.pb.TokenProduct, 1));
+};
+
+
+/**
+ * @param {?proto.pb.TokenProduct|undefined} value
+ * @return {!proto.pb.DeleteTokenProductResponse} returns this
+*/
+proto.pb.DeleteTokenProductResponse.prototype.setTokenProduct = function(value) {
+  return jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.pb.DeleteTokenProductResponse} returns this
+ */
+proto.pb.DeleteTokenProductResponse.prototype.clearTokenProduct = function() {
+  return this.setTokenProduct(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.pb.DeleteTokenProductResponse.prototype.hasTokenProduct = function() {
+  return jspb.Message.getField(this, 1) != null;
 };
 
 

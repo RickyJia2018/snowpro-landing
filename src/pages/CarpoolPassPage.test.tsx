@@ -8,7 +8,7 @@ import CarpoolPassSuccessPage from './CarpoolPassSuccessPage';
 import { getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
 import { stripeCheckoutUrl } from '../lib/checkout';
 const expiry=()=>new Date(Date.now()+60000).toISOString();
-const catalog={products:[{productId:'com.snowpro.carpool.pass.season',durationMonths:7,priceInCents:'1299',title:'Season pass'},{productId:'com.snowpro.carpool.pass.short',durationMonths:2,priceInCents:299,title:'Short pass'}]};
+const catalog={products:[{productId:'com.snowpro.carpool.pass.season',durationMonths:7,priceInCents:'1299',version:'1',title:'Season pass'},{productId:'com.snowpro.carpool.pass.short',durationMonths:2,priceInCents:299,version:'1',title:'Short pass'}]};
 const response=(v:unknown)=>new Response(JSON.stringify(v));
 const mount=(page=<CarpoolPassPage/>)=>render(<React.StrictMode><MemoryRouter><LanguageProvider>{page}</LanguageProvider></MemoryRouter></React.StrictMode>);
 beforeEach(()=>{sessionStorage.clear();localStorage.clear();window.history.replaceState({},'','/carpool-pass');vi.restoreAllMocks()});afterEach(cleanup);

@@ -1,6 +1,6 @@
 import RefundNotice from '../components/RefundNotice';
 import PurchaseLogin from '../components/PurchaseLogin';
-import { checkoutFetch, stripeCheckoutUrl } from '../lib/checkout';
+import { checkoutFetch, stripeCheckoutUrl, purchaseProductChanged } from '../lib/checkout';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -13,10 +13,26 @@ import { parseTokenAmount } from '../lib/tokenConversion';
 
 interface Product {
   productId: string;
-  tokenAmount: number;
+  tokenAmount: string;
+  tokenAmountInCents: string;
   priceInCents: number;
   title: string;
   description?: string;
+}
+
+function originalTokenCents(value: unknown): string {
+  if (typeof value !== 'string' && typeof value !== 'number') throw new Error('Invalid token amount');
+  if (typeof value === 'number' && !Number.isSafeInteger(value)) throw new Error('Invalid token amount');
+  const cents = String(value);
+  if (!/^[1-9]\d*$/.test(cents) || BigInt(cents) > 9223372036854775807n) throw new Error('Invalid token amount');
+  return cents;
+}
+
+function displayTokenCents(cents: string): string {
+  const value = BigInt(cents);
+  const whole = value / 100n;
+  const fraction = value % 100n;
+  return fraction === 0n ? String(whole) : `${whole}.${String(fraction).padStart(2, '0')}`;
 }
 
 interface UserInfo {
@@ -30,6 +46,7 @@ type TokenPurchaseAvailability = 'loading' | 'enabled' | 'disabled' | 'unknown';
 
 const localTranslations = {
   zh: {
+    reloadProducts: "重新读取商品",
     title: "Snow Pro 账户充值",
     handoffRequiredTitle: "请从 Snow Pro App 发起充值",
     handoffRequiredSubtitle: "为了保障您的账户安全与限权保护，网页充值仅支持从 Snow Pro 移动端安全跳转授权。",
@@ -53,6 +70,7 @@ const localTranslations = {
     restoreAlert: "检测到您之前有一笔未确认的到账订单。系统已为您自动恢复购买并到账 {amount} 代币！",
   },
   en: {
+    reloadProducts: "Reload products",
     title: "Snow Pro Token Recharge",
     handoffRequiredTitle: "Please Recharge via Snow Pro App",
     handoffRequiredSubtitle: "For your account security and token scope isolation, web recharge is accessible only via secure handoff from the Snow Pro mobile app.",
@@ -76,6 +94,7 @@ const localTranslations = {
     restoreAlert: "Found a pending purchase! Successfully restored and credited {amount} tokens to your account.",
   },
   ja: {
+    reloadProducts: "商品を再読み込み",
     title: "Snow Pro アカウントチャージ",
     handoffRequiredTitle: "Snow Pro アプリからチャージを開始してください",
     handoffRequiredSubtitle: "アカウントの安全性と権限保護のため、ウェブチャージは Snow Pro モバイルアプリからの安全なリダイレクト認証のみに対応しています。",
@@ -99,6 +118,7 @@ const localTranslations = {
     restoreAlert: "未確認の支払い注文が検出されました。システムにより自動復旧され、アカウントに {amount} トークンが付与されました！",
   },
   ko: {
+    reloadProducts: "상품 다시 불러오기",
     title: "Snow Pro 계정 충전",
     handoffRequiredTitle: "Snow Pro 앱에서 충전을 시작해 주세요",
     handoffRequiredSubtitle: "계정 보안 및 권한 격리를 위해, 웹 충전은 Snow Pro 모바일 앱의 안전한 인증 리디렉션을 통해서만 이용할 수 있습니다.",
@@ -122,6 +142,7 @@ const localTranslations = {
     restoreAlert: "확인되지 않은 결제 주문이 감지되었습니다. 자동으로 복구되어 계정에 {amount} 토큰이 지급되었습니다!",
   },
   fr: {
+    reloadProducts: "Recharger les produits",
     title: "Recharge de compte Snow Pro",
     handoffRequiredTitle: "Veuillez recharger via l'application Snow Pro",
     handoffRequiredSubtitle: "Pour la sécurité de votre compte, la recharge web n'est accessible que via une redirection sécurisée depuis l'application Snow Pro.",
@@ -145,6 +166,7 @@ const localTranslations = {
     restoreAlert: "Paiement en attente détecté ! {amount} jetons ont été crédités sur votre compte avec succès.",
   },
   de: {
+    reloadProducts: "Produkte neu laden",
     title: "Snow Pro Guthaben aufladen",
     handoffRequiredTitle: "Bitte über die Snow Pro App aufladen",
     handoffRequiredSubtitle: "Zur Sicherheit Ihres Kontos ist die Web-Aufladung nur über eine sichere Weiterleitung aus der Snow Pro App zugänglich.",
@@ -168,6 +190,7 @@ const localTranslations = {
     restoreAlert: "Ausstehende Zahlung gefunden! {amount} Token wurden Ihrem Konto erfolgreich gutgeschrieben.",
   },
   es: {
+    reloadProducts: "Volver a cargar productos",
     title: "Recarga de cuenta Snow Pro",
     handoffRequiredTitle: "Por favor recargue desde la app Snow Pro",
     handoffRequiredSubtitle: "Por seguridad de su cuenta, la recarga web solo es accesible mediante transferencia segura desde la aplicación móvil Snow Pro.",
@@ -191,6 +214,7 @@ const localTranslations = {
     restoreAlert: "¡Se detectó un pago pendiente! Se han acreditado exitosamente {amount} tokens en su cuenta.",
   },
   ru: {
+    reloadProducts: "Загрузить товары снова",
     title: "Пополнение баланса Snow Pro",
     handoffRequiredTitle: "Пожалуйста, пополните счет через приложение Snow Pro",
     handoffRequiredSubtitle: "В целях безопасности вашего аккаунта пополнение через веб доступно только по защищенной ссылке из приложения Snow Pro.",
@@ -261,6 +285,8 @@ export default function RechargePage() {
   const [pageLoading, setPageLoading] = useState(true);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [catalogReloadNeeded, setCatalogReloadNeeded] = useState(false);
+  const catalogRequest = useRef(0);
 
   // Check login state or exchange handoff code on mount
   useEffect(() => {
@@ -494,36 +520,43 @@ export default function RechargePage() {
 
   // Fetch token products
   const fetchProducts = async () => {
+    const request = ++catalogRequest.current;
+    const ownsRead = () => mounted.current && request === catalogRequest.current;
+    setProducts([]); setSelectedProductId(''); setCatalogReloadNeeded(false);
     try {
       const response = await checkoutFetch(`${API_BASE_URL}/token/products`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.products && data.products.length > 0) {
-          // Normalize snake_case from server to camelCase for frontend
-          const normalized: Product[] = data.products.map((p: any) => {
-            const priceVal = p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents;
-            const amountInCentsVal = p.tokenAmountInCents !== undefined ? p.tokenAmountInCents : (p.token_amount_in_cents !== undefined ? p.token_amount_in_cents : (p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount));
-            const rawAmount = Number(amountInCentsVal) || 0;
-            // tokenAmountInCents is stored in cents (e.g. 10000 cents = 100.00 Tokens)
-            const tokenAmount = rawAmount / 100;
-            return {
-              productId: p.productId || p.product_id,
-              tokenAmount: tokenAmount,
-              priceInCents: Number(priceVal) || 0,
-              title: p.title,
-              description: p.description,
-            };
-          });
+      if (!response.ok) throw new Error('Catalog unavailable');
+      const data = await response.json();
+      if (!ownsRead()) return;
+      if (!Array.isArray(data.products)) throw new Error('Invalid catalog');
+      // Normalize snake_case from server to camelCase for frontend
+      const normalized: Product[] = data.products.map((p: any) => {
+        const priceVal = p.priceInCents !== undefined ? p.priceInCents : p.price_in_cents;
+        const amountInCentsVal = p.tokenAmountInCents !== undefined ? p.tokenAmountInCents : (p.token_amount_in_cents !== undefined ? p.token_amount_in_cents : (p.tokenAmount !== undefined ? p.tokenAmount : p.token_amount));
+        const tokenAmountInCents = originalTokenCents(amountInCentsVal);
+        // tokenAmountInCents is stored in cents (e.g. 10000 cents = 100.00 Tokens)
+        const tokenAmount = displayTokenCents(tokenAmountInCents);
+        return {
+          productId: p.productId || p.product_id,
+          tokenAmount: tokenAmount,
+          tokenAmountInCents,
+          priceInCents: Number(priceVal) || 0,
+          title: p.title,
+          description: p.description,
+        };
+      });
 
-          // Sort products by price ascending
-          const valid = normalized.filter(p => typeof p.productId === 'string' && p.productId.trim() && Number.isSafeInteger(p.priceInCents) && p.priceInCents > 0 && Number.isFinite(p.tokenAmount) && p.tokenAmount > 0);
-          const sorted = [...valid].sort((a, b) => a.priceInCents - b.priceInCents);
-          setProducts(sorted);
-          setSelectedProductId(sorted[0]?.productId || '');
-        }
-      }
+      // Sort products by price ascending
+      const valid = normalized.filter(p => typeof p.productId === 'string' && p.productId.trim() && Number.isSafeInteger(p.priceInCents) && p.priceInCents > 0);
+      const sorted = [...valid].sort((a, b) => a.priceInCents - b.priceInCents);
+      setProducts(sorted);
+      setSelectedProductId(sorted[0]?.productId || '');
     } catch (err) {
       console.error("Failed to fetch products", err);
+      if (ownsRead()) {
+        setCatalogReloadNeeded(true);
+        setError(tLocal.unknownError);
+      }
     }
   };
 
@@ -562,6 +595,8 @@ export default function RechargePage() {
   // Recharge payment redirection handler
   const handleRecharge = async () => {
     if (recoveryInFlight.current > 0 || paymentInFlight.current || !isLoggedIn || !selectedProductId || !policy) return;
+    const confirmedProduct = products.find(p => p.productId === selectedProductId);
+    if (!confirmedProduct) return;
     if (tokenPurchaseAvailability !== 'enabled') {
       setError(
         tokenPurchaseAvailability === 'disabled'
@@ -596,7 +631,9 @@ export default function RechargePage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          product_id: selectedProductId,
+          product_id: confirmedProduct.productId,
+          expected_token_amount_in_cents: confirmedProduct.tokenAmountInCents,
+          expected_price_in_cents: String(confirmedProduct.priceInCents),
           payment_type: 5, // PaymentType_STRIPE
           policy_consents:[{policy_version_id:policy.policyVersionId,language_code:policy.languageCode}],
           success_url: `${window.location.origin}/recharge/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -612,7 +649,15 @@ export default function RechargePage() {
         setError(tLocal.sessionExpiredError);
         return;
       }
-      if (!response.ok) throw new Error('Checkout unavailable');
+      if (!response.ok) {
+        const failure = await response.json();
+        if (!mounted.current || getValidRechargeAccessToken() !== token) return;
+        if (purchaseProductChanged(failure)) {
+          ++catalogRequest.current;
+          setProducts([]); setSelectedProductId(''); setCatalogReloadNeeded(true);
+        }
+        throw new Error('Checkout unavailable');
+      }
 
       const data = await response.json();
       if (!mounted.current || getValidRechargeAccessToken() !== token) return;
@@ -762,6 +807,9 @@ export default function RechargePage() {
               )}
 
               <div className="space-y-3">
+                {catalogReloadNeeded && <button disabled={paymentLoading} onClick={() => {
+                  setError(null); void fetchProducts();
+                }} className="text-blue-300">{tLocal.reloadProducts}</button>}
                 {products.map((product) => {
                   const isSelected = selectedProductId === product.productId;
                   const priceFormatted = `$${(product.priceInCents / 100).toFixed(2)}`;

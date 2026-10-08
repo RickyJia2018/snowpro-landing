@@ -8,6 +8,14 @@ export function stripeCheckoutUrl(value: unknown): string | null {
   } catch { return null; }
 }
 
+export function purchaseProductChanged(value: unknown): boolean {
+  if (!value || typeof value !== 'object') return false;
+  const details = (value as { details?: unknown }).details;
+  return Array.isArray(details) && details.some(detail => detail && typeof detail === 'object' &&
+    detail['@type'] === 'type.googleapis.com/google.rpc.ErrorInfo' &&
+    detail.reason === 'PURCHASE_PRODUCT_CHANGED' && detail.domain === 'peakpal.com');
+}
+
 /** Bound network waits; callers render localized errors, never server diagnostics. */
 export async function checkoutFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const controller = new AbortController();

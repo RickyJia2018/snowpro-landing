@@ -1,6 +1,8 @@
 import * as jspb from 'google-protobuf'
 
+import * as rpc_policy_pb from './rpc_policy_pb'; // proto import: "rpc_policy.proto"
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb'; // proto import: "google/protobuf/timestamp.proto"
+import * as rpc_resort_pb from './rpc_resort_pb'; // proto import: "rpc_resort.proto"
 
 
 export class CarpoolTrip extends jspb.Message {
@@ -95,6 +97,11 @@ export class CarpoolTrip extends jspb.Message {
   getPublishMethod(): CarpoolPublishMethod;
   setPublishMethod(value: CarpoolPublishMethod): CarpoolTrip;
 
+  getDestinationResortId(): number;
+  setDestinationResortId(value: number): CarpoolTrip;
+  hasDestinationResortId(): boolean;
+  clearDestinationResortId(): CarpoolTrip;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CarpoolTrip.AsObject;
   static toObject(includeInstance: boolean, msg: CarpoolTrip): CarpoolTrip.AsObject;
@@ -130,6 +137,7 @@ export namespace CarpoolTrip {
     acceptedCount: number;
     vehicleImageUrl?: string;
     publishMethod: CarpoolPublishMethod;
+    destinationResortId?: number;
   };
 
   export enum ReturnTimeCase {
@@ -155,6 +163,11 @@ export namespace CarpoolTrip {
   export enum VehicleImageUrlCase {
     _VEHICLE_IMAGE_URL_NOT_SET = 0,
     VEHICLE_IMAGE_URL = 24,
+  }
+
+  export enum DestinationResortIdCase {
+    _DESTINATION_RESORT_ID_NOT_SET = 0,
+    DESTINATION_RESORT_ID = 26,
   }
 }
 
@@ -204,6 +217,11 @@ export class CarpoolBooking extends jspb.Message {
   hasPassengerAvatarUrl(): boolean;
   clearPassengerAvatarUrl(): CarpoolBooking;
 
+  getAcceptedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setAcceptedAt(value?: google_protobuf_timestamp_pb.Timestamp): CarpoolBooking;
+  hasAcceptedAt(): boolean;
+  clearAcceptedAt(): CarpoolBooking;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CarpoolBooking.AsObject;
   static toObject(includeInstance: boolean, msg: CarpoolBooking): CarpoolBooking.AsObject;
@@ -225,6 +243,7 @@ export namespace CarpoolBooking {
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     passengerNickname?: string;
     passengerAvatarUrl?: string;
+    acceptedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
   };
 
   export enum ProposedPickupLatitudeCase {
@@ -250,6 +269,11 @@ export namespace CarpoolBooking {
   export enum PassengerAvatarUrlCase {
     _PASSENGER_AVATAR_URL_NOT_SET = 0,
     PASSENGER_AVATAR_URL = 11,
+  }
+
+  export enum AcceptedAtCase {
+    _ACCEPTED_AT_NOT_SET = 0,
+    ACCEPTED_AT = 12,
   }
 }
 
@@ -299,6 +323,11 @@ export namespace Stopover {
 }
 
 export class CreateCarpoolTripRequest extends jspb.Message {
+  getPolicyConsentsList(): Array<rpc_policy_pb.PolicyConsent>;
+  setPolicyConsentsList(value: Array<rpc_policy_pb.PolicyConsent>): CreateCarpoolTripRequest;
+  clearPolicyConsentsList(): CreateCarpoolTripRequest;
+  addPolicyConsents(value?: rpc_policy_pb.PolicyConsent, index?: number): rpc_policy_pb.PolicyConsent;
+
   getDepartureLatitude(): number;
   setDepartureLatitude(value: number): CreateCarpoolTripRequest;
 
@@ -382,6 +411,11 @@ export class CreateCarpoolTripRequest extends jspb.Message {
   getPublishMethod(): CarpoolPublishMethod;
   setPublishMethod(value: CarpoolPublishMethod): CreateCarpoolTripRequest;
 
+  getDestinationResortId(): number;
+  setDestinationResortId(value: number): CreateCarpoolTripRequest;
+  hasDestinationResortId(): boolean;
+  clearDestinationResortId(): CreateCarpoolTripRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateCarpoolTripRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreateCarpoolTripRequest): CreateCarpoolTripRequest.AsObject;
@@ -392,6 +426,7 @@ export class CreateCarpoolTripRequest extends jspb.Message {
 
 export namespace CreateCarpoolTripRequest {
   export type AsObject = {
+    policyConsentsList: Array<rpc_policy_pb.PolicyConsent.AsObject>;
     departureLatitude: number;
     departureLongitude: number;
     departureAddress: string;
@@ -413,6 +448,7 @@ export namespace CreateCarpoolTripRequest {
     vehicleImageUrl?: string;
     vehicleImageFileId?: string;
     publishMethod: CarpoolPublishMethod;
+    destinationResortId?: number;
   };
 
   export enum ReturnTimeCase {
@@ -454,14 +490,19 @@ export namespace CreateCarpoolTripRequest {
     _VEHICLE_IMAGE_FILE_ID_NOT_SET = 0,
     VEHICLE_IMAGE_FILE_ID = 20,
   }
+
+  export enum DestinationResortIdCase {
+    _DESTINATION_RESORT_ID_NOT_SET = 0,
+    DESTINATION_RESORT_ID = 22,
+  }
 }
 
 export class CarpoolSubscriptionEntitlement extends jspb.Message {
   getId(): string;
   setId(value: string): CarpoolSubscriptionEntitlement;
 
-  getUserId(): number;
-  setUserId(value: number): CarpoolSubscriptionEntitlement;
+  getUserId(): string;
+  setUserId(value: string): CarpoolSubscriptionEntitlement;
 
   getPlatform(): string;
   setPlatform(value: string): CarpoolSubscriptionEntitlement;
@@ -484,6 +525,15 @@ export class CarpoolSubscriptionEntitlement extends jspb.Message {
   hasCreatedAt(): boolean;
   clearCreatedAt(): CarpoolSubscriptionEntitlement;
 
+  getAdminOperationId(): string;
+  setAdminOperationId(value: string): CarpoolSubscriptionEntitlement;
+
+  getAdminOperationAction(): string;
+  setAdminOperationAction(value: string): CarpoolSubscriptionEntitlement;
+
+  getAdminOperationReason(): string;
+  setAdminOperationReason(value: string): CarpoolSubscriptionEntitlement;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CarpoolSubscriptionEntitlement.AsObject;
   static toObject(includeInstance: boolean, msg: CarpoolSubscriptionEntitlement): CarpoolSubscriptionEntitlement.AsObject;
@@ -495,12 +545,15 @@ export class CarpoolSubscriptionEntitlement extends jspb.Message {
 export namespace CarpoolSubscriptionEntitlement {
   export type AsObject = {
     id: string;
-    userId: number;
+    userId: string;
     platform: string;
     productId: string;
     expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     revokedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    adminOperationId: string;
+    adminOperationAction: string;
+    adminOperationReason: string;
   };
 
   export enum RevokedAtCase {
@@ -553,8 +606,8 @@ export namespace GetMyCarpoolSubscriptionResponse {
 }
 
 export class AdminGrantCarpoolSubscriptionRequest extends jspb.Message {
-  getUserId(): number;
-  setUserId(value: number): AdminGrantCarpoolSubscriptionRequest;
+  getUserId(): string;
+  setUserId(value: string): AdminGrantCarpoolSubscriptionRequest;
 
   getExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): AdminGrantCarpoolSubscriptionRequest;
@@ -563,6 +616,9 @@ export class AdminGrantCarpoolSubscriptionRequest extends jspb.Message {
 
   getReason(): string;
   setReason(value: string): AdminGrantCarpoolSubscriptionRequest;
+
+  getOperationId(): string;
+  setOperationId(value: string): AdminGrantCarpoolSubscriptionRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminGrantCarpoolSubscriptionRequest.AsObject;
@@ -574,9 +630,10 @@ export class AdminGrantCarpoolSubscriptionRequest extends jspb.Message {
 
 export namespace AdminGrantCarpoolSubscriptionRequest {
   export type AsObject = {
-    userId: number;
+    userId: string;
     expiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
     reason: string;
+    operationId: string;
   };
 }
 
@@ -586,6 +643,25 @@ export class AdminRevokeCarpoolSubscriptionRequest extends jspb.Message {
 
   getReason(): string;
   setReason(value: string): AdminRevokeCarpoolSubscriptionRequest;
+
+  getOperationId(): string;
+  setOperationId(value: string): AdminRevokeCarpoolSubscriptionRequest;
+
+  getExpectedUserId(): string;
+  setExpectedUserId(value: string): AdminRevokeCarpoolSubscriptionRequest;
+
+  getExpectedExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setExpectedExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): AdminRevokeCarpoolSubscriptionRequest;
+  hasExpectedExpiresAt(): boolean;
+  clearExpectedExpiresAt(): AdminRevokeCarpoolSubscriptionRequest;
+
+  getExpectedCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setExpectedCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): AdminRevokeCarpoolSubscriptionRequest;
+  hasExpectedCreatedAt(): boolean;
+  clearExpectedCreatedAt(): AdminRevokeCarpoolSubscriptionRequest;
+
+  getExpectedProductId(): string;
+  setExpectedProductId(value: string): AdminRevokeCarpoolSubscriptionRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminRevokeCarpoolSubscriptionRequest.AsObject;
@@ -599,12 +675,17 @@ export namespace AdminRevokeCarpoolSubscriptionRequest {
   export type AsObject = {
     entitlementId: string;
     reason: string;
+    operationId: string;
+    expectedUserId: string;
+    expectedExpiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    expectedCreatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    expectedProductId: string;
   };
 }
 
 export class AdminListCarpoolSubscriptionsRequest extends jspb.Message {
-  getUserId(): number;
-  setUserId(value: number): AdminListCarpoolSubscriptionsRequest;
+  getUserId(): string;
+  setUserId(value: string): AdminListCarpoolSubscriptionsRequest;
   hasUserId(): boolean;
   clearUserId(): AdminListCarpoolSubscriptionsRequest;
 
@@ -624,7 +705,7 @@ export class AdminListCarpoolSubscriptionsRequest extends jspb.Message {
 
 export namespace AdminListCarpoolSubscriptionsRequest {
   export type AsObject = {
-    userId?: number;
+    userId?: string;
     page: number;
     limit: number;
   };
@@ -641,6 +722,9 @@ export class AdminListCarpoolSubscriptionsResponse extends jspb.Message {
   clearEntitlementsList(): AdminListCarpoolSubscriptionsResponse;
   addEntitlements(value?: CarpoolSubscriptionEntitlement, index?: number): CarpoolSubscriptionEntitlement;
 
+  getHasMore(): boolean;
+  setHasMore(value: boolean): AdminListCarpoolSubscriptionsResponse;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminListCarpoolSubscriptionsResponse.AsObject;
   static toObject(includeInstance: boolean, msg: AdminListCarpoolSubscriptionsResponse): AdminListCarpoolSubscriptionsResponse.AsObject;
@@ -652,6 +736,123 @@ export class AdminListCarpoolSubscriptionsResponse extends jspb.Message {
 export namespace AdminListCarpoolSubscriptionsResponse {
   export type AsObject = {
     entitlementsList: Array<CarpoolSubscriptionEntitlement.AsObject>;
+    hasMore: boolean;
+  };
+}
+
+export class AdminDecideCarpoolPassOperationRequest extends jspb.Message {
+  getGrant(): AdminGrantCarpoolSubscriptionRequest | undefined;
+  setGrant(value?: AdminGrantCarpoolSubscriptionRequest): AdminDecideCarpoolPassOperationRequest;
+  hasGrant(): boolean;
+  clearGrant(): AdminDecideCarpoolPassOperationRequest;
+
+  getRevoke(): AdminRevokeCarpoolSubscriptionRequest | undefined;
+  setRevoke(value?: AdminRevokeCarpoolSubscriptionRequest): AdminDecideCarpoolPassOperationRequest;
+  hasRevoke(): boolean;
+  clearRevoke(): AdminDecideCarpoolPassOperationRequest;
+
+  getDecisionCase(): AdminDecideCarpoolPassOperationRequest.DecisionCase;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminDecideCarpoolPassOperationRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminDecideCarpoolPassOperationRequest): AdminDecideCarpoolPassOperationRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminDecideCarpoolPassOperationRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminDecideCarpoolPassOperationRequest;
+  static deserializeBinaryFromReader(message: AdminDecideCarpoolPassOperationRequest, reader: jspb.BinaryReader): AdminDecideCarpoolPassOperationRequest;
+}
+
+export namespace AdminDecideCarpoolPassOperationRequest {
+  export type AsObject = {
+    grant?: AdminGrantCarpoolSubscriptionRequest.AsObject;
+    revoke?: AdminRevokeCarpoolSubscriptionRequest.AsObject;
+  };
+
+  export enum DecisionCase {
+    DECISION_NOT_SET = 0,
+    GRANT = 1,
+    REVOKE = 2,
+  }
+}
+
+export class AdminResolveCarpoolPassOperationRequest extends jspb.Message {
+  getOperationId(): string;
+  setOperationId(value: string): AdminResolveCarpoolPassOperationRequest;
+
+  getCancelIfUnconfirmed(): boolean;
+  setCancelIfUnconfirmed(value: boolean): AdminResolveCarpoolPassOperationRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminResolveCarpoolPassOperationRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminResolveCarpoolPassOperationRequest): AdminResolveCarpoolPassOperationRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminResolveCarpoolPassOperationRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminResolveCarpoolPassOperationRequest;
+  static deserializeBinaryFromReader(message: AdminResolveCarpoolPassOperationRequest, reader: jspb.BinaryReader): AdminResolveCarpoolPassOperationRequest;
+}
+
+export namespace AdminResolveCarpoolPassOperationRequest {
+  export type AsObject = {
+    operationId: string;
+    cancelIfUnconfirmed: boolean;
+  };
+}
+
+export class AdminResolveCarpoolPassOperationResponse extends jspb.Message {
+  getOperationId(): string;
+  setOperationId(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getStatus(): string;
+  setStatus(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getAction(): string;
+  setAction(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getReason(): string;
+  setReason(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getEntitlement(): CarpoolSubscriptionEntitlement | undefined;
+  setEntitlement(value?: CarpoolSubscriptionEntitlement): AdminResolveCarpoolPassOperationResponse;
+  hasEntitlement(): boolean;
+  clearEntitlement(): AdminResolveCarpoolPassOperationResponse;
+
+  getRequestedUserId(): string;
+  setRequestedUserId(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getRequestedExpiresAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setRequestedExpiresAt(value?: google_protobuf_timestamp_pb.Timestamp): AdminResolveCarpoolPassOperationResponse;
+  hasRequestedExpiresAt(): boolean;
+  clearRequestedExpiresAt(): AdminResolveCarpoolPassOperationResponse;
+
+  getRequestedEntitlementId(): string;
+  setRequestedEntitlementId(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  getRequestedCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setRequestedCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): AdminResolveCarpoolPassOperationResponse;
+  hasRequestedCreatedAt(): boolean;
+  clearRequestedCreatedAt(): AdminResolveCarpoolPassOperationResponse;
+
+  getRequestedProductId(): string;
+  setRequestedProductId(value: string): AdminResolveCarpoolPassOperationResponse;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AdminResolveCarpoolPassOperationResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: AdminResolveCarpoolPassOperationResponse): AdminResolveCarpoolPassOperationResponse.AsObject;
+  static serializeBinaryToWriter(message: AdminResolveCarpoolPassOperationResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AdminResolveCarpoolPassOperationResponse;
+  static deserializeBinaryFromReader(message: AdminResolveCarpoolPassOperationResponse, reader: jspb.BinaryReader): AdminResolveCarpoolPassOperationResponse;
+}
+
+export namespace AdminResolveCarpoolPassOperationResponse {
+  export type AsObject = {
+    operationId: string;
+    status: string;
+    action: string;
+    reason: string;
+    entitlement?: CarpoolSubscriptionEntitlement.AsObject;
+    requestedUserId: string;
+    requestedExpiresAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    requestedEntitlementId: string;
+    requestedCreatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject;
+    requestedProductId: string;
   };
 }
 
@@ -686,6 +887,22 @@ export class ListCarpoolTripsRequest extends jspb.Message {
   hasDriverId(): boolean;
   clearDriverId(): ListCarpoolTripsRequest;
 
+  getMode(): CarpoolListMode;
+  setMode(value: CarpoolListMode): ListCarpoolTripsRequest;
+
+  getResortId(): number;
+  setResortId(value: number): ListCarpoolTripsRequest;
+  hasResortId(): boolean;
+  clearResortId(): ListCarpoolTripsRequest;
+
+  getNearbyRadiusKm(): number;
+  setNearbyRadiusKm(value: number): ListCarpoolTripsRequest;
+  hasNearbyRadiusKm(): boolean;
+  clearNearbyRadiusKm(): ListCarpoolTripsRequest;
+
+  getClearResortPreference(): boolean;
+  setClearResortPreference(value: boolean): ListCarpoolTripsRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListCarpoolTripsRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ListCarpoolTripsRequest): ListCarpoolTripsRequest.AsObject;
@@ -702,6 +919,10 @@ export namespace ListCarpoolTripsRequest {
     page?: number;
     limit?: number;
     driverId?: number;
+    mode: CarpoolListMode;
+    resortId?: number;
+    nearbyRadiusKm?: number;
+    clearResortPreference: boolean;
   };
 
   export enum UserLatitudeCase {
@@ -733,6 +954,16 @@ export namespace ListCarpoolTripsRequest {
     _DRIVER_ID_NOT_SET = 0,
     DRIVER_ID = 6,
   }
+
+  export enum ResortIdCase {
+    _RESORT_ID_NOT_SET = 0,
+    RESORT_ID = 8,
+  }
+
+  export enum NearbyRadiusKmCase {
+    _NEARBY_RADIUS_KM_NOT_SET = 0,
+    NEARBY_RADIUS_KM = 9,
+  }
 }
 
 export class ListCarpoolTripsResponse extends jspb.Message {
@@ -740,6 +971,24 @@ export class ListCarpoolTripsResponse extends jspb.Message {
   setTripsList(value: Array<CarpoolTrip>): ListCarpoolTripsResponse;
   clearTripsList(): ListCarpoolTripsResponse;
   addTrips(value?: CarpoolTrip, index?: number): CarpoolTrip;
+
+  getDestinationTripsList(): Array<CarpoolTrip>;
+  setDestinationTripsList(value: Array<CarpoolTrip>): ListCarpoolTripsResponse;
+  clearDestinationTripsList(): ListCarpoolTripsResponse;
+  addDestinationTrips(value?: CarpoolTrip, index?: number): CarpoolTrip;
+
+  getNearbyDepartureTripsList(): Array<CarpoolTrip>;
+  setNearbyDepartureTripsList(value: Array<CarpoolTrip>): ListCarpoolTripsResponse;
+  clearNearbyDepartureTripsList(): ListCarpoolTripsResponse;
+  addNearbyDepartureTrips(value?: CarpoolTrip, index?: number): CarpoolTrip;
+
+  getSelectedResort(): rpc_resort_pb.Resort | undefined;
+  setSelectedResort(value?: rpc_resort_pb.Resort): ListCarpoolTripsResponse;
+  hasSelectedResort(): boolean;
+  clearSelectedResort(): ListCarpoolTripsResponse;
+
+  getUsedSavedResort(): boolean;
+  setUsedSavedResort(value: boolean): ListCarpoolTripsResponse;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ListCarpoolTripsResponse.AsObject;
@@ -752,7 +1001,16 @@ export class ListCarpoolTripsResponse extends jspb.Message {
 export namespace ListCarpoolTripsResponse {
   export type AsObject = {
     tripsList: Array<CarpoolTrip.AsObject>;
+    destinationTripsList: Array<CarpoolTrip.AsObject>;
+    nearbyDepartureTripsList: Array<CarpoolTrip.AsObject>;
+    selectedResort?: rpc_resort_pb.Resort.AsObject;
+    usedSavedResort: boolean;
   };
+
+  export enum SelectedResortCase {
+    _SELECTED_RESORT_NOT_SET = 0,
+    SELECTED_RESORT = 4,
+  }
 }
 
 export class GetCarpoolTripDetailRequest extends jspb.Message {
@@ -800,6 +1058,19 @@ export class TripDetailResponse extends jspb.Message {
   getDriverAvatarUrl(): string;
   setDriverAvatarUrl(value: string): TripDetailResponse;
 
+  getMyBooking(): CarpoolBooking | undefined;
+  setMyBooking(value?: CarpoolBooking): TripDetailResponse;
+  hasMyBooking(): boolean;
+  clearMyBooking(): TripDetailResponse;
+
+  getCanReviewDriver(): boolean;
+  setCanReviewDriver(value: boolean): TripDetailResponse;
+
+  getReviewableBookingsList(): Array<CarpoolBooking>;
+  setReviewableBookingsList(value: Array<CarpoolBooking>): TripDetailResponse;
+  clearReviewableBookingsList(): TripDetailResponse;
+  addReviewableBookings(value?: CarpoolBooking, index?: number): CarpoolBooking;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TripDetailResponse.AsObject;
   static toObject(includeInstance: boolean, msg: TripDetailResponse): TripDetailResponse.AsObject;
@@ -816,7 +1087,15 @@ export namespace TripDetailResponse {
     pendingBookingsList: Array<CarpoolBooking.AsObject>;
     driverNickname: string;
     driverAvatarUrl: string;
+    myBooking?: CarpoolBooking.AsObject;
+    canReviewDriver: boolean;
+    reviewableBookingsList: Array<CarpoolBooking.AsObject>;
   };
+
+  export enum MyBookingCase {
+    _MY_BOOKING_NOT_SET = 0,
+    MY_BOOKING = 7,
+  }
 }
 
 export class ApplyCarpoolRequest extends jspb.Message {
@@ -1131,6 +1410,24 @@ export namespace CancelCarpoolTripRequest {
   };
 }
 
+export class CompleteCarpoolTripRequest extends jspb.Message {
+  getId(): string;
+  setId(value: string): CompleteCarpoolTripRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CompleteCarpoolTripRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CompleteCarpoolTripRequest): CompleteCarpoolTripRequest.AsObject;
+  static serializeBinaryToWriter(message: CompleteCarpoolTripRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CompleteCarpoolTripRequest;
+  static deserializeBinaryFromReader(message: CompleteCarpoolTripRequest, reader: jspb.BinaryReader): CompleteCarpoolTripRequest;
+}
+
+export namespace CompleteCarpoolTripRequest {
+  export type AsObject = {
+    id: string;
+  };
+}
+
 export class CancelCarpoolBookingRequest extends jspb.Message {
   getId(): string;
   setId(value: string): CancelCarpoolBookingRequest;
@@ -1223,6 +1520,11 @@ export class UpdateCarpoolTripRequest extends jspb.Message {
   hasVehicleImageFileId(): boolean;
   clearVehicleImageFileId(): UpdateCarpoolTripRequest;
 
+  getDestinationResortId(): number;
+  setDestinationResortId(value: number): UpdateCarpoolTripRequest;
+  hasDestinationResortId(): boolean;
+  clearDestinationResortId(): UpdateCarpoolTripRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateCarpoolTripRequest.AsObject;
   static toObject(includeInstance: boolean, msg: UpdateCarpoolTripRequest): UpdateCarpoolTripRequest.AsObject;
@@ -1252,6 +1554,7 @@ export namespace UpdateCarpoolTripRequest {
     privateDepartureAddress?: string;
     vehicleImageUrl?: string;
     vehicleImageFileId?: string;
+    destinationResortId?: number;
   };
 
   export enum ReturnTimeCase {
@@ -1282,6 +1585,11 @@ export namespace UpdateCarpoolTripRequest {
   export enum VehicleImageFileIdCase {
     _VEHICLE_IMAGE_FILE_ID_NOT_SET = 0,
     VEHICLE_IMAGE_FILE_ID = 19,
+  }
+
+  export enum DestinationResortIdCase {
+    _DESTINATION_RESORT_ID_NOT_SET = 0,
+    DESTINATION_RESORT_ID = 20,
   }
 }
 
@@ -1395,6 +1703,24 @@ export class InitiateCarpoolPassCheckoutRequest extends jspb.Message {
   getProductId(): string;
   setProductId(value: string): InitiateCarpoolPassCheckoutRequest;
 
+  getPlatform(): string;
+  setPlatform(value: string): InitiateCarpoolPassCheckoutRequest;
+
+  getExpectedDurationMonths(): number;
+  setExpectedDurationMonths(value: number): InitiateCarpoolPassCheckoutRequest;
+  hasExpectedDurationMonths(): boolean;
+  clearExpectedDurationMonths(): InitiateCarpoolPassCheckoutRequest;
+
+  getExpectedPriceInCents(): string;
+  setExpectedPriceInCents(value: string): InitiateCarpoolPassCheckoutRequest;
+  hasExpectedPriceInCents(): boolean;
+  clearExpectedPriceInCents(): InitiateCarpoolPassCheckoutRequest;
+
+  getExpectedProductVersion(): string;
+  setExpectedProductVersion(value: string): InitiateCarpoolPassCheckoutRequest;
+  hasExpectedProductVersion(): boolean;
+  clearExpectedProductVersion(): InitiateCarpoolPassCheckoutRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InitiateCarpoolPassCheckoutRequest.AsObject;
   static toObject(includeInstance: boolean, msg: InitiateCarpoolPassCheckoutRequest): InitiateCarpoolPassCheckoutRequest.AsObject;
@@ -1406,7 +1732,26 @@ export class InitiateCarpoolPassCheckoutRequest extends jspb.Message {
 export namespace InitiateCarpoolPassCheckoutRequest {
   export type AsObject = {
     productId: string;
+    platform: string;
+    expectedDurationMonths?: number;
+    expectedPriceInCents?: string;
+    expectedProductVersion?: string;
   };
+
+  export enum ExpectedDurationMonthsCase {
+    _EXPECTED_DURATION_MONTHS_NOT_SET = 0,
+    EXPECTED_DURATION_MONTHS = 3,
+  }
+
+  export enum ExpectedPriceInCentsCase {
+    _EXPECTED_PRICE_IN_CENTS_NOT_SET = 0,
+    EXPECTED_PRICE_IN_CENTS = 4,
+  }
+
+  export enum ExpectedProductVersionCase {
+    _EXPECTED_PRODUCT_VERSION_NOT_SET = 0,
+    EXPECTED_PRODUCT_VERSION = 5,
+  }
 }
 
 export class InitiateCarpoolPassCheckoutResponse extends jspb.Message {
@@ -1431,8 +1776,127 @@ export namespace InitiateCarpoolPassCheckoutResponse {
   };
 }
 
+export class CarpoolPassProduct extends jspb.Message {
+  getProductId(): string;
+  setProductId(value: string): CarpoolPassProduct;
+
+  getDurationMonths(): number;
+  setDurationMonths(value: number): CarpoolPassProduct;
+
+  getPriceInCents(): number;
+  setPriceInCents(value: number): CarpoolPassProduct;
+
+  getTitle(): string;
+  setTitle(value: string): CarpoolPassProduct;
+
+  getDescription(): string;
+  setDescription(value: string): CarpoolPassProduct;
+
+  getIsActive(): boolean;
+  setIsActive(value: boolean): CarpoolPassProduct;
+
+  getIsRecommended(): boolean;
+  setIsRecommended(value: boolean): CarpoolPassProduct;
+
+  getSortOrder(): number;
+  setSortOrder(value: number): CarpoolPassProduct;
+
+  getVersion(): number;
+  setVersion(value: number): CarpoolPassProduct;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CarpoolPassProduct.AsObject;
+  static toObject(includeInstance: boolean, msg: CarpoolPassProduct): CarpoolPassProduct.AsObject;
+  static serializeBinaryToWriter(message: CarpoolPassProduct, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CarpoolPassProduct;
+  static deserializeBinaryFromReader(message: CarpoolPassProduct, reader: jspb.BinaryReader): CarpoolPassProduct;
+}
+
+export namespace CarpoolPassProduct {
+  export type AsObject = {
+    productId: string;
+    durationMonths: number;
+    priceInCents: number;
+    title: string;
+    description: string;
+    isActive: boolean;
+    isRecommended: boolean;
+    sortOrder: number;
+    version: number;
+  };
+}
+
+export class GetCarpoolPassProductsRequest extends jspb.Message {
+  getIncludeInactive(): boolean;
+  setIncludeInactive(value: boolean): GetCarpoolPassProductsRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetCarpoolPassProductsRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetCarpoolPassProductsRequest): GetCarpoolPassProductsRequest.AsObject;
+  static serializeBinaryToWriter(message: GetCarpoolPassProductsRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetCarpoolPassProductsRequest;
+  static deserializeBinaryFromReader(message: GetCarpoolPassProductsRequest, reader: jspb.BinaryReader): GetCarpoolPassProductsRequest;
+}
+
+export namespace GetCarpoolPassProductsRequest {
+  export type AsObject = {
+    includeInactive: boolean;
+  };
+}
+
+export class GetCarpoolPassProductsResponse extends jspb.Message {
+  getProductsList(): Array<CarpoolPassProduct>;
+  setProductsList(value: Array<CarpoolPassProduct>): GetCarpoolPassProductsResponse;
+  clearProductsList(): GetCarpoolPassProductsResponse;
+  addProducts(value?: CarpoolPassProduct, index?: number): CarpoolPassProduct;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetCarpoolPassProductsResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetCarpoolPassProductsResponse): GetCarpoolPassProductsResponse.AsObject;
+  static serializeBinaryToWriter(message: GetCarpoolPassProductsResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetCarpoolPassProductsResponse;
+  static deserializeBinaryFromReader(message: GetCarpoolPassProductsResponse, reader: jspb.BinaryReader): GetCarpoolPassProductsResponse;
+}
+
+export namespace GetCarpoolPassProductsResponse {
+  export type AsObject = {
+    productsList: Array<CarpoolPassProduct.AsObject>;
+  };
+}
+
+export class SaveCarpoolPassProductRequest extends jspb.Message {
+  getProduct(): CarpoolPassProduct | undefined;
+  setProduct(value?: CarpoolPassProduct): SaveCarpoolPassProductRequest;
+  hasProduct(): boolean;
+  clearProduct(): SaveCarpoolPassProductRequest;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): SaveCarpoolPassProductRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: SaveCarpoolPassProductRequest): SaveCarpoolPassProductRequest.AsObject;
+  static serializeBinaryToWriter(message: SaveCarpoolPassProductRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): SaveCarpoolPassProductRequest;
+  static deserializeBinaryFromReader(message: SaveCarpoolPassProductRequest, reader: jspb.BinaryReader): SaveCarpoolPassProductRequest;
+}
+
+export namespace SaveCarpoolPassProductRequest {
+  export type AsObject = {
+    product?: CarpoolPassProduct.AsObject;
+  };
+}
+
 export enum CarpoolPublishMethod {
   CARPOOL_PUBLISH_METHOD_DIRECT = 0,
   CARPOOL_PUBLISH_METHOD_AD = 1,
   CARPOOL_PUBLISH_METHOD_MEMBERSHIP = 2,
+}
+export enum CarpoolListMode {
+  CARPOOL_LIST_MODE_LEGACY = 0,
+  CARPOOL_LIST_MODE_HYBRID = 1,
+}
+export enum CarpoolTripStatus {
+  CARPOOL_TRIP_STATUS_UNSPECIFIED = 0,
+  CARPOOL_TRIP_STATUS_RECRUITING = 1,
+  CARPOOL_TRIP_STATUS_IN_PROGRESS = 2,
+  CARPOOL_TRIP_STATUS_CANCELLED = 3,
+  CARPOOL_TRIP_STATUS_COMPLETED = 4,
 }

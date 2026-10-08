@@ -4,11 +4,11 @@
     "details": [
       {
         "appID": "654476VZU7.com.googuar.snowpro",
-        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*" ]
+        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*", "/carpool/detail" ]
       },
       {
         "appID": "654476VZU7.com.googuar.snowpro.dev",
-        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*" ]
+        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*", "/carpool/detail" ]
       }
     ]
   }
