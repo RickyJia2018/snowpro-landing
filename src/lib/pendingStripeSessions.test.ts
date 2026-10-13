@@ -30,7 +30,7 @@ describe('pending Stripe sessions', () => {
     expect(readPendingStripeSessionIds('user3')).toEqual([]);
   });
 
-  it('reads and migrates the legacy sessionStorage single-session and array values', () => {
+  it('reads legacy sessions without assigning them to the current account', () => {
     sessionStorage.setItem('pending_stripe_session_id', 'cs_test_legacy');
     sessionStorage.setItem('pending_stripe_session_ids', JSON.stringify(['cs_test_current', 'cs_test_legacy']));
 
@@ -39,11 +39,12 @@ describe('pending Stripe sessions', () => {
     expect(readPendingStripeSessionIds('user1')).toContain('cs_test_legacy');
     expect(readPendingStripeSessionIds('user1')).toContain('cs_test_current');
     expect(readPendingStripeSessionIds('user1')).toContain('cs_test_new');
-    expect(sessionStorage.getItem('pending_stripe_session_id')).toBeNull();
-    expect(sessionStorage.getItem('pending_stripe_session_ids')).toBeNull();
+    expect(readPendingStripeSessionIds('user2')).toEqual(['cs_test_legacy', 'cs_test_current']);
+    expect(JSON.parse(localStorage.getItem('pending_stripe_sessions_user1')!))
+      .toEqual([expect.objectContaining({ sessionId: 'cs_test_new' })]);
   });
 
-  it('drops sessions older than TTL (24 hours)', () => {
+  it('retains unresolved sessions beyond 24 hours until fulfillment is confirmed', () => {
     const now = Date.now();
     const twentyFiveHoursAgo = now - 25 * 60 * 60 * 1000;
     const twoHoursAgo = now - 2 * 60 * 60 * 1000;
@@ -57,8 +58,11 @@ describe('pending Stripe sessions', () => {
     );
 
     const activeSessions = readPendingStripeSessionIds('user1');
-    expect(activeSessions).toEqual(['cs_test_valid']);
-    expect(readPendingStripeSessionEntries('user1').length).toBe(1);
+    expect(activeSessions).toEqual(['cs_test_expired', 'cs_test_valid']);
+    expect(readPendingStripeSessionEntries('user1')).toEqual([
+      { sessionId: 'cs_test_expired', createdAt: twentyFiveHoursAgo },
+      { sessionId: 'cs_test_valid', createdAt: twoHoursAgo },
+    ]);
   });
 
   it('removes only the fulfilled session', () => {

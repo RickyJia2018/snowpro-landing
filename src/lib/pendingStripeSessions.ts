@@ -1,7 +1,6 @@
 const LEGACY_SESSION_STORAGE_KEY = 'pending_stripe_session_id';
 const LEGACY_SESSION_STORAGE_IDS_KEY = 'pending_stripe_session_ids';
 const BASE_STORAGE_KEY = 'pending_stripe_sessions';
-export const DEFAULT_PENDING_SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 Hours
 
 export interface PendingSessionEntry {
   sessionId: string;
@@ -16,272 +15,162 @@ function getStorageKey(userId?: string | number): string {
 }
 
 function safeGetItem(storage: Storage, key: string): string | null {
-  try {
-    return storage.getItem(key);
-  } catch {
-    return null;
-  }
+  try { return storage.getItem(key); } catch { return null; }
 }
 
 function safeSetItem(storage: Storage, key: string, value: string): void {
-  try {
-    storage.setItem(key, value);
-  } catch {
-    // Ignore storage quota or access errors
-  }
+  try { storage.setItem(key, value); } catch { /* Retain existing evidence. */ }
 }
 
 function safeRemoveItem(storage: Storage, key: string): void {
+  try { storage.removeItem(key); } catch { /* Retry cleanup on a later read. */ }
+}
+
+function entryId(value: unknown): string | null {
+  const id = typeof value === 'string' ? value
+    : value && typeof value === 'object' && 'sessionId' in value ? value.sessionId : null;
+  return typeof id === 'string' && id.trim() ? id.trim() : null;
+}
+
+function readEntries(storage: Storage, key: string): PendingSessionEntry[] {
   try {
-    storage.removeItem(key);
-  } catch {
-    // Ignore
-  }
+    const raw: unknown = JSON.parse(safeGetItem(storage, key) ?? '[]');
+    if (!Array.isArray(raw)) return [];
+    const now = Date.now();
+    return raw.flatMap(value => {
+      const sessionId = entryId(value);
+      if (!sessionId) return [];
+      const stamp = value && typeof value === 'object' ? Number(value.createdAt) : NaN;
+      return [{ sessionId, createdAt: Number.isFinite(stamp) && stamp > 0 ? stamp : now }];
+    });
+  } catch { return []; }
 }
 
-function parseRawEntries(raw: unknown, now: number, ttlMs: number): PendingSessionEntry[] {
-  if (!raw) return [];
-  const entries: PendingSessionEntry[] = [];
-
-  if (Array.isArray(raw)) {
-    for (const item of raw) {
-      if (typeof item === 'string' && item.trim().length > 0) {
-        entries.push({ sessionId: item.trim(), createdAt: now });
-      } else if (item && typeof item === 'object' && 'sessionId' in item) {
-        const sid = String((item as any).sessionId || '').trim();
-        const createdAt = Number((item as any).createdAt) || now;
-        if (sid.length > 0 && now - createdAt < ttlMs) {
-          entries.push({ sessionId: sid, createdAt });
-        }
-      }
-    }
+function preserveLegacyInbox(): void {
+  if (typeof sessionStorage === 'undefined' || typeof localStorage === 'undefined') return;
+  const single = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
+  const array = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
+  const legacy = readEntries(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
+  if (single?.trim()) legacy.unshift({ sessionId: single.trim(), createdAt: Date.now() });
+  if (!legacy.length) return;
+  const key = getStorageKey();
+  const shared = new Map(readEntries(localStorage, key).map(entry => [entry.sessionId, entry]));
+  for (const entry of legacy) if (!shared.has(entry.sessionId)) shared.set(entry.sessionId, entry);
+  const saved = JSON.stringify([...shared.values()]);
+  safeSetItem(localStorage, key, saved);
+  // Never delete the tab's only copy when writes are blocked or out of quota.
+  if (safeGetItem(localStorage, key) !== saved) return;
+  if (single !== null && safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY) === single) {
+    safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
   }
-  return entries;
-}
-
-export function readPendingStripeSessionEntries(
-  userId?: string | number,
-  ttlMs: number = DEFAULT_PENDING_SESSION_TTL_MS
-): PendingSessionEntry[] {
-  const now = Date.now();
-  const key = getStorageKey(userId);
-  const entriesMap = new Map<string, PendingSessionEntry>();
-
-  // 1. Read from localStorage (new format)
-  if (typeof localStorage !== 'undefined') {
-    const raw = safeGetItem(localStorage, key);
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        for (const entry of parseRawEntries(parsed, now, ttlMs)) {
-          entriesMap.set(entry.sessionId, entry);
-        }
-      } catch {
-        // Invalid JSON ignored
-      }
-    }
-
-    // If a specific userId is provided, also check and adopt anonymous sessions
-    if (userId !== undefined && userId !== null && String(userId).trim().length > 0) {
-      const anonKey = getStorageKey();
-      const rawAnon = safeGetItem(localStorage, anonKey);
-      if (rawAnon) {
-        try {
-          const parsed = JSON.parse(rawAnon);
-          for (const entry of parseRawEntries(parsed, now, ttlMs)) {
-            entriesMap.set(entry.sessionId, entry);
-          }
-        } catch {
-          // Ignore
-        }
-        safeRemoveItem(localStorage, anonKey);
-      }
-    }
-  }
-
-  // 2. Backward compatibility & Migration: check legacy sessionStorage
-  if (typeof sessionStorage !== 'undefined') {
-    const legacySingle = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
-    if (legacySingle && legacySingle.trim().length > 0) {
-      entriesMap.set(legacySingle.trim(), { sessionId: legacySingle.trim(), createdAt: now });
-      safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
-    }
-    const legacyArray = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
-    if (legacyArray) {
-      try {
-        const parsed = JSON.parse(legacyArray);
-        for (const entry of parseRawEntries(parsed, now, ttlMs)) {
-          entriesMap.set(entry.sessionId, entry);
-        }
-      } catch {
-        // Ignore
-      }
+  // Keep malformed/unknown legacy data rather than declaring it migrated.
+  try {
+    const parsed: unknown = JSON.parse(array ?? 'null');
+    if (Array.isArray(parsed) && parsed.every(entry => entryId(entry) !== null) &&
+        safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY) === array) {
       safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
     }
-  }
-
-  const validEntries = Array.from(entriesMap.values()).filter((e) => now - e.createdAt < ttlMs);
-
-  // Sync back cleaned valid entries to localStorage
-  if (typeof localStorage !== 'undefined') {
-    if (validEntries.length === 0) {
-      safeRemoveItem(localStorage, key);
-    } else {
-      safeSetItem(localStorage, key, JSON.stringify(validEntries));
-    }
-  }
-
-  return validEntries;
+  } catch { /* Preserve unknown legacy evidence. */ }
 }
 
-export function readPendingStripeSessionIds(
-  userId?: string | number,
-  ttlMs: number = DEFAULT_PENDING_SESSION_TTL_MS
-): string[] {
-  return readPendingStripeSessionEntries(userId, ttlMs).map((e) => e.sessionId);
+/** A checkout's age does not establish payment or fulfillment. Reads never
+ * prune evidence or assign unknown receipts to whoever happens to sign in.
+ * The authenticated verification endpoint determines the actual owner.
+ */
+export function readPendingStripeSessionEntries(userId?: string | number): PendingSessionEntry[] {
+  preserveLegacyInbox();
+  const entries = new Map<string, PendingSessionEntry>();
+  const include = (values: PendingSessionEntry[]) => {
+    for (const entry of values) if (!entries.has(entry.sessionId)) entries.set(entry.sessionId, entry);
+  };
+  if (typeof localStorage !== 'undefined') {
+    include(readEntries(localStorage, getStorageKey(userId)));
+    if (getStorageKey(userId) !== getStorageKey()) include(readEntries(localStorage, getStorageKey()));
+  }
+  // If migration could not persist the shared inbox, the original tab's copy
+  // can still be retried. It never belongs to the first logged-in visitor.
+  if (typeof sessionStorage !== 'undefined') {
+    const legacy = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY)?.trim();
+    if (legacy) include([{ sessionId: legacy, createdAt: Date.now() }]);
+    include(readEntries(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY));
+  }
+  return Array.from(entries.values());
+}
+
+export function readPendingStripeSessionIds(userId?: string | number): string[] {
+  return readPendingStripeSessionEntries(userId).map(entry => entry.sessionId);
 }
 
 export function addPendingStripeSessionId(sessionId: string, userId?: string | number): void {
-  if (!sessionId || typeof sessionId !== 'string' || sessionId.trim().length === 0) return;
-  const normalizedSid = sessionId.trim();
-  const existingEntries = readPendingStripeSessionEntries(userId);
-  const now = Date.now();
-
-  const existingIndex = existingEntries.findIndex((e) => e.sessionId === normalizedSid);
-  if (existingIndex >= 0) {
-    existingEntries[existingIndex].createdAt = now;
-  } else {
-    existingEntries.push({ sessionId: normalizedSid, createdAt: now });
-  }
-
+  if (typeof sessionId !== 'string' || !sessionId.trim() || typeof localStorage === 'undefined') return;
   const key = getStorageKey(userId);
-  if (typeof localStorage !== 'undefined') {
-    safeSetItem(localStorage, key, JSON.stringify(existingEntries));
+  // Only write this queue. Shared and legacy entries remain unassigned.
+  const entries = readEntries(localStorage, key);
+  if (!entries.some(entry => entry.sessionId === sessionId.trim())) {
+    entries.push({ sessionId: sessionId.trim(), createdAt: Date.now() });
   }
+  safeSetItem(localStorage, key, JSON.stringify(entries));
 }
 
-export function removePendingStripeSessionId(sessionId: string, userId?: string | number): void {
-  if (!sessionId || typeof sessionId !== 'string') return;
-  const normalizedSid = sessionId.trim();
-  if (normalizedSid.length === 0) return;
+function removeConfirmedEntry(storage: Storage, key: string, sessionId: string): void {
+  try {
+    const raw = safeGetItem(storage, key);
+    if (!raw) return;
+    const entries: unknown = JSON.parse(raw);
+    if (!Array.isArray(entries)) return;
+    const remaining = entries.filter(entry => entryId(entry) !== sessionId);
+    if (remaining.length === entries.length) return;
+    // Preserve every unrelated entry, including old or unrecognized records.
+    if (remaining.length) safeSetItem(storage, key, JSON.stringify(remaining));
+    else safeRemoveItem(storage, key);
+  } catch { /* Preserve unrecognized recovery evidence. */ }
+}
 
+function removeConfirmedLegacy(sessionId: string): void {
+  if (typeof sessionStorage === 'undefined') return;
+  if (safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY)?.trim() === sessionId) {
+    safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
+  }
+  removeConfirmedEntry(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY, sessionId);
+}
+
+/** Called only after the server confirms fulfillment of this exact checkout. */
+export function removePendingStripeSessionId(sessionId: string, userId?: string | number): void {
+  if (typeof sessionId !== 'string' || !sessionId.trim()) return;
+  const id = sessionId.trim();
   if (typeof localStorage !== 'undefined') {
     try {
-      // 1. Clean from specific user key if provided
-      if (userId !== undefined && userId !== null && String(userId).trim().length > 0) {
-        const userKey = getStorageKey(userId);
-        const userEntries = readPendingStripeSessionEntries(userId);
-        const remaining = userEntries.filter((e) => e.sessionId !== normalizedSid);
-        if (remaining.length === 0) {
-          safeRemoveItem(localStorage, userKey);
-        } else {
-          safeSetItem(localStorage, userKey, JSON.stringify(remaining));
-        }
-      }
-
-      // 2. Global purge: Iterate over all pending_stripe_sessions keys in localStorage
-      // to ensure no scope (anonymous, different user ids) retains this fulfilled session.
-      const keysToInspect: string[] = [];
+      const keys = new Set<string>();
+      if (userId !== undefined) keys.add(getStorageKey(userId));
       for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith(BASE_STORAGE_KEY)) {
-          keysToInspect.push(k);
-        }
+        const key = localStorage.key(i);
+        if (key?.startsWith(`${BASE_STORAGE_KEY}_`)) keys.add(key);
       }
-
-      for (const k of keysToInspect) {
-        const raw = safeGetItem(localStorage, k);
-        if (raw) {
-          try {
-            const parsed = JSON.parse(raw);
-            const remaining = parseRawEntries(parsed, Date.now(), DEFAULT_PENDING_SESSION_TTL_MS)
-              .filter((e) => e.sessionId !== normalizedSid);
-            if (remaining.length === 0) {
-              safeRemoveItem(localStorage, k);
-            } else {
-              safeSetItem(localStorage, k, JSON.stringify(remaining));
-            }
-          } catch {
-            // Ignore
-          }
-        }
-      }
-    } catch {
-      // Ignore
-    }
+      for (const key of keys) removeConfirmedEntry(localStorage, key, id);
+    } catch { /* Retain evidence if storage cannot be enumerated. */ }
   }
-
-  // 3. Backward compatibility: also ensure legacy sessionStorage is purged
-  if (typeof sessionStorage !== 'undefined') {
-    const legacySingle = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
-    if (legacySingle && legacySingle.trim() === normalizedSid) {
-      safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_KEY);
-    }
-    const legacyArray = safeGetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
-    if (legacyArray) {
-      try {
-        const parsed = JSON.parse(legacyArray);
-        if (Array.isArray(parsed)) {
-          const remaining = parsed.filter((id) => String(id).trim() !== normalizedSid);
-          if (remaining.length === 0) {
-            safeRemoveItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY);
-          } else {
-            safeSetItem(sessionStorage, LEGACY_SESSION_STORAGE_IDS_KEY, JSON.stringify(remaining));
-          }
-        }
-      } catch {
-        // Ignore
-      }
-    }
-  }
+  removeConfirmedLegacy(id);
 }
 
-export function replacePendingStripeSessionIds(
-  sessionIds: string[],
-  userId?: string | number
-): void {
-  const normalized = Array.from(
-    new Set(
-      sessionIds
-        .filter((s): s is string => typeof s === 'string' && s.trim().length > 0)
-        .map((s) => s.trim())
-    )
-  );
-  const existingEntries = readPendingStripeSessionEntries(userId);
-  const existingMap = new Map(existingEntries.map((e) => [e.sessionId, e.createdAt]));
-  const now = Date.now();
-
-  const newEntries: PendingSessionEntry[] = normalized.map((sid) => ({
-    sessionId: sid,
-    createdAt: existingMap.get(sid) || now,
-  }));
-
+export function replacePendingStripeSessionIds(sessionIds: string[], userId?: string | number): void {
+  if (typeof localStorage === 'undefined') return;
   const key = getStorageKey(userId);
-  if (typeof localStorage !== 'undefined') {
-    if (newEntries.length === 0) {
-      safeRemoveItem(localStorage, key);
-    } else {
-      safeSetItem(localStorage, key, JSON.stringify(newEntries));
-    }
-  }
+  const previous = new Map(readEntries(localStorage, key).map(entry => [entry.sessionId, entry.createdAt]));
+  const ids = [...new Set(sessionIds.filter(id => typeof id === 'string' && id.trim()).map(id => id.trim()))];
+  const entries = ids.map(sessionId => ({ sessionId, createdAt: previous.get(sessionId) ?? Date.now() }));
+  if (entries.length) safeSetItem(localStorage, key, JSON.stringify(entries));
+  else safeRemoveItem(localStorage, key);
 }
 
-/** Remove only an observed result from this owner's current queue.
- * Never replace a queue captured before an asynchronous provider verification.
+/** Remove a server-confirmed result from the owner's current queue and the
+ * unassigned inbox, without replacing snapshots taken before verification.
  */
 export function removePendingStripeSessionForUser(sessionId: string, userId: string): void {
-  if (!sessionId.trim() || !userId.trim() || typeof localStorage === 'undefined') return;
-  const key = getStorageKey(userId);
-  const raw = safeGetItem(localStorage, key);
-  if (!raw) return;
-  try {
-    const entries = JSON.parse(raw);
-    if (!Array.isArray(entries)) return;
-    const remaining = entries.filter(entry => {
-      const id = typeof entry === 'string' ? entry : entry?.sessionId;
-      return typeof id !== 'string' || id.trim() !== sessionId.trim();
-    });
-    if (remaining.length) safeSetItem(localStorage, key, JSON.stringify(remaining));
-    else safeRemoveItem(localStorage, key);
-  } catch { /* Preserve unrecognized recovery evidence. */ }
+  if (!sessionId.trim() || !userId.trim()) return;
+  const id = sessionId.trim();
+  if (typeof localStorage !== 'undefined') {
+    removeConfirmedEntry(localStorage, getStorageKey(userId), id);
+    removeConfirmedEntry(localStorage, getStorageKey(), id);
+  }
+  removeConfirmedLegacy(id);
 }
