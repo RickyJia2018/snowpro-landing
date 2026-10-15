@@ -12,6 +12,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
+import LinkStripePage from './src/pages/LinkStripePage';
 import RechargePage from './src/pages/RechargePage';
 import RechargeSuccessPage from './src/pages/RechargeSuccessPage';
 import RefundPolicyPage from './src/pages/RefundPolicyPage';
@@ -33,6 +34,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
+        <Route path="/linkstripe" element={<LinkStripePage />} />
+        <Route path="/stripe-callback" element={<LinkStripePage />} />
         <Route path="/recharge" element={<RechargePage />} />
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
         <Route path="/carpool-pass" element={<CarpoolPassPage />} />
