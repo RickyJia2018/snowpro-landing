@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>&copy; {new Date().getFullYear()} {APP_NAME} Inc. {t.footer.rights}</p>
+          <p>&copy; {new Date().getFullYear()} Googuar Technology Inc. {t.footer.rights}</p>
           <div className="flex items-center gap-2">
             <Mail size={14} />
             <span>contact@snowpro.app</span>
