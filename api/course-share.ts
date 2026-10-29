@@ -1,4 +1,4 @@
-import { CourseShareUnavailable, fetchPublicCourse, renderCourseShareDocument, validCourseId } from '../src/lib/courseShare';
+import { CourseShareUnavailable, fetchPublicCourse, renderCourseShareDocument, validCourseId } from '../src/lib/courseShare.js';
 
 type Request = { query: Record<string, string | string[] | undefined>; headers: Record<string, string | string[] | undefined> };
 type Response = { setHeader(name: string, value: string): void; status(code: number): Response; send(body: string): void };

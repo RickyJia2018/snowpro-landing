@@ -9,7 +9,9 @@ describe('Instructor sharing', () => {
   it('renders safe public metadata, price, certificates and correct app destination', () => {
     const coach = normalizeInstructor(response(), '9223372036854775807')!;
     const html = renderInstructorDocument(coach, coach.id, true);
-    expect(html).toContain('¥120.00');
+    expect(html).toContain('120.00');
+    expect(html).toContain('雪币');
+    expect(html).not.toContain('¥');
     expect(html).toContain('4.5 / 5');
     expect(html).toContain('CASI 2');
     expect(html).toContain('og:title');
@@ -20,6 +22,15 @@ describe('Instructor sharing', () => {
     expect(html).not.toContain('REJECTED');
     expect(html).toContain('snowpro://instructors/9223372036854775807');
     expect(html).toContain('app-argument=https://snowpro.googuar.com/instructors/9223372036854775807');
+  });
+  it('uses real teaching languages and does not advertise a missing price as free', () => {
+    const coach = normalizeInstructor({instructor:{user_id:'1003',username:'SnowPro97482438',self_intro:'About me'},languages:[{name:'English',code:'en'}]},'1003')!;
+    const html = renderInstructorDocument(coach,'1003',false);
+    expect(html).toContain('English');
+    expect(html).not.toContain('0.00');
+    expect(html).not.toContain('5.0');
+    expect(html).toContain('snowpro://instructors/1003');
+    expect(html).toContain('instructor-share');
   });
   it('rejects malformed IDs, wrong identities and unsafe images', () => {
     expect(normalizeInstructor(response(), '1')).toBeNull();
