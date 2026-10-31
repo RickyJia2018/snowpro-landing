@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
           <p>&copy; {new Date().getFullYear()} Googuar Technology Inc. {t.footer.rights}</p>
           <div className="flex items-center gap-2">
             <Mail size={14} />
-            <span>contact@snowpro.app</span>
+            <span>snowpro-support@googuar.com</span>
           </div>
         </div>
       </div>

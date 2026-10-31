@@ -13,7 +13,7 @@ describe('Refund access', () => {
     mount();
     await screen.findByRole('alert');
     const link = screen.getByRole('link', { name: 'Email a refund or withdrawal request' });
-    expect(link.getAttribute('href')).toContain('mailto:contact@snowpro.app');
+    expect(link.getAttribute('href')).toContain('mailto:snowpro-support@googuar.com');
     expect(decodeURIComponent(link.getAttribute('href')!)).toContain('no reason is required');
     fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
     await screen.findByText('Current statutory refund rights');

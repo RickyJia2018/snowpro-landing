@@ -7,8 +7,9 @@ describe('public privacy notice', () => {
   it('identifies the actual operator and current contact information', () => {
     expect(html).toContain('Googuar Technology Inc.');
     expect(html).toContain('5611 Goring St');
-    expect(html).toContain('href="mailto:contact@snowpro.app"');
+    expect(html).toContain('href="mailto:snowpro-support@googuar.com"');
     expect(html).not.toContain('support@snowpro.googuar.com');
+    expect(html).not.toContain('contact@snowpro.app');
   });
   it('covers adult accounts, private media access and staged deletion without claiming immediate erasure', () => {
     expect(html).toContain('age of majority');
