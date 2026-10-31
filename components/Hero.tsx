@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { ChevronRight, Apple, Smartphone, Video, Car, GraduationCap, Users } from 'lucide-react';
+import { ChevronRight, Video, Car, GraduationCap, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { AppleLogo, AndroidLogo } from './BrandIcons';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
@@ -290,7 +291,7 @@ const Hero: React.FC = () => {
             onClick={() => window.open('https://apps.apple.com/app/id6754150275', '_blank')}
             className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_25px_rgba(255,255,255,0.25)]"
           >
-            <Apple size={22} className="fill-current" />
+            <AppleLogo size={22} />
             <span>{t.hero.ctaIos}</span>
             <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-slate-300 whitespace-nowrap">
               {t.hero.ctaIosNote}
@@ -301,7 +302,7 @@ const Hero: React.FC = () => {
             onClick={() => scrollToSection('download')}
             className="group flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all hover:bg-white/20 hover:scale-105"
           >
-            <Smartphone size={22} />
+            <AndroidLogo size={22} />
             <span>{t.hero.ctaAndroid}</span>
           </button>
         </div>

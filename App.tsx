@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Apple, Smartphone, Download, QrCode } from 'lucide-react';
+import { Download, QrCode } from 'lucide-react';
+import { AppleLogo, AndroidLogo } from './components/BrandIcons';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VideoDemo from './components/VideoDemo';
@@ -152,7 +153,7 @@ function HomePage() {
               {/* iOS Download Card */}
               <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-8 flex flex-col items-center hover:border-blue-500/50 hover:shadow-[0_0_35px_rgba(59,130,246,0.15)] transition-all duration-300">
                 <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400 mb-4">
-                  <Apple size={32} />
+                  <AppleLogo size={32} />
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.iosLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
@@ -179,7 +180,7 @@ function HomePage() {
                   rel="noopener noreferrer"
                   className="w-full bg-white text-slate-950 hover:bg-slate-100 font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-[1.02]"
                 >
-                  <Apple size={20} className="fill-current" />
+                  <AppleLogo size={20} />
                   {t.ctaBottom.btnIos}
                 </a>
               </div>
@@ -187,7 +188,7 @@ function HomePage() {
               {/* Android Download Card */}
               <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-8 flex flex-col items-center hover:border-cyan-500/50 hover:shadow-[0_0_35px_rgba(6,182,212,0.15)] transition-all duration-300">
                 <div className="p-3 bg-cyan-500/10 rounded-2xl text-cyan-400 mb-4">
-                  <Smartphone size={32} />
+                  <AndroidLogo size={32} />
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.androidLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
