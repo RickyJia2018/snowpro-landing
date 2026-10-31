@@ -20,3 +20,16 @@ it('rejects a recharge exchange without account data before storing the token',a
  fireEvent.change(screen.getByLabelText('Email'),{target:{value:'test@example.com'}});fireEvent.change(screen.getByLabelText('Password'),{target:{value:'secret'}});fireEvent.click(screen.getByRole('button',{name:'Sign in'}));
  await screen.findByRole('alert');expect(done).not.toHaveBeenCalled();expect(getValidRechargeAccessToken('recharge')).toBeNull();
 });
+
+it('renders full-width aligned primary button by default and allows buttonClassName override', () => {
+ const { unmount } = render(<PurchaseLogin scope="recharge" zh={false} onSuccess={vi.fn()} />);
+ const defaultBtn = screen.getByRole('button', { name: 'Sign in' });
+ expect(defaultBtn.className).toContain('w-full');
+ expect(defaultBtn.className).toContain('rounded-2xl');
+ expect(defaultBtn.className).toContain('bg-gradient-to-r');
+ unmount();
+
+ render(<PurchaseLogin scope="recharge" zh={false} onSuccess={vi.fn()} buttonClassName="custom-btn-class" />);
+ const customBtn = screen.getByRole('button', { name: 'Sign in' });
+ expect(customBtn.className).toBe('custom-btn-class');
+});

@@ -754,7 +754,7 @@ export default function RechargePage() {
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white font-semibold py-4 rounded-2xl hover:border-slate-600 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-3"
             >
               <span>{tLocal.openAppBtn}</span>
               <ArrowRight className="h-4 w-4" />

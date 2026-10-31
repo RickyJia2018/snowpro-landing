@@ -49,6 +49,31 @@ describe('RechargePage Security & Handoff Isolation', () => {
     expect(loginCalls.length).toBe(0);
   });
 
+  it('renders aligned full-width login and secondary back-to-home buttons when unauthenticated', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() =>
+      Promise.resolve(new Response(JSON.stringify({ products: [] }), { status: 200 }))
+    );
+
+    render(
+      <MemoryRouter>
+        <LanguageProvider>
+          <RechargePage />
+        </LanguageProvider>
+      </MemoryRouter>
+    );
+
+    const loginBtn = await screen.findByRole('button', { name: /sign in/i });
+    const backBtn = screen.getByRole('button', { name: /back to home/i });
+
+    expect(loginBtn.className).toContain('w-full');
+    expect(loginBtn.className).toContain('rounded-2xl');
+    expect(loginBtn.className).toContain('bg-gradient-to-r');
+
+    expect(backBtn.className).toContain('w-full');
+    expect(backBtn.className).toContain('rounded-2xl');
+    expect(backBtn.className).toContain('border');
+  });
+
   it('ignores ?code= in query params to prevent referer/log leak', async () => {
     // Set query param
     window.location.search = '?code=query_code_123';
