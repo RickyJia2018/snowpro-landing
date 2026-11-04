@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const localTranslations = {
   zh: {
     title: "Stripe 收款账户绑定",
-    subtitle: "设置已完成，正在尝试返回 SnowPro App...",
-    redirecting: "正在唤醒 SnowPro App...",
+    subtitle: "请返回 SnowPro App 检查收款账号状态。Stripe 可能仍需补充资料或完成身份验证。",
+    redirecting: "正在打开 SnowPro App，账号状态将在 App 中检查。",
     button: "打开 SnowPro App",
     manualHint: "如果您的设备没有自动跳转，请点击上方按钮返回 App。",
     backHome: "返回官网首页",
   },
   en: {
     title: "Stripe Payout Setup",
-    subtitle: "Setup completed. Attempting to return to SnowPro App...",
-    redirecting: "Opening SnowPro App...",
+    subtitle: "Return to SnowPro to check your payout account status. Stripe may still require more information or identity verification.",
+    redirecting: "Opening SnowPro to check your account status...",
     button: "Open SnowPro App",
     manualHint: "If you are not automatically redirected, please click the button above.",
     backHome: "Back to Home",
   },
   ja: {
     title: "Stripe 受取口座設定",
-    subtitle: "設定が完了しました。SnowPro アプリに戻っています...",
+    subtitle: "SnowPro に戻って受取口座の状態を確認してください。Stripe で追加情報や本人確認が必要な場合があります。",
     redirecting: "SnowPro アプリを開いています...",
     button: "SnowPro アプリを開く",
     manualHint: "自動的に戻らない場合は、上のボタンをタップしてください。",
@@ -30,7 +30,7 @@ const localTranslations = {
   },
   ko: {
     title: "Stripe 정산 계좌 연결",
-    subtitle: "설정이 완료되었습니다. SnowPro 앱으로 돌아가는 중...",
+    subtitle: "SnowPro로 돌아가 수취 계정 상태를 확인하세요. Stripe에서 추가 정보나 본인 확인을 요구할 수 있습니다.",
     redirecting: "SnowPro 앱을 여는 중...",
     button: "SnowPro 앱 열기",
     manualHint: "자동으로 이동하지 않으면 위 버튼을 눌러주세요.",
@@ -38,7 +38,7 @@ const localTranslations = {
   },
   fr: {
     title: "Configuration des paiements Stripe",
-    subtitle: "Configuration terminée. Retour à l'application SnowPro...",
+    subtitle: "Revenez dans SnowPro pour vérifier votre compte. Stripe peut encore demander des renseignements ou une vérification d’identité.",
     redirecting: "Ouverture de l'application SnowPro...",
     button: "Ouvrir l'application SnowPro",
     manualHint: "Si vous n'êtes pas redirigé automatiquement, veuillez cliquer sur le bouton ci-dessus.",
@@ -46,7 +46,7 @@ const localTranslations = {
   },
   de: {
     title: "Stripe Auszahlungskonto-Einrichtung",
-    subtitle: "Einrichtung abgeschlossen. Rückkehr zur SnowPro App...",
+    subtitle: "Kehren Sie zu SnowPro zurück, um den Kontostatus zu prüfen. Stripe benötigt möglicherweise weitere Angaben oder eine Identitätsprüfung.",
     redirecting: "SnowPro App wird geöffnet...",
     button: "SnowPro App öffnen",
     manualHint: "Falls die Weiterleitung nicht automatisch erfolgt, tippen Sie bitte auf den Button oben.",
@@ -54,7 +54,7 @@ const localTranslations = {
   },
   es: {
     title: "Configuración de pagos Stripe",
-    subtitle: "Configuración completada. Volviendo a la aplicación SnowPro...",
+    subtitle: "Vuelve a SnowPro para comprobar el estado de tu cuenta. Stripe podría necesitar más información o verificar tu identidad.",
     redirecting: "Abriendo la aplicación SnowPro...",
     button: "Abrir la aplicación SnowPro",
     manualHint: "Si no es redirigido automáticamente, toque el botón de arriba.",
@@ -62,7 +62,7 @@ const localTranslations = {
   },
   ru: {
     title: "Настройка выплат Stripe",
-    subtitle: "Настройка завершена. Возвращаемся в приложение SnowPro...",
+    subtitle: "Вернитесь в SnowPro, чтобы проверить состояние счёта. Stripe может запросить дополнительные сведения или проверку личности.",
     redirecting: "Открытие приложения SnowPro...",
     button: "Открыть приложение SnowPro",
     manualHint: "Если перенаправление не произошло автоматически, нажмите кнопку выше.",
@@ -101,7 +101,7 @@ const LinkStripePage: React.FC = () => {
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-400 to-indigo-500" />
 
         <div className="w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-400">
-          <CheckCircle2 className="w-8 h-8 text-blue-400" />
+          <ArrowRight className="w-8 h-8 text-blue-400" />
         </div>
 
         <h1 className="text-2xl font-bold text-white mb-2">{t.title}</h1>
