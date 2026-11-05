@@ -1,6 +1,7 @@
 export const COURSE_SHARE_ORIGIN = 'https://snowpro.googuar.com';
+export const ANDROID_APK_DOWNLOAD_URL = 'https://snowpro-public-bucket.googuar.com/snowpro.apk';
 export const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/id6754150275';
-export const ANDROID_DOWNLOAD_URL = 'https://snowpro-public-bucket.googuar.com/snowpro.apk';
+export const ANDROID_PLAY_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro&pcampaignid=web_share';
 
 export type PublicCourse = {
   id: string;
@@ -93,48 +94,54 @@ export async function fetchPublicCourse(
   return course;
 }
 
+// Runtime/SSR CSS bypasses the site's PostCSS cascade-layer transform.
+// Match its reset specificity so React fallback pages keep the same spacing.
+export const SHARE_PAGE_SELECTOR = '.course-share:not(#snowpro-share-reset):not(#snowpro-share-reset)';
 export const courseShareStyles = `
   *{box-sizing:border-box}body{margin:0;background:#020617;color:#f1f5f9;font-family:system-ui,-apple-system,sans-serif;line-height:1.6}
-  .course-share{max-width:880px;margin:auto;padding:28px 20px 48px}
+  .course-share{max-width:640px;margin:auto;padding:28px 20px 48px}
   .course-share a{color:#93c5fd}.course-share a:focus-visible{outline:3px solid #60a5fa;outline-offset:4px}
   .course-share .brand{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:700;margin-bottom:20px}
-  .course-share article{border:1px solid #334155;border-radius:24px;overflow:hidden;background:#0f172a}
+  .course-share article{border:1px solid #334155;border-radius:20px;overflow:hidden;background:#0f172a}
   .course-share .cover{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block;background:#1e293b}
   .course-share .cover-placeholder{aspect-ratio:16/9;display:grid;place-items:center;background:#1e293b;font-size:32px;font-weight:700}
-  .course-share .content{padding:28px}.course-share h1{font-size:clamp(26px,5vw,38px);line-height:1.25;margin:8px 0 16px;overflow-wrap:anywhere}
-  .course-share h2{font-size:20px;margin-top:28px}.course-share .muted{color:#cbd5e1}.course-share .description{white-space:pre-wrap;overflow-wrap:anywhere}
+  .course-share .content{padding:28px}.course-share h1{font-size:clamp(26px,5vw,38px);line-height:1.25;font-weight:700;margin:8px 0 16px;overflow-wrap:anywhere}
+  .course-share h2{font-size:20px;font-weight:600;margin-top:28px}.course-share p{margin:12px 0}.course-share .muted{color:#cbd5e1}.course-share .description{white-space:pre-wrap;overflow-wrap:anywhere}
   .course-share .price{font-size:22px;font-weight:700}.course-share .actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
   .course-share .button{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:10px 20px;border-radius:12px;text-decoration:none;border:1px solid #475569;font-weight:600}
   .course-share .primary{background:#2563eb;color:white;border-color:#2563eb;flex:1}.course-share .button:hover{filter:brightness(1.15)}
-  .course-share .downloads{display:flex;gap:12px;flex-wrap:wrap}.course-share ol{padding-left:24px}.course-share li{margin-bottom:12px}
+  .course-share .downloads{display:flex;gap:12px;flex-wrap:wrap}.course-share ol{padding-left:24px;list-style:decimal}.course-share li{margin-bottom:12px}
   .course-share .badge{font-size:14px;color:#bfdbfe;margin-left:8px}.course-share .hint{padding:16px;background:#1e293b;border-radius:12px}
   .course-share footer{margin-top:24px;font-size:14px}.course-share .error{padding:32px 0}
   @media(max-width:480px){.course-share{padding:16px 12px 32px}.course-share .content{padding:20px}.course-share .downloads .button{flex:1}}
-`;
+`.replaceAll('.course-share', SHARE_PAGE_SELECTOR);
 
-export function renderCourseShare(course: PublicCourse | null, zh: boolean, unavailable = false): string {
+export function renderCourseShare(course: PublicCourse | null, zh: boolean, unavailable = false, requestedId = ''): string {
   const label = (cn: string, en: string) => zh ? cn : en;
   const actions = `<section aria-label="${label('下载 App', 'Download app')}">
-    <h2>${label('下载 Snow Pro', 'Download Snow Pro')}</h2>
+    <h2>${label('下载 Snow Pro', 'Download SnowPro')}</h2>
     <div class="downloads">
       <a class="button" href="${IOS_DOWNLOAD_URL}">App Store · iPhone</a>
-      <a class="button" href="${ANDROID_DOWNLOAD_URL}">Android · APK</a>
+      <a class="button" href="${ANDROID_PLAY_DOWNLOAD_URL}">Google Play · Android</a>
+      <a class="button" href="${ANDROID_APK_DOWNLOAD_URL}">${label('直接下载 APK', 'Download APK')}</a>
     </div>
     <p class="muted">${label('安装后返回这条分享链接，即可打开该课程。', 'After installing, return to this shared link to open the course.')}</p>
   </section>`;
-  if (!course) return `<main class="course-share"><a class="brand" href="/">Snow Pro</a>
+  const appId = course?.id || (validCourseId(requestedId) ? requestedId : '');
+  const openApp = appId ? `<div class="actions"><a class="button primary" href="snowpro://courses/${appId}">${label('在 Snow Pro 中打开课程', 'Open course in Snow Pro')}</a></div>` : '';
+  if (!course) return `<main class="course-share"><a class="brand" href="/">SnowPro</a><article><div class="content">
     <div class="error" role="alert"><h1>${unavailable ? label('课程暂不可查看', 'Course unavailable') : label('暂时无法加载课程', 'Unable to load course')}</h1>
-    <p class="muted">${unavailable ? label('课程可能已下架，或分享链接无效。', 'The course may no longer be published, or the link is invalid.') : label('请稍后刷新页面重试。', 'Please refresh this page to try again.')}</p></div>${actions}</main>`;
+    <p class="muted">${unavailable ? label('课程可能已下架，或分享链接无效。', 'The course may no longer be published, or the link is invalid.') : label('请稍后刷新页面重试。', 'Please refresh this page to try again.')}</p></div>${openApp}${actions}</div></article></main>`;
   const safe = escapeHtml;
   return `<main class="course-share">
-    <a class="brand" href="/">Snow Pro</a>
+    <a class="brand" href="/">SnowPro</a>
     <article>
       ${course.cover ? `<img class="cover" src="${safe(course.cover)}" alt="${safe(course.title)}" width="880" height="495">` : '<div class="cover-placeholder" aria-hidden="true">Snow Pro</div>'}
       <div class="content">
         <p class="muted">${label('滑雪视频课程', 'Ski & snowboard video course')}</p>
         <h1>${safe(course.title)}</h1>
         ${course.instructor ? `<p class="muted">${label('教练', 'Instructor')} · ${safe(course.instructor)}</p>` : ''}
-        <p class="price">${course.price === 0 ? label('免费课程', 'Free course') : `${(course.price / 100).toFixed(2)} Tokens`}</p>
+        <p class="price">${course.price === 0 ? label('免费课程', 'Free course') : `${(course.price / 100).toFixed(2)} ${label('雪币', 'Snow Coins')}`}</p>
         <div class="actions"><a class="button primary" href="snowpro://courses/${course.id}">${label('在 Snow Pro 中打开课程', 'Open course in Snow Pro')}</a></div>
         <p class="hint">${label('如果微信或其他 App 内置浏览器无法打开，请从右上角菜单选择“在浏览器中打开”。', 'If an in-app browser cannot open Snow Pro, choose “Open in browser” from its menu.')}</p>
         <h2>${label('课程简介', 'About this course')}</h2>
@@ -165,5 +172,5 @@ export function renderCourseShareDocument(course: PublicCourse | null, id: strin
     <meta name="apple-itunes-app" content="app-id=6754150275, app-argument=${canonical}">
     ${course ? '' : '<meta name="robots" content="noindex">'}
     <style>${courseShareStyles}</style>
-  </head><body>${renderCourseShare(course, zh, unavailable)}</body></html>`;
+  </head><body>${renderCourseShare(course, zh, unavailable, id)}</body></html>`;
 }

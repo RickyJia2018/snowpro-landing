@@ -65,3 +65,16 @@ Unavailable instructors return 404; temporary API failures return 503. Both reta
 download links. The React local-development fallback has bounded loading and
 cancels stale requests. Deploy the whole repository, including `api/`, and verify
 signed-device HTTPS opening after deployment, as described above for courses.
+
+### Preview share pages without a local backend
+
+Local `.env` overrides may point to `localhost:8000`. If that backend is not
+running, use this opt-in preview to read the existing public API:
+
+```sh
+VITE_API_BASE_URL=http://127.0.0.1:3091 SNOWPRO_SHARE_PREVIEW_API=https://skiapp-api.googuar.com NODE_USE_SYSTEM_CA=1 npm run dev -- --host 127.0.0.1 --port 3091
+```
+
+Only `/v1/public` and `/get_course` are proxied. This does not change the
+production configuration or proxy authenticated endpoints. Share pages use one
+compact layout with App Store, Google Play, and direct APK download options.

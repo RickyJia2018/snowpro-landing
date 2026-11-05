@@ -33,6 +33,8 @@ describe('Public course sharing', () => {
     expect(html).toContain('snowpro://courses/9223372036854775807');
     expect(html).toContain('app-id=6754150275');
     expect(html).toContain('Free preview');
+    expect(html).toContain('Google Play · Android');
+    expect(html).toContain('Download APK');
     expect(html).toContain('covers/one.webp');
   });
 
@@ -68,6 +70,7 @@ describe('Public course sharing', () => {
     expect(res.status).toHaveBeenCalledWith(status);
     expect(send.mock.calls[0][0]).toContain('noindex');
     expect(send.mock.calls[0][0]).toContain('App Store');
+    expect(send.mock.calls[0][0]).toContain('snowpro://courses/1');
     expect(setHeader).toHaveBeenCalledWith('Cache-Control', 'no-store');
   });
 

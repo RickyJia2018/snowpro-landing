@@ -30,7 +30,12 @@ describe('Instructor sharing', () => {
     expect(html).not.toContain('0.00');
     expect(html).not.toContain('5.0');
     expect(html).toContain('snowpro://instructors/1003');
-    expect(html).toContain('instructor-share');
+    expect(html).toContain('course-share instructor-share');
+    expect(html).not.toContain('is-cover');
+    expect(html).not.toContain('MOUNTAIN MENTOR');
+    expect(html).not.toContain('A little guidance');
+    expect(html).toContain('Google Play · Android');
+    expect(html).toContain('Download APK');
   });
   it('rejects malformed IDs, wrong identities and unsafe images', () => {
     expect(normalizeInstructor(response(), '1')).toBeNull();

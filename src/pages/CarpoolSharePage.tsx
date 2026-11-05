@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { ANDROID_DOWNLOAD_URL, IOS_DOWNLOAD_URL, courseShareStyles } from '../lib/courseShare';
+import { ANDROID_APK_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, IOS_DOWNLOAD_URL, courseShareStyles } from '../lib/courseShare';
 
 // Keep protected trip details in the authenticated app. This page only helps
 // recipients open the shared destination or install the app and return here.
@@ -18,7 +18,7 @@ export default function CarpoolSharePage() {
   return <>
     <style>{courseShareStyles}</style>
     <main className="course-share">
-      <a className="brand" href="/">Snow Pro</a>
+      <a className="brand" href="/">SnowPro</a>
       <article>
         <div className="content">
           {appUrl ? <>
@@ -33,10 +33,11 @@ export default function CarpoolSharePage() {
             <p className="muted">{label('请向分享者索取完整的行程链接。', 'Ask the sender for the complete trip link.')}</p>
           </div>}
           <section aria-label={label('下载 App', 'Download app')}>
-            <h2>{label('下载 Snow Pro', 'Download Snow Pro')}</h2>
+            <h2>{label('下载 SnowPro', 'Download SnowPro')}</h2>
             <div className="downloads">
               <a className="button" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a>
-              <a className="button" href={ANDROID_DOWNLOAD_URL}>Android · APK</a>
+              <a className="button" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
+              <a className="button" href={ANDROID_APK_DOWNLOAD_URL}>{label('直接下载 APK', 'Download APK')}</a>
             </div>
             {appUrl && <p className="muted">{label('安装后返回这条分享链接，再打开行程。', 'After installing, return to this shared link to open the trip.')}</p>}
           </section>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Snowflake, ArrowUpRight } from 'lucide-react';
+import { courseShareStyles, IOS_DOWNLOAD_URL, ANDROID_APK_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL } from '../lib/courseShare';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 const copy = {
@@ -25,22 +25,25 @@ export default function InstructorInvitePage() {
   const { language } = useLanguage();
   const t = copy[language] ?? copy.en;
   const code = invitationCode(params);
-  return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-5 py-12">
-      <section className="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900 p-7 sm:p-9 shadow-xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-sky-400 font-semibold mb-8"><Snowflake size={25} /> SnowPro</Link>
-        <h1 className="text-2xl font-bold leading-tight mb-4">{t[0]}</h1>
-        <p className="text-slate-300 leading-relaxed mb-7">{code ? t[1] : t[6]}</p>
+  return <>
+    <style>{courseShareStyles}</style>
+    <main className="course-share">
+      <Link to="/" className="brand">SnowPro</Link>
+      <article><div className="content">
+        <h1>{t[0]}</h1>
+        <p className="muted">{code ? t[1] : t[6]}</p>
         {code && <>
-          <div className="rounded-2xl border border-sky-900 bg-sky-950/30 p-5 mb-6">
-            <p className="text-sm text-slate-400 mb-2">{t[2]}</p>
-            <p className="text-3xl font-bold tracking-wider text-sky-400 select-all break-all">{code}</p>
-          </div>
-          <a href={`snowpro://invite/instructor?code=${encodeURIComponent(code)}`} className="flex items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-500 min-h-12 px-5 py-3 font-semibold">{t[3]}<ArrowUpRight size={20} /></a>
+          <p className="muted">{t[2]}</p>
+          <p className="price" style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{code}</p>
+          <div className="actions"><a href={`snowpro://invite/instructor?code=${encodeURIComponent(code)}`} className="button primary">{t[3]}</a></div>
         </>}
-        <a href="/#download" className="flex justify-center py-4 text-sky-400 font-medium">{t[4]}</a>
-        {code && <p className="text-sm text-slate-400 text-center leading-relaxed">{t[5]}</p>}
-      </section>
+        <section aria-label={t[4]}>
+          <h2>{t[4]}</h2>
+          <div className="downloads"><a className="button" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a><a className="button" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
+              <a className="button" href={ANDROID_APK_DOWNLOAD_URL}>{language === 'zh' ? '直接下载 APK' : 'Download APK'}</a></div>
+          {code && <p className="muted">{t[5]}</p>}
+        </section>
+      </div></article>
     </main>
-  );
+  </>;
 }
