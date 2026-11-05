@@ -1,3 +1,4 @@
+import InstructorInvitePage from './src/pages/InstructorInvitePage';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Download, QrCode } from 'lucide-react';
@@ -43,6 +44,7 @@ function App() {
         <Route path="/carpool-pass/success" element={<CarpoolPassSuccessPage />} />
         <Route path="/refunds" element={<RefundPolicyPage />} />
         <Route path="/terms" element={<TokenPolicyPage />} />
+        <Route path="/invite/instructor" element={<InstructorInvitePage />} />
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
         <Route path="/courses/:id" element={<CourseSharePage />} />
         <Route path="/carpool/detail" element={<CarpoolSharePage />} />

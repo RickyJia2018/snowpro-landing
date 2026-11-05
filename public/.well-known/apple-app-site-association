@@ -4,11 +4,23 @@
     "details": [
       {
         "appID": "654476VZU7.com.googuar.snowpro",
-        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*", "/carpool/detail" ]
+        "paths": [
+          "NOT /instructors/*/edit",
+          "/instructors/*",
+          "/courses/*",
+          "/carpool/detail",
+          "/invite/instructor"
+        ]
       },
       {
         "appID": "654476VZU7.com.googuar.snowpro.dev",
-        "paths": [ "NOT /instructors/*/edit", "/instructors/*", "/courses/*", "/carpool/detail" ]
+        "paths": [
+          "NOT /instructors/*/edit",
+          "/instructors/*",
+          "/courses/*",
+          "/carpool/detail",
+          "/invite/instructor"
+        ]
       }
     ]
   }
