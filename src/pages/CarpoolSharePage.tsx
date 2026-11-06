@@ -17,7 +17,7 @@ export default function CarpoolSharePage() {
 
   return <>
     <style>{courseShareStyles}</style>
-    <main className="course-share">
+    <main className="course-share" data-share-language={language}>
       <a className="brand" href="/">SnowPro</a>
       <article>
         <div className="content">

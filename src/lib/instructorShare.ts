@@ -63,7 +63,7 @@ export function renderInstructorDocument(coach: SharedInstructor | null, id: str
     <meta property="og:image" content="${safe(coach?.cover || coach?.avatar || COURSE_SHARE_ORIGIN + '/logo_icon.png')}">
     <meta name="twitter:card" content="summary_large_image"><meta name="apple-itunes-app" content="app-id=6754150275, app-argument=${canonical}">
     ${coach ? '' : '<meta name="robots" content="noindex">'}<style>${instructorShareStyles}</style>
-    </head><body style="margin:0">${renderInstructorShare(coach, zh, unavailable, id)}</body></html>`;
+    <script defer src="/browser-open-guide.js"></script></head><body style="margin:0">${renderInstructorShare(coach, zh, unavailable, id)}</body></html>`;
 }
 
 // Share pages use one compact layout; the full profile stays in the app.
@@ -93,7 +93,7 @@ export function renderInstructorShare(coach: SharedInstructor | null, zh: boolea
     ${coach.intro ? `<h2>${label('教练简介','About the instructor')}</h2><p class="description muted">${safe(coach.intro)}</p>` : ''}
     ${coach.price > 0 ? `<p class="price">${(coach.price / 100).toFixed(2)} ${label('雪币','Snow Coins')}</p><p class="muted">${label('视频指导，具体服务请在 App 内确认。','Video coaching. Confirm service details in the app.')}</p>` : ''}
   ` : `<div role="status"><h1>${unavailable ? label('教练暂不可查看','Instructor unavailable') : label('暂时无法加载教练资料','Unable to load instructor')}</h1><p class="muted">${unavailable ? label('主页可能已不可见，或链接无效。','This profile may no longer be available, or the link is invalid.') : label('请刷新重试，或在 App 中查看。','Refresh to try again, or view the profile in the app.')}</p></div>`;
-  return `<main class="course-share instructor-share">
+  return `<main data-share-language="${zh ? 'zh' : 'en'}" class="course-share instructor-share">
     <a class="brand" href="/">SnowPro</a>
     <article><div class="content">
       ${profile}

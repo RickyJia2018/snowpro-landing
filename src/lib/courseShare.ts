@@ -113,7 +113,7 @@ export const courseShareStyles = `
   .course-share .downloads{display:flex;gap:12px;flex-wrap:wrap}.course-share ol{padding-left:24px;list-style:decimal}.course-share li{margin-bottom:12px}
   .course-share .badge{font-size:14px;color:#bfdbfe;margin-left:8px}.course-share .hint{padding:16px;background:#1e293b;border-radius:12px}
   .course-share footer{margin-top:24px;font-size:14px}.course-share .error{padding:32px 0}
-  @media(max-width:480px){.course-share{padding:16px 12px 32px}.course-share .content{padding:20px}.course-share .downloads .button{flex:1}}
+  @media(max-width:480px){.course-share{padding:16px 12px 32px}.course-share .content{padding:20px}.course-share .downloads{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.course-share .downloads .button:last-child:nth-child(3){grid-column:1/-1}}
 `.replaceAll('.course-share', SHARE_PAGE_SELECTOR);
 
 export function renderCourseShare(course: PublicCourse | null, zh: boolean, unavailable = false, requestedId = ''): string {
@@ -129,11 +129,11 @@ export function renderCourseShare(course: PublicCourse | null, zh: boolean, unav
   </section>`;
   const appId = course?.id || (validCourseId(requestedId) ? requestedId : '');
   const openApp = appId ? `<div class="actions"><a class="button primary" href="snowpro://courses/${appId}">${label('在 Snow Pro 中打开课程', 'Open course in Snow Pro')}</a></div>` : '';
-  if (!course) return `<main class="course-share"><a class="brand" href="/">SnowPro</a><article><div class="content">
+  if (!course) return `<main data-share-language="${zh ? 'zh' : 'en'}" class="course-share"><a class="brand" href="/">SnowPro</a><article><div class="content">
     <div class="error" role="alert"><h1>${unavailable ? label('课程暂不可查看', 'Course unavailable') : label('暂时无法加载课程', 'Unable to load course')}</h1>
     <p class="muted">${unavailable ? label('课程可能已下架，或分享链接无效。', 'The course may no longer be published, or the link is invalid.') : label('请稍后刷新页面重试。', 'Please refresh this page to try again.')}</p></div>${openApp}${actions}</div></article></main>`;
   const safe = escapeHtml;
-  return `<main class="course-share">
+  return `<main data-share-language="${zh ? 'zh' : 'en'}" class="course-share">
     <a class="brand" href="/">SnowPro</a>
     <article>
       ${course.cover ? `<img class="cover" src="${safe(course.cover)}" alt="${safe(course.title)}" width="880" height="495">` : '<div class="cover-placeholder" aria-hidden="true">Snow Pro</div>'}
@@ -172,5 +172,5 @@ export function renderCourseShareDocument(course: PublicCourse | null, id: strin
     <meta name="apple-itunes-app" content="app-id=6754150275, app-argument=${canonical}">
     ${course ? '' : '<meta name="robots" content="noindex">'}
     <style>${courseShareStyles}</style>
-  </head><body>${renderCourseShare(course, zh, unavailable, id)}</body></html>`;
+  <script defer src="/browser-open-guide.js"></script></head><body>${renderCourseShare(course, zh, unavailable, id)}</body></html>`;
 }

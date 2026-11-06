@@ -27,7 +27,7 @@ export default function InstructorInvitePage() {
   const code = invitationCode(params);
   return <>
     <style>{courseShareStyles}</style>
-    <main className="course-share">
+    <main className="course-share" data-share-language={language}>
       <Link to="/" className="brand">SnowPro</Link>
       <article><div className="content">
         <h1>{t[0]}</h1>

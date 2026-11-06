@@ -1,3 +1,4 @@
+import ShareBrowserGuideRuntime from './src/components/ShareBrowserGuideRuntime';
 import InstructorInvitePage from './src/pages/InstructorInvitePage';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <LanguageProvider>
+      <ShareBrowserGuideRuntime />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
