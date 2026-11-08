@@ -1,3 +1,4 @@
+import HelpCenterPage from './src/pages/HelpCenterPage';
 import ShareBrowserGuideRuntime from './src/components/ShareBrowserGuideRuntime';
 import InstructorInvitePage from './src/pages/InstructorInvitePage';
 import React from 'react';
@@ -37,6 +38,7 @@ function App() {
       <ShareBrowserGuideRuntime />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/help-center" element={<HelpCenterPage />} />
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/linkstripe" element={<LinkStripePage />} />
         <Route path="/stripe-callback" element={<LinkStripePage />} />
