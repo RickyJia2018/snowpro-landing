@@ -1,9 +1,10 @@
 // src/lib/peakpalClient.ts
 import { PeakPalClient } from '../pb/Service_peakpalServiceClientPb';
 import { Request, UnaryResponse, ClientReadableStream } from 'grpc-web'; // Import Request type
+import { API_BASE_URL } from '../config/api';
 
 const peakPalClient = new PeakPalClient(
-  "https://skiapp-api.googuar.com",
+  API_BASE_URL,
   null,
   {
     unaryInterceptors: [

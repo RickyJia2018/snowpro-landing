@@ -1,1 +1,1 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://skiapp-api.googuar.com";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://snowpro-prod-786618190531.us-west1.run.app";
