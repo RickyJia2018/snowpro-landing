@@ -7,6 +7,7 @@ export default defineConfig(() => {
     // Never proxy authenticated routes or change the production API setting.
     const sharePreviewTarget = process.env.SNOWPRO_SHARE_PREVIEW_API;
     return {
+      envPrefix: ['VITE_', 'NEXT_PUBLIC_'],
       server: {
         port: 3000,
         host: '0.0.0.0',

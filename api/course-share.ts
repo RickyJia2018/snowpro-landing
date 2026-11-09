@@ -1,4 +1,5 @@
 import { CourseShareUnavailable, fetchPublicCourse, renderCourseShareDocument, validCourseId } from '../src/lib/courseShare.js';
+import { getApiBaseUrl } from '../src/config/api.js';
 
 type Request = { query: Record<string, string | string[] | undefined>; headers: Record<string, string | string[] | undefined> };
 type Response = { setHeader(name: string, value: string): void; status(code: number): Response; send(body: string): void };
@@ -16,7 +17,7 @@ export default async function handler(req: Request, res: Response) {
   try {
     const course = await fetchPublicCourse(
       id,
-      process.env.COURSE_SHARE_API_BASE_URL || process.env.VITE_API_BASE_URL || 'https://skiapp-api.googuar.com',
+      process.env.COURSE_SHARE_API_BASE_URL || getApiBaseUrl(),
       AbortSignal.timeout(10000),
     );
     res.status(200).send(renderCourseShareDocument(course, id, zh));

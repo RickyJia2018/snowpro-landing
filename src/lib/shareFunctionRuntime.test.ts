@@ -12,7 +12,7 @@ it('loads share functions in the deployed Node ESM module format', () => {
   const root = mkdtempSync(join(tmpdir(), 'snowpro-share-runtime-'));
   try {
     writeFileSync(join(root, 'package.json'), '{"type":"module"}');
-    for (const source of ['api/instructor-share.ts', 'api/course-share.ts', 'src/lib/instructorShare.ts', 'src/lib/courseShare.ts']) {
+    for (const source of ['api/instructor-share.ts', 'api/course-share.ts', 'src/lib/instructorShare.ts', 'src/lib/courseShare.ts', 'src/config/api.ts']) {
       const file = join(root, source.replace(/\.ts$/, '.js'));
       mkdirSync(dirname(file), { recursive: true });
       const result = ts.transpileModule(readFileSync(source, 'utf8'), {
