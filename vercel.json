@@ -57,6 +57,14 @@
   ],
   "rewrites": [
     {
+      "source": "/buddy/detail",
+      "destination": "/api/buddy-share"
+    },
+    {
+      "source": "/carpool/detail",
+      "destination": "/api/carpool-share"
+    },
+    {
       "source": "/instructors/:id",
       "destination": "/api/instructor-share?id=:id"
     },

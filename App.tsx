@@ -52,6 +52,7 @@ function App() {
         <Route path="/instructors/:id" element={<InstructorSharePage />} />
         <Route path="/courses/:id" element={<CourseSharePage />} />
         <Route path="/carpool/detail" element={<CarpoolSharePage />} />
+        <Route path="/buddy/detail" element={<CarpoolSharePage kind="buddy" />} />
       </Routes>
     </LanguageProvider>
   );

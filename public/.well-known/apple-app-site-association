@@ -9,6 +9,7 @@
           "/instructors/*",
           "/courses/*",
           "/carpool/detail",
+          "/buddy/detail",
           "/invite/instructor"
         ]
       },
@@ -19,6 +20,7 @@
           "/instructors/*",
           "/courses/*",
           "/carpool/detail",
+          "/buddy/detail",
           "/invite/instructor"
         ]
       }
