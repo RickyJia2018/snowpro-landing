@@ -29,7 +29,15 @@ export default function HelpCenterPage() {
       <Link to="/" aria-label={t[2]} className="text-lg font-semibold text-blue-300">SnowPro</Link>
       <section className="mt-10 rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
         <h1 className="text-2xl font-bold">{t[0]}</h1>
-        <p className="mt-3 text-base leading-7 text-slate-400">{t[1]}</p>
+        <p className="mt-3 text-base leading-7 text-slate-400">{selected === 'zh' ? '账号、购买、退款或内容安全问题，请联系 SnowPro 支持。' : 'For account, purchase, refund or content-safety questions, contact SnowPro support.'}</p>
+        <a href="mailto:snowpro-support@googuar.com" className="mt-4 inline-block text-blue-300 underline">snowpro-support@googuar.com</a>
+        <ul className="mt-6 space-y-3 text-blue-300">
+          <li><a href="/account-deletion.html" className="underline">{selected === 'zh' ? '申请删除账号与关联数据' : 'Request account and data deletion'}</a></li>
+          <li><a href="/refunds" className="underline">{selected === 'zh' ? '购买与退款政策' : 'Purchases and refund policy'}</a></li>
+          <li><a href="/community-guidelines.html" className="underline">{selected === 'zh' ? '举报与儿童安全规则' : 'Reporting and child safety standards'}</a></li>
+          <li><a href="/privacy.html" className="underline">{selected === 'zh' ? '隐私政策' : 'Privacy policy'}</a></li>
+          <li><a href="/terms-of-service.html" className="underline">{selected === 'zh' ? '服务条款' : 'Terms of service'}</a></li>
+        </ul>
       </section>
     </div>
   </main>;
