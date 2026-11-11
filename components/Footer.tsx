@@ -61,11 +61,13 @@ const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-sm font-light">
               {t.footer.supportLinks.map((link: string, i: number) => (
                 <li key={i}>
-                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
+                  <a href={["/help-center", "mailto:snowpro-support@googuar.com", "/privacy.html", "/terms-of-service.html"][i] || "/help-center"} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
                     {link}
                   </a>
                 </li>
               ))}
+              <li><a href="/account-deletion.html" className="hover:text-cyan-400 transition-colors">{language === 'zh' ? '删除账号与数据' : 'Delete account & data'}</a></li>
+              <li><a href="/community-guidelines.html" className="hover:text-cyan-400 transition-colors">{language === 'zh' ? '社区与儿童安全' : 'Community & child safety'}</a></li>
             </ul>
           </div>
         </div>
