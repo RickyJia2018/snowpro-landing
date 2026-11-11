@@ -22,3 +22,10 @@ it.each(['id=invalid', 'id=00000000-0000-0000-0000-000000000000', 'id=11111111-1
   expect(screen.queryByRole('link', { name: 'Open carpool trip' })).toBeNull();
   expect(screen.getByRole('alert')).toBeTruthy();
 });
+
+it('opens the exact Ski Buddy post with the same download layout', () => {
+  const id = '11111111-1111-4111-8111-111111111111';
+  render(<MemoryRouter initialEntries={[`/buddy/detail?id=${id}`]}><LanguageProvider><CarpoolSharePage kind="buddy" /></LanguageProvider></MemoryRouter>);
+  expect(screen.getByRole('link', { name: 'Open Ski Buddy post' }).getAttribute('href')).toBe(`snowpro://buddy/detail?id=${id}`);
+  expect(screen.getByRole('link', { name: 'Download APK' })).toBeTruthy();
+});
