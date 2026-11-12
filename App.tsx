@@ -3,7 +3,7 @@ import ShareBrowserGuideRuntime from './src/components/ShareBrowserGuideRuntime'
 import InstructorInvitePage from './src/pages/InstructorInvitePage';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Download, QrCode } from 'lucide-react';
+import { Download, Play, QrCode } from 'lucide-react';
 import { AppleLogo, AndroidLogo } from './components/BrandIcons';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -27,6 +27,7 @@ import CarpoolSharePage from './src/pages/CarpoolSharePage';
 import CarpoolPassPage from './src/pages/CarpoolPassPage';
 import CarpoolPassSuccessPage from './src/pages/CarpoolPassSuccessPage';
 import { API_BASE_URL } from './src/config/api';
+import { IOS_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, ANDROID_APK_DOWNLOAD_URL } from './src/lib/courseShare';
 
 function App() {
   React.useEffect(() => {
@@ -61,7 +62,8 @@ function App() {
 const localT = {
   zh: {
     scanIos: "扫码下载 iOS 版",
-    scanGooglePlay: "扫码直接下载 APK",
+    scanGooglePlay: "扫码从 Google Play 下载",
+    androidDescription: "通过 Google Play 下载，或直接安装 APK",
     directApk: "直接下载 Android APK",
     iosLabel: "iPhone 用户",
     androidLabel: "Android 用户",
@@ -69,7 +71,8 @@ const localT = {
   },
   en: {
     scanIos: "Scan to download iOS app",
-    scanGooglePlay: "Scan to download APK directly",
+    scanGooglePlay: "Scan to download on Google Play",
+    androidDescription: "Get it on Google Play or install the APK directly",
     directApk: "Direct APK Download",
     iosLabel: "iPhone Users",
     androidLabel: "Android Users",
@@ -77,7 +80,8 @@ const localT = {
   },
   ja: {
     scanIos: "QRコードでiOS版をダウンロード",
-    scanGooglePlay: "QRコードでAPKを直接ダウンロード",
+    scanGooglePlay: "QRコードでGoogle Playからダウンロード",
+    androidDescription: "Google Play または APK からインストール",
     directApk: "Android APK 直接ダウンロード",
     iosLabel: "iPhone ユーザー",
     androidLabel: "Android ユーザー",
@@ -85,7 +89,8 @@ const localT = {
   },
   ko: {
     scanIos: "QR 코드로 iOS 앱 다운로드",
-    scanGooglePlay: "QR 코드로 APK 직접 다운로드",
+    scanGooglePlay: "QR 코드로 Google Play에서 다운로드",
+    androidDescription: "Google Play에서 다운로드하거나 APK 직접 설치",
     directApk: "Android APK 직접 다운로드",
     iosLabel: "iPhone 사용자",
     androidLabel: "Android 사용자",
@@ -93,7 +98,8 @@ const localT = {
   },
   fr: {
     scanIos: "Scanner pour iOS App Store",
-    scanGooglePlay: "Scanner pour télécharger l'APK",
+    scanGooglePlay: "Scanner pour télécharger sur Google Play",
+    androidDescription: "Télécharger sur Google Play ou installer directement l’APK",
     directApk: "Téléchargement direct de l'APK",
     iosLabel: "Utilisateurs iPhone",
     androidLabel: "Utilisateurs Android",
@@ -101,7 +107,8 @@ const localT = {
   },
   de: {
     scanIos: "Scannen für iOS App Store",
-    scanGooglePlay: "Scannen zum direkten APK-Download",
+    scanGooglePlay: "Scannen für Google Play",
+    androidDescription: "Über Google Play herunterladen oder APK direkt installieren",
     directApk: "Direkter APK-Download",
     iosLabel: "iPhone-Nutzer",
     androidLabel: "Android-Nutzer",
@@ -109,7 +116,8 @@ const localT = {
   },
   es: {
     scanIos: "Escanear para descargar en iOS",
-    scanGooglePlay: "Escanear para descargar APK",
+    scanGooglePlay: "Escanear para descargar en Google Play",
+    androidDescription: "Descarga desde Google Play o instala el APK directamente",
     directApk: "Descarga directa de APK",
     iosLabel: "Usuarios iPhone",
     androidLabel: "Usuarios Android",
@@ -117,7 +125,8 @@ const localT = {
   },
   ru: {
     scanIos: "Сканируйте для загрузки iOS",
-    scanGooglePlay: "Сканируйте для загрузки APK",
+    scanGooglePlay: "Сканируйте для загрузки из Google Play",
+    androidDescription: "Скачайте из Google Play или установите APK напрямую",
     directApk: "Прямая загрузка APK",
     iosLabel: "Для пользователей iPhone",
     androidLabel: "Для пользователей Android",
@@ -170,7 +179,7 @@ function HomePage() {
                 {/* QR Code Container */}
                 <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fapps.apple.com%2Fapp%2Fid6754150275"
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(IOS_DOWNLOAD_URL)}`}
                     alt="iOS App Store QR Code"
                     className="w-[150px] h-[150px] rounded-lg opacity-90"
                     loading="lazy"
@@ -182,7 +191,7 @@ function HomePage() {
                 </span>
 
                 <a 
-                  href="https://apps.apple.com/app/id6754150275"
+                  href={IOS_DOWNLOAD_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-white text-slate-950 hover:bg-slate-100 font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-[1.02]"
@@ -199,14 +208,14 @@ function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">{currT.androidLabel}</h3>
                 <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '直接下载并安装 Android APK 文件' : language === 'es' ? 'Descarga e instala el archivo APK de Android directamente' : language === 'ru' ? 'Скачайте и установите APK-файл Android напрямую' : 'Download and install the Android APK file directly'}
+                  {currT.androidDescription}
                 </p>
 
                 {/* QR Code Container */}
                 <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fsnowpro-public-bucket.googuar.com%2Fsnowpro.apk"
-                    alt="Android APK QR Code"
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ANDROID_PLAY_DOWNLOAD_URL)}`}
+                    alt="Google Play QR Code"
                     className="w-[150px] h-[150px] rounded-lg opacity-90"
                     loading="lazy"
                   />
@@ -216,12 +225,21 @@ function HomePage() {
                   {currT.scanGooglePlay}
                 </span>
 
-                <div className="w-full">
-                  <a 
-                    href="https://snowpro-public-bucket.googuar.com/snowpro.apk"
+                <div className="w-full flex flex-col gap-3">
+                  <a
+                    href={ANDROID_PLAY_DOWNLOAD_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border-0 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center hover:scale-[1.02]"
                   >
-                    <Download size={20} />
+                    <Play size={20} fill="currentColor" />
+                    Google Play
+                  </a>
+                  <a
+                    href={ANDROID_APK_DOWNLOAD_URL}
+                    className="w-full border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800/60 text-slate-200 font-medium py-3 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center"
+                  >
+                    <Download size={18} />
                     {currT.directApk}
                   </a>
                 </div>

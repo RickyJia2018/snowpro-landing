@@ -13,7 +13,7 @@ it('opens the exact trip in the app, with direct store fallbacks', () => {
   const id = '11111111-1111-4111-8111-111111111111';
   mount(`id=${id}`);
   expect(screen.getByRole('link', { name: 'Open carpool trip' }).getAttribute('href')).toBe(`snowpro://carpool/detail?id=${id}`);
-  expect(screen.getByRole('link', { name: 'Google Play · Android' }).getAttribute('href')).toBe('https://play.google.com/store/apps/details?id=com.googuar.snowpro&pcampaignid=web_share');
+  expect(screen.getByRole('link', { name: 'Google Play · Android' }).getAttribute('href')).toBe('https://play.google.com/store/apps/details?id=com.googuar.snowpro');
     expect(screen.getByRole('link', { name: 'Download APK' }).getAttribute('href')).toBe('https://snowpro-public-bucket.googuar.com/snowpro.apk');
   expect(screen.getByText(/Sign in/)).toBeTruthy();
 });
