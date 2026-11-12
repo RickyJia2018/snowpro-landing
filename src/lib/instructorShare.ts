@@ -1,7 +1,7 @@
 import { ANDROID_APK_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, COURSE_SHARE_ORIGIN, IOS_DOWNLOAD_URL, CourseShareUnavailable, SHARE_PAGE_SELECTOR, courseShareStyles, escapeHtml, validCourseId } from './courseShare.js';
 
 export type SharedInstructor = {
-  id: string; name: string; intro: string; avatar: string; cover: string;
+  id: string; name: string; intro: string; tagline?: string; highestCertificate?: string; avatar: string; cover: string;
   price: number; active: boolean; reviews: number; rating: number;
   certificates: string[];
   base: string; tags: string[]; teachingSince: number; skiingSince: number; languages: string[];
@@ -11,7 +11,8 @@ function image(value: unknown): string {
   if (typeof value !== 'string') return '';
   try {
     const url = new URL(value);
-    return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+    return url.protocol === 'https:' && !url.username && !url.password &&
+      !/\.(mp4|mov|m4v|webm|m3u8)$/i.test(url.pathname) ? url.href : '';
   } catch { return ''; }
 }
 
@@ -19,9 +20,18 @@ export function normalizeInstructor(data: any, id: string): SharedInstructor | n
   const raw = data?.instructor;
   if (!validCourseId(id) || !raw || String(raw.userId ?? raw.user_id) !== id) return null;
   const number = (value: unknown) => Number.isFinite(Number(value)) ? Math.max(0, Number(value)) : 0;
+  const certificates = (Array.isArray(data.certificates) ? data.certificates : [])
+    .filter((cert: any) => cert.status === undefined || cert.status === 1 || cert.status === 'APPROVED');
+  const highest = certificates.filter((cert: any) =>
+    cert.category === undefined || cert.category === 0 || cert.category === 'TEACHING')
+    .filter((cert: any) => String(cert.acronym || cert.name || '').trim())
+    .sort((a: any, b: any) => number(b.level) - number(a.level))[0];
   return {
     id, name: String(raw.username || 'Snow Pro Instructor'),
     intro: String(raw.selfIntro ?? raw.self_intro ?? ''),
+    tagline: String(raw.tagline || '').trim(),
+    highestCertificate: highest ? [highest.acronym || highest.name,
+      number(highest.level) > 0 ? `L${number(highest.level)}` : ''].filter(Boolean).join(' ') : '',
     avatar: image(raw.avatarUrl ?? raw.avatar_url),
     cover: Array.isArray(raw.media) ? raw.media.map(image).find(Boolean) || '' : '',
     price: number(raw.price), active: raw.active === true,
@@ -32,8 +42,7 @@ export function normalizeInstructor(data: any, id: string): SharedInstructor | n
     teachingSince: number(raw.teachingSince ?? raw.teaching_since),
     skiingSince: number(raw.skiingSince ?? raw.skiing_since),
     // Public certificate endpoint already filters approval. Never copy proof images.
-    certificates: (Array.isArray(data.certificates) ? data.certificates : [])
-      .filter((cert: any) => cert.status === undefined || cert.status === 1 || cert.status === 'APPROVED')
+    certificates: certificates
       .map((cert: any) => [cert.acronym || cert.name, cert.level].filter(Boolean).join(' ')),
   };
 }
@@ -51,8 +60,14 @@ export function renderInstructorDocument(coach: SharedInstructor | null, id: str
   const label = (cn: string, en: string) => zh ? cn : en;
   const safe = escapeHtml;
   const canonical = validCourseId(id) ? `${COURSE_SHARE_ORIGIN}/instructors/${id}` : COURSE_SHARE_ORIGIN;
-  const title = coach ? `${coach.name} · Snow Pro` : label('Snow Pro · 教练', 'Snow Pro · Instructor');
-  const description = coach?.intro.slice(0, 200) || label('在 Snow Pro 预约滑雪教练', 'Discover ski and snowboard instructors on Snow Pro');
+  const title = coach ? [coach.name, coach.highestCertificate, 'SnowPro'].filter(Boolean).join(' · ') : label('Snow Pro · 教练', 'Snow Pro · Instructor');
+  const years = coach ? new Date().getFullYear() - coach.teachingSince : -1;
+  const description = (coach ? [
+    coach.highestCertificate,
+    coach.teachingSince > 0 && years >= 0 ? label(`${years}年教学经验`, `${years} yrs teaching`) : '',
+    coach.tagline?.trim() || coach.intro.trim(),
+  ].filter(Boolean).join(' · ').replace(/\s+/g, ' ').slice(0, 200) : '') || label('在 Snow Pro 预约滑雪教练', 'Discover ski and snowboard instructors on Snow Pro');
+  const thumbnail = coach?.avatar || coach?.cover || COURSE_SHARE_ORIGIN + '/logo_icon.png';
 
   return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}"><head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,7 +75,11 @@ export function renderInstructorDocument(coach: SharedInstructor | null, id: str
     <link rel="canonical" href="${canonical}"><meta property="og:type" content="profile">
     <meta property="og:site_name" content="Snow Pro"><meta property="og:title" content="${safe(title)}">
     <meta property="og:description" content="${safe(description)}"><meta property="og:url" content="${canonical}">
-    <meta property="og:image" content="${safe(coach?.cover || coach?.avatar || COURSE_SHARE_ORIGIN + '/logo_icon.png')}">
+    <meta property="og:image" content="${safe(thumbnail)}">
+    <meta property="og:image:secure_url" content="${safe(thumbnail)}">
+    <link rel="icon" href="/logo_icon.png"><link rel="apple-touch-icon" href="/logo_icon.png">
+    <meta name="twitter:title" content="${safe(title)}"><meta name="twitter:description" content="${safe(description)}">
+    <meta name="twitter:image" content="${safe(thumbnail)}">
     <meta name="twitter:card" content="summary_large_image"><meta name="apple-itunes-app" content="app-id=6754150275, app-argument=${canonical}">
     ${coach ? '' : '<meta name="robots" content="noindex">'}<style>${instructorShareStyles}</style>
     <script defer src="/browser-open-guide.js"></script></head><body style="margin:0">${renderInstructorShare(coach, zh, unavailable, id)}</body></html>`;

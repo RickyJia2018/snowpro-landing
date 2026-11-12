@@ -157,7 +157,9 @@ export function renderCourseShare(course: PublicCourse | null, zh: boolean, unav
 // Server-rendered metadata lets chat/social crawlers see the actual course.
 export function renderCourseShareDocument(course: PublicCourse | null, id: string, zh: boolean, unavailable = false): string {
   const title = course ? `${course.title} · Snow Pro` : 'Snow Pro · Course';
-  const description = course?.description.slice(0, 200) || 'Discover ski and snowboard courses on Snow Pro.';
+  const description = (course ? [course.instructor, course.description].filter(Boolean)
+    .join(' · ').replace(/\s+/g, ' ').slice(0, 200) : '') || 'Discover ski and snowboard courses on Snow Pro.';
+  const thumbnail = course?.cover || COURSE_SHARE_ORIGIN + '/logo_icon.png';
   const canonical = validCourseId(id) ? courseUrl(id) : COURSE_SHARE_ORIGIN;
   const safe = escapeHtml;
   return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}"><head>
@@ -167,7 +169,11 @@ export function renderCourseShareDocument(course: PublicCourse | null, id: strin
     <meta property="og:type" content="website"><meta property="og:site_name" content="Snow Pro">
     <meta property="og:title" content="${safe(title)}"><meta property="og:description" content="${safe(description)}">
     <meta property="og:url" content="${canonical}">
-    <meta property="og:image" content="${safe(course?.cover || COURSE_SHARE_ORIGIN + '/logo_icon.png')}">
+    <meta property="og:image" content="${safe(thumbnail)}">
+    <meta property="og:image:secure_url" content="${safe(thumbnail)}">
+    <link rel="icon" href="/logo_icon.png"><link rel="apple-touch-icon" href="/logo_icon.png">
+    <meta name="twitter:title" content="${safe(title)}"><meta name="twitter:description" content="${safe(description)}">
+    <meta name="twitter:image" content="${safe(thumbnail)}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="apple-itunes-app" content="app-id=6754150275, app-argument=${canonical}">
     ${course ? '' : '<meta name="robots" content="noindex">'}

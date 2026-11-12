@@ -6,6 +6,27 @@ const response = () => ({ instructor: { userId: '9223372036854775807', username:
 afterEach(() => vi.restoreAllMocks());
 
 describe('Instructor sharing', () => {
+  it('previews highest teaching certificate, experience, tagline and avatar', () => {
+    const data = response();
+    Object.assign(data.instructor, { tagline: 'Patient coaching', teachingSince: 2020 });
+    data.instructor.media = ['https://images.example/lesson.mp4'];
+    data.certificates.push({ acronym: 'CSIA', level: 4, status: 1, proveImage: '' });
+    data.certificates.push({ acronym: 'PENDING', level: 5, status: 0, proveImage: '' });
+    data.certificates.push({ acronym: 'RACE', level: 9, status: 1, proveImage: '', category: 1 } as any);
+    const coach = normalizeInstructor(data, data.instructor.userId)!;
+    const html = renderInstructorDocument(coach, coach.id, false);
+    expect(coach.highestCertificate).toBe('CSIA L4');
+    expect(coach.cover).toBe('');
+    expect(html).toContain(`content="CSIA L4 · ${new Date().getFullYear() - 2020} yrs teaching · Patient coaching"`);
+    expect(html).toContain('property="og:image" content="https://images.example/avatar.png"');
+    expect(html).not.toContain('lesson.mp4');
+    expect(html).not.toContain('PENDING');
+    coach.tagline = '  ';
+    const fallback = renderInstructorDocument(coach, coach.id, true);
+    expect(fallback).toContain('教学经验 · Ski &amp; snowboard');
+    coach.teachingSince = new Date().getFullYear() + 1;
+    expect(renderInstructorDocument(coach, coach.id, false)).not.toContain('yrs teaching');
+  });
   it('renders safe public metadata, price, certificates and correct app destination', () => {
     const coach = normalizeInstructor(response(), '9223372036854775807')!;
     const html = renderInstructorDocument(coach, coach.id, true);
