@@ -6,7 +6,7 @@ type Response = { setHeader(name: string, value: string): void; status(code: num
 
 export default async function handler(req: Request, res: Response) {
   const id = req.query.id;
-  const zh = String(req.headers['accept-language'] || '').toLowerCase().startsWith('zh');
+  const zh = req.query.lang === 'zh' || (req.query.lang !== 'en' && String(req.headers['accept-language'] || '').toLowerCase().startsWith('zh'));
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Vary', 'Accept-Language');

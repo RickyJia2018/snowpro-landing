@@ -27,6 +27,8 @@ describe('Public course sharing', () => {
     expect(course.price).toBe(1000);
     const html = renderCourseShareDocument(course, course.id, false);
     expect(html).toContain('og:title');
+    expect(html).toContain('property="og:description" content="Coach · Safe &amp; clear"');
+    expect(html).toContain('property="og:image" content="https://snowpro-public-bucket.googuar.com/covers/one.webp"');
     expect(html).toContain('Carving &lt;script&gt;bad()&lt;/script&gt;');
     expect(html).not.toContain('<script>bad()');
     expect(html).not.toContain('PRIVATE_SECRET');
