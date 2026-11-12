@@ -13,7 +13,7 @@ let clipboardDescriptor: PropertyDescriptor | undefined;
 function mount(ua = wechat, path = '/invite/instructor?code=SP-R91CQI&lang=zh', lang = 'zh') {
   vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(ua);
   window.history.replaceState({}, '', path);
-  document.body.innerHTML = `<main class="course-share" data-share-language="${lang}"><a href="/" class="brand">SnowPro</a><article><div class="actions"><a href="snowpro://invite/instructor?code=SP-R91CQI">Open SnowPro</a></div><div class="downloads"><a href="https://apps.apple.com/app/id6754150275">App Store</a></div></article></main>`;
+  document.body.innerHTML = `<main class="course-share" data-share-language="${lang}"><a href="/" class="brand">SnowPro</a><article><div class="actions"><a href="snowpro://invite/instructor?code=SP-R91CQI">Open SnowPro</a></div><div class="downloads"><a href="https://apps.apple.com/ca/app/snow-pro/id6754150275">App Store</a></div></article></main>`;
   new Function(source)();
 }
 beforeEach(() => { clipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, 'clipboard'); });

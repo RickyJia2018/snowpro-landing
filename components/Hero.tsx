@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ChevronRight, Video, Car, GraduationCap, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { AppleLogo, AndroidLogo } from './BrandIcons';
+import { IOS_DOWNLOAD_URL } from '../src/lib/courseShare';
 
 const Hero: React.FC = () => {
   const { t } = useLanguage();
@@ -288,7 +289,7 @@ const Hero: React.FC = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button 
-            onClick={() => window.open('https://apps.apple.com/app/id6754150275', '_blank')}
+            onClick={() => window.open(IOS_DOWNLOAD_URL, '_blank', 'noopener,noreferrer')}
             className="group relative flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-base sm:text-lg transition-all hover:bg-blue-50 hover:scale-105 shadow-[0_0_25px_rgba(255,255,255,0.25)]"
           >
             <AppleLogo size={22} />

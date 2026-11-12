@@ -16,8 +16,8 @@ describe('instructor invitation fallback', () => {
     expect(screen.getByRole('link', { name: 'Open SnowPro' }).getAttribute('href')).toBe('snowpro://invite/instructor?code=SP-R91CQI');
     expect(screen.getByText(/After installing/)).toBeTruthy();
     expect(screen.getByText(/already applied/)).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'App Store · iPhone' }).getAttribute('href')).toBe('https://apps.apple.com/app/id6754150275');
-    expect(screen.getByRole('link', { name: 'Google Play · Android' }).getAttribute('href')).toBe('https://play.google.com/store/apps/details?id=com.googuar.snowpro&pcampaignid=web_share');
+    expect(screen.getByRole('link', { name: 'App Store · iPhone' }).getAttribute('href')).toBe('https://apps.apple.com/ca/app/snow-pro/id6754150275');
+    expect(screen.getByRole('link', { name: 'Google Play · Android' }).getAttribute('href')).toBe('https://play.google.com/store/apps/details?id=com.googuar.snowpro');
     expect(screen.getByRole('link', { name: 'Download APK' }).getAttribute('href')).toBe('https://snowpro-public-bucket.googuar.com/snowpro.apk');
   });
   it.each(['code=', 'code=FIRST&code=SECOND', 'code=BAD%2FCODE'])('does not open malformed codes: %s', (query) => {

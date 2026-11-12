@@ -1,7 +1,7 @@
 export const COURSE_SHARE_ORIGIN = 'https://snowpro.googuar.com';
 export const ANDROID_APK_DOWNLOAD_URL = 'https://snowpro-public-bucket.googuar.com/snowpro.apk';
-export const IOS_DOWNLOAD_URL = 'https://apps.apple.com/app/id6754150275';
-export const ANDROID_PLAY_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro&pcampaignid=web_share';
+export const IOS_DOWNLOAD_URL = 'https://apps.apple.com/ca/app/snow-pro/id6754150275';
+export const ANDROID_PLAY_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro';
 
 export type PublicCourse = {
   id: string;
