@@ -20,7 +20,7 @@ export function previewLabel(value: unknown, maxLength: number): string {
   return typeof value === 'string' ? Array.from(value.replace(/[\u0000-\u001f\u007f]/g, ' ').trim()).slice(0, maxLength).join('') : '';
 }
 
-export function renderCarpoolDocument(id: string, title: string, description: string, zh: boolean, kind: 'carpool' | 'buddy' = 'carpool'): string {
+export function renderCarpoolDocument(id: string, title: string, description: string, zh: boolean, kind: 'carpool' | 'buddy' = 'carpool', country = ''): string {
   const label = (cn: string, en: string) => zh ? cn : en;
   const valid = validCarpoolId(id);
   const buddy = kind === 'buddy';
@@ -28,7 +28,7 @@ export function renderCarpoolDocument(id: string, title: string, description: st
   const localizedTitle = valid && title ? localizePreviewText(title, zh) : '';
   const localizedDesc = valid && description ? localizePreviewText(description, zh) : '';
   const pageTitle = localizedTitle || (buddy ? label('在 SnowPro 中查看雪友帖子', 'View the Ski Buddy post in SnowPro') : label('在 SnowPro 中查看拼车行程', 'View the carpool trip in SnowPro'));
-  const summary = localizedDesc || (buddy ? label('登录 App 查看帖子详情并联系雪友。', 'Sign in to the app to view the post and contact your ski buddy.') : label('登录 App 查看当前行程信息和座位情况。', 'Sign in to the app to view the current trip and available seats.'));
+  const summary = localizedDesc || (buddy ? label('在 App 中查看帖子详情并联系雪友。', 'View post details and contact your ski buddy in the app.') : label('在 App 中查看实时座位与行程详情。', 'View live seat availability and trip details in the app.'));
   const query = new URLSearchParams({ id });
   const appUrl = `snowpro://${kind}/detail?${query}`;
   const canonical = valid ? `${COURSE_SHARE_ORIGIN}/${kind}/detail?${query}` : COURSE_SHARE_ORIGIN;
@@ -40,8 +40,8 @@ export function renderCarpoolDocument(id: string, title: string, description: st
   const langHref = `/${kind}/detail?${langQuery}`;
   const eyebrow = buddy ? label('雪友约滑', 'Ski Buddy') : label('雪场拼车', 'Carpool Trip');
   const subtitle = buddy
-    ? label('登录 SnowPro App 查看帖子详情并联系雪友。', 'Sign in to SnowPro to view post details and contact your ski buddy.')
-    : label('登录 SnowPro App 查看实时座位与出发安排。', 'Sign in to SnowPro to check live seat availability and trip details.');
+    ? label('在 App 中查看帖子详情并联系雪友。', 'View post details and contact your ski buddy in the app.')
+    : label('在 App 中查看实时座位与行程详情。', 'View live seat availability and trip details in the app.');
 
   const body = valid ? `
     <span class="eyebrow">${eyebrow}</span>
@@ -51,7 +51,7 @@ export function renderCarpoolDocument(id: string, title: string, description: st
     <div class="actions"><a class="button primary" href="${safe(appUrl)}">${buddy ? label('打开雪友帖子', 'Open Ski Buddy post') : label('打开拼车行程', 'Open carpool trip')}</a></div>
   ` : `<div class="error" role="alert"><h1>${buddy ? label('雪友链接无效', 'Invalid Ski Buddy link') : label('拼车链接无效', 'Invalid carpool link')}</h1><p class="muted">${label('请向分享者索取完整的链接。', 'Ask the sender for the complete link.')}</p></div>`;
 
-  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}"><head>
+  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}" data-share-country="${/^[A-Z]{2}$/.test(country) ? country : ''}"><head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>${safe(pageTitle)}</title><meta name="description" content="${safe(summary)}">
     <link rel="icon" href="/logo_icon.png"><link rel="canonical" href="${safe(canonical)}">

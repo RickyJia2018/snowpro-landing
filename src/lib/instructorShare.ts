@@ -67,7 +67,7 @@ export async function fetchSharedInstructor(id: string, apiBase: string, signal?
   return result;
 }
 
-export function renderInstructorDocument(coach: SharedInstructor | null, id: string, zh: boolean, unavailable = false): string {
+export function renderInstructorDocument(coach: SharedInstructor | null, id: string, zh: boolean, unavailable = false, country = ''): string {
   const label = (cn: string, en: string) => zh ? cn : en;
   const safe = escapeHtml;
   const canonical = validCourseId(id) ? `${COURSE_SHARE_ORIGIN}/instructors/${id}` : COURSE_SHARE_ORIGIN;
@@ -80,7 +80,7 @@ export function renderInstructorDocument(coach: SharedInstructor | null, id: str
   ].filter(Boolean).join(' · ').replace(/\s+/g, ' ').slice(0, 200) : '') || label('在 SnowPro 预约滑雪教练', 'Discover ski and snowboard instructors on SnowPro');
   const thumbnail = coach?.avatar || coach?.cover || COURSE_SHARE_ORIGIN + '/logo_icon.png';
 
-  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}"><head>
+  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}" data-share-country="${/^[A-Z]{2}$/.test(country) ? country : ''}"><head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>${safe(title)}</title><meta name="description" content="${safe(description)}">
     <link rel="canonical" href="${canonical}"><meta property="og:type" content="profile">

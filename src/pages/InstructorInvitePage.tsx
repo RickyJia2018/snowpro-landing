@@ -29,7 +29,7 @@ export default function InstructorInvitePage() {
     <style>{courseShareStyles}</style>
     <main className="course-share" data-share-language={language}>
       <header className="topbar">
-        <Link to="/" className="brand"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
+        <Link to="/" className="brand"><img className="brand-icon" src="/share-app-icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
       </header>
       <article><div className="content">
         <h1>{t[0]}</h1>

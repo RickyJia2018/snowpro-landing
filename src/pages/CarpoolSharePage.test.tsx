@@ -15,7 +15,7 @@ it('opens the exact trip in the app, with direct store fallbacks', () => {
   expect(screen.getByRole('link', { name: 'Open carpool trip' }).getAttribute('href')).toBe(`snowpro://carpool/detail?id=${id}`);
   expect(screen.getByRole('link', { name: 'Google Play · Android' }).getAttribute('href')).toBe('https://play.google.com/store/apps/details?id=com.googuar.snowpro');
     expect(screen.getByRole('link', { name: 'Download APK' }).getAttribute('href')).toBe('https://snowpro-public-bucket.googuar.com/snowpro.apk');
-  expect(screen.getByText(/Sign in/)).toBeTruthy();
+  expect(screen.getByText(/View live seat availability/)).toBeTruthy();
 });
 it.each(['id=invalid', 'id=00000000-0000-0000-0000-000000000000', 'id=11111111-1111-4111-8111-111111111111&id=other'])('rejects unusable trip identifiers: %s', query => {
   mount(query);
