@@ -84,4 +84,30 @@ describe('Public course sharing', () => {
     expect(res.send.mock.calls[0][0]).toContain('<h1>Carving');
     expect(res.send.mock.calls[0][0]).toContain('og:image');
   });
+
+  it('uses safe-area header, brand icon, language toggle, and omits static hint noise', () => {
+    const course = normalizePublicCourse(apiResponse(), '9223372036854775807')!;
+    const html = renderCourseShareDocument(course, course.id, false);
+    expect(html).toContain('viewport-fit=cover');
+    expect(html).toContain('env(safe-area-inset-top');
+    expect(html).toContain('/logo_icon.png');
+    expect(html).toContain('lang=zh');
+    expect(html).not.toContain('class="hint"');
+    expect(html).toContain('data-platform="ios"');
+    expect(html).toContain('data-platform="android"');
+    expect(html).toContain('data-platform="apk"');
+  });
+
+  it('collapses extra lessons beyond 4 into an expandable details block', () => {
+    const data = apiResponse();
+    data.videos = Array.from({ length: 6 }, (_, i) => ({
+      title: `Lesson ${i + 1}`, duration: 120, isPreviewable: i === 0, decryptKey: 'SECRET',
+    }));
+    const course = normalizePublicCourse(data, '9223372036854775807')!;
+    const html = renderCourseShareDocument(course, course.id, false);
+    expect(html).toContain('class="more-lessons"');
+    expect(html).toContain('Lesson 1');
+    expect(html).toContain('Lesson 6');
+    expect(html).toContain('View all 6 lessons');
+  });
 });

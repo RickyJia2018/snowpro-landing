@@ -46,3 +46,15 @@ it('opens the exact Ski Buddy post from its poster link', async () => {
   expect(html).toContain('<meta property="og:title" content="Mt Seymour">');
   expect(html).not.toContain('snowpro://carpool');
 });
+
+it('renders structured summary card, brand icon, unified SnowPro name, and localizes Chinese date previews in English mode', () => {
+  const { html } = response({ id, title: 'Whistler Blackcomb', description: '12月5日 ~ 12月7日 (3天)', lang: 'en' });
+  expect(html).toContain('class="summary-card"');
+  expect(html).toContain('Whistler Blackcomb');
+  expect(html).toContain('Dec 5 ~ Dec 7 (3 days)');
+  expect(html).not.toContain('12月5日');
+  expect(html).toContain('/logo_icon.png');
+  expect(html).toContain('lang=zh');
+  expect(html).not.toContain('class="hint"');
+  expect(html).not.toContain('Snow Pro');
+});

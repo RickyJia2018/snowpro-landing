@@ -21,7 +21,7 @@ export default function CourseSharePage() {
   return <>
     <style>{courseShareStyles}</style>
     {!result || result.id !== id
-      ? <main className="course-share" role="status"><a className="brand" href="/">SnowPro</a><article><div className="content"><h1>{language === 'zh' ? '正在加载课程…' : 'Loading course…'}</h1></div></article></main>
+      ? <main className="course-share" role="status"><header className="topbar"><a className="brand" href="/"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></a></header><article><div className="content"><h1>{language === 'zh' ? '正在加载课程…' : 'Loading course…'}</h1></div></article></main>
       : <div dangerouslySetInnerHTML={{ __html: renderCourseShare(result.course, language === 'zh', result.unavailable, id) }} />}
   </>;
 }

@@ -90,4 +90,37 @@ describe('public share browser guidance', () => {
       expect(html).not.toContain('onclick=');
     }
   });
+
+  it('supports /buddy/detail route and adapts download buttons by device OS', () => {
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(safari);
+    window.history.replaceState({}, '', '/buddy/detail?id=11111111-1111-4111-8111-111111111111&lang=en');
+    document.body.innerHTML = `<main class="course-share" data-share-language="en"><a href="/" class="brand">SnowPro</a><article><div class="actions"><a href="snowpro://buddy/detail?id=1">Open Ski Buddy post</a></div><div class="downloads"><a class="button" data-platform="ios" href="https://apps.apple.com/ca/app/snow-pro/id6754150275">App Store · iPhone</a><a class="button" data-platform="android" href="https://play.google.com/store/apps/details?id=com.googuar.snowpro">Google Play · Android</a><a class="button" data-platform="apk" href="https://snowpro-public-bucket.googuar.com/snowpro.apk">Download APK</a></div></article></main>`;
+    new Function(source)();
+    const main = document.querySelector('main')!;
+    expect(main.dataset.sharePlatform).toBe('ios');
+    expect(screen.getByRole('button', { name: 'Can’t open the app?' })).toBeTruthy();
+    const iosLink = main.querySelector('a[data-platform="ios"]') as HTMLElement;
+    const androidLink = main.querySelector('a[data-platform="android"]') as HTMLElement;
+    const apkLink = main.querySelector('a[data-platform="apk"]') as HTMLElement;
+    expect(iosLink.hidden).toBe(false);
+    expect(androidLink.hidden).toBe(true);
+    expect(apkLink.hidden).toBe(true);
+    const toggle = screen.getByRole('button', { name: /Other platforms/ });
+    fireEvent.click(toggle);
+    expect(androidLink.hidden).toBe(false);
+    expect(apkLink.hidden).toBe(false);
+  });
+
+  it('shows Google Play and APK for Android devices and hides App Store until expanded', () => {
+    const androidUa = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0.0.0 Mobile Safari/537.36';
+    vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(androidUa);
+    window.history.replaceState({}, '', '/instructors/1002?lang=en');
+    document.body.innerHTML = `<main class="course-share" data-share-language="en"><article><div class="actions"><a href="snowpro://instructors/1002">Open</a></div><div class="downloads"><a class="button" data-platform="ios" href="https://apps.apple.com/ca/app/snow-pro/id6754150275">App Store · iPhone</a><a class="button" data-platform="android" href="https://play.google.com/store/apps/details?id=com.googuar.snowpro">Google Play · Android</a><a class="button" data-platform="apk" href="https://snowpro-public-bucket.googuar.com/snowpro.apk">Download APK</a></div></article></main>`;
+    new Function(source)();
+    const main = document.querySelector('main')!;
+    expect(main.dataset.sharePlatform).toBe('android');
+    expect((main.querySelector('a[data-platform="ios"]') as HTMLElement).hidden).toBe(true);
+    expect((main.querySelector('a[data-platform="android"]') as HTMLElement).hidden).toBe(false);
+    expect((main.querySelector('a[data-platform="apk"]') as HTMLElement).hidden).toBe(false);
+  });
 });
