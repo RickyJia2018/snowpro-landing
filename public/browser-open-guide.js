@@ -17,7 +17,6 @@
   const platform = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
     ? 'ios' : (/Android/i.test(ua) ? 'android' : 'desktop');
   const mobile = embedded || platform !== 'desktop';
-  const IOS_STORE_URL = 'https://apps.apple.com/ca/app/snow-pro/id6754150275';
   const ANDROID_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro';
   const WEB_DOWNLOAD_URL = 'https://snowpro.googuar.com/download';
   const detectRegion = () => {
@@ -31,11 +30,6 @@
     } catch { /* ignore */ }
     const lang = (navigator.language || '').toLowerCase();
     return new Date().getTimezoneOffset() === -480 && lang.startsWith('zh-cn') ? 'cn' : 'global';
-  };
-  const fallbackUrlFor = (plat, region) => {
-    if (plat === 'ios') return IOS_STORE_URL;
-    if (plat === 'android') return region === 'cn' ? WEB_DOWNLOAD_URL : ANDROID_PLAY_URL;
-    return WEB_DOWNLOAD_URL;
   };
   const publicShare = () => /^\/(?:invite\/instructor\/?|courses\/[^/]+\/?|instructors\/[^/]+\/?|carpool\/detail\/?|buddy\/detail\/?)$/.test(location.pathname);
   const icon = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9"/><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg>';
@@ -66,28 +60,9 @@
   let previousOverflow = '';
   let scheduled = false;
   let destroyed = false;
-  let fallbackTimer = null;
-  function clearFallback() {
-    if (fallbackTimer !== null) {
-      clearTimeout(fallbackTimer);
-      fallbackTimer = null;
-    }
-  }
-  function onAppSwitch() {
-    if (document.hidden) clearFallback();
-  }
   function navigate(target) {
     if (typeof window.__snowproNavigate === 'function') window.__snowproNavigate(target);
     else window.location.assign(target);
-  }
-  function scheduleFallback() {
-    clearFallback();
-    const target = fallbackUrlFor(platform, detectRegion());
-    fallbackTimer = setTimeout(() => {
-      fallbackTimer = null;
-      if (destroyed || document.hidden) return;
-      navigate(target);
-    }, 1500);
   }
   const text = root => {
     const language = root?.dataset.shareLanguage || document.documentElement.lang || navigator.language;
@@ -172,7 +147,7 @@
   function refresh() {
     scheduled = false;
     if (destroyed) return;
-    if (!publicShare()) { clearFallback(); close(); return; }
+    if (!publicShare()) { close(); return; }
     if (overlay && (dialogUrl !== location.href || !dialogRoot?.isConnected)) close();
     for (const root of document.querySelectorAll('main.course-share,main[data-snowpro-share-page]')) {
       const t = text(root);
@@ -210,21 +185,20 @@
       }
       if (platform === 'android' && !embedded && /Chrome\/|Chromium\/|EdgA\/|SamsungBrowser\//i.test(ua)) {
         event.preventDefault();
-        clearFallback();
-        const fallback = encodeURIComponent(fallbackUrlFor(platform, detectRegion()));
+        const fallback = encodeURIComponent(detectRegion() === 'cn' ? WEB_DOWNLOAD_URL : ANDROID_PLAY_URL);
         navigate(`intent:${href.slice('snowpro:'.length)}#Intent;scheme=snowpro;package=com.googuar.snowpro;S.browser_fallback_url=${fallback};end`);
         return;
       }
-      scheduleFallback();
+      // iOS (and browsers without native intent fallback) cannot reliably tell
+      // an uninstalled app from a cold launch. A delayed store redirect can
+      // steal focus after the app opens. Keep the explicit download links.
     }
   }
   function schedule() { if (!scheduled) { scheduled = true; queueMicrotask(refresh); } }
   const observer = new MutationObserver(schedule);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-share-language'] });
   document.addEventListener('click', click, true);
-  document.addEventListener('visibilitychange', onAppSwitch);
-  window.addEventListener('pagehide', clearFallback);
   window.addEventListener('popstate', schedule);
-  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; clearFallback(); observer.disconnect(); document.removeEventListener('click', click, true); document.removeEventListener('visibilitychange', onAppSwitch); window.removeEventListener('pagehide', clearFallback); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
+  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; observer.disconnect(); document.removeEventListener('click', click, true); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
   refresh();
 })();
