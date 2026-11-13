@@ -128,7 +128,7 @@ describe('public share browser guidance', () => {
     expect((main.querySelector('a[data-platform="apk"]') as HTMLElement).hidden).toBe(false);
   });
 
-  it('falls back to App Store / Google Play / official /download when app is not installed, and cancels when app opens', () => {
+  it('uses native Android download fallback and never guesses iOS installation with a timer', () => {
     vi.useFakeTimers();
     try {
       const originalDateTimeFormat = Intl.DateTimeFormat;
@@ -151,12 +151,13 @@ describe('public share browser guidance', () => {
       const navigateSpy = vi.fn();
       (window as any).__snowproNavigate = navigateSpy;
 
-      // 1. iOS not installed -> App Store
+      // 1. iOS custom scheme -> no delayed store redirect, even without visibility events
       mockTimeZone('America/Vancouver');
       mountShare(safari);
       fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
       vi.advanceTimersByTime(1700);
-      expect(navigateSpy).toHaveBeenLastCalledWith('https://apps.apple.com/ca/app/snow-pro/id6754150275');
+      expect(navigateSpy).not.toHaveBeenCalled();
+      expect(vi.getTimerCount()).toBe(0);
 
       // 2. Overseas Android (even with zh-CN language in Vancouver) -> Google Play
       navigateSpy.mockClear();

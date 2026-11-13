@@ -65,6 +65,7 @@ it.each(pages)('settles DOM updates and leaves the event loop free on mobile: %s
 });
 
 it.each(pages)('keeps the exact content destination and Android store fallback: %s', (path, html) => {
+  vi.useFakeTimers();
   mount(path, html, android);
   const navigate = (window as any).__snowproNavigate = vi.fn();
   const action = document.querySelector('.actions a[href^="snowpro:"]') as HTMLAnchorElement;
@@ -72,9 +73,30 @@ it.each(pages)('keeps the exact content destination and Android store fallback: 
   action.click();
   expect(navigate).toHaveBeenCalledOnce();
   expect(navigate).toHaveBeenCalledWith(`intent:${destination}#Intent;scheme=snowpro;package=com.googuar.snowpro;S.browser_fallback_url=${encodeURIComponent('https://play.google.com/store/apps/details?id=com.googuar.snowpro')};end`);
+  window.dispatchEvent(new Event('blur'));
+  window.dispatchEvent(new Event('pagehide'));
+  window.dispatchEvent(new Event('pageshow'));
+  window.dispatchEvent(new Event('focus'));
+  vi.advanceTimersByTime(30000);
+  expect(navigate).toHaveBeenCalledOnce();
+  expect(vi.getTimerCount()).toBe(0);
 });
 
-it.each(pages)('falls back on iOS only when the page stays visible: %s', (path, html) => {
+it.each(pages)('does not force a store redirect in other Android browsers: %s', (path, html) => {
+  vi.useFakeTimers();
+  mount(path, html, 'Mozilla/5.0 (Android 14; Mobile; rv:126.0) Gecko/126.0 Firefox/126.0');
+  const navigate = (window as any).__snowproNavigate = vi.fn();
+  const action = document.querySelector('.actions a[href^="snowpro:"]') as HTMLAnchorElement;
+  action.addEventListener('click', event => event.preventDefault());
+  action.click();
+  window.dispatchEvent(new Event('blur'));
+  window.dispatchEvent(new Event('focus'));
+  vi.advanceTimersByTime(30000);
+  expect(navigate).not.toHaveBeenCalled();
+  expect(vi.getTimerCount()).toBe(0);
+});
+
+it.each(pages)('never sends iOS to the store after an app launch or browser resume: %s', (path, html) => {
   vi.useFakeTimers();
   const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(false);
   mount(path, html);
@@ -84,13 +106,16 @@ it.each(pages)('falls back on iOS only when the page stays visible: %s', (path, 
   action.addEventListener('click', event => event.preventDefault());
   action.click();
   vi.advanceTimersByTime(1600);
-  expect(navigate).toHaveBeenCalledExactlyOnceWith('https://apps.apple.com/ca/app/snow-pro/id6754150275');
+  expect(navigate).not.toHaveBeenCalled();
+  expect(vi.getTimerCount()).toBe(0);
+  expect(document.querySelector('a[data-platform="ios"]')?.getAttribute('href')).toBe('https://apps.apple.com/ca/app/snow-pro/id6754150275');
   navigate.mockClear();
   action.click();
   hidden.mockReturnValue(true);
   document.dispatchEvent(new Event('visibilitychange'));
   hidden.mockReturnValue(false);
-  vi.advanceTimersByTime(2000);
+  window.dispatchEvent(new Event('focus'));
+  vi.advanceTimersByTime(30000);
   expect(navigate).not.toHaveBeenCalled();
 });
 
