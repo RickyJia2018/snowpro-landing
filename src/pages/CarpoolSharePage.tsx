@@ -30,7 +30,7 @@ export default function CarpoolSharePage({ kind = 'carpool' }: { kind?: 'carpool
     <style>{courseShareStyles}</style>
     <main className="course-share" data-share-language={zh ? 'zh' : 'en'}>
       <header className="topbar">
-        <Link className="brand" to="/"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
+        <Link className="brand" to="/"><img className="brand-icon" src="/share-app-icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
         <Link className="lang-switch" to={`/${kind}/detail?${langParams}`}>{zh ? 'EN' : '中文'}</Link>
       </header>
       <article>
@@ -41,7 +41,7 @@ export default function CarpoolSharePage({ kind = 'carpool' }: { kind?: 'carpool
             {description && <div className="summary-card">
               <div className="summary-sub"><Calendar size={15} aria-hidden="true" /><span>{description}</span></div>
             </div>}
-            <p className="muted">{buddy ? label('登录 App 查看帖子详情并联系雪友。', 'Sign in to the app to view the post and contact your ski buddy.') : label('登录 App 查看当前行程信息和座位情况。', 'Sign in to the app to view the current trip and available seats.')}</p>
+            <p className="muted">{buddy ? label('在 App 中查看帖子详情并联系雪友。', 'View post details and contact your ski buddy in the app.') : label('在 App 中查看实时座位与行程详情。', 'View live seat availability and trip details in the app.')}</p>
             <div className="actions">
               <a className="button primary" href={appUrl}>{buddy ? label('打开雪友帖子', 'Open Ski Buddy post') : label('打开拼车行程', 'Open carpool trip')}</a>
             </div>

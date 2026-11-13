@@ -1,4 +1,4 @@
-import { CourseShareUnavailable, validCourseId } from '../src/lib/courseShare.js';
+import { shareCountry, CourseShareUnavailable, validCourseId } from '../src/lib/courseShare.js';
 import { fetchSharedInstructor, renderInstructorDocument } from '../src/lib/instructorShare.js';
 import { getApiBaseUrl } from '../src/config/api.js';
 
@@ -7,21 +7,22 @@ type Response = { setHeader(name: string, value: string): void; status(code: num
 
 export default async function handler(req: Request, res: Response) {
   const id = req.query.id;
+  const country = shareCountry(req.headers);
   const zh = req.query.lang === 'zh' || (req.query.lang !== 'en' && String(req.headers['accept-language'] || '').toLowerCase().startsWith('zh'));
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Vary', 'Accept-Language');
   if (!validCourseId(id)) {
-    res.status(404).send(renderInstructorDocument(null, '', zh, true));
+    res.status(404).send(renderInstructorDocument(null, '', zh, true, country));
     return;
   }
   try {
     const instructor = await fetchSharedInstructor(id,
       process.env.INSTRUCTOR_SHARE_API_BASE_URL || getApiBaseUrl(),
       AbortSignal.timeout(10000));
-    res.status(200).send(renderInstructorDocument(instructor, id, zh));
+    res.status(200).send(renderInstructorDocument(instructor, id, zh, false, country));
   } catch (error) {
     const unavailable = error instanceof CourseShareUnavailable && error.status === 404;
-    res.status(unavailable ? 404 : 503).send(renderInstructorDocument(null, id, zh, unavailable));
+    res.status(unavailable ? 404 : 503).send(renderInstructorDocument(null, id, zh, unavailable, country));
   }
 }

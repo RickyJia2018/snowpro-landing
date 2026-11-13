@@ -22,6 +22,7 @@ afterEach(() => {
   document.body.innerHTML = '';
   if (clipboardDescriptor) Object.defineProperty(navigator, 'clipboard', clipboardDescriptor);
   else delete (navigator as any).clipboard;
+  delete document.documentElement.dataset.shareCountry;
   vi.restoreAllMocks();
 });
 
@@ -105,13 +106,10 @@ describe('public share browser guidance', () => {
     expect(iosLink.hidden).toBe(false);
     expect(androidLink.hidden).toBe(true);
     expect(apkLink.hidden).toBe(true);
-    const toggle = screen.getByRole('button', { name: /Other platforms/ });
-    fireEvent.click(toggle);
-    expect(androidLink.hidden).toBe(false);
-    expect(apkLink.hidden).toBe(false);
+    expect(screen.queryByRole('button', { name: /Other platforms/ })).toBeNull();
   });
 
-  it('shows Google Play and APK for Android devices and hides App Store until expanded', () => {
+  it('shows Google Play and APK for Android devices and never shows App Store', () => {
     const originalDateTimeFormat = Intl.DateTimeFormat;
     vi.spyOn(Intl, 'DateTimeFormat').mockImplementation((...args: any[]) => {
       const instance = new originalDateTimeFormat(...args);
@@ -169,7 +167,8 @@ describe('public share browser guidance', () => {
       expect(document.querySelector('main')!.dataset.shareRegion).toBe('global');
       fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
       vi.advanceTimersByTime(1700);
-      expect(navigateSpy).toHaveBeenLastCalledWith('https://play.google.com/store/apps/details?id=com.googuar.snowpro');
+      expect(navigateSpy).toHaveBeenLastCalledWith(expect.stringContaining('intent://instructors/1002#Intent;'));
+      expect(navigateSpy).toHaveBeenLastCalledWith(expect.stringContaining('S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.googuar.snowpro')));
 
       // 3. Mainland China Android -> https://snowpro.googuar.com/download & APK prioritized
       navigateSpy.mockClear();
@@ -181,7 +180,7 @@ describe('public share browser guidance', () => {
       expect((cnMain.querySelector('a[data-platform="android"]') as HTMLElement).hidden).toBe(true);
       fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
       vi.advanceTimersByTime(1700);
-      expect(navigateSpy).toHaveBeenLastCalledWith('https://snowpro.googuar.com/download');
+      expect(navigateSpy).toHaveBeenLastCalledWith(expect.stringContaining('S.browser_fallback_url=' + encodeURIComponent('https://snowpro.googuar.com/download')));
 
       // 4. App opens (document becomes hidden) -> cancels fallback redirect
       navigateSpy.mockClear();

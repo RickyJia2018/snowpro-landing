@@ -2,24 +2,29 @@
 (() => {
   if (window.__snowproBrowserGuide) return;
   const copy = {
-    en: ['Open in your browser', 'This in-app browser may block app links.', 'Can’t open the app?', 'Tap the page menu ···', 'Choose “Open in browser”, then open SnowPro.', 'Copy this page link', 'Paste it into Safari or Chrome. If needed, install SnowPro first, then return to this link.', 'Copy link', 'Link copied', 'Continue browsing', 'Close', 'Touch and hold the link to copy it.', 'Other platforms', 'Hide other platforms'],
-    zh: ['请在浏览器中打开', '内置浏览器可能无法唤起 App。', '打不开 App？', '点击页面右上角的 ··· 菜单', '选择“在浏览器中打开”，再打开 SnowPro。', '复制本页链接', '粘贴到 Safari 或 Chrome 中打开。如未安装 SnowPro，请先安装，再返回此链接。', '复制链接', '链接已复制', '继续浏览', '关闭', '请长按下方链接并选择复制。', '其他平台下载', '收起其他平台'],
-    ja: ['ブラウザで開いてください', 'アプリ内ブラウザではリンクを開けない場合があります。', 'アプリを開けませんか？', 'ページのメニュー ··· をタップ', '「ブラウザで開く」を選び、SnowPro を開いてください。', 'このページのリンクをコピー', 'Safari または Chrome に貼り付けてください。必要に応じて SnowPro をインストールし、このリンクに戻ってください。', 'リンクをコピー', 'コピーしました', '閲覧を続ける', '閉じる', '下のリンクを長押ししてコピーしてください。', 'その他のプラットフォーム', 'その他のプラットフォームを隠す'],
-    ko: ['브라우저에서 열어 주세요', '앱 내 브라우저가 앱 링크를 차단할 수 있습니다.', '앱이 열리지 않나요?', '페이지 메뉴 ··· 를 누르세요', '“브라우저에서 열기”를 선택한 후 SnowPro를 여세요.', '이 페이지 링크 복사', 'Safari 또는 Chrome에 붙여 넣으세요. 필요한 경우 SnowPro를 설치한 후 이 링크로 돌아오세요.', '링크 복사', '복사되었습니다', '계속 보기', '닫기', '아래 링크를 길게 눌러 복사하세요.', '다른 플랫폼', '다른 플랫폼 숨기기'],
-    fr: ['Ouvrir dans un navigateur', 'Ce navigateur intégré peut bloquer les liens vers l’app.', 'L’app ne s’ouvre pas ?', 'Touchez le menu de la page ···', 'Choisissez « Ouvrir dans le navigateur », puis ouvrez SnowPro.', 'Copiez le lien de cette page', 'Collez-le dans Safari ou Chrome. Si nécessaire, installez SnowPro puis revenez à ce lien.', 'Copier le lien', 'Lien copié', 'Continuer la lecture', 'Fermer', 'Appuyez longuement sur le lien pour le copier.', 'Autres plateformes', 'Masquer les autres plateformes'],
-    de: ['Im Browser öffnen', 'Dieser In-App-Browser kann App-Links blockieren.', 'Die App öffnet sich nicht?', 'Tippe auf das Seitenmenü ···', 'Wähle „Im Browser öffnen“ und öffne dann SnowPro.', 'Kopiere den Link dieser Seite', 'Füge ihn in Safari oder Chrome ein. Installiere bei Bedarf SnowPro und kehre zu diesem Link zurück.', 'Link kopieren', 'Link kopiert', 'Weiterlesen', 'Schließen', 'Halte den Link gedrückt, um ihn zu kopieren.', 'Andere Plattformen', 'Andere Plattformen ausblenden'],
-    es: ['Abrir en el navegador', 'Este navegador integrado puede bloquear enlaces a la app.', '¿No se abre la app?', 'Toca el menú de la página ···', 'Elige “Abrir en el navegador” y abre SnowPro.', 'Copia el enlace de esta página', 'Pégalo en Safari o Chrome. Si es necesario, instala SnowPro y vuelve a este enlace.', 'Copiar enlace', 'Enlace copiado', 'Seguir navegando', 'Cerrar', 'Mantén pulsado el enlace para copiarlo.', 'Otras plataformas', 'Ocultar otras plataformas'],
-    ru: ['Откройте в браузере', 'Встроенный браузер может блокировать ссылки на приложение.', 'Приложение не открывается?', 'Нажмите меню страницы ···', 'Выберите «Открыть в браузере», затем откройте SnowPro.', 'Скопируйте ссылку страницы', 'Вставьте её в Safari или Chrome. При необходимости установите SnowPro и вернитесь к ссылке.', 'Копировать ссылку', 'Ссылка скопирована', 'Продолжить просмотр', 'Закрыть', 'Нажмите и удерживайте ссылку, чтобы скопировать её.', 'Другие платформы', 'Скрыть другие платформы'],
+    en: ['Open in your browser', 'This in-app browser may block app links.', 'Can’t open the app?', 'Tap the page menu ···', 'Choose “Open in browser”, then open SnowPro.', 'Copy this page link', 'Paste it into Safari or Chrome. If needed, install SnowPro first, then return to this link.', 'Copy link', 'Link copied', 'Continue browsing', 'Close', 'Touch and hold the link to copy it.'],
+    zh: ['请在浏览器中打开', '内置浏览器可能无法唤起 App。', '打不开 App？', '点击页面右上角的 ··· 菜单', '选择“在浏览器中打开”，再打开 SnowPro。', '复制本页链接', '粘贴到 Safari 或 Chrome 中打开。如未安装 SnowPro，请先安装，再返回此链接。', '复制链接', '链接已复制', '继续浏览', '关闭', '请长按下方链接并选择复制。'],
+    ja: ['ブラウザで開いてください', 'アプリ内ブラウザではリンクを開けない場合があります。', 'アプリを開けませんか？', 'ページのメニュー ··· をタップ', '「ブラウザで開く」を選び、SnowPro を開いてください。', 'このページのリンクをコピー', 'Safari または Chrome に貼り付けてください。必要に応じて SnowPro をインストールし、このリンクに戻ってください。', 'リンクをコピー', 'コピーしました', '閲覧を続ける', '閉じる', '下のリンクを長押ししてコピーしてください。'],
+    ko: ['브라우저에서 열어 주세요', '앱 내 브라우저가 앱 링크를 차단할 수 있습니다.', '앱이 열리지 않나요?', '페이지 메뉴 ··· 를 누르세요', '“브라우저에서 열기”를 선택한 후 SnowPro를 여세요.', '이 페이지 링크 복사', 'Safari 또는 Chrome에 붙여 넣으세요. 필요한 경우 SnowPro를 설치한 후 이 링크로 돌아오세요.', '링크 복사', '복사되었습니다', '계속 보기', '닫기', '아래 링크를 길게 눌러 복사하세요.'],
+    fr: ['Ouvrir dans un navigateur', 'Ce navigateur intégré peut bloquer les liens vers l’app.', 'L’app ne s’ouvre pas ?', 'Touchez le menu de la page ···', 'Choisissez « Ouvrir dans le navigateur », puis ouvrez SnowPro.', 'Copiez le lien de cette page', 'Collez-le dans Safari ou Chrome. Si nécessaire, installez SnowPro puis revenez à ce lien.', 'Copier le lien', 'Lien copié', 'Continuer la lecture', 'Fermer', 'Appuyez longuement sur le lien pour le copier.'],
+    de: ['Im Browser öffnen', 'Dieser In-App-Browser kann App-Links blockieren.', 'Die App öffnet sich nicht?', 'Tippe auf das Seitenmenü ···', 'Wähle „Im Browser öffnen“ und öffne dann SnowPro.', 'Kopiere den Link dieser Seite', 'Füge ihn in Safari oder Chrome ein. Installiere bei Bedarf SnowPro und kehre zu diesem Link zurück.', 'Link kopieren', 'Link kopiert', 'Weiterlesen', 'Schließen', 'Halte den Link gedrückt, um ihn zu kopieren.'],
+    es: ['Abrir en el navegador', 'Este navegador integrado puede bloquear enlaces a la app.', '¿No se abre la app?', 'Toca el menú de la página ···', 'Elige “Abrir en el navegador” y abre SnowPro.', 'Copia el enlace de esta página', 'Pégalo en Safari o Chrome. Si es necesario, instala SnowPro y vuelve a este enlace.', 'Copiar enlace', 'Enlace copiado', 'Seguir navegando', 'Cerrar', 'Mantén pulsado el enlace para copiarlo.'],
+    ru: ['Откройте в браузере', 'Встроенный браузер может блокировать ссылки на приложение.', 'Приложение не открывается?', 'Нажмите меню страницы ···', 'Выберите «Открыть в браузере», затем откройте SnowPro.', 'Скопируйте ссылку страницы', 'Вставьте её в Safari или Chrome. При необходимости установите SnowPro и вернитесь к ссылке.', 'Копировать ссылку', 'Ссылка скопирована', 'Продолжить просмотр', 'Закрыть', 'Нажмите и удерживайте ссылку, чтобы скопировать её.'],
   };
   const ua = navigator.userAgent || '';
   const blocked = /MicroMessenger|\bQQ\//i.test(ua);
   const embedded = blocked || /FBAN|FBAV|Instagram|Line\/|BytedanceWebview|TikTok|DingTalk|AlipayClient/i.test(ua);
-  const mobile = embedded || /iPhone|iPad|iPod|Android/i.test(ua);
-  const platform = /iPhone|iPad|iPod/i.test(ua) ? 'ios' : (/Android/i.test(ua) ? 'android' : 'desktop');
+  const platform = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)
+    ? 'ios' : (/Android/i.test(ua) ? 'android' : 'desktop');
+  const mobile = embedded || platform !== 'desktop';
   const IOS_STORE_URL = 'https://apps.apple.com/ca/app/snow-pro/id6754150275';
   const ANDROID_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro';
   const WEB_DOWNLOAD_URL = 'https://snowpro.googuar.com/download';
   const detectRegion = () => {
+    // Use the hosting edge's IP country when available. A Chinese phone used
+    // overseas may still have a Chinese language and time-zone setting.
+    const country = document.documentElement.dataset.shareCountry || '';
+    if (/^[A-Z]{2}$/.test(country)) return country === 'CN' ? 'cn' : 'global';
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
       if (tz) return /^(?:Asia\/(?:Shanghai|Chongqing|Harbin|Urumqi|Kashgar)|PRC)$/i.test(tz) ? 'cn' : 'global';
@@ -40,7 +45,6 @@
     .sp-browser-hint{display:flex;width:100%;align-items:center;gap:12px;margin:0 0 20px;padding:16px;text-align:left;border:1px solid #315384;border-radius:16px;background:#13233c;color:#93c5fd;font:inherit;cursor:pointer}
     .sp-browser-hint>svg{flex:none}.sp-browser-hint strong{display:block;color:#eff6ff;font-size:15px;line-height:1.5}.sp-browser-hint small{display:block;color:#b7c8df;font-size:13px;line-height:1.5;margin-top:2px}
     .sp-browser-help{display:block;min-height:36px;margin:2px 0 6px;padding:4px 0;background:none;border:0;color:#93c5fd;font:inherit;font-size:13px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
-    .sp-browser-platforms{display:inline-block;margin-top:8px;padding:4px 0;background:none;border:0;color:#94a3b8;font:inherit;font-size:12px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
     .sp-browser-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 64px) 20px 24px;background:rgba(2,6,23,.78);backdrop-filter:blur(6px);overflow-y:auto;color:#f1f5f9;font-family:system-ui,-apple-system,sans-serif;line-height:1.55}
     .sp-browser-sheet{position:relative;width:100%;max-width:420px;padding:28px 24px 16px;border:1px solid #334155;border-radius:24px;background:#0f172a;box-shadow:0 24px 80px #0006;box-sizing:border-box;margin:0 auto}
     .sp-browser-sheet *{box-sizing:border-box}.sp-browser-sheet h2{font-size:23px;line-height:1.3;margin:8px 32px 24px 0;font-weight:700;overflow-wrap:anywhere}.sp-browser-sheet h2:focus{outline:0}
@@ -72,14 +76,17 @@
   function onAppSwitch() {
     if (document.hidden) clearFallback();
   }
+  function navigate(target) {
+    if (typeof window.__snowproNavigate === 'function') window.__snowproNavigate(target);
+    else window.location.assign(target);
+  }
   function scheduleFallback() {
     clearFallback();
     const target = fallbackUrlFor(platform, detectRegion());
     fallbackTimer = setTimeout(() => {
       fallbackTimer = null;
       if (destroyed || document.hidden) return;
-      if (typeof window.__snowproNavigate === 'function') window.__snowproNavigate(target);
-      else window.location.assign(target);
+      navigate(target);
     }, 1500);
   }
   const text = root => {
@@ -149,50 +156,27 @@
     };
     document.body.style.overflow = 'hidden'; document.body.append(overlay); heading.focus();
   }
-  function syncPlatformDownloads(root, t) {
+  function syncPlatformDownloads(root) {
     const region = detectRegion();
     root.dataset.sharePlatform = platform;
     root.dataset.shareRegion = region;
-    const container = root.querySelector('.downloads');
-    if (!container) return;
-    const links = [...container.querySelectorAll('a[data-platform]')];
-    if (!links.length) return;
-    root.querySelectorAll('.sp-browser-platforms').forEach(node => node.remove());
-    if (platform === 'desktop') {
-      for (const link of links) link.hidden = false;
-      return;
-    }
-    const expanded = root.dataset.platformsExpanded === 'true';
-    const allowed = platform === 'ios'
-      ? new Set(['ios'])
-      : (region === 'cn' ? new Set(['apk']) : new Set(['android', 'apk']));
-    let hasHidden = false;
-    for (const link of links) {
-      const keep = allowed.has(link.dataset.platform || '');
-      if (!keep) hasHidden = true;
-      link.hidden = !expanded && !keep;
-    }
-    if (hasHidden) {
-      const toggle = document.createElement('button');
-      toggle.type = 'button';
-      toggle.className = 'sp-browser-platforms';
-      toggle.textContent = expanded ? t[13] : t[12];
-      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      toggle.onclick = () => {
-        root.dataset.platformsExpanded = expanded ? 'false' : 'true';
-        syncPlatformDownloads(root, text(root));
-      };
-      container.after(toggle);
+    const allowed = platform === 'desktop' ? new Set(['ios', 'android', 'apk'])
+      : platform === 'ios' ? new Set(['ios'])
+      : region === 'cn' ? new Set(['apk']) : new Set(['android', 'apk']);
+    // Do not recreate children here: the observer below also watches this DOM.
+    for (const link of root.querySelectorAll('.downloads a[data-platform]')) {
+      const hidden = !allowed.has(link.dataset.platform || '');
+      if (link.hidden !== hidden) link.hidden = hidden;
     }
   }
   function refresh() {
     scheduled = false;
     if (destroyed) return;
-    if (!publicShare()) { close(); return; }
+    if (!publicShare()) { clearFallback(); close(); return; }
     if (overlay && (dialogUrl !== location.href || !dialogRoot?.isConnected)) close();
     for (const root of document.querySelectorAll('main.course-share,main[data-snowpro-share-page]')) {
       const t = text(root);
-      syncPlatformDownloads(root, t);
+      syncPlatformDownloads(root);
       if (root.dataset.browserGuideReady === t[0]) continue;
       root.querySelectorAll('.sp-browser-hint,.sp-browser-help').forEach(node => node.remove());
       const action = root.querySelector('a[href^="snowpro:"]');
@@ -219,6 +203,18 @@
       return;
     }
     if (!blocked && href.startsWith('snowpro:')) {
+      if (platform === 'desktop') {
+        event.preventDefault();
+        navigate(WEB_DOWNLOAD_URL);
+        return;
+      }
+      if (platform === 'android' && !embedded && /Chrome\/|Chromium\/|EdgA\/|SamsungBrowser\//i.test(ua)) {
+        event.preventDefault();
+        clearFallback();
+        const fallback = encodeURIComponent(fallbackUrlFor(platform, detectRegion()));
+        navigate(`intent:${href.slice('snowpro:'.length)}#Intent;scheme=snowpro;package=com.googuar.snowpro;S.browser_fallback_url=${fallback};end`);
+        return;
+      }
       scheduleFallback();
     }
   }
@@ -229,6 +225,6 @@
   document.addEventListener('visibilitychange', onAppSwitch);
   window.addEventListener('pagehide', clearFallback);
   window.addEventListener('popstate', schedule);
-  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; clearFallback(); observer.disconnect(); document.removeEventListener('click', click, true); document.removeEventListener('visibilitychange', onAppSwitch); window.removeEventListener('pagehide', clearFallback); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help,.sp-browser-platforms').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
+  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; clearFallback(); observer.disconnect(); document.removeEventListener('click', click, true); document.removeEventListener('visibilitychange', onAppSwitch); window.removeEventListener('pagehide', clearFallback); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
   refresh();
 })();

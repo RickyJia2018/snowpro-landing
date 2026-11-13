@@ -1,3 +1,4 @@
+import { shareCountry } from '../src/lib/courseShare.js';
 import { previewLabel, renderCarpoolDocument, validCarpoolId } from '../src/lib/carpoolShare.js';
 
 type Request = { query: Record<string, string | string[] | undefined>; headers: Record<string, string | string[] | undefined> };
@@ -11,5 +12,5 @@ export default function handler(req: Request, res: Response) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Vary', 'Accept-Language');
   res.status(valid ? 200 : 404).send(renderCarpoolDocument(
-    valid ? id : '', previewLabel(req.query.title, 120), previewLabel(req.query.description, 180), zh));
+    valid ? id : '', previewLabel(req.query.title, 120), previewLabel(req.query.description, 180), zh, 'carpool', shareCountry(req.headers)));
 }

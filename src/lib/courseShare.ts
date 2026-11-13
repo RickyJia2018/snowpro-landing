@@ -3,6 +3,12 @@ export const ANDROID_APK_DOWNLOAD_URL = 'https://snowpro-public-bucket.googuar.c
 export const IOS_DOWNLOAD_URL = 'https://apps.apple.com/ca/app/snow-pro/id6754150275';
 export const ANDROID_PLAY_DOWNLOAD_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro';
 
+// Download routing only; never used for authentication or content access.
+export function shareCountry(headers: Record<string, string | string[] | undefined>): string {
+  const value = headers['x-vercel-ip-country'];
+  return typeof value === 'string' && /^[A-Z]{2}$/i.test(value) ? value.toUpperCase() : '';
+}
+
 export type PublicCourse = {
   id: string;
   title: string;
@@ -115,7 +121,7 @@ export const shareIcons = {
 
 export function renderShareHeader(zh: boolean, langSwitchHref = ''): string {
   const switchHref = langSwitchHref || `?lang=${zh ? 'en' : 'zh'}`;
-  return `<header class="topbar"><a class="brand" href="/"><img class="brand-icon" src="/logo_icon.png" alt="" width="28" height="28"><span>SnowPro</span></a><a class="lang-switch" href="${escapeHtml(switchHref)}">${zh ? 'EN' : '中文'}</a></header>`;
+  return `<header class="topbar"><a class="brand" href="/"><img class="brand-icon" src="/share-app-icon.png" alt="" width="28" height="28"><span>SnowPro</span></a><a class="lang-switch" href="${escapeHtml(switchHref)}">${zh ? 'EN' : '中文'}</a></header>`;
 }
 
 export function renderDownloadSection(zh: boolean, note: string, showNote = true): string {
@@ -235,14 +241,14 @@ export function renderCourseShare(course: PublicCourse | null, zh: boolean, unav
 }
 
 // Server-rendered metadata lets chat/social crawlers see the actual course.
-export function renderCourseShareDocument(course: PublicCourse | null, id: string, zh: boolean, unavailable = false): string {
+export function renderCourseShareDocument(course: PublicCourse | null, id: string, zh: boolean, unavailable = false, country = ''): string {
   const title = course ? `${course.title} · SnowPro` : 'SnowPro · Course';
   const description = (course ? [course.instructor, course.description].filter(Boolean)
     .join(' · ').replace(/\s+/g, ' ').slice(0, 200) : '') || 'Discover ski and snowboard courses on SnowPro.';
   const thumbnail = course?.cover || COURSE_SHARE_ORIGIN + '/logo_icon.png';
   const canonical = validCourseId(id) ? courseUrl(id) : COURSE_SHARE_ORIGIN;
   const safe = escapeHtml;
-  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}"><head>
+  return `<!doctype html><html lang="${zh ? 'zh-CN' : 'en'}" data-share-country="${/^[A-Z]{2}$/.test(country) ? country : ''}"><head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>${safe(title)}</title><meta name="description" content="${safe(description)}">
     <link rel="canonical" href="${canonical}">

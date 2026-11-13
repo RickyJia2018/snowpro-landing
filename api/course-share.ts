@@ -1,4 +1,4 @@
-import { CourseShareUnavailable, fetchPublicCourse, renderCourseShareDocument, validCourseId } from '../src/lib/courseShare.js';
+import { shareCountry, CourseShareUnavailable, fetchPublicCourse, renderCourseShareDocument, validCourseId } from '../src/lib/courseShare.js';
 import { getApiBaseUrl } from '../src/config/api.js';
 
 type Request = { query: Record<string, string | string[] | undefined>; headers: Record<string, string | string[] | undefined> };
@@ -6,12 +6,13 @@ type Response = { setHeader(name: string, value: string): void; status(code: num
 
 export default async function handler(req: Request, res: Response) {
   const id = req.query.id;
+  const country = shareCountry(req.headers);
   const zh = req.query.lang === 'zh' || (req.query.lang !== 'en' && String(req.headers['accept-language'] || '').toLowerCase().startsWith('zh'));
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Vary', 'Accept-Language');
   if (!validCourseId(id)) {
-    res.status(404).send(renderCourseShareDocument(null, '', zh, true));
+    res.status(404).send(renderCourseShareDocument(null, '', zh, true, country));
     return;
   }
   try {
@@ -20,9 +21,9 @@ export default async function handler(req: Request, res: Response) {
       process.env.COURSE_SHARE_API_BASE_URL || getApiBaseUrl(),
       AbortSignal.timeout(10000),
     );
-    res.status(200).send(renderCourseShareDocument(course, id, zh));
+    res.status(200).send(renderCourseShareDocument(course, id, zh, false, country));
   } catch (error) {
     const unavailable = error instanceof CourseShareUnavailable && error.status === 404;
-    res.status(unavailable ? 404 : 503).send(renderCourseShareDocument(null, id, zh, unavailable));
+    res.status(unavailable ? 404 : 503).send(renderCourseShareDocument(null, id, zh, unavailable, country));
   }
 }

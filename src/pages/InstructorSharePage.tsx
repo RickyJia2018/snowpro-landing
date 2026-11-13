@@ -26,7 +26,7 @@ export default function InstructorSharePage() {
   return <>
     <style>{instructorShareStyles}</style>
     {!result || result.id !== id
-      ? <main className="course-share instructor-share" role="status"><header className="topbar"><a className="brand" href="/"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></a></header><article><div className="content"><h1>{zh ? '正在加载教练资料…' : 'Loading your instructor…'}</h1><p className="muted">{zh ? '稍等片刻，马上就好。' : 'Getting the profile ready for you.'}</p></div></article></main>
+      ? <main className="course-share instructor-share" role="status"><header className="topbar"><a className="brand" href="/"><img className="brand-icon" src="/share-app-icon.png" alt="" width="28" height="28" /><span>SnowPro</span></a></header><article><div className="content"><h1>{zh ? '正在加载教练资料…' : 'Loading your instructor…'}</h1><p className="muted">{zh ? '稍等片刻，马上就好。' : 'Getting the profile ready for you.'}</p></div></article></main>
       : <div dangerouslySetInnerHTML={{ __html: renderInstructorShare(result.instructor, zh, result.unavailable, id) }} />}
   </>;
 }

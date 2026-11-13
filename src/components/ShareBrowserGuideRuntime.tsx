@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 export default function ShareBrowserGuideRuntime() {
   const { pathname } = useLocation();
   useEffect(() => {
-    if (!/^\/(?:invite\/instructor\/?|courses\/[^/]+\/?|instructors\/[^/]+\/?|carpool\/detail\/?)$/.test(pathname)) return;
+    if (!/^\/(?:invite\/instructor\/?|courses\/[^/]+\/?|instructors\/[^/]+\/?|carpool\/detail\/?|buddy\/detail\/?)$/.test(pathname)) return;
     if (document.getElementById('snowpro-browser-guide-runtime')) return;
     const script = document.createElement('script');
     script.id = 'snowpro-browser-guide-runtime';
