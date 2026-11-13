@@ -28,20 +28,24 @@ export default function InstructorInvitePage() {
   return <>
     <style>{courseShareStyles}</style>
     <main className="course-share" data-share-language={language}>
-      <Link to="/" className="brand">SnowPro</Link>
+      <header className="topbar">
+        <Link to="/" className="brand"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
+      </header>
       <article><div className="content">
         <h1>{t[0]}</h1>
         <p className="muted">{code ? t[1] : t[6]}</p>
         {code && <>
-          <p className="muted">{t[2]}</p>
-          <p className="price" style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{code}</p>
+          <div className="offer-box">
+            <p className="offer-note">{t[2]}</p>
+            <p className="price" style={{ overflowWrap: 'anywhere', userSelect: 'all' }}>{code}</p>
+          </div>
           <div className="actions"><a href={`snowpro://invite/instructor?code=${encodeURIComponent(code)}`} className="button primary">{t[3]}</a></div>
         </>}
-        <section aria-label={t[4]}>
+        <section className="download-section" aria-label={t[4]}>
           <h2>{t[4]}</h2>
-          <div className="downloads"><a className="button" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a><a className="button" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
-              <a className="button" href={ANDROID_APK_DOWNLOAD_URL}>{language === 'zh' ? '直接下载 APK' : 'Download APK'}</a></div>
-          {code && <p className="muted">{t[5]}</p>}
+          <div className="downloads"><a className="button download-btn" data-platform="ios" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a><a className="button download-btn" data-platform="android" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
+              <a className="button download-btn" data-platform="apk" href={ANDROID_APK_DOWNLOAD_URL}>{language === 'zh' ? '直接下载 APK' : 'Download APK'}</a></div>
+          {code && <p className="download-note muted">{t[5]}</p>}
         </section>
       </div></article>
     </main>

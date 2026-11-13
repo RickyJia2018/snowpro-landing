@@ -1,7 +1,9 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Calendar } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { ANDROID_APK_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, IOS_DOWNLOAD_URL, courseShareStyles } from '../lib/courseShare';
+import { previewLabel, validCarpoolId } from '../lib/carpoolShare';
+import { ANDROID_APK_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, IOS_DOWNLOAD_URL, courseShareStyles, localizePreviewText } from '../lib/courseShare';
 
 // Keep protected trip details in the authenticated app. This page only helps
 // recipients open the shared destination or install the app and return here.
@@ -9,38 +11,52 @@ export default function CarpoolSharePage({ kind = 'carpool' }: { kind?: 'carpool
   const buddy = kind === 'buddy';
   const { search } = useLocation();
   const { language } = useLanguage();
-  const label = (zh: string, en: string) => language === 'zh' ? zh : en;
-  const ids = new URLSearchParams(search).getAll('id');
-  const id = ids.length === 1 &&
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(ids[0]) &&
-    ids[0] !== '00000000-0000-0000-0000-000000000000' ? ids[0] : null;
+  const params = new URLSearchParams(search);
+  const langParam = params.get('lang');
+  const zh = langParam === 'zh' || (langParam !== 'en' && language === 'zh');
+  const label = (cn: string, en: string) => zh ? cn : en;
+  const ids = params.getAll('id');
+  const id = ids.length === 1 && validCarpoolId(ids[0]) ? ids[0] : null;
   const appUrl = id ? `snowpro://${kind}/detail?${new URLSearchParams({ id })}` : null;
+  const rawTitle = previewLabel(params.get('title'), 120);
+  const rawDescription = previewLabel(params.get('description'), 180);
+  const title = id && rawTitle ? localizePreviewText(rawTitle, zh) : '';
+  const description = id && rawDescription ? localizePreviewText(rawDescription, zh) : '';
+
+  const langParams = new URLSearchParams(params);
+  langParams.set('lang', zh ? 'en' : 'zh');
 
   return <>
     <style>{courseShareStyles}</style>
-    <main className="course-share" data-share-language={language}>
-      <a className="brand" href="/">SnowPro</a>
+    <main className="course-share" data-share-language={zh ? 'zh' : 'en'}>
+      <header className="topbar">
+        <Link className="brand" to="/"><img className="brand-icon" src="/logo_icon.png" alt="" width="28" height="28" /><span>SnowPro</span></Link>
+        <Link className="lang-switch" to={`/${kind}/detail?${langParams}`}>{zh ? 'EN' : '中文'}</Link>
+      </header>
       <article>
         <div className="content">
           {appUrl ? <>
-            <h1>{buddy ? label('在 SnowPro 中查看雪友帖子', 'View the Ski Buddy post in SnowPro') : label('在 Snow Pro 中查看拼车行程', 'View the carpool trip in Snow Pro')}</h1>
+            <span className="eyebrow">{buddy ? label('雪友约滑', 'Ski Buddy') : label('雪场拼车', 'Carpool Trip')}</span>
+            <h1>{title || (buddy ? label('在 SnowPro 中查看雪友帖子', 'View the Ski Buddy post in SnowPro') : label('在 SnowPro 中查看拼车行程', 'View the carpool trip in SnowPro'))}</h1>
+            {description && <div className="summary-card">
+              <div className="summary-sub"><Calendar size={15} aria-hidden="true" /><span>{description}</span></div>
+            </div>}
             <p className="muted">{buddy ? label('登录 App 查看帖子详情并联系雪友。', 'Sign in to the app to view the post and contact your ski buddy.') : label('登录 App 查看当前行程信息和座位情况。', 'Sign in to the app to view the current trip and available seats.')}</p>
             <div className="actions">
               <a className="button primary" href={appUrl}>{buddy ? label('打开雪友帖子', 'Open Ski Buddy post') : label('打开拼车行程', 'Open carpool trip')}</a>
             </div>
-            <p className="hint">{label('如果内置浏览器无法打开，请从菜单选择“在浏览器中打开”。', 'If an in-app browser cannot open Snow Pro, choose “Open in browser” from its menu.')}</p>
           </> : <div className="error" role="alert">
             <h1>{buddy ? label('雪友链接无效', 'Invalid Ski Buddy link') : label('拼车链接无效', 'Invalid carpool link')}</h1>
             <p className="muted">{label('请向分享者索取完整的链接。', 'Ask the sender for the complete link.')}</p>
           </div>}
-          <section aria-label={label('下载 App', 'Download app')}>
-            <h2>{label('下载 SnowPro', 'Download SnowPro')}</h2>
+          <section className="download-section" aria-label={label('下载 App', 'Download app')}>
+            <h2>{label('获取 SnowPro App', 'Download SnowPro')}</h2>
             <div className="downloads">
-              <a className="button" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a>
-              <a className="button" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
-              <a className="button" href={ANDROID_APK_DOWNLOAD_URL}>{label('直接下载 APK', 'Download APK')}</a>
+              <a className="button download-btn" data-platform="ios" href={IOS_DOWNLOAD_URL}>App Store · iPhone</a>
+              <a className="button download-btn" data-platform="android" href={ANDROID_PLAY_DOWNLOAD_URL}>Google Play · Android</a>
+              <a className="button download-btn" data-platform="apk" href={ANDROID_APK_DOWNLOAD_URL}>{label('直接下载 APK', 'Download APK')}</a>
             </div>
-            {appUrl && <p className="muted">{label('安装后返回这条分享链接，再打开帖子。', 'After installing, return to this shared link to open the post.')}</p>}
+            {appUrl && <p className="download-note muted">{label('安装后返回这条分享链接，即可打开帖子。', 'After installing, return to this shared link to open the post.')}</p>}
           </section>
         </div>
       </article>

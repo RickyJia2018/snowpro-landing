@@ -93,4 +93,28 @@ describe('Instructor sharing', () => {
     expect(res.status).toHaveBeenCalledWith(404);
     expect(fetch).not.toHaveBeenCalled();
   });
+
+  it('renders rich profile layout with cover banner, tagline, experience, tags, offer box, and no static hint', () => {
+    const data = response();
+    Object.assign(data.instructor, {
+      tagline: 'Carving & powder specialist <tag>',
+      teachingSince: 2020,
+      baseAt: 'Whistler Blackcomb',
+      tags: ['Carving', 'Powder'],
+    });
+    const coach = normalizeInstructor(data, data.instructor.userId)!;
+    const html = renderInstructorDocument(coach, coach.id, false);
+    expect(html).toContain('class="hero-banner"');
+    expect(html).not.toContain('is-cover');
+    expect(html).toContain('Carving &amp; powder specialist &lt;tag&gt;');
+    expect(html).toContain(`${new Date().getFullYear() - 2020} yrs teaching`);
+    expect(html).toContain('Whistler Blackcomb');
+    expect(html).toContain('class="meta-pills"');
+    expect(html).toContain('class="offer-box"');
+    expect(html).toContain('Carving');
+    expect(html).toContain('Powder');
+    expect(html).toContain('/logo_icon.png');
+    expect(html).toContain('lang=zh');
+    expect(html).not.toContain('class="hint"');
+  });
 });

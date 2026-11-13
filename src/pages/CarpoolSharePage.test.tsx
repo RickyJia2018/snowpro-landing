@@ -29,3 +29,11 @@ it('opens the exact Ski Buddy post with the same download layout', () => {
   expect(screen.getByRole('link', { name: 'Open Ski Buddy post' }).getAttribute('href')).toBe(`snowpro://buddy/detail?id=${id}`);
   expect(screen.getByRole('link', { name: 'Download APK' })).toBeTruthy();
 });
+
+it('renders preview title/description from URL and avoids static hint box', () => {
+  const id = '11111111-1111-4111-8111-111111111111';
+  render(<MemoryRouter initialEntries={[`/buddy/detail?id=${id}&title=Whistler+Blackcomb&description=${encodeURIComponent('12月5日 ~ 12月7日 (3天)')}&lang=en`]}><LanguageProvider><CarpoolSharePage kind="buddy" /></LanguageProvider></MemoryRouter>);
+  expect(screen.getByText('Whistler Blackcomb')).toBeTruthy();
+  expect(screen.getByText('Dec 5 ~ Dec 7 (3 days)')).toBeTruthy();
+  expect(document.querySelector('.hint')).toBeNull();
+});
