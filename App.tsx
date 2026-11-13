@@ -39,6 +39,7 @@ function App() {
       <ShareBrowserGuideRuntime />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/download" element={<HomePage scrollToDownload />} />
         <Route path="/help-center" element={<HelpCenterPage />} />
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/linkstripe" element={<LinkStripePage />} />
@@ -134,9 +135,15 @@ const localT = {
   }
 };
 
-function HomePage() {
+function HomePage({ scrollToDownload = false }: { scrollToDownload?: boolean }) {
   const { t, language } = useLanguage();
   const currT = localT[language] || localT.en;
+
+  React.useEffect(() => {
+    if (!scrollToDownload) return;
+    const el = document.getElementById('download');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, [scrollToDownload]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-500 selection:text-white">

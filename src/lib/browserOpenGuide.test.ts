@@ -112,6 +112,12 @@ describe('public share browser guidance', () => {
   });
 
   it('shows Google Play and APK for Android devices and hides App Store until expanded', () => {
+    const originalDateTimeFormat = Intl.DateTimeFormat;
+    vi.spyOn(Intl, 'DateTimeFormat').mockImplementation((...args: any[]) => {
+      const instance = new originalDateTimeFormat(...args);
+      vi.spyOn(instance, 'resolvedOptions').mockReturnValue({ ...instance.resolvedOptions(), timeZone: 'America/Vancouver' });
+      return instance;
+    });
     const androidUa = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0.0.0 Mobile Safari/537.36';
     vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(androidUa);
     window.history.replaceState({}, '', '/instructors/1002?lang=en');
@@ -122,5 +128,75 @@ describe('public share browser guidance', () => {
     expect((main.querySelector('a[data-platform="ios"]') as HTMLElement).hidden).toBe(true);
     expect((main.querySelector('a[data-platform="android"]') as HTMLElement).hidden).toBe(false);
     expect((main.querySelector('a[data-platform="apk"]') as HTMLElement).hidden).toBe(false);
+  });
+
+  it('falls back to App Store / Google Play / official /download when app is not installed, and cancels when app opens', () => {
+    vi.useFakeTimers();
+    try {
+      const originalDateTimeFormat = Intl.DateTimeFormat;
+      const mockTimeZone = (tz: string) => {
+        vi.spyOn(Intl, 'DateTimeFormat').mockImplementation((...args: any[]) => {
+          const instance = new originalDateTimeFormat(...args);
+          vi.spyOn(instance, 'resolvedOptions').mockReturnValue({ ...instance.resolvedOptions(), timeZone: tz });
+          return instance;
+        });
+      };
+
+      const mountShare = (ua: string) => {
+        runtime()?.destroy();
+        vi.spyOn(navigator, 'userAgent', 'get').mockReturnValue(ua);
+        window.history.replaceState({}, '', '/instructors/1002?lang=en');
+        document.body.innerHTML = `<main class="course-share" data-share-language="en"><article><div class="actions"><a class="button primary" href="snowpro://instructors/1002">View instructor in app</a></div><div class="downloads"><a class="button" data-platform="ios" href="https://apps.apple.com/ca/app/snow-pro/id6754150275">App Store · iPhone</a><a class="button" data-platform="android" href="https://play.google.com/store/apps/details?id=com.googuar.snowpro">Google Play · Android</a><a class="button" data-platform="apk" href="https://snowpro-public-bucket.googuar.com/snowpro.apk">Download APK</a></div></article></main>`;
+        new Function(source)();
+      };
+
+      const navigateSpy = vi.fn();
+      (window as any).__snowproNavigate = navigateSpy;
+
+      // 1. iOS not installed -> App Store
+      mockTimeZone('America/Vancouver');
+      mountShare(safari);
+      fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
+      vi.advanceTimersByTime(1700);
+      expect(navigateSpy).toHaveBeenLastCalledWith('https://apps.apple.com/ca/app/snow-pro/id6754150275');
+
+      // 2. Overseas Android (even with zh-CN language in Vancouver) -> Google Play
+      navigateSpy.mockClear();
+      vi.spyOn(navigator, 'language', 'get').mockReturnValue('zh-CN');
+      mockTimeZone('America/Vancouver');
+      const androidUa = 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0.0.0 Mobile Safari/537.36';
+      mountShare(androidUa);
+      expect(document.querySelector('main')!.dataset.shareRegion).toBe('global');
+      fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
+      vi.advanceTimersByTime(1700);
+      expect(navigateSpy).toHaveBeenLastCalledWith('https://play.google.com/store/apps/details?id=com.googuar.snowpro');
+
+      // 3. Mainland China Android -> https://snowpro.googuar.com/download & APK prioritized
+      navigateSpy.mockClear();
+      mockTimeZone('Asia/Shanghai');
+      mountShare(androidUa);
+      const cnMain = document.querySelector('main')!;
+      expect(cnMain.dataset.shareRegion).toBe('cn');
+      expect((cnMain.querySelector('a[data-platform="apk"]') as HTMLElement).hidden).toBe(false);
+      expect((cnMain.querySelector('a[data-platform="android"]') as HTMLElement).hidden).toBe(true);
+      fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
+      vi.advanceTimersByTime(1700);
+      expect(navigateSpy).toHaveBeenLastCalledWith('https://snowpro.googuar.com/download');
+
+      // 4. App opens (document becomes hidden) -> cancels fallback redirect
+      navigateSpy.mockClear();
+      mockTimeZone('America/Vancouver');
+      mountShare(safari);
+      const hiddenSpy = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
+      fireEvent.click(screen.getByRole('link', { name: 'View instructor in app' }));
+      vi.advanceTimersByTime(300);
+      document.dispatchEvent(new Event('visibilitychange'));
+      vi.advanceTimersByTime(2000);
+      expect(navigateSpy).not.toHaveBeenCalled();
+      hiddenSpy.mockRestore();
+    } finally {
+      delete (window as any).__snowproNavigate;
+      vi.useRealTimers();
+    }
   });
 });

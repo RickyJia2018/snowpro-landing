@@ -34,7 +34,8 @@ describe('Instructor sharing', () => {
     expect(html).toContain('雪币');
     expect(html).not.toContain('¥');
     expect(html).toContain('4.5 / 5');
-    expect(html).toContain('CASI 2');
+    expect(html).toContain('CASI L2');
+    expect(html).not.toContain('class="certificates"');
     expect(html).toContain('og:title');
     expect(html).toContain('Coach &lt;script&gt;');
     expect(html).not.toContain('<script>alert');
@@ -116,5 +117,17 @@ describe('Instructor sharing', () => {
     expect(html).toContain('/logo_icon.png');
     expect(html).toContain('lang=zh');
     expect(html).not.toContain('class="hint"');
+  });
+
+  it('deduplicates highest certificate from the certificates list when multiple exist', () => {
+    const data = response();
+    data.certificates.push({ acronym: 'CSIA', level: 4, status: 1, proveImage: '' });
+    const coach = normalizeInstructor(data, data.instructor.userId)!;
+    const html = renderInstructorDocument(coach, coach.id, false);
+    expect(html).toContain('<span class="cert-badge">CSIA L4</span>');
+    expect(html).toContain('class="certificates"');
+    expect(html).toContain('<li>CASI L2</li>');
+    expect(html).not.toContain('<li>CSIA L4</li>');
+    expect(html).not.toContain('<li>CSIA 4</li>');
   });
 });
