@@ -142,6 +142,7 @@ export function renderDownloadSection(zh: boolean, note: string, showNote = true
 export const SHARE_PAGE_SELECTOR = '.course-share:not(#snowpro-share-reset):not(#snowpro-share-reset)';
 export const courseShareStyles = `
   *{box-sizing:border-box}
+  html,body{overscroll-behavior-y:none}
   body{margin:0;background:#020617;background-image:radial-gradient(ellipse 80% 45% at 50% -10%,rgba(56,189,248,0.14),transparent 70%);color:#f1f5f9;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
   .course-share{max-width:560px;margin:auto;padding:calc(env(safe-area-inset-top,0px) + 18px) 18px calc(env(safe-area-inset-bottom,0px) + 40px)}
   .course-share [hidden]{display:none!important}
