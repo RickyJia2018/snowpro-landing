@@ -16,6 +16,22 @@
   const embedded = blocked || /FBAN|FBAV|Instagram|Line\/|BytedanceWebview|TikTok|DingTalk|AlipayClient/i.test(ua);
   const mobile = embedded || /iPhone|iPad|iPod|Android/i.test(ua);
   const platform = /iPhone|iPad|iPod/i.test(ua) ? 'ios' : (/Android/i.test(ua) ? 'android' : 'desktop');
+  const IOS_STORE_URL = 'https://apps.apple.com/ca/app/snow-pro/id6754150275';
+  const ANDROID_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.googuar.snowpro';
+  const WEB_DOWNLOAD_URL = 'https://snowpro.googuar.com/download';
+  const detectRegion = () => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      if (tz) return /^(?:Asia\/(?:Shanghai|Chongqing|Harbin|Urumqi|Kashgar)|PRC)$/i.test(tz) ? 'cn' : 'global';
+    } catch { /* ignore */ }
+    const lang = (navigator.language || '').toLowerCase();
+    return new Date().getTimezoneOffset() === -480 && lang.startsWith('zh-cn') ? 'cn' : 'global';
+  };
+  const fallbackUrlFor = (plat, region) => {
+    if (plat === 'ios') return IOS_STORE_URL;
+    if (plat === 'android') return region === 'cn' ? WEB_DOWNLOAD_URL : ANDROID_PLAY_URL;
+    return WEB_DOWNLOAD_URL;
+  };
   const publicShare = () => /^\/(?:invite\/instructor\/?|courses\/[^/]+\/?|instructors\/[^/]+\/?|carpool\/detail\/?|buddy\/detail\/?)$/.test(location.pathname);
   const icon = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9"/><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg>';
   const style = document.createElement('style');
@@ -46,6 +62,26 @@
   let previousOverflow = '';
   let scheduled = false;
   let destroyed = false;
+  let fallbackTimer = null;
+  function clearFallback() {
+    if (fallbackTimer !== null) {
+      clearTimeout(fallbackTimer);
+      fallbackTimer = null;
+    }
+  }
+  function onAppSwitch() {
+    if (document.hidden) clearFallback();
+  }
+  function scheduleFallback() {
+    clearFallback();
+    const target = fallbackUrlFor(platform, detectRegion());
+    fallbackTimer = setTimeout(() => {
+      fallbackTimer = null;
+      if (destroyed || document.hidden) return;
+      if (typeof window.__snowproNavigate === 'function') window.__snowproNavigate(target);
+      else window.location.assign(target);
+    }, 1500);
+  }
   const text = root => {
     const language = root?.dataset.shareLanguage || document.documentElement.lang || navigator.language;
     return copy[String(language).toLowerCase().split('-')[0]] || copy.en;
@@ -114,7 +150,9 @@
     document.body.style.overflow = 'hidden'; document.body.append(overlay); heading.focus();
   }
   function syncPlatformDownloads(root, t) {
+    const region = detectRegion();
     root.dataset.sharePlatform = platform;
+    root.dataset.shareRegion = region;
     const container = root.querySelector('.downloads');
     if (!container) return;
     const links = [...container.querySelectorAll('a[data-platform]')];
@@ -125,7 +163,9 @@
       return;
     }
     const expanded = root.dataset.platformsExpanded === 'true';
-    const allowed = platform === 'ios' ? new Set(['ios']) : new Set(['android', 'apk']);
+    const allowed = platform === 'ios'
+      ? new Set(['ios'])
+      : (region === 'cn' ? new Set(['apk']) : new Set(['android', 'apk']));
     let hasHidden = false;
     for (const link of links) {
       const keep = allowed.has(link.dataset.platform || '');
@@ -169,18 +209,26 @@
     }
   }
   function click(event) {
-    if (!blocked || !publicShare()) return;
+    if (!publicShare()) return;
     const anchor = event.target instanceof Element ? event.target.closest('a') : null;
     const root = anchor?.closest('main.course-share,main[data-snowpro-share-page]');
-    if (root && (anchor.getAttribute('href')?.startsWith('snowpro:') || anchor.closest('.downloads'))) {
+    if (!root) return;
+    const href = anchor.getAttribute('href') || '';
+    if (blocked && (href.startsWith('snowpro:') || anchor.closest('.downloads'))) {
       event.preventDefault(); show(root);
+      return;
+    }
+    if (!blocked && href.startsWith('snowpro:')) {
+      scheduleFallback();
     }
   }
   function schedule() { if (!scheduled) { scheduled = true; queueMicrotask(refresh); } }
   const observer = new MutationObserver(schedule);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-share-language'] });
   document.addEventListener('click', click, true);
+  document.addEventListener('visibilitychange', onAppSwitch);
+  window.addEventListener('pagehide', clearFallback);
   window.addEventListener('popstate', schedule);
-  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; observer.disconnect(); document.removeEventListener('click', click, true); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help,.sp-browser-platforms').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
+  window.__snowproBrowserGuide = { refresh, destroy() { destroyed = true; clearFallback(); observer.disconnect(); document.removeEventListener('click', click, true); document.removeEventListener('visibilitychange', onAppSwitch); window.removeEventListener('pagehide', clearFallback); window.removeEventListener('popstate', schedule); close(); style.remove(); document.querySelectorAll('.sp-browser-hint,.sp-browser-help,.sp-browser-platforms').forEach(node => node.remove()); document.querySelectorAll('a[data-platform]').forEach(node => { node.hidden = false; }); delete window.__snowproBrowserGuide; } };
   refresh();
 })();

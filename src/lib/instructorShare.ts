@@ -53,7 +53,8 @@ export function normalizeInstructor(data: any, id: string): SharedInstructor | n
     skiingSince: number(raw.skiingSince ?? raw.skiing_since),
     // Public certificate endpoint already filters approval. Never copy proof images.
     certificates: certificates
-      .map((cert: any) => [cert.acronym || cert.name, cert.level].filter(Boolean).join(' ')),
+      .map((cert: any) => [cert.acronym || cert.name, number(cert.level) > 0 ? `L${number(cert.level)}` : ''].filter(Boolean).join(' '))
+      .filter(Boolean),
   };
 }
 
@@ -124,6 +125,14 @@ export function renderInstructorShare(coach: SharedInstructor | null, zh: boolea
   const pageUrl = id ? `/instructors/${id}` : '/';
   const langHref = `${pageUrl}?lang=${zh ? 'en' : 'zh'}`;
   const years = coach ? new Date().getFullYear() - coach.teachingSince : -1;
+  let skippedHighest = false;
+  const extraCertificates = coach ? coach.certificates.filter(cert => {
+    if (!skippedHighest && coach.highestCertificate && cert === coach.highestCertificate) {
+      skippedHighest = true;
+      return false;
+    }
+    return true;
+  }) : [];
   const metaPills = coach ? [
     coach.reviews > 0 && coach.rating > 0
       ? `<li class="meta-pill rating">${shareIcons.star}<span>${coach.rating.toFixed(1)} / 5 · ${coach.reviews} ${label('条评价', 'reviews')}</span></li>`
@@ -150,7 +159,7 @@ export function renderInstructorShare(coach: SharedInstructor | null, zh: boolea
       </div>
     </div>
     ${metaPills.length ? `<ul class="meta-pills" aria-label="${label('教练信息', 'Instructor highlights')}">${metaPills.join('')}</ul>` : ''}
-    ${coach.certificates.length ? `<ul class="certificates" aria-label="${label('专业认证', 'Instructor certifications')}">${coach.certificates.map(cert => `<li>${safe(cert)}</li>`).join('')}</ul>` : ''}
+    ${extraCertificates.length ? `<ul class="certificates" aria-label="${label('专业认证', 'Instructor certifications')}">${extraCertificates.map(cert => `<li>${safe(cert)}</li>`).join('')}</ul>` : ''}
     ${coach.tags.length ? `<ul class="tags" aria-label="${label('教学专长', 'Specialties')}">${coach.tags.slice(0, 6).map(tag => `<li>${safe(tag)}</li>`).join('')}</ul>` : ''}
     ${coach.intro ? `<h2>${label('教练简介', 'About the instructor')}</h2><p class="description">${safe(coach.intro)}</p>` : ''}
     ${coach.price > 0 ? `<div class="offer-box"><p class="price">${(coach.price / 100).toFixed(2)} ${label('雪币', 'Snow Coins')}</p><p class="offer-note">${label('视频指导 · 详情请在 App 内确认', 'Video coaching · Confirm details in app')}</p></div>` : ''}
