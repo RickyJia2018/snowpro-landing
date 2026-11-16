@@ -62,11 +62,6 @@ export const translations = {
       feature3Title: "透明分摊路费",
       feature3Desc: "AA分摊油费与过路费，出行更经济、更环保。",
       cta: "在 App 中体验拼车",
-      routes: [
-        { from: "北京市区 (惠新西街)", to: "崇礼万龙雪场", date: "周六 06:30", price: "¥60 /人", seats: "余 2 座", boardCapacity: "可放 2 块单板/双板", driver: "滑雪老徐", car: "SUV · 顶架雪板箱" },
-        { from: "上海虹桥", to: "吉林松花湖", date: "周五 19:00", price: "¥85 /人", seats: "余 1 座", boardCapacity: "支持 160cm 板包", driver: "CarveMaster", car: "商务MPV · 宽敞空间" },
-        { from: "东京新宿", to: "汤泽神乐雪场", date: "周日 07:00", price: "¥3,500 /人", seats: "余 3 座", boardCapacity: "单双板皆可", driver: "Kenji", car: "四驱SUV · 雪地胎" }
-      ]
     },
     courses: {
       tag: "核心功能 03",
@@ -77,13 +72,6 @@ export const translations = {
       feature2Title: "学生一键订阅学习",
       feature2Desc: "代币便捷购买，随时随地反复观看、复盘技术细节与训练动作。",
       btnText: "立即在 App 中探索全部课程",
-      instructorLabel: "授课教练",
-      lessonsLabel: "课时",
-      list: [
-        { title: "双板高级刻滑进阶体系", instructor: "Marcus Vogt", lessons: 12, level: "高级", style: "双板刻滑", price: "80 代币" },
-        { title: "单板基础滑行与核心发力精讲", instructor: "Hannah Adams", lessons: 8, level: "初中级", style: "单板技巧", price: "50 代币" },
-        { title: "大山野雪与树林探险安全指南", instructor: "Sven Lindqvist", lessons: 10, level: "专家级", style: "野雪自由式", price: "100 代币" }
-      ]
     },
     skibuddy: {
       tag: "核心功能 04",
@@ -95,11 +83,6 @@ export const translations = {
       feature2Title: "互拍刷道与拼玩",
       feature2Desc: "无论是进阶互拍分析动作，还是约饭拼房，轻松组建专属滑雪小分队。",
       cta: "在 App 中招募雪友",
-      posts: [
-        { title: "万龙周末刻滑互拍，寻中高级单板搭子", resort: "崇礼 · 万龙", date: "本周六 - 周日", level: "中高级", style: "单板", target: "互拍动作 / 刷黑道", author: "Leo_Carver", members: "3/4 人" },
-        { title: "北海道二世谷野雪探路小分队", resort: "二世谷 · Niseko", date: "下月 12-16日", level: "专家级", style: "单双板均可", target: "粉雪树林 / 探秘境", author: "Yuki", members: "2/5 人" },
-        { title: "云顶夜场小白练习，互相鼓励不劝退", resort: "密苑云顶", date: "周五夜场", level: "初学者", style: "单板", target: "基础推坡 / 落叶飘", author: "小雪梨", members: "2/3 人" }
-      ]
     },
     roadmap: {
       tag: "未来规划",
@@ -229,11 +212,6 @@ export const translations = {
       feature3Title: "Transparent Cost Sharing",
       feature3Desc: "Split gas and toll costs fairly. Economic, eco-friendly, and social.",
       cta: "Explore Carpool in App",
-      routes: [
-        { from: "Downtown Beijing", to: "Wanlong Ski Resort", date: "Sat 06:30", price: "$9 /person", seats: "2 seats left", boardCapacity: "2 board bags max", driver: "Alex Xu", car: "SUV with Roof Rack" },
-        { from: "Shanghai Hub", to: "Songhua Lake Resort", date: "Fri 19:00", price: "$12 /person", seats: "1 seat left", boardCapacity: "Fits up to 160cm bag", driver: "CarveMaster", car: "Spacious MPV" },
-        { from: "Tokyo Shinjuku", to: "Yuzawa Kagura", date: "Sun 07:00", price: "$25 /person", seats: "3 seats left", boardCapacity: "Skis & boards welcome", driver: "Kenji", car: "4WD SUV · Snow Tires" }
-      ]
     },
     courses: {
       tag: "Core Feature 03",
@@ -244,13 +222,6 @@ export const translations = {
       feature2Title: "Instant Student Access",
       feature2Desc: "Unlock lessons with tokens for lifetime review, technical breakdowns, and guided practice.",
       btnText: "Explore All Courses in App",
-      instructorLabel: "Instructor",
-      lessonsLabel: "Lessons",
-      list: [
-        { title: "Ski Carving Masterclass", instructor: "Marcus Vogt", lessons: 12, level: "Advanced", style: "Ski Carving", price: "80 Tokens" },
-        { title: "Snowboard Basics & Core Riding", instructor: "Hannah Adams", lessons: 8, level: "Beginner", style: "Snowboard", price: "50 Tokens" },
-        { title: "Backcountry & Freeride Safety", instructor: "Sven Lindqvist", lessons: 10, level: "Expert", style: "Freeride", price: "100 Tokens" }
-      ]
     },
     skibuddy: {
       tag: "Core Feature 04",
@@ -262,11 +233,6 @@ export const translations = {
       feature2Title: "Shred & Film Together",
       feature2Desc: "Capture each other's runs for technique reviews, split accommodation, and make friends.",
       cta: "Find Buddies in App",
-      posts: [
-        { title: "Wanlong weekend carving & video filming", resort: "Chongli · Wanlong", date: "This Sat - Sun", level: "Intermediate+", style: "Snowboard", target: "Carving & filming", author: "Leo_Carver", members: "3/4 Joined" },
-        { title: "Niseko Backcountry & Powder Team", resort: "Hokkaido · Niseko", date: "Next Month 12-16", level: "Expert", style: "Ski / Snowboard", target: "Tree runs & Powder", author: "Yuki", members: "2/5 Joined" },
-        { title: "Genting night session beginner practice", resort: "Secret Garden Genting", date: "Fri Night", level: "Beginner", style: "Snowboard", target: "Side slipping / turns", author: "Cherry", members: "2/3 Joined" }
-      ]
     },
     roadmap: {
       tag: "Future Roadmap",
@@ -396,11 +362,6 @@ export const translations = {
       feature3Title: "透明な費用分担",
       feature3Desc: "ガソリン代や高速料金を割り勘にして、経済的かつエコに移動。",
       cta: "アプリで相乗りを利用する",
-      routes: [
-        { from: "東京都内 (新宿)", to: "かぐらスキー場", date: "土曜 06:30", price: "¥3,500 /人", seats: "残り 2 席", boardCapacity: "ボードケース2つ可", driver: "Kenji", car: "4WD SUV · スタッドタイヤ" },
-        { from: "大阪市内", to: "白馬八方尾根", date: "金曜 20:00", price: "¥4,000 /人", seats: "残り 1 席", boardCapacity: "スノボ・スキー対応", driver: "Takuya", car: "ミニバン · 余裕の広さ" },
-        { from: "札幌市内", to: "ニセコ東急 グラン・ヒラフ", date: "日曜 07:00", price: "¥2,000 /人", seats: "残り 3 席", boardCapacity: "ルーフキャリア搭載", driver: "Hokkaido_Pow", car: "SUV · 4WD" }
-      ]
     },
     courses: {
       tag: "コア機能 03",
@@ -411,13 +372,6 @@ export const translations = {
       feature2Title: "受講生は手軽に購入・学習",
       feature2Desc: "トークンで購入し、無期限で動画をいつでも見返して練習に活かせます。",
       btnText: "アプリで講座一覧を見る",
-      instructorLabel: "インストラクター",
-      lessonsLabel: "レッスン",
-      list: [
-        { title: "スキー上級カービングマスター", instructor: "Marcus Vogt", lessons: 12, level: "上級", style: "カービング", price: "80 トークン" },
-        { title: "スノーボード初心者基本ライディング", instructor: "Hannah Adams", lessons: 8, level: "初級", style: "基本滑走", price: "50 トークン" },
-        { title: "バックカントリー＆フリーライド安全対策", instructor: "Sven Lindqvist", lessons: 10, level: "エキスパート", style: "フリーライド", price: "100 トークン" }
-      ]
     },
     skibuddy: {
       tag: "コア機能 04",
@@ -429,11 +383,6 @@ export const translations = {
       feature2Title: "相互撮影とグループ滑走",
       feature2Desc: "フォーム確認の撮り合いや宿のシェアなど、気の合う仲間とチームを結成。",
       cta: "アプリで仲間を探す",
-      posts: [
-        { title: "週末のかぐらでカービング撮り合い仲間募集", resort: "新潟 · かぐら", date: "今週土日", level: "中上級", style: "スノーボード", target: "滑走動画の撮り合い", author: "Leo_Carver", members: "3/4 人参加中" },
-        { title: "ニセコ パウダー・ツリーラン探検チーム", resort: "北海道 · ニセコ", date: "来月12-16日", level: "上級者", style: "スキー / スノボ", target: "パウダーライディング", author: "Yuki", members: "2/5 人参加中" },
-        { title: "初心者向けゲレンデ練習、一緒に楽しみましょう", resort: "長野 · 志賀高原", date: "金曜ナイター", level: "初心者", style: "スノーボード", target: "基本ターン練習", author: "Mika", members: "2/3 人参加中" }
-      ]
     },
     roadmap: {
       tag: "将来の計画",
@@ -563,11 +512,6 @@ export const translations = {
       feature3Title: "투명한 비용 정산",
       feature3Desc: "유류비와 통행료를 공정하게 분담하여 경제적이고 친환경적인 이동.",
       cta: "앱에서 카풀 이용하기",
-      routes: [
-        { from: "서울 강남", to: "휘닉스파크", date: "토요일 06:00", price: "₩15,000 /인", seats: "2자리 남음", boardCapacity: "보드백 2개 가능", driver: "김스키", car: "SUV · 루프박스" },
-        { from: "경기 판교", to: "용평리조트 (모나용평)", date: "금요일 19:30", price: "₩18,000 /인", seats: "1자리 남음", boardCapacity: "160cm 보드백 수납", driver: "CarveKing", car: "카니발 · 넉넉한 공간" },
-        { from: "대구 수성구", to: "하이원리조트", date: "일요일 06:30", price: "₩20,000 /인", seats: "3자리 남음", boardCapacity: "스키/보드 모두 가능", driver: "박보더", car: "4륜 SUV · 스노우타이어" }
-      ]
     },
     courses: {
       tag: "핵심 기능 03",
@@ -578,13 +522,6 @@ export const translations = {
       feature2Title: "수강생의 평생 반복 학습",
       feature2Desc: "토큰으로 손쉽게 강좌를 구독하고, 언제든 디테일한 기술을 복습.",
       btnText: "앱에서 모든 강좌 둘러보기",
-      instructorLabel: "강사",
-      lessonsLabel: "레슨",
-      list: [
-        { title: "스키 상급 카빙 마스터클래스", instructor: "Marcus Vogt", lessons: 12, level: "상급", style: "카빙", price: "80 토큰" },
-        { title: "스노보드 기초 및 코어 라이딩", instructor: "Hannah Adams", lessons: 8, level: "초급", style: "기초 라이딩", price: "50 토큰" },
-        { title: "백컨트리 및 프리라이드 안전 가이드", instructor: "Sven Lindqvist", lessons: 10, level: "전문가", style: "프리라이드", price: "100 토큰" }
-      ]
     },
     skibuddy: {
       tag: "핵심 기능 04",
@@ -596,11 +533,6 @@ export const translations = {
       feature2Title: "영상 상호 촬영 및 동반 라이딩",
       feature2Desc: "자세 교정을 위한 영상 촬영, 식사 및 숙소 쉐어 등 스키 크루 형성.",
       cta: "앱에서 스키 버디 찾기",
-      posts: [
-        { title: "휘팍 주말 카빙 상호 촬영 크루 모집", resort: "평창 · 휘닉스파크", date: "이번주 토-일", level: "중상급", style: "스노보드", target: "슬로프 영상 촬영", author: "Leo_Carver", members: "3/4명 참여중" },
-        { title: "하이원 파우더 & 슬로프 투어 소분대", resort: "정선 · 하이원", date: "다음달 12-16일", level: "상급/전문가", style: "스키/보드", target: "파우더 라이딩", author: "Yuki", members: "2/5명 참여중" },
-        { title: "야간 기초 턴 연습, 서로 응원하며 타요", resort: "비발디파크", date: "금요일 야간", level: "초급자", style: "스노보드", target: "기초 턴 마스터", author: "초보보더", members: "2/3명 참여중" }
-      ]
     },
     roadmap: {
       tag: "로드맵",
@@ -730,11 +662,6 @@ export const translations = {
       feature3Title: "Partage Équitable des Frais",
       feature3Desc: "Partage transparent des frais de carburant et péages pour un voyage écologique et économique.",
       cta: "Découvrir le covoiturage",
-      routes: [
-        { from: "Grenoble Gare", to: "L'Alpe d'Huez", date: "Samedi 07:00", price: "8 € /pers", seats: "2 places rest.", boardCapacity: "2 housses de ski max", driver: "Julien", car: "SUV avec coffre de toit" },
-        { from: "Lyon Part-Dieu", to: "Val Thorens", date: "Vendredi 18:30", price: "15 € /pers", seats: "1 place rest.", boardCapacity: "Housses jusqu'à 165cm", driver: "Claire", car: "Monospace spacieux" },
-        { from: "Genève Aéroport", to: "Chamonix Mont-Blanc", date: "Dimanche 07:30", price: "12 € /pers", seats: "3 places rest.", boardCapacity: "Skis & Snowboards", driver: "Marc", car: "Break 4x4 · Pneus neige" }
-      ]
     },
     courses: {
       tag: "Fonctionnalité Clé 03",
@@ -745,13 +672,6 @@ export const translations = {
       feature2Title: "Accès Instantané pour les Élèves",
       feature2Desc: "Achetez avec des jetons et profitez d'un accès illimité pour réviser chaque détail technique.",
       btnText: "Explorer tous les cours sur l'App",
-      instructorLabel: "Moniteur",
-      lessonsLabel: "Leçons",
-      list: [
-        { title: "Masterclass de Ski de Carving", instructor: "Marcus Vogt", lessons: 12, level: "Avancé", style: "Carving", price: "80 Jetons" },
-        { title: "Bases du Snowboard et Glisse", instructor: "Hannah Adams", lessons: 8, level: "Débutant", style: "Glisse de Base", price: "50 Jetons" },
-        { title: "Hors-piste et Sécurité en Montagne", instructor: "Sven Lindqvist", lessons: 10, level: "Expert", style: "Freeride", price: "100 Jetons" }
-      ]
     },
     skibuddy: {
       tag: "Fonctionnalité Clé 04",
@@ -763,11 +683,6 @@ export const translations = {
       feature2Title: "Filmez-vous & Partagez",
       feature2Desc: "Capturez vos descentes pour progresser, partagez vos repas ou votre hébergement en station.",
       cta: "Trouver des partenaires de ski",
-      posts: [
-        { title: "Session Carving & vidéo mutuelle à Val Thorens", resort: "3 Vallées · Val Thorens", date: "Ce Sam - Dim", level: "Intermédiaire+", style: "Snowboard", target: "Carving & vidéo", author: "Leo_Carver", members: "3/4 Inscrits" },
-        { title: "Équipe Hors-piste & Poudreuse à Niseko", resort: "Hokkaido · Niseko", date: "Mois prochain 12-16", level: "Expert", style: "Ski & Snow", target: "Hors-piste sécurisé", author: "Yuki", members: "2/5 Inscrits" },
-        { title: "Session nocturne débutant, entraide & bonne humeur", resort: "Les 2 Alpes", date: "Vendredi soir", level: "Débutant", style: "Snowboard", target: "Perfectionnement virages", author: "Sophie", members: "2/3 Inscrits" }
-      ]
     },
     roadmap: {
       tag: "Feuille de Route",
@@ -897,11 +812,6 @@ export const translations = {
       feature3Title: "Faire Kostenteilung",
       feature3Desc: "Transparente Aufteilung von Benzin- und Mautkosten – umweltfreundlich und günstig.",
       cta: "Fahrgemeinschaften in der App",
-      routes: [
-        { from: "München Hbf", to: "Garmisch Classic", date: "Samstag 06:45", price: "10 € /Pers.", seats: "2 Plätze frei", boardCapacity: "2 Skitaschen max.", driver: "Stefan", car: "Kombi mit Dachbox" },
-        { from: "Innsbruck", to: "St. Anton am Arlberg", date: "Freitag 18:00", price: "12 € /Pers.", seats: "1 Platz frei", boardCapacity: "Bis 165cm Boardtasche", driver: "Laura", car: "Geräumiger Van" },
-        { from: "Zürich HB", to: "Laax / Flims", date: "Sonntag 07:00", price: "18 CHF /Pers.", seats: "3 Plätze frei", boardCapacity: "Ski & Snowboards", driver: "Beat", car: "Allrad SUV · Winterreifen" }
-      ]
     },
     courses: {
       tag: "Kernfunktion 03",
@@ -912,13 +822,6 @@ export const translations = {
       feature2Title: "Flexibles Lernen für Schüler",
       feature2Desc: "Einfacher Token-Kauf und unbegrenzter Zugriff zum Wiederholen und Üben.",
       btnText: "Alle Kurse in der App ansehen",
-      instructorLabel: "Skilehrer",
-      lessonsLabel: "Lektionen",
-      list: [
-        { title: "Ski-Carving-Meisterklasse", instructor: "Marcus Vogt", lessons: 12, level: "Fortgeschritten", style: "Carving", price: "80 Token" },
-        { title: "Snowboard-Grundlagen & Core-Riding", instructor: "Hannah Adams", lessons: 8, level: "Anfänger", style: "Grundlegendes Fahren", price: "50 Token" },
-        { title: "Backcountry & Freeride Sicherheit", instructor: "Sven Lindqvist", lessons: 10, level: "Experte", style: "Freeride", price: "100 Token" }
-      ]
     },
     skibuddy: {
       tag: "Kernfunktion 04",
@@ -930,11 +833,6 @@ export const translations = {
       feature2Title: "Gemeinsam Fahren & Filmen",
       feature2Desc: "Gegenseitiges Filmen zur Videoanalyse, Hütteneinkehr und neue Freundschaften.",
       cta: "Ski-Buddies in der App finden",
-      posts: [
-        { title: "Wochenend-Carving & Video-Filmen in Garmisch", resort: "Garmisch-Partenkirchen", date: "Diesen Sa - So", level: "Mittel/Fortgeschritten", style: "Snowboard", target: "Carving & gegenseitig filmen", author: "Leo_Carver", members: "3/4 Plätze" },
-        { title: "Arlberg Freeride & Tiefschnee-Team", resort: "St. Anton am Arlberg", date: "Nächster Monat 12-16", level: "Experte", style: "Ski & Snowboard", target: "Powder & Freeride", author: "Yuki", members: "2/5 Plätze" },
-        { title: "Flachau Nachtskifahren für Einsteiger", resort: "Snow Space Salzburg", date: "Freitag Nacht", level: "Anfänger", style: "Snowboard", target: "Kurventechnik üben", author: "Lisa", members: "2/3 Plätze" }
-      ]
     },
     roadmap: {
       tag: "Zukunftspläne",
@@ -1064,11 +962,6 @@ export const translations = {
       feature3Title: "División Justa de Gastos",
       feature3Desc: "Comparte combustible y peajes de forma transparente: económico y ecológico.",
       cta: "Ver Viajes Compartidos en la App",
-      routes: [
-        { from: "Madrid (Moncloa)", to: "Sierra Nevada", date: "Sábado 06:30", price: "12 € /pers", seats: "2 plazas libres", boardCapacity: "Máx. 2 fundas de esquí", driver: "Carlos", car: "SUV con cofre de techo" },
-        { from: "Barcelona (Sants)", to: "Baqueira Beret", date: "Viernes 18:30", price: "18 € /pers", seats: "1 plaza libre", boardCapacity: "Fundas hasta 165cm", driver: "Elena", car: "Monovolumen espacioso" },
-        { from: "Santiago (Las Condes)", to: "Valle Nevado", date: "Domingo 07:00", price: "$10.000 /pers", seats: "3 plazas libres", boardCapacity: "Esquís y snowboards", driver: "Mateo", car: "4x4 · Cadenas de nieve" }
-      ]
     },
     courses: {
       tag: "Función Clave 03",
@@ -1079,13 +972,6 @@ export const translations = {
       feature2Title: "Aprendizaje Flexible para Alumnos",
       feature2Desc: "Desbloquea con tokens y disfruta de acceso ilimitado para repasar cada detalle técnico.",
       btnText: "Explorar Todos los Cursos en la App",
-      instructorLabel: "Instructor",
-      lessonsLabel: "Lecciones",
-      list: [
-        { title: "Masterclass de Carving Avanzado", instructor: "Marcus Vogt", lessons: 12, level: "Avanzado", style: "Carving", price: "80 Tokens" },
-        { title: "Fundamentos y Técnica en Snowboard", instructor: "Hannah Adams", lessons: 8, level: "Principiante", style: "Snowboard", price: "50 Tokens" },
-        { title: "Seguridad en Fuera de Pista y Freeride", instructor: "Sven Lindqvist", lessons: 10, level: "Experto", style: "Freeride", price: "100 Tokens" }
-      ]
     },
     skibuddy: {
       tag: "Función Clave 04",
@@ -1097,11 +983,6 @@ export const translations = {
       feature2Title: "Grábense y Compartan la Experiencia",
       feature2Desc: "Grábense mutuamente para analizar técnica, compartan comidas o alojamiento en la montaña.",
       cta: "Buscar Compañeros en la App",
-      posts: [
-        { title: "Carving de fin de semana y grabación mutua en Baqueira", resort: "Pirineos · Baqueira", date: "Este Sáb - Dom", level: "Intermedio+", style: "Snowboard", target: "Carving y grabación", author: "Leo_Carver", members: "3/4 Unid@s" },
-        { title: "Equipo de Fuera de Pista y Powder en Niseko", resort: "Hokkaido · Niseko", date: "Próx. mes 12-16", level: "Experto", style: "Esquí / Snow", target: "Powder y rutas boscosas", author: "Yuki", members: "2/5 Unid@s" },
-        { title: "Práctica nocturna para principiantes con buen rollo", resort: "Sierra Nevada", date: "Viernes noche", level: "Principiante", style: "Snowboard", target: "Giros básicos y técnica", author: "Lucia", members: "2/3 Unid@s" }
-      ]
     },
     roadmap: {
       tag: "Hoja de Ruta",
@@ -1231,11 +1112,6 @@ export const translations = {
       feature3Title: "Прозрачное разделение расходов",
       feature3Desc: "Честное разделение затрат на топливо и платные дороги — выгодно и экологично.",
       cta: "Открыть поездки в приложении",
-      routes: [
-        { from: "Москва (м. Тушинская)", to: "ГК Сорочаны", date: "Суббота 07:00", price: "400 ₽ /чел", seats: "Осталось 2 места", boardCapacity: "До 2 чехлов с лыжами", driver: "Алексей", car: "Внедорожник с боксом на крыше" },
-        { from: "Санкт-Петербург", to: "Игора Драйв / Курорт", date: "Пятница 18:30", price: "500 ₽ /чел", seats: "Осталось 1 место", boardCapacity: "Чехлы до 165 см", driver: "Дмитрий", car: "Просторный минивэн" },
-        { from: "Адлер (Аэропорт)", to: "Роза Хутор / Красная Поляна", date: "Воскресенье 07:30", price: "600 ₽ /чел", seats: "Осталось 3 места", boardCapacity: "Лыжи и сноуборды", driver: "Максим", car: "4WD · Зимняя резина" }
-      ]
     },
     courses: {
       tag: "Ключевая функция 03",
@@ -1246,13 +1122,6 @@ export const translations = {
       feature2Title: "Удобное обучение для учеников",
       feature2Desc: "Оплата токенами и бессрочный доступ к видеоурокам для отработки техники.",
       btnText: "Смотреть все курсы в приложении",
-      instructorLabel: "Инструктор",
-      lessonsLabel: "Уроков",
-      list: [
-        { title: "Мастер-класс по экспертному карвингу", instructor: "Marcus Vogt", lessons: 12, level: "Продвинутый", style: "Карвинг", price: "80 Токенов" },
-        { title: "Основы сноуборда и баланс", instructor: "Hannah Adams", lessons: 8, level: "Начинающий", style: "Базовое катание", price: "50 Токенов" },
-        { title: "Фрирайд и безопасность в горах", instructor: "Sven Lindqvist", lessons: 10, level: "Эксперт", style: "Фрирайд", price: "100 Токенов" }
-      ]
     },
     skibuddy: {
       tag: "Ключевая функция 04",
@@ -1264,11 +1133,6 @@ export const translations = {
       feature2Title: "Съемка спусков и общение",
       feature2Desc: "Снимайте друг друга на видео для разбора техники, делите жилье и находите друзей.",
       cta: "Найти компанию в приложении",
-      posts: [
-        { title: "Выходные на Роза Хутор: карвинг и видеосъемка", resort: "Сочи · Роза Хутор", date: "Сб - Вс", level: "Средний / Выше", style: "Сноуборд", target: "Карвинг и съемка спусков", author: "Leo_Carver", members: "3/4 Участника" },
-        { title: "Фрирайд-команда в Шерегеше (пухляк и лес)", resort: "Сибирь · Шерегеш", date: "В след. месяце 12-16", level: "Эксперт", style: "Лыжи / Сноуборд", target: "Фрирайд и лес", author: "Yuki", members: "2/5 Участников" },
-        { title: "Вечернее катание для начинающих, учимся вместе", resort: "Красная Поляна", date: "Пятница вечер", level: "Новичок", style: "Сноуборд", target: "Базовые повороты", author: "Анна", members: "2/3 Участника" }
-      ]
     },
     roadmap: {
       tag: "Планы развития",
