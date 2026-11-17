@@ -145,4 +145,16 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
     expect(screen.queryByTestId('store-tab-coins')).toBeNull();
     expect(screen.getByLabelText('Email')).toBeTruthy();
   });
+
+  it('requires unified login if only a single-scope carpool_pass token exists in sessionStorage', () => {
+    const expiresAt = new Date(Date.now() + 60_000).toISOString();
+    sessionStorage.setItem('carpool_pass_access_token', 'stale-pass-only-token');
+    sessionStorage.setItem('carpool_pass_access_token_expires_at', String(Date.parse(expiresAt)));
+
+    renderStore('/store?tab=pass');
+
+    expect(screen.queryByTestId('store-tab-coins')).toBeNull();
+    expect(screen.queryByTestId('store-tab-pass')).toBeNull();
+    expect(screen.getByLabelText('Email')).toBeTruthy();
+  });
 });
