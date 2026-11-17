@@ -3,15 +3,17 @@ import { API_BASE_URL } from '../config/api';
 import { checkoutFetch } from '../lib/checkout';
 import { PurchaseScope, rechargeUserId, storeRechargeAccessToken } from '../lib/rechargeSession';
 
-// Full login credentials stay in memory; only the short-lived purchase token is stored.
+// Full login credentials stay in memory; only short-lived scoped purchase tokens are stored.
 export default function PurchaseLogin({
   scope,
+  extraScopes,
   zh,
   onSuccess,
   purpose = 'purchase',
   buttonClassName,
 }: {
   scope: PurchaseScope;
+  extraScopes?: PurchaseScope[];
   zh: boolean;
   purpose?: 'purchase' | 'refund' | 'verify';
   onSuccess: (data: any) => void;
@@ -47,27 +49,45 @@ export default function PurchaseLogin({
       if (!r.ok) throw new Error('Login failed');
       return r.json();
     };
+    const exchangeScope = async (targetScope: PurchaseScope, fullToken: string) => {
+      const handoff = await post('/v1/auth/web_handoff_code', { scope: targetScope }, fullToken);
+      if (!active.current) return null;
+      const code = handoff.handoffCode || handoff.handoff_code;
+      if (typeof code !== 'string' || !code) throw new Error('Invalid handoff');
+      const data = await post('/v1/auth/exchange_handoff_code', { handoff_code: code });
+      if (!active.current) return null;
+      if (targetScope === 'recharge' && !rechargeUserId(data.user)) throw new Error('Invalid user');
+      if (
+        !storeRechargeAccessToken(
+          data.accessToken || data.access_token,
+          data.accessTokenExpiresAt || data.access_token_expires_at,
+          targetScope,
+        )
+      ) {
+        throw new Error('Invalid session');
+      }
+      return data;
+    };
+
     try {
       const login = await post('/login_user', { email: email.trim(), password });
       setPassword('');
       if (!active.current) return;
       const fullToken = login.accessToken || login.access_token;
       if (typeof fullToken !== 'string' || !fullToken) throw new Error('Invalid login');
-      const handoff = await post('/v1/auth/web_handoff_code', { scope }, fullToken);
+      const data = await exchangeScope(scope, fullToken);
+      if (!data || !active.current) return;
+      if (extraScopes?.length) {
+        for (const extra of extraScopes) {
+          if (extra === scope) continue;
+          try {
+            await exchangeScope(extra, fullToken);
+          } catch {
+            // Optional secondary scope failure must not block the active scope login.
+          }
+        }
+      }
       if (!active.current) return;
-      const code = handoff.handoffCode || handoff.handoff_code;
-      if (typeof code !== 'string' || !code) throw new Error('Invalid handoff');
-      const data = await post('/v1/auth/exchange_handoff_code', { handoff_code: code });
-      if (!active.current) return;
-      if (scope === 'recharge' && !rechargeUserId(data.user)) throw new Error('Invalid user');
-      if (
-        !storeRechargeAccessToken(
-          data.accessToken || data.access_token,
-          data.accessTokenExpiresAt || data.access_token_expires_at,
-          scope
-        )
-      )
-        throw new Error('Invalid session');
       onSuccess(data);
     } catch {
       if (active.current) setError(true);

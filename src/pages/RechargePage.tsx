@@ -7,7 +7,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { CreditCard, LogOut, Loader2, Coins, ArrowRight, ShieldCheck, User } from 'lucide-react';
 
 import { API_BASE_URL } from '../config/api';
-import { clearRechargeAccessToken, getValidRechargeAccessToken, rechargeUserId, storeRechargeAccessToken } from '../lib/rechargeSession';
+import { clearRechargeAccessToken, getValidRechargeAccessToken, PurchaseScope, rechargeUserId, storeRechargeAccessToken } from '../lib/rechargeSession';
 import { addPendingStripeSessionId, readPendingStripeSessionIds, removePendingStripeSessionForUser } from '../lib/pendingStripeSessions';
 import { parseTokenAmount } from '../lib/tokenConversion';
 
@@ -239,7 +239,15 @@ const localTranslations = {
   },
 };
 
-export default function RechargePage() {
+export default function RechargePage({
+  embedded = false,
+  extraScopes,
+  onAuthSuccess,
+}: {
+  embedded?: boolean;
+  extraScopes?: PurchaseScope[];
+  onAuthSuccess?: () => void;
+} = {}) {
   const { language } = useLanguage();
   const navigate = useNavigate();
   
@@ -692,10 +700,210 @@ export default function RechargePage() {
   // Main Loader
   if (pageLoading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className={embedded ? 'py-16 flex items-center justify-center' : 'min-h-screen bg-slate-900 flex items-center justify-center'}>
         <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
       </div>
     );
+  }
+
+  const content = (
+    <div className={embedded ? 'max-w-md w-full mx-auto' : 'max-w-md w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center'}>
+      {!isLoggedIn ? (
+        /* Handoff Required Card */
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-center">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+
+          <div className="mx-auto w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400">
+            <ShieldCheck className="h-8 w-8" />
+          </div>
+
+          <PurchaseLogin
+            scope="recharge"
+            extraScopes={extraScopes}
+            zh={language === 'zh'}
+            onSuccess={(data) => {
+              const purchaseToken = data.accessToken || data.access_token;
+              const id = rechargeUserId(data.user);
+              if (!id) return;
+              const info = {
+                id,
+                email: data.user.email || '',
+                nickname: data.user.nickname || '',
+                balance: (Number(data.user.balance) || 0) / 100,
+              };
+              setAccessToken(purchaseToken);
+              setSessionId(null);
+              setUser(info);
+              setIsLoggedIn(true);
+              setError(null);
+              checkPendingOrder(info.id, purchaseToken);
+              onAuthSuccess?.();
+            }}
+          />
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex gap-2 text-left">
+              <ShieldCheck className="h-5 w-5 shrink-0 text-red-400" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          {!embedded && (
+            <button
+              onClick={() => navigate('/')}
+              className="w-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white font-semibold py-4 rounded-2xl hover:border-slate-600 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-3"
+            >
+              <span>{tLocal.openAppBtn}</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      ) : (
+        /* Recharge Panel */
+        <div className="space-y-6">
+          {/* User Profile Card */}
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex items-center justify-between relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-5 rounded-full blur-2xl"></div>
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center">
+                <User className="h-6 w-6 text-blue-400" />
+              </div>
+              <div>
+                <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.welcomeBack}</div>
+                <div className="text-base font-bold text-white">{user?.nickname || user?.email}</div>
+              </div>
+            </div>
+
+            <div className="text-right">
+              <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.balanceLabel}</div>
+              <div className="flex items-center gap-1.5 justify-end mt-0.5">
+                <Coins className="h-5 w-5 text-amber-500" />
+                <span className="text-xl font-black text-white">{user?.balance !== undefined ? user.balance.toFixed(2) : '0.00'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Token Products List */}
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{tLocal.selectPack}</h3>
+
+            {tokenPurchaseAvailability !== 'enabled' && (
+              <div
+                role="alert"
+                className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-4 rounded-2xl text-sm"
+              >
+                {tokenPurchaseAvailability === 'disabled'
+                  ? tLocal.purchaseDisabled
+                  : tLocal.availabilityUnknown}
+              </div>
+            )}
+
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-xs">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-3">
+              {catalogReloadNeeded && <button disabled={paymentLoading} onClick={() => {
+                setError(null); void fetchProducts();
+              }} className="text-blue-300">{tLocal.reloadProducts}</button>}
+              {products.map((product) => {
+                const isSelected = selectedProductId === product.productId;
+                const priceFormatted = `$${(product.priceInCents / 100).toFixed(2)}`;
+
+                return (
+                  <div
+                    key={product.productId}
+                    onClick={() => {
+                      if (tokenPurchaseAvailability === 'enabled') {
+                        setSelectedProductId(product.productId);
+                      }
+                    }}
+                    aria-disabled={tokenPurchaseAvailability !== 'enabled'}
+                    className={`border-2 rounded-2xl p-4 flex items-center justify-between transition-all ${
+                      tokenPurchaseAvailability === 'enabled'
+                        ? 'cursor-pointer'
+                        : 'cursor-not-allowed opacity-50'
+                    } ${
+                      isSelected
+                        ? 'border-blue-500 bg-blue-500/5'
+                        : 'border-slate-800 hover:border-slate-700 bg-slate-950/45'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-xl transition-colors ${isSelected ? 'bg-blue-500/15 text-blue-400' : 'bg-slate-850 text-slate-400'}`}>
+                        <Coins className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-white flex items-center gap-1.5">
+                          {product.tokenAmount} {tLocal.tokenUnit}
+                        </div>
+                        {product.description && (
+                          <div className="text-xs text-slate-500 mt-0.5">{product.description}</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-black text-white text-base">{priceFormatted}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <RefundNotice zh={language === 'zh'} />
+            <div className="text-xs text-slate-400 pt-2">
+              {policy ? <details>
+                <summary className="cursor-pointer">{language==='zh'?'点击支付即表示您已阅读并同意：':'By paying, you acknowledge that you have read and agree to: '}<span className="text-blue-400">{tLocal.policyAgreeLink} ({policy.version})</span></summary>
+                <pre className="whitespace-pre-wrap max-h-72 overflow-y-auto mt-3 p-3 border border-slate-700 rounded">{policy.content}</pre>
+              </details> : <p>{policyError ? (language==='zh'?'协议加载失败':'Could not load policy') : (language==='zh'?'正在加载协议…':'Loading policy…')}</p>}
+              <button type="button" onClick={()=>setPolicyReload(value=>value+1)} className="text-blue-400 mt-2">{language==='zh'?'刷新协议':'Refresh policy'}</button>
+            </div>
+
+            {isRestoring && <p role="status" className="text-sm text-blue-300">{language === 'zh' ? '正在核对之前的订单，请勿再次付款…' : 'Checking previous orders. Please do not pay again yet…'}</p>}
+            {restoreMessage && <p role="status" className="text-sm text-green-300">{restoreMessage}</p>}
+            {/* Checkout CTA */}
+            <button
+              onClick={handleRecharge}
+              disabled={
+                tokenPurchaseAvailability !== 'enabled' ||
+                paymentLoading ||
+                isRestoring ||
+                !selectedProductId ||
+                !policy
+              }
+              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+            >
+              {paymentLoading ? (
+                <>
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <span>{tLocal.initiatingPayment}</span>
+                </>
+              ) : (
+                <>
+                  <CreditCard className="h-5 w-5" />
+                  <span>
+                    {tokenPurchaseAvailability === 'enabled'
+                      ? tLocal.stripePayBtn
+                      : tLocal.purchaseDisabledButton}
+                  </span>
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </button>
+
+            <div className="text-center text-xs text-slate-500 mt-2 font-medium">
+              {tLocal.payWithAlipayWechat}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  if (embedded) {
+    return content;
   }
 
   return (
@@ -728,179 +936,8 @@ export default function RechargePage() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-md w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center">
-        {!isLoggedIn ? (
-          /* Handoff Required Card */
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-center">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-            
-            <div className="mx-auto w-16 h-16 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400">
-              <ShieldCheck className="h-8 w-8" />
-            </div>
-
-            <PurchaseLogin scope="recharge" zh={language==='zh'} onSuccess={data=>{
-              const purchaseToken=data.accessToken||data.access_token;
-              const id=rechargeUserId(data.user);if(!id)return;
-              const info={id,email:data.user.email||'',nickname:data.user.nickname||'',balance:(Number(data.user.balance)||0)/100};
-              setAccessToken(purchaseToken);setSessionId(null);setUser(info);setIsLoggedIn(true);setError(null);checkPendingOrder(info.id,purchaseToken);
-            }}/>
-
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl mb-6 text-sm flex gap-2 text-left">
-                <ShieldCheck className="h-5 w-5 shrink-0 text-red-400" />
-                <span>{error}</span>
-              </div>
-            )}
-
-            <button
-              onClick={() => navigate('/')}
-              className="w-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white font-semibold py-4 rounded-2xl hover:border-slate-600 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-3"
-            >
-              <span>{tLocal.openAppBtn}</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
-        ) : (
-          /* Recharge Panel */
-          <div className="space-y-6">
-            {/* User Profile Card */}
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex items-center justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-5 rounded-full blur-2xl"></div>
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center">
-                  <User className="h-6 w-6 text-blue-400" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.welcomeBack}</div>
-                  <div className="text-base font-bold text-white">{user?.nickname || user?.email}</div>
-                </div>
-              </div>
-
-              <div className="text-right">
-                <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.balanceLabel}</div>
-                <div className="flex items-center gap-1.5 justify-end mt-0.5">
-                  <Coins className="h-5 w-5 text-amber-500" />
-                  <span className="text-xl font-black text-white">{user?.balance !== undefined ? user.balance.toFixed(2) : '0.00'}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Token Products List */}
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{tLocal.selectPack}</h3>
-
-              {tokenPurchaseAvailability !== 'enabled' && (
-                <div
-                  role="alert"
-                  className="bg-amber-500/10 border border-amber-500/30 text-amber-300 p-4 rounded-2xl text-sm"
-                >
-                  {tokenPurchaseAvailability === 'disabled'
-                    ? tLocal.purchaseDisabled
-                    : tLocal.availabilityUnknown}
-                </div>
-              )}
-              
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-2xl text-xs">
-                  {error}
-                </div>
-              )}
-
-              <div className="space-y-3">
-                {catalogReloadNeeded && <button disabled={paymentLoading} onClick={() => {
-                  setError(null); void fetchProducts();
-                }} className="text-blue-300">{tLocal.reloadProducts}</button>}
-                {products.map((product) => {
-                  const isSelected = selectedProductId === product.productId;
-                  const priceFormatted = `$${(product.priceInCents / 100).toFixed(2)}`;
-                  
-                  return (
-                    <div
-                      key={product.productId}
-                      onClick={() => {
-                        if (tokenPurchaseAvailability === 'enabled') {
-                          setSelectedProductId(product.productId);
-                        }
-                      }}
-                      aria-disabled={tokenPurchaseAvailability !== 'enabled'}
-                      className={`border-2 rounded-2xl p-4 flex items-center justify-between transition-all ${
-                        tokenPurchaseAvailability === 'enabled'
-                          ? 'cursor-pointer'
-                          : 'cursor-not-allowed opacity-50'
-                      } ${
-                        isSelected
-                          ? 'border-blue-500 bg-blue-500/5'
-                          : 'border-slate-800 hover:border-slate-700 bg-slate-950/45'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-xl transition-colors ${isSelected ? 'bg-blue-500/15 text-blue-400' : 'bg-slate-850 text-slate-400'}`}>
-                          <Coins className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-white flex items-center gap-1.5">
-                            {product.tokenAmount} {tLocal.tokenUnit}
-                          </div>
-                          {product.description && (
-                            <div className="text-xs text-slate-500 mt-0.5">{product.description}</div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-black text-white text-base">{priceFormatted}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <RefundNotice zh={language === 'zh'} />
-              <div className="text-xs text-slate-400 pt-2">
-                {policy ? <details>
-                  <summary className="cursor-pointer">{language==='zh'?'点击支付即表示您已阅读并同意：':'By paying, you acknowledge that you have read and agree to: '}<span className="text-blue-400">{tLocal.policyAgreeLink} ({policy.version})</span></summary>
-                  <pre className="whitespace-pre-wrap max-h-72 overflow-y-auto mt-3 p-3 border border-slate-700 rounded">{policy.content}</pre>
-                </details> : <p>{policyError ? (language==='zh'?'协议加载失败':'Could not load policy') : (language==='zh'?'正在加载协议…':'Loading policy…')}</p>}
-                <button type="button" onClick={()=>setPolicyReload(value=>value+1)} className="text-blue-400 mt-2">{language==='zh'?'刷新协议':'Refresh policy'}</button>
-              </div>
-
-              {isRestoring && <p role="status" className="text-sm text-blue-300">{language === 'zh' ? '正在核对之前的订单，请勿再次付款…' : 'Checking previous orders. Please do not pay again yet…'}</p>}
-              {restoreMessage && <p role="status" className="text-sm text-green-300">{restoreMessage}</p>}
-              {/* Checkout CTA */}
-              <button
-                onClick={handleRecharge}
-                disabled={
-                  tokenPurchaseAvailability !== 'enabled' ||
-                  paymentLoading ||
-                  isRestoring ||
-                  !selectedProductId ||
-                  !policy
-                }
-                className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
-              >
-                {paymentLoading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    <span>{tLocal.initiatingPayment}</span>
-                  </>
-                ) : (
-                  <>
-                    <CreditCard className="h-5 w-5" />
-                    <span>
-                      {tokenPurchaseAvailability === 'enabled'
-                        ? tLocal.stripePayBtn
-                        : tLocal.purchaseDisabledButton}
-                    </span>
-                    <ArrowRight className="h-4 w-4" />
-                  </>
-                )}
-              </button>
-
-              <div className="text-center text-xs text-slate-500 mt-2 font-medium">
-                {tLocal.payWithAlipayWechat}
-              </div>
-            </div>
-          </div>
-        )}
+      <main className="flex-grow flex flex-col justify-center">
+        {content}
       </main>
 
       {/* Footer copyright */}

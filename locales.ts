@@ -24,7 +24,7 @@ export interface LocaleContent {
     carpool: string;
     skibuddy: string;
     roadmap: string;
-    recharge: string;
+    store: string;
     appDownload: string;
   };
   hero: {
@@ -138,7 +138,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: 'Free Carpool',
       skibuddy: 'Ski Buddy',
       roadmap: 'Roadmap',
-      recharge: 'Token Recharge',
+      store: 'Store',
       appDownload: 'Get App',
     },
     hero: {
@@ -373,7 +373,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'Take your skiing to the next level. Connecting instructors, friends, and services.',
       product: 'Product',
-      productLinks: ['Video Analysis', 'Courses', 'Free Carpool', 'Ski Buddy', 'Token Recharge'],
+      productLinks: ['Video Analysis', 'Courses', 'Free Carpool', 'Ski Buddy', 'Store'],
       support: 'Support & Legal',
       supportLinks: ['Help Center', 'Contact Us', 'Privacy Policy', 'Terms of Service'],
       refundPolicy: 'Refund Policy',
@@ -389,7 +389,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: '免费拼车',
       skibuddy: '雪搭子',
       roadmap: '未来规划',
-      recharge: '代币充值',
+      store: '商店',
       appDownload: '下载 App',
     },
     hero: {
@@ -624,7 +624,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: '让每一次滑行都更进一步。连接教练、雪友与优质服务，您的终极滑雪伴侣。',
       product: '产品功能',
-      productLinks: ['视频分析', '视频课程', '免费拼车', '雪搭子', '代币充值'],
+      productLinks: ['视频分析', '视频课程', '免费拼车', '雪搭子', '商店'],
       support: '支持与条款',
       supportLinks: ['使用帮助', '联系我们', '隐私政策', '服务条款'],
       refundPolicy: '退款政策',
@@ -640,7 +640,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: '無料相乗り',
       skibuddy: 'スキー仲間',
       roadmap: '今後の計画',
-      recharge: 'トークン購入',
+      store: 'ストア',
       appDownload: 'アプリ入手',
     },
     hero: {
@@ -833,7 +833,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'すべての滑走を次のレベルへ。Instructor・仲間・サービスをつなぐプラットフォーム。',
       product: 'プロダクト',
-      productLinks: ['ビデオ分析', 'コース', '無料相乗り', 'スキー仲間', 'トークン購入'],
+      productLinks: ['ビデオ分析', 'コース', '無料相乗り', 'スキー仲間', 'ストア'],
       support: 'サポート・規約',
       supportLinks: ['ヘルプセンター', 'お問い合わせ', 'プライバシーポリシー', '利用規約'],
       refundPolicy: '返金ポリシー',
@@ -849,7 +849,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: '무료 카풀',
       skibuddy: '스키 버디',
       roadmap: '로드맵',
-      recharge: '토큰 충전',
+      store: '스토어',
       appDownload: '앱 받기',
     },
     hero: {
@@ -1042,7 +1042,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: '모든 라이딩을 한 단계 위로. Instructor, 친구, 서비스를 연결합니다.',
       product: '제품',
-      productLinks: ['영상 분석', '강의 코스', '무료 카풀', '스키 버디', '토큰 충전'],
+      productLinks: ['영상 분석', '강의 코스', '무료 카풀', '스키 버디', '스토어'],
       support: '지원 및 약관',
       supportLinks: ['도움말 센터', '문의하기', '개인정보처리방침', '이용약관'],
       refundPolicy: '환불 정책',
@@ -1058,7 +1058,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: 'Covoiturage gratuit',
       skibuddy: 'Ski Buddy',
       roadmap: 'Feuille de route',
-      recharge: 'Recharge',
+      store: 'Boutique',
       appDownload: "Télécharger l'app",
     },
     hero: {
@@ -1251,7 +1251,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'Passez au niveau supérieur. Connectez moniteurs, amis et services.',
       product: 'Produit',
-      productLinks: ['Analyse vidéo', 'Cours vidéo', 'Covoiturage gratuit', 'Ski Buddy', 'Recharge'],
+      productLinks: ['Analyse vidéo', 'Cours vidéo', 'Covoiturage gratuit', 'Ski Buddy', 'Boutique'],
       support: 'Support & Légal',
       supportLinks: ["Centre d'aide", 'Contact', 'Confidentialité', "Conditions d'utilisation"],
       refundPolicy: 'Politique de remboursement',
@@ -1267,7 +1267,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: 'Gratis-Carpool',
       skibuddy: 'Ski Buddy',
       roadmap: 'Roadmap',
-      recharge: 'Aufladen',
+      store: 'Store',
       appDownload: 'App laden',
     },
     hero: {
@@ -1460,7 +1460,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'Bring dein Skifahren aufs nächste Level. Instructors, Freunde und Services vereint.',
       product: 'Produkt',
-      productLinks: ['Videoanalyse', 'Kurse', 'Gratis-Carpool', 'Ski Buddy', 'Aufladen'],
+      productLinks: ['Videoanalyse', 'Kurse', 'Gratis-Carpool', 'Ski Buddy', 'Store'],
       support: 'Support & Rechtliches',
       supportLinks: ['Hilfecenter', 'Kontakt', 'Datenschutz', 'Nutzungsbedingungen'],
       refundPolicy: 'Rückerstattung',
@@ -1476,7 +1476,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: 'Carpool gratis',
       skibuddy: 'Ski Buddy',
       roadmap: 'Hoja de ruta',
-      recharge: 'Recargar',
+      store: 'Tienda',
       appDownload: 'Descargar App',
     },
     hero: {
@@ -1669,7 +1669,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'Lleva tu esquí al siguiente nivel. Conectando instructors, amigos y servicios.',
       product: 'Producto',
-      productLinks: ['Análisis de video', 'Cursos', 'Carpool gratis', 'Ski Buddy', 'Recargar'],
+      productLinks: ['Análisis de video', 'Cursos', 'Carpool gratis', 'Ski Buddy', 'Tienda'],
       support: 'Soporte y Legal',
       supportLinks: ['Centro de ayuda', 'Contacto', 'Privacidad', 'Términos'],
       refundPolicy: 'Política de reembolso',
@@ -1685,7 +1685,7 @@ export const translations: Record<Language, LocaleContent> = {
       carpool: 'Бесплатный карпул',
       skibuddy: 'Ski Buddy',
       roadmap: 'Планы',
-      recharge: 'Пополнение',
+      store: 'Магазин',
       appDownload: 'Скачать',
     },
     hero: {
@@ -1878,7 +1878,7 @@ export const translations: Record<Language, LocaleContent> = {
     footer: {
       tagline: 'Выведите катание на новый уровень. Связываем инструкторов, друзей и сервисы.',
       product: 'Продукт',
-      productLinks: ['Видеоанализ', 'Курсы', 'Бесплатный карпул', 'Ski Buddy', 'Пополнение'],
+      productLinks: ['Видеоанализ', 'Курсы', 'Бесплатный карпул', 'Ski Buddy', 'Магазин'],
       support: 'Поддержка',
       supportLinks: ['Помощь', 'Связаться с нами', 'Конфиденциальность', 'Условия'],
       refundPolicy: 'Политика возврата',

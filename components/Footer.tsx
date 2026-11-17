@@ -12,8 +12,7 @@ const Footer: React.FC = () => {
     { label: t.footer.productLinks[1], href: '#courses', isRoute: false },
     { label: t.footer.productLinks[2], href: '#carpool', isRoute: false },
     { label: t.footer.productLinks[3], href: '#skibuddy', isRoute: false },
-    { label: t.footer.productLinks[4], href: '/recharge', isRoute: true },
-    { label: 'Carpool Pass', href: '/carpool-pass', isRoute: true },
+    { label: t.footer.productLinks[4], href: '/store', isRoute: true },
   ];
 
   const supportLinks = [
