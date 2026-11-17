@@ -4,7 +4,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter } from 'react-router-dom';
 import { LanguageProvider } from '../../contexts/LanguageContext';
 import StorePage from './StorePage';
-import { getValidRechargeAccessToken } from '../lib/rechargeSession';
+import { getValidRechargeAccessToken, storeRechargeAccessToken } from '../lib/rechargeSession';
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -24,6 +24,32 @@ function renderStore(initialEntry = '/store') {
       </MemoryRouter>
     </LanguageProvider>,
   );
+}
+
+function seedStoreSession() {
+  const expiry = new Date(Date.now() + 60_000).toISOString();
+  storeRechargeAccessToken('coins-session', expiry);
+  storeRechargeAccessToken('pass-session', expiry, 'carpool_pass');
+}
+
+function mockStoreApi({ accountStatus = () => 200, passCheckoutStatus = 200 }: {
+  accountStatus?: () => number;
+  passCheckoutStatus?: number;
+} = {}) {
+  return vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+    const url = String(input);
+    const json = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status });
+    if (url.includes('/get_user')) {
+      const status = accountStatus();
+      return json(status === 200 ? { user: { ID: '42', email: 'skier@example.com', balance: 500 } } : {}, status);
+    }
+    if (url.includes('/v1/feature_availability')) return json({ features: { token_purchase_enabled: { enabled: true } } });
+    if (url.includes('/token/products')) return json({ products: [{ productId: 'pack_10', tokenAmountInCents: '1000', priceInCents: 1299 }] });
+    if (url.includes('/policies/latest')) return json({ policy_version_id: '1', language_code: 'en', version: 'v1', content: 'Policy' });
+    if (url.includes('/v1/carpools/pass/products')) return json({ products: [{ product_id: 'pass_1m', title: 'Monthly Pass', duration_months: 1, price_in_cents: 499, version: '1' }] });
+    if (url.includes('/v1/carpools/pass/checkout')) return json({}, passCheckoutStatus);
+    return json({}, 404);
+  });
 }
 
 describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
@@ -156,5 +182,53 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
     expect(screen.queryByTestId('store-tab-coins')).toBeNull();
     expect(screen.queryByTestId('store-tab-pass')).toBeNull();
     expect(screen.getByLabelText('Email')).toBeTruthy();
+  });
+
+  it('returns an expired Coins session to the single Store login instead of showing login inside authenticated tabs', async () => {
+    seedStoreSession();
+    mockStoreApi({ accountStatus: () => 401 });
+    renderStore();
+    await screen.findByLabelText('Password');
+    expect(screen.queryByTestId('store-tab-coins')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'End Session' })).toBeNull();
+    expect(getValidRechargeAccessToken()).toBeNull();
+    expect(getValidRechargeAccessToken('carpool_pass')).toBeNull();
+    expect(screen.getAllByLabelText('Password')).toHaveLength(1);
+  });
+
+  it('retries an unavailable account read without asking an authenticated buyer to log in again', async () => {
+    seedStoreSession();
+    let accountStatus = 503;
+    mockStoreApi({ accountStatus: () => accountStatus });
+    renderStore();
+    await screen.findByRole('button', { name: 'Retry' });
+    expect(screen.queryByLabelText('Password')).toBeNull();
+    expect(getValidRechargeAccessToken()).toBe('coins-session');
+    expect(screen.getByRole('button', { name: 'End Session' })).toBeTruthy();
+
+    accountStatus = 200;
+    fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
+    await screen.findByText(/10 Tokens/);
+    expect(screen.queryByLabelText('Password')).toBeNull();
+    fireEvent.click(screen.getByTestId('store-tab-pass'));
+    await screen.findByText(/Monthly Pass/);
+    expect(screen.queryByLabelText('Password')).toBeNull();
+    fireEvent.click(screen.getByTestId('store-tab-coins'));
+    await screen.findByText(/10 Tokens/);
+    expect(screen.queryByLabelText('Password')).toBeNull();
+  });
+
+  it('returns a rejected Pass checkout to the same Store login and clears both scopes', async () => {
+    seedStoreSession();
+    mockStoreApi({ passCheckoutStatus: 401 });
+    renderStore('/store?tab=pass');
+    const checkout = await screen.findByRole('button', { name: 'Continue to Stripe' });
+    await waitFor(() => expect((checkout as HTMLButtonElement).disabled).toBe(false));
+    fireEvent.click(checkout);
+    await screen.findByLabelText('Password');
+    expect(screen.queryByTestId('store-tab-pass')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'End Session' })).toBeNull();
+    expect(getValidRechargeAccessToken()).toBeNull();
+    expect(getValidRechargeAccessToken('carpool_pass')).toBeNull();
   });
 });
