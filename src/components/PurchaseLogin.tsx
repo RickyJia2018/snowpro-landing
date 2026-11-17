@@ -134,7 +134,7 @@ export default function PurchaseLogin({
           value={email}
           disabled={busy}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 block w-full rounded-xl bg-slate-800 border border-slate-700/60 p-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+          className="mt-1 block w-full rounded-xl bg-slate-800 border border-slate-700/60 p-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
         />
       </label>
       <label className="block text-sm font-medium text-slate-300">
@@ -146,7 +146,7 @@ export default function PurchaseLogin({
           value={password}
           disabled={busy}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 block w-full rounded-xl bg-slate-800 border border-slate-700/60 p-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+          className="mt-1 block w-full rounded-xl bg-slate-800 border border-slate-700/60 p-3 text-base text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
         />
       </label>
       {error && (
@@ -160,7 +160,7 @@ export default function PurchaseLogin({
         disabled={busy}
         className={
           buttonClassName ||
-          'w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer mt-2'
+          'w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer touch-manipulation mt-2'
         }
       >
         {busy ? (zh ? '登录中…' : 'Signing in…') : zh ? '登录' : 'Sign in'}

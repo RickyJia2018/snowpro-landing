@@ -231,4 +231,27 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
     expect(getValidRechargeAccessToken()).toBeNull();
     expect(getValidRechargeAccessToken('carpool_pass')).toBeNull();
   });
+
+  it('supports switching language from the Store header and updates Pass tab copy', async () => {
+    seedStoreSession();
+    mockStoreApi();
+    renderStore('/store?tab=pass');
+    await screen.findByRole('button', { name: 'Continue to Stripe' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Language selector' }));
+    fireEvent.click(screen.getByRole('button', { name: '中文' }));
+
+    await screen.findByRole('button', { name: '前往 Stripe 支付' });
+    expect(screen.getByText('Snow Pro 商店')).toBeTruthy();
+    expect(screen.getByText('拼车免广告通行卡')).toBeTruthy();
+  });
+
+  it('keeps mobile-friendly 16px input font-size on login and accessible Back to Home control', () => {
+    renderStore();
+    const emailInput = screen.getByLabelText('Email');
+    const passwordInput = screen.getByLabelText('Password');
+    expect(emailInput.className).toContain('text-base');
+    expect(passwordInput.className).toContain('text-base');
+    expect(screen.getAllByRole('button', { name: 'Back to Home' }).length).toBeGreaterThanOrEqual(1);
+  });
 });
