@@ -101,6 +101,8 @@ describe('Snow Pro Landing Page', () => {
     expect(document.getElementById('download')).toBeTruthy();
 
     const html = document.body.innerHTML;
+    expect(html).toContain('href="/store"');
+    expect(html).not.toContain('Token Recharge');
     expect(html).toContain('apps.apple.com/ca/app/snow-pro/id6754150275');
     expect(html).toContain('play.google.com/store/apps/details?id=com.googuar.snowpro');
     expect(html).toContain('snowpro-public-bucket.googuar.com/snowpro.apk');

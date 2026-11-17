@@ -24,6 +24,7 @@ import CourseSharePage from './src/pages/CourseSharePage';
 import CarpoolSharePage from './src/pages/CarpoolSharePage';
 import CarpoolPassPage from './src/pages/CarpoolPassPage';
 import CarpoolPassSuccessPage from './src/pages/CarpoolPassSuccessPage';
+import StorePage from './src/pages/StorePage';
 import { API_BASE_URL } from './src/config/api';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/linkpaypal" element={<LinkPaypalPage />} />
         <Route path="/linkstripe" element={<LinkStripePage />} />
         <Route path="/stripe-callback" element={<LinkStripePage />} />
+        <Route path="/store" element={<StorePage />} />
         <Route path="/recharge" element={<RechargePage />} />
         <Route path="/recharge/success" element={<RechargeSuccessPage />} />
         <Route path="/carpool-pass" element={<CarpoolPassPage />} />

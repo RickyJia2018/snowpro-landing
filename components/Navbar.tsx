@@ -53,8 +53,7 @@ const Navbar: React.FC = () => {
     { label: t.nav.carpool, href: '#carpool' },
     { label: t.nav.skibuddy, href: '#skibuddy' },
     { label: t.nav.roadmap, href: '#roadmap' },
-    { label: t.nav.recharge, href: '/recharge' },
-    { label: 'Carpool Pass', href: '/carpool-pass' },
+    { label: t.nav.store, href: '/store' },
   ];
 
   const scrollToDownload = () => {
