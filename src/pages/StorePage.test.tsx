@@ -27,7 +27,7 @@ function renderStore(initialEntry = '/store') {
 }
 
 describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
-  it('signs in once and keeps both Snow Coins and Carpool Pass tabs authenticated', async () => {
+  it('shows login first without tabs, then reveals Snow Coins and Carpool Pass tabs after sign-in', async () => {
     const expiresAt = new Date(Date.now() + 60_000).toISOString();
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
       const url = String(input);
@@ -108,6 +108,11 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
 
     renderStore();
 
+    // Before sign-in: tabs are hidden; only the login form is shown
+    expect(screen.queryByTestId('store-tab-coins')).toBeNull();
+    expect(screen.queryByTestId('store-tab-pass')).toBeNull();
+    expect(screen.getByLabelText('Email')).toBeTruthy();
+
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'skier@example.com' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'secret123' } });
     fireEvent.click(screen.getByRole('button', { name: 'Sign in' }));
@@ -115,6 +120,8 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
     await waitFor(() => {
       expect(getValidRechargeAccessToken('recharge')).toBe('recharge-scoped-token');
       expect(getValidRechargeAccessToken('carpool_pass')).toBe('pass-scoped-token');
+      expect(screen.getByTestId('store-tab-coins')).toBeTruthy();
+      expect(screen.getByTestId('store-tab-pass')).toBeTruthy();
     });
 
     await waitFor(() => {
@@ -132,5 +139,10 @@ describe('StorePage unified Snow Coins & Carpool Pass experience', () => {
     });
     expect(screen.queryByLabelText('Password')).toBeNull();
     expect(fetchMock).toHaveBeenCalled();
+
+    // Logging out hides tabs and returns to the unified login card
+    fireEvent.click(screen.getByRole('button', { name: 'End Session' }));
+    expect(screen.queryByTestId('store-tab-coins')).toBeNull();
+    expect(screen.getByLabelText('Email')).toBeTruthy();
   });
 });
