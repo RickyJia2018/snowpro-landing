@@ -1,73 +1,70 @@
 import React from 'react';
-import { Clock, Ticket, ShieldCheck, Award, ShoppingBag, Sparkles } from 'lucide-react';
+import { Award, Clock, ShieldCheck, ShoppingBag, Sparkles, Ticket } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Reveal, SpotlightCard } from './Motion';
 
 const Roadmap: React.FC = () => {
   const { t } = useLanguage();
-  
-  // Map icons for future roadmap features:
-  // 0: Discounted Lift Tickets (Ticket)
-  // 1: Gear Rental Deals (ShieldCheck)
-  // 2: Official Instructor Booking (Award)
-  // 3: Community & Gear Shop (ShoppingBag)
   const icons = [Ticket, ShieldCheck, Award, ShoppingBag];
 
-  const features = t.roadmap.features.map((f: any, i: number) => ({
-    ...f,
-    icon: icons[i] || Sparkles
-  }));
-
   return (
-    <div className="bg-slate-900 py-24 border-t border-slate-800 relative overflow-hidden" id="roadmap">
-      {/* Decorative Light Halos */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[160px] pointer-events-none"></div>
-      <div className="absolute top-0 left-0 w-80 h-80 bg-blue-500/5 rounded-full blur-[128px] pointer-events-none"></div>
-
+    <section
+      id="roadmap"
+      className="py-24 bg-slate-950 border-t border-slate-900 relative overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 text-blue-300 font-semibold mb-4 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full text-sm">
-             <Clock size={16} />
-             <span>{t.roadmap.tag}</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-            {t.roadmap.title}
-          </h2>
-          <p className="text-lg text-slate-400 font-light">
-            {t.roadmap.desc}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature: any, index: number) => (
-            <div 
-              key={index}
-              className="group bg-slate-950/50 backdrop-blur-md p-7 rounded-3xl border border-slate-800/80 hover:border-blue-500/40 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
-            >
-              {/* Decoration Circle */}
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full opacity-40 group-hover:scale-150 transition-transform duration-500"></div>
-
-              <div className="relative z-10">
-                <div className="w-13 h-13 rounded-2xl bg-slate-900 border border-slate-800 text-blue-400 flex items-center justify-center mb-6 group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-500 group-hover:text-white group-hover:border-transparent transition-all duration-300">
-                  <feature.icon size={24} />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3 leading-snug">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-400 leading-relaxed font-light text-xs sm:text-sm">
-                  {feature.desc}
-                </p>
+        <Reveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold text-xs sm:text-sm mb-4">
+                <Clock size={15} />
+                <span>{t.roadmap.tag}</span>
               </div>
-
-              <div className="mt-6 pt-4 border-t border-slate-800/60">
-                <span className="inline-block text-[10px] font-bold tracking-wider text-cyan-400 uppercase bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-md">
-                  {t.roadmap.status}
-                </span>
-              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+                {t.roadmap.title}
+              </h2>
+              <p className="text-base text-slate-400 leading-relaxed">{t.roadmap.desc}</p>
             </div>
-          ))}
+            <div className="inline-flex items-center gap-2 self-start md:self-auto rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-cyan-300">
+              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span>{t.roadmap.status}</span>
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {t.roadmap.features.map((feature, index) => {
+            const Icon = icons[index] || Sparkles;
+            return (
+              <Reveal key={index} delayMs={index * 70}>
+                <SpotlightCard className="group h-full rounded-3xl border border-slate-800/90 bg-slate-900/50 p-6 hover:border-sky-500/40 transition-all hover:-translate-y-1">
+                  <div className="flex flex-col justify-between h-full">
+                    <div>
+                      <div className="flex items-center justify-between mb-5">
+                        <div className="w-11 h-11 rounded-2xl bg-slate-950 border border-slate-800 text-sky-400 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-slate-950 group-hover:border-transparent transition-colors">
+                          <Icon size={20} />
+                        </div>
+                        <span className="font-mono text-xs text-slate-500">0{index + 1}</span>
+                      </div>
+                      <h3 className="text-lg font-bold text-white mb-2.5 leading-snug">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-slate-400 leading-relaxed">{feature.desc}</p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-slate-800/70">
+                      <span className="inline-block text-[11px] font-semibold tracking-wider text-cyan-300 uppercase">
+                        {t.roadmap.status}
+                      </span>
+                    </div>
+                  </div>
+                </SpotlightCard>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

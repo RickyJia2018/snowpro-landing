@@ -1,79 +1,92 @@
 import React from 'react';
-import { Users, Mountain, Video, ArrowRight } from 'lucide-react';
+import { ArrowRight, CalendarDays, MessageCircle, Mountain, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { Reveal, SpotlightCard } from './Motion';
+import PhoneFrame from './PhoneFrame';
 
 const SkiBuddyDemo: React.FC = () => {
   const { t } = useLanguage();
+  const icons = [CalendarDays, Mountain, MessageCircle];
+
   return (
-    <div className="py-24 bg-slate-950 border-t border-slate-900 relative overflow-hidden" id="skibuddy">
-      {/* Decorative Glow Blobs */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[160px] pointer-events-none"></div>
-      <div className="absolute -bottom-10 right-10 w-80 h-80 bg-blue-500/10 rounded-full blur-[140px] pointer-events-none"></div>
-
+    <section
+      id="skibuddy"
+      className="py-24 bg-slate-900/45 border-t border-slate-900 relative overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto">
-          
-          {/* Title & Descriptions */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 font-semibold text-sm mb-6">
-              <Users size={16} />
-              <span>{t.skibuddy.tag}</span>
+        <div className="rounded-[2.25rem] border border-slate-800/80 bg-gradient-to-bl from-purple-950/25 via-slate-950/90 to-slate-900/75 p-6 sm:p-10 lg:p-14 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <Reveal direction="left">
+                <PhoneFrame
+                  src="/screenshots/ski-buddy.png"
+                  alt={t.skibuddy.screenCaption}
+                  caption={t.skibuddy.screenCaption}
+                  accent="purple"
+                />
+              </Reveal>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
-              {t.skibuddy.titlePre} <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
-                {t.skibuddy.titleHighlight}
-              </span>
-            </h2>
-
-            <p className="text-lg text-slate-300 mb-8 leading-relaxed font-light">
-              {t.skibuddy.desc}
-            </p>
-
-            <div className="space-y-6 mb-10">
-              {/* Feature 1 */}
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
-                    <Mountain size={20} />
-                  </div>
+            <div className="lg:col-span-7 order-1 lg:order-2">
+              <Reveal>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/25 text-purple-300 font-semibold text-xs sm:text-sm mb-5">
+                  <Users size={15} />
+                  <span>{t.skibuddy.tag}</span>
                 </div>
-                <div>
-                  <h3 className="font-bold text-white text-lg">{t.skibuddy.feature1Title}</h3>
-                  <p className="text-slate-400 font-light">{t.skibuddy.feature1Desc}</p>
-                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-5">
+                  {t.skibuddy.titlePre}{' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-sky-300">
+                    {t.skibuddy.titleHighlight}
+                  </span>
+                </h2>
+
+                <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl">
+                  {t.skibuddy.desc}
+                </p>
+              </Reveal>
+
+              <div className="space-y-4 mb-9">
+                {t.skibuddy.points.map((point, idx) => {
+                  const Icon = icons[idx] || Users;
+                  return (
+                    <Reveal key={idx} delayMs={idx * 80}>
+                      <SpotlightCard
+                        glowColor="rgba(192, 132, 252, 0.16)"
+                        className="rounded-2xl border border-slate-800/80 bg-slate-950/70 p-4"
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/25 text-purple-300 flex items-center justify-center shrink-0">
+                            <Icon size={18} />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-white text-base mb-1">{point.title}</h3>
+                            <p className="text-sm text-slate-400 leading-relaxed">{point.desc}</p>
+                          </div>
+                        </div>
+                      </SpotlightCard>
+                    </Reveal>
+                  );
+                })}
               </div>
 
-              {/* Feature 2 */}
-              <div className="flex gap-4">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400">
-                    <Video size={20} />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-lg">{t.skibuddy.feature2Title}</h3>
-                  <p className="text-slate-400 font-light">{t.skibuddy.feature2Desc}</p>
-                </div>
-              </div>
+              <Reveal delayMs={240}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    document.getElementById('download')?.scrollIntoView({ behavior: 'smooth' })
+                  }
+                  className="inline-flex items-center gap-2 rounded-xl border border-purple-500/35 bg-purple-500/15 hover:bg-purple-500/25 text-purple-200 font-semibold px-6 py-3.5 text-sm sm:text-base transition-all hover:scale-[1.02]"
+                >
+                  <span>{t.skibuddy.cta}</span>
+                  <ArrowRight size={17} />
+                </button>
+              </Reveal>
             </div>
-
-            <button 
-              onClick={() => {
-                const el = document.getElementById('download');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="px-8 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl font-semibold transition-all hover:scale-105 shadow-lg shadow-purple-500/10 inline-flex items-center gap-2"
-            >
-              <span>{t.skibuddy.cta}</span>
-              <ArrowRight size={18} />
-            </button>
           </div>
-
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

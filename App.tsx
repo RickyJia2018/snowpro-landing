@@ -3,18 +3,16 @@ import ShareBrowserGuideRuntime from './src/components/ShareBrowserGuideRuntime'
 import InstructorInvitePage from './src/pages/InstructorInvitePage';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Download, Play, QrCode } from 'lucide-react';
-import { AppleLogo, AndroidLogo } from './components/BrandIcons';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import VideoDemo from './components/VideoDemo';
+import CoursesSection from './components/CoursesSection';
 import CarpoolDemo from './components/CarpoolDemo';
-import Courses from './components/Courses';
 import SkiBuddyDemo from './components/SkiBuddyDemo';
 import Roadmap from './components/Roadmap';
-import Testimonials from './components/Testimonials';
+import DownloadSection from './components/DownloadSection';
 import Footer from './components/Footer';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import LinkPaypalPage from './src/pages/LinkPaypalPage';
 import LinkStripePage from './src/pages/LinkStripePage';
 import RechargePage from './src/pages/RechargePage';
@@ -27,11 +25,10 @@ import CarpoolSharePage from './src/pages/CarpoolSharePage';
 import CarpoolPassPage from './src/pages/CarpoolPassPage';
 import CarpoolPassSuccessPage from './src/pages/CarpoolPassSuccessPage';
 import { API_BASE_URL } from './src/config/api';
-import { IOS_DOWNLOAD_URL, ANDROID_PLAY_DOWNLOAD_URL, ANDROID_APK_DOWNLOAD_URL } from './src/lib/courseShare';
 
 function App() {
   React.useEffect(() => {
-    console.log("[Snow Pro App] Global API Base URL:", API_BASE_URL);
+    console.log('[Snow Pro App] Global API Base URL:', API_BASE_URL);
   }, []);
 
   return (
@@ -60,85 +57,7 @@ function App() {
   );
 }
 
-const localT = {
-  zh: {
-    scanIos: "扫码下载 iOS 版",
-    scanGooglePlay: "扫码从 Google Play 下载",
-    androidDescription: "通过 Google Play 下载，或直接安装 APK",
-    directApk: "直接下载 Android APK",
-    iosLabel: "iPhone 用户",
-    androidLabel: "Android 用户",
-    or: "或",
-  },
-  en: {
-    scanIos: "Scan to download iOS app",
-    scanGooglePlay: "Scan to download on Google Play",
-    androidDescription: "Get it on Google Play or install the APK directly",
-    directApk: "Direct APK Download",
-    iosLabel: "iPhone Users",
-    androidLabel: "Android Users",
-    or: "or",
-  },
-  ja: {
-    scanIos: "QRコードでiOS版をダウンロード",
-    scanGooglePlay: "QRコードでGoogle Playからダウンロード",
-    androidDescription: "Google Play または APK からインストール",
-    directApk: "Android APK 直接ダウンロード",
-    iosLabel: "iPhone ユーザー",
-    androidLabel: "Android ユーザー",
-    or: "または",
-  },
-  ko: {
-    scanIos: "QR 코드로 iOS 앱 다운로드",
-    scanGooglePlay: "QR 코드로 Google Play에서 다운로드",
-    androidDescription: "Google Play에서 다운로드하거나 APK 직접 설치",
-    directApk: "Android APK 직접 다운로드",
-    iosLabel: "iPhone 사용자",
-    androidLabel: "Android 사용자",
-    or: "또는",
-  },
-  fr: {
-    scanIos: "Scanner pour iOS App Store",
-    scanGooglePlay: "Scanner pour télécharger sur Google Play",
-    androidDescription: "Télécharger sur Google Play ou installer directement l’APK",
-    directApk: "Téléchargement direct de l'APK",
-    iosLabel: "Utilisateurs iPhone",
-    androidLabel: "Utilisateurs Android",
-    or: "ou",
-  },
-  de: {
-    scanIos: "Scannen für iOS App Store",
-    scanGooglePlay: "Scannen für Google Play",
-    androidDescription: "Über Google Play herunterladen oder APK direkt installieren",
-    directApk: "Direkter APK-Download",
-    iosLabel: "iPhone-Nutzer",
-    androidLabel: "Android-Nutzer",
-    or: "oder",
-  },
-  es: {
-    scanIos: "Escanear para descargar en iOS",
-    scanGooglePlay: "Escanear para descargar en Google Play",
-    androidDescription: "Descarga desde Google Play o instala el APK directamente",
-    directApk: "Descarga directa de APK",
-    iosLabel: "Usuarios iPhone",
-    androidLabel: "Usuarios Android",
-    or: "o",
-  },
-  ru: {
-    scanIos: "Сканируйте для загрузки iOS",
-    scanGooglePlay: "Сканируйте для загрузки из Google Play",
-    androidDescription: "Скачайте из Google Play или установите APK напрямую",
-    directApk: "Прямая загрузка APK",
-    iosLabel: "Для пользователей iPhone",
-    androidLabel: "Для пользователей Android",
-    or: "или",
-  }
-};
-
 function HomePage({ scrollToDownload = false }: { scrollToDownload?: boolean }) {
-  const { t, language } = useLanguage();
-  const currT = localT[language] || localT.en;
-
   React.useEffect(() => {
     if (!scrollToDownload) return;
     const el = document.getElementById('download');
@@ -146,115 +65,16 @@ function HomePage({ scrollToDownload = false }: { scrollToDownload?: boolean }) 
   }, [scrollToDownload]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-sky-500 selection:text-slate-950">
       <Navbar />
       <main>
         <Hero />
         <VideoDemo />
+        <CoursesSection />
         <CarpoolDemo />
-        <Courses />
         <SkiBuddyDemo />
         <Roadmap />
-        <Testimonials />
-        
-        {/* Bottom CTA Section */}
-        <section className="bg-slate-950 py-24 text-white border-t border-slate-900 relative overflow-hidden" id="download">
-          {/* Neon Light Halos */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] pointer-events-none"></div>
-
-          <div className="max-w-5xl mx-auto px-4 relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-6 bg-gradient-to-r from-white via-slate-100 to-blue-200 bg-clip-text text-transparent">
-                {t.ctaBottom.title}
-              </h2>
-              <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light">
-                {t.ctaBottom.desc}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* iOS Download Card */}
-              <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-8 flex flex-col items-center hover:border-blue-500/50 hover:shadow-[0_0_35px_rgba(59,130,246,0.15)] transition-all duration-300">
-                <div className="p-3 bg-blue-500/10 rounded-2xl text-blue-400 mb-4">
-                  <AppleLogo size={32} />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{currT.iosLabel}</h3>
-                <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {language === 'zh' ? '在 App Store 中搜索 "Snow Pro" 或扫码下载' : language === 'es' ? 'Busca "Snow Pro" en la App Store o escanea el QR' : language === 'ru' ? 'Ищите "Snow Pro" в App Store или сканируйте QR' : 'Search "Snow Pro" in App Store or scan QR code'}
-                </p>
-                
-                {/* QR Code Container */}
-                <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
-                  <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(IOS_DOWNLOAD_URL)}`}
-                    alt="iOS App Store QR Code"
-                    className="w-[150px] h-[150px] rounded-lg opacity-90"
-                    loading="lazy"
-                  />
-                </div>
-                <span className="text-slate-400 text-xs flex items-center gap-1.5 mb-6 font-light">
-                  <QrCode size={14} />
-                  {currT.scanIos}
-                </span>
-
-                <a 
-                  href={IOS_DOWNLOAD_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-white text-slate-950 hover:bg-slate-100 font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-[1.02]"
-                >
-                  <AppleLogo size={20} />
-                  {t.ctaBottom.btnIos}
-                </a>
-              </div>
-
-              {/* Android Download Card */}
-              <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-3xl p-8 flex flex-col items-center hover:border-cyan-500/50 hover:shadow-[0_0_35px_rgba(6,182,212,0.15)] transition-all duration-300">
-                <div className="p-3 bg-cyan-500/10 rounded-2xl text-cyan-400 mb-4">
-                  <AndroidLogo size={32} />
-                </div>
-                <h3 className="text-xl font-bold mb-2">{currT.androidLabel}</h3>
-                <p className="text-slate-400 text-xs text-center mb-6 font-light">
-                  {currT.androidDescription}
-                </p>
-
-                {/* QR Code Container */}
-                <div className="bg-slate-900 p-3.5 rounded-2xl border border-slate-800 shadow-2xl shadow-blue-500/5 mb-6 transition-transform hover:scale-105 duration-300">
-                  <img 
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(ANDROID_PLAY_DOWNLOAD_URL)}`}
-                    alt="Google Play QR Code"
-                    className="w-[150px] h-[150px] rounded-lg opacity-90"
-                    loading="lazy"
-                  />
-                </div>
-                <span className="text-slate-400 text-xs flex items-center gap-1.5 mb-6 font-light">
-                  <QrCode size={14} />
-                  {currT.scanGooglePlay}
-                </span>
-
-                <div className="w-full flex flex-col gap-3">
-                  <a
-                    href={ANDROID_PLAY_DOWNLOAD_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 border-0 shadow-lg shadow-blue-500/10 transition-all duration-200 text-center hover:scale-[1.02]"
-                  >
-                    <Play size={20} fill="currentColor" />
-                    Google Play
-                  </a>
-                  <a
-                    href={ANDROID_APK_DOWNLOAD_URL}
-                    className="w-full border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800/60 text-slate-200 font-medium py-3 px-6 rounded-2xl flex items-center justify-center gap-2 transition-all duration-200 text-center"
-                  >
-                    <Download size={18} />
-                    {currT.directApk}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        <DownloadSection />
       </main>
       <Footer />
     </div>
@@ -262,4 +82,3 @@ function HomePage({ scrollToDownload = false }: { scrollToDownload?: boolean }) 
 }
 
 export default App;
-

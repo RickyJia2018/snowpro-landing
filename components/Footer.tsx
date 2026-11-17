@@ -1,83 +1,102 @@
 import React from 'react';
+import { Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { APP_NAME } from '../constants';
-import { Instagram, Twitter, Facebook, Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const productAnchors = [
-    { label: t.footer.productLinks[0] || "视频分析", href: "#video-analysis" },
-    { label: t.footer.productLinks[1] || "雪场拼车", href: "#carpool" },
-    { label: t.footer.productLinks[2] || "名师课程", href: "#courses" },
-    { label: t.footer.productLinks[3] || "雪友招募", href: "#skibuddy" },
-    { label: t.footer.productLinks[4] || "代币充值", href: "/recharge" },
-    { label: "Carpool Pass", href: "/carpool-pass" },
-    { label: language === 'zh' ? '退款政策' : 'Refund policy', href: '/refunds' },
+    { label: t.footer.productLinks[0], href: '#video-analysis', isRoute: false },
+    { label: t.footer.productLinks[1], href: '#courses', isRoute: false },
+    { label: t.footer.productLinks[2], href: '#carpool', isRoute: false },
+    { label: t.footer.productLinks[3], href: '#skibuddy', isRoute: false },
+    { label: t.footer.productLinks[4], href: '/recharge', isRoute: true },
+    { label: 'Carpool Pass', href: '/carpool-pass', isRoute: true },
+  ];
+
+  const supportLinks = [
+    { label: t.footer.supportLinks[0], href: '/help-center', external: false },
+    { label: t.footer.supportLinks[1], href: 'mailto:snowpro-support@googuar.com', external: false },
+    { label: t.footer.supportLinks[2], href: '/privacy.html', external: true },
+    { label: t.footer.supportLinks[3], href: '/terms-of-service.html', external: true },
+    { label: t.footer.refundPolicy, href: '/refunds', external: false },
+    { label: t.footer.deleteAccount, href: '/account-deletion.html', external: true },
+    { label: t.footer.communitySafety, href: '/community-guidelines.html', external: true },
   ];
 
   return (
     <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          
-          {/* Brand Col */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <img 
-                src="/logo_icon.png" 
-                alt="Snow Pro Logo" 
-                className="w-8 h-8 rounded-xl object-cover shadow-sm border border-slate-800"
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+          <div className="md:col-span-6">
+            <div className="flex items-center gap-3 mb-4">
+              <img
+                src="/logo_icon.png"
+                alt="Snow Pro Logo"
+                className="w-9 h-9 rounded-xl object-cover border border-slate-800"
               />
-              <h3 className="text-white text-2xl font-black">{APP_NAME}</h3>
+              <h3 className="text-white text-2xl font-bold tracking-tight">{APP_NAME}</h3>
             </div>
-            <p className="text-slate-400 max-w-sm mb-6 font-light leading-relaxed text-sm">
+            <p className="text-slate-400 max-w-md text-sm leading-relaxed">
               {t.footer.tagline}
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"><Instagram size={18} /></a>
-              <a href="#" className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"><Twitter size={18} /></a>
-              <a href="#" className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"><Facebook size={18} /></a>
-            </div>
           </div>
-          
-          {/* Product Links */}
-          <div>
-            <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">{t.footer.product}</h4>
-            <ul className="space-y-2.5 text-sm font-light">
-              {productAnchors.map((link, i) => (
-                <li key={i}>
-                  <a href={link.href} className="hover:text-cyan-400 transition-colors">
+
+          <div className="md:col-span-3">
+            <h4 className="text-white font-semibold mb-4 text-xs uppercase tracking-wider">
+              {t.footer.product}
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {productAnchors.map((link) => (
+                <li key={link.href}>
+                  {link.isRoute ? (
+                    <Link to={link.href} className="hover:text-sky-400 transition-colors">
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a href={link.href} className="hover:text-sky-400 transition-colors">
+                      {link.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-3">
+            <h4 className="text-white font-semibold mb-4 text-xs uppercase tracking-wider">
+              {t.footer.support}
+            </h4>
+            <ul className="space-y-2.5 text-sm">
+              {supportLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    className="hover:text-sky-400 transition-colors"
+                  >
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Support Links */}
-          <div>
-            <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider">{t.footer.support}</h4>
-            <ul className="space-y-2.5 text-sm font-light">
-              {t.footer.supportLinks.map((link: string, i: number) => (
-                <li key={i}>
-                  <a href={["/help-center", "mailto:snowpro-support@googuar.com", "/privacy.html", "/terms-of-service.html"][i] || "/help-center"} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
-                    {link}
-                  </a>
-                </li>
-              ))}
-              <li><a href="/account-deletion.html" className="hover:text-cyan-400 transition-colors">{language === 'zh' ? '删除账号与数据' : 'Delete account & data'}</a></li>
-              <li><a href="/community-guidelines.html" className="hover:text-cyan-400 transition-colors">{language === 'zh' ? '社区与儿童安全' : 'Community & child safety'}</a></li>
-            </ul>
-          </div>
         </div>
-        
-        <div className="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>&copy; {new Date().getFullYear()} Googuar Technology Inc. {t.footer.rights}</p>
-          <div className="flex items-center gap-2">
+
+        <div className="border-t border-slate-900 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+          <p>
+            &copy; {new Date().getFullYear()} Googuar Technology Inc. {t.footer.rights}
+          </p>
+          <a
+            href="mailto:snowpro-support@googuar.com"
+            className="flex items-center gap-2 hover:text-slate-300 transition-colors"
+          >
             <Mail size={14} />
             <span>snowpro-support@googuar.com</span>
-          </div>
+          </a>
         </div>
       </div>
     </footer>
