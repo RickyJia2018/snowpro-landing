@@ -34,6 +34,16 @@ describe('Dynamic Pass purchase',()=>{
   storeRechargeAccessToken('pass',expiry(),'carpool_pass');let resolve!:(v:Response)=>void;const fetch=mockFetch(()=>new Promise(r=>{resolve=r}));mount();await screen.findByText(/Season pass/);
   const button=screen.getByRole('button',{name:'Continue to Stripe'});fireEvent.click(button);fireEvent.click(button);expect(fetch.mock.calls.filter(([u])=>String(u).endsWith('/pass/checkout'))).toHaveLength(1);resolve(response({stripeCheckoutUrl:'https://evil.example/pay'}));await screen.findByRole('alert');expect((button as HTMLButtonElement).disabled).toBe(false);
  });
+ it('formats 1 month with singular grammar without duplicating title duration and renders recommended badge and description',async()=>{
+  vi.spyOn(globalThis,'fetch').mockImplementation(async()=>response({products:[{productId:'pass_1m',durationMonths:1,priceInCents:99,version:'1',title:'SnowPro Carpool Pass — 1 month',description:'Hide promotional banners in carpool',isRecommended:true}]}));
+  storeRechargeAccessToken('pass',expiry(),'carpool_pass');
+  mount();
+  await screen.findByText('SnowPro Carpool Pass — 1 month');
+  expect(screen.queryByText(/1 months/i)).toBeNull();
+  expect(screen.getByText('1 month')).toBeTruthy();
+  expect(screen.getByText('Recommended')).toBeTruthy();
+  expect(screen.getByText('Hide promotional banners in carpool')).toBeTruthy();
+ });
  it('does not treat a return page as payment confirmation',()=>{mount(<CarpoolPassSuccessPage/>);expect(screen.getByText(/Payment confirmation is still pending/)).toBeTruthy()});
  it('requires exact Stripe origin',()=>{expect(stripeCheckoutUrl('https://checkout.stripe.com/c/pay/abc')).toBeTruthy();for(const u of ['javascript:alert(1)','https://checkout.stripe.com.evil.test/pay','https://user@checkout.stripe.com/pay'])expect(stripeCheckoutUrl(u)).toBeNull()});
 });

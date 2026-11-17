@@ -697,7 +697,7 @@ export default function RechargePage({
   }
 
   const content = (
-    <div className={embedded ? 'max-w-md w-full mx-auto' : 'max-w-md w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center'}>
+    <div className={embedded ? 'max-w-lg w-full mx-auto' : 'max-w-lg w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center'}>
       {!isLoggedIn && accountLoadFailed ? (
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center">
           <p role="alert" className="text-sm text-red-300">{error}</p>
@@ -766,32 +766,32 @@ export default function RechargePage({
         </div>
       ) : (
         /* Recharge Panel */
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-5">
           {/* User Profile Card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex items-center justify-between relative overflow-hidden">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl flex items-center justify-between gap-3 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-5 rounded-full blur-2xl"></div>
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center">
-                <User className="h-6 w-6 text-blue-400" />
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 shrink-0 bg-slate-800 border border-slate-700 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                <User className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
               </div>
-              <div>
-                <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.welcomeBack}</div>
-                <div className="text-base font-bold text-white">{user?.nickname || user?.email}</div>
+              <div className="min-w-0">
+                <div className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.welcomeBack}</div>
+                <div className="text-sm sm:text-base font-bold text-white truncate">{user?.nickname || user?.email}</div>
               </div>
             </div>
 
-            <div className="text-right">
-              <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.balanceLabel}</div>
+            <div className="text-right shrink-0">
+              <div className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">{tLocal.balanceLabel}</div>
               <div className="flex items-center gap-1.5 justify-end mt-0.5">
-                <Coins className="h-5 w-5 text-amber-500" />
-                <span className="text-xl font-black text-white">{user?.balance !== undefined ? user.balance.toFixed(2) : '0.00'}</span>
+                <Coins className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500" />
+                <span className="text-lg sm:text-xl font-black text-white tabular-nums">{user?.balance !== undefined ? user.balance.toFixed(2) : '0.00'}</span>
               </div>
             </div>
           </div>
 
           {/* Token Products List */}
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{tLocal.selectPack}</h3>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4">
+            <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400">{tLocal.selectPack}</h3>
 
             {tokenPurchaseAvailability !== 'enabled' && (
               <div
@@ -827,9 +827,9 @@ export default function RechargePage({
                       }
                     }}
                     aria-disabled={tokenPurchaseAvailability !== 'enabled'}
-                    className={`border-2 rounded-2xl p-4 flex items-center justify-between transition-all ${
+                    className={`border-2 rounded-2xl p-3.5 sm:p-4 min-h-[60px] flex items-center justify-between gap-3 transition-all touch-manipulation ${
                       tokenPurchaseAvailability === 'enabled'
-                        ? 'cursor-pointer'
+                        ? 'cursor-pointer active:scale-[0.99]'
                         : 'cursor-not-allowed opacity-50'
                     } ${
                       isSelected
@@ -837,12 +837,12 @@ export default function RechargePage({
                         : 'border-slate-800 hover:border-slate-700 bg-slate-950/45'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-xl transition-colors ${isSelected ? 'bg-blue-500/15 text-blue-400' : 'bg-slate-850 text-slate-400'}`}>
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className={`p-2 rounded-xl shrink-0 transition-colors ${isSelected ? 'bg-blue-500/15 text-blue-400' : 'bg-slate-850 text-slate-400'}`}>
                         <Coins className="h-5 w-5" />
                       </div>
-                      <div>
-                        <div className="font-bold text-white flex items-center gap-1.5">
+                      <div className="min-w-0">
+                        <div className="font-bold text-white text-sm sm:text-base flex items-center gap-1.5">
                           {product.tokenAmount} {tLocal.tokenUnit}
                         </div>
                         {product.description && (
@@ -850,15 +850,15 @@ export default function RechargePage({
                         )}
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-black text-white text-base">{priceFormatted}</div>
+                    <div className="text-right shrink-0">
+                      <div className="font-black text-white text-base tabular-nums">{priceFormatted}</div>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            <RefundNotice zh={language === 'zh'} />
+            <RefundNotice zh={language === 'zh'} language={language} />
             <div className="text-xs text-slate-400 pt-2">
               {policy ? <details>
                 <summary className="cursor-pointer">{language==='zh'?'点击支付即表示您已阅读并同意：':'By paying, you acknowledge that you have read and agree to: '}<span className="text-blue-400">{tLocal.policyAgreeLink} ({policy.version})</span></summary>
@@ -879,7 +879,7 @@ export default function RechargePage({
                 !selectedProductId ||
                 !policy
               }
-              className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+              className="w-full min-h-[52px] bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold py-3.5 sm:py-4 rounded-2xl hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2 touch-manipulation cursor-pointer"
             >
               {paymentLoading ? (
                 <>

@@ -31,4 +31,8 @@ describe('Refund access', () => {
     expect(link.getAttribute('href')).toBe('/refunds');
     expect(screen.getByText(zh ? /不表示放弃法定权利/ : /does not waive these rights/)).toBeTruthy();
   });
+  it('renders localized notice when language prop is provided', () => {
+    render(<RefundNotice zh={false} language="ja" />);
+    expect(screen.getByRole('link', { name: '返金ポリシーとサポートの申請方法' })).toBeTruthy();
+  });
 });
