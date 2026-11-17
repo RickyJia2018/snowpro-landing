@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Coins, CreditCard, LogOut } from 'lucide-react';
+import { ArrowRight, Coins, CreditCard, LogOut, ShieldCheck } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
+import PurchaseLogin from '../components/PurchaseLogin';
 import { clearRechargeAccessToken, getValidRechargeAccessToken } from '../lib/rechargeSession';
 import CarpoolPassPage from './CarpoolPassPage';
 import RechargePage from './RechargePage';
@@ -17,10 +18,8 @@ export default function StorePage() {
   const initialTab: StoreTab = searchParams.get('tab') === 'pass' ? 'pass' : 'coins';
   const [activeTab, setActiveTab] = useState<StoreTab>(initialTab);
   const [sessionKey, setSessionKey] = useState(0);
-  const [, setSessionTick] = useState(0);
-
-  const hasAnySession = Boolean(
-    getValidRechargeAccessToken('recharge') || getValidRechargeAccessToken('carpool_pass'),
+  const [authenticated, setAuthenticated] = useState<boolean>(() =>
+    Boolean(getValidRechargeAccessToken('recharge') || getValidRechargeAccessToken('carpool_pass')),
   );
 
   const selectTab = (tab: StoreTab) => {
@@ -32,6 +31,7 @@ export default function StorePage() {
     clearRechargeAccessToken('recharge');
     clearRechargeAccessToken('carpool_pass');
     sessionStorage.removeItem('recharge_session_id');
+    setAuthenticated(false);
     setSessionKey((k) => k + 1);
   };
 
@@ -62,7 +62,7 @@ export default function StorePage() {
             >
               {zh ? '返回首页' : 'Back to Home'}
             </button>
-            {hasAnySession && (
+            {authenticated && (
               <button
                 type="button"
                 onClick={handleLogout}
@@ -76,52 +76,84 @@ export default function StorePage() {
         </div>
       </header>
 
-      <main className="max-w-3xl w-full mx-auto px-4 py-10 flex-grow">
-        {/* Store Tab Switcher */}
-        <div className="max-w-md mx-auto mb-8 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 grid grid-cols-2 gap-1.5">
-          <button
-            type="button"
-            data-testid="store-tab-coins"
-            onClick={() => selectTab('coins')}
-            className={`flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-sm font-semibold transition-all ${
-              activeTab === 'coins'
-                ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <Coins size={16} />
-            <span>{zh ? 'Snow Coins 充值' : 'Snow Coins'}</span>
-          </button>
+      <main className="max-w-3xl w-full mx-auto px-4 py-10 flex-grow flex flex-col justify-center">
+        {!authenticated ? (
+          <div className="max-w-md w-full mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-center">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/10 rounded-full blur-3xl -mr-16 -mt-16" />
 
-          <button
-            type="button"
-            data-testid="store-tab-pass"
-            onClick={() => selectTab('pass')}
-            className={`flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-sm font-semibold transition-all ${
-              activeTab === 'pass'
-                ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
-                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
-            }`}
-          >
-            <CreditCard size={16} />
-            <span>{zh ? 'Carpool 通行卡' : 'Carpool Pass'}</span>
-          </button>
-        </div>
+            <div className="mx-auto w-16 h-16 bg-sky-500/10 border border-sky-500/20 rounded-2xl flex items-center justify-center mb-6 text-sky-400">
+              <ShieldCheck className="h-8 w-8" />
+            </div>
 
-        {activeTab === 'coins' ? (
-          <RechargePage
-            key={`coins-${sessionKey}`}
-            embedded
-            extraScopes={['carpool_pass']}
-            onAuthSuccess={() => setSessionTick((n) => n + 1)}
-          />
+            <PurchaseLogin
+              key={`login-${sessionKey}`}
+              scope="recharge"
+              extraScopes={['carpool_pass']}
+              zh={zh}
+              onSuccess={() => {
+                setAuthenticated(true);
+                setSessionKey((k) => k + 1);
+              }}
+            />
+
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="w-full bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-white font-semibold py-4 rounded-2xl hover:border-slate-600 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer mt-3"
+            >
+              <span>{zh ? '返回首页' : 'Back to Home'}</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
         ) : (
-          <CarpoolPassPage
-            key={`pass-${sessionKey}`}
-            embedded
-            extraScopes={['recharge']}
-            onAuthSuccess={() => setSessionTick((n) => n + 1)}
-          />
+          <div>
+            {/* Store Tab Switcher (shown only after authentication) */}
+            <div className="max-w-md mx-auto mb-8 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 grid grid-cols-2 gap-1.5">
+              <button
+                type="button"
+                data-testid="store-tab-coins"
+                onClick={() => selectTab('coins')}
+                className={`flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-sm font-semibold transition-all ${
+                  activeTab === 'coins'
+                    ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                }`}
+              >
+                <Coins size={16} />
+                <span>{zh ? 'Snow Coins 充值' : 'Snow Coins'}</span>
+              </button>
+
+              <button
+                type="button"
+                data-testid="store-tab-pass"
+                onClick={() => selectTab('pass')}
+                className={`flex items-center justify-center gap-2 rounded-xl py-2.5 px-3 text-sm font-semibold transition-all ${
+                  activeTab === 'pass'
+                    ? 'bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                }`}
+              >
+                <CreditCard size={16} />
+                <span>{zh ? 'Carpool 通行卡' : 'Carpool Pass'}</span>
+              </button>
+            </div>
+
+            {activeTab === 'coins' ? (
+              <RechargePage
+                key={`coins-${sessionKey}`}
+                embedded
+                extraScopes={['carpool_pass']}
+                onAuthSuccess={() => setAuthenticated(true)}
+              />
+            ) : (
+              <CarpoolPassPage
+                key={`pass-${sessionKey}`}
+                embedded
+                extraScopes={['recharge']}
+                onAuthSuccess={() => setAuthenticated(true)}
+              />
+            )}
+          </div>
         )}
       </main>
 
