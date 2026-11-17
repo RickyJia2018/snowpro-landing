@@ -9,6 +9,9 @@ import RechargePage from './RechargePage';
 
 type StoreTab = 'coins' | 'pass';
 
+const hasBothStoreTokens = () =>
+  Boolean(getValidRechargeAccessToken('recharge') && getValidRechargeAccessToken('carpool_pass'));
+
 export default function StorePage() {
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -18,11 +21,13 @@ export default function StorePage() {
   const initialTab: StoreTab = searchParams.get('tab') === 'pass' ? 'pass' : 'coins';
   const [activeTab, setActiveTab] = useState<StoreTab>(initialTab);
   const [sessionKey, setSessionKey] = useState(0);
-  const [authenticated, setAuthenticated] = useState<boolean>(() =>
-    Boolean(getValidRechargeAccessToken('recharge') || getValidRechargeAccessToken('carpool_pass')),
-  );
+  const [authenticated, setAuthenticated] = useState<boolean>(hasBothStoreTokens);
 
   const selectTab = (tab: StoreTab) => {
+    if (!hasBothStoreTokens()) {
+      setAuthenticated(false);
+      return;
+    }
     setActiveTab(tab);
     setSearchParams(tab === 'pass' ? { tab: 'pass' } : {});
   };
@@ -89,9 +94,10 @@ export default function StorePage() {
               key={`login-${sessionKey}`}
               scope="recharge"
               extraScopes={['carpool_pass']}
+              requireExtraScopes
               zh={zh}
               onSuccess={() => {
-                setAuthenticated(true);
+                setAuthenticated(hasBothStoreTokens());
                 setSessionKey((k) => k + 1);
               }}
             />

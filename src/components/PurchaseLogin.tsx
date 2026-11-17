@@ -7,6 +7,7 @@ import { PurchaseScope, rechargeUserId, storeRechargeAccessToken } from '../lib/
 export default function PurchaseLogin({
   scope,
   extraScopes,
+  requireExtraScopes = false,
   zh,
   onSuccess,
   purpose = 'purchase',
@@ -14,6 +15,7 @@ export default function PurchaseLogin({
 }: {
   scope: PurchaseScope;
   extraScopes?: PurchaseScope[];
+  requireExtraScopes?: boolean;
   zh: boolean;
   purpose?: 'purchase' | 'refund' | 'verify';
   onSuccess: (data: any) => void;
@@ -82,8 +84,8 @@ export default function PurchaseLogin({
           if (extra === scope) continue;
           try {
             await exchangeScope(extra, fullToken);
-          } catch {
-            // Optional secondary scope failure must not block the active scope login.
+          } catch (err) {
+            if (requireExtraScopes) throw err;
           }
         }
       }
