@@ -150,6 +150,7 @@ export default function StorePage() {
                 embedded
                 extraScopes={['carpool_pass']}
                 onAuthSuccess={() => setAuthenticated(true)}
+                onAuthRequired={handleLogout}
               />
             ) : (
               <CarpoolPassPage
@@ -157,6 +158,7 @@ export default function StorePage() {
                 embedded
                 extraScopes={['recharge']}
                 onAuthSuccess={() => setAuthenticated(true)}
+                onAuthRequired={handleLogout}
               />
             )}
           </div>

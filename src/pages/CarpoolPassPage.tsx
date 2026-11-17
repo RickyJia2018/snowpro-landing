@@ -15,10 +15,12 @@ export default function CarpoolPassPage({
   embedded = false,
   extraScopes,
   onAuthSuccess,
+  onAuthRequired,
 }: {
   embedded?: boolean;
   extraScopes?: PurchaseScope[];
   onAuthSuccess?: () => void;
+  onAuthRequired?: () => void;
 } = {}) {
   const navigate = useNavigate();
   const { language } = useLanguage();
@@ -92,7 +94,7 @@ export default function CarpoolPassPage({
     const confirmedPlan = plans.find(p => p.id === selected);
     if (!confirmedPlan) return;
     const currentToken = getValidRechargeAccessToken(scope);
-    if (!currentToken || currentToken !== token) { setToken(null); setError('session'); return; }
+    if (!currentToken || currentToken !== token) { setToken(null); setError('session'); onAuthRequired?.(); return; }
     checkoutInFlight.current = true;
     setLoading(true);
     setError(null);
@@ -107,7 +109,7 @@ export default function CarpoolPassPage({
       });
       if (!mounted.current || getValidRechargeAccessToken(scope) !== currentToken) return;
       if (response.status === 401) {
-        clearRechargeAccessToken(scope); setToken(null); setError('session'); return;
+        clearRechargeAccessToken(scope); setToken(null); setError('session'); onAuthRequired?.(); return;
       }
       if (!response.ok) {
         const failure = await response.json();

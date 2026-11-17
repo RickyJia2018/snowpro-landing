@@ -243,10 +243,12 @@ export default function RechargePage({
   embedded = false,
   extraScopes,
   onAuthSuccess,
+  onAuthRequired,
 }: {
   embedded?: boolean;
   extraScopes?: PurchaseScope[];
   onAuthSuccess?: () => void;
+  onAuthRequired?: () => void;
 } = {}) {
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -293,8 +295,19 @@ export default function RechargePage({
   const [pageLoading, setPageLoading] = useState(true);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [accountLoadFailed, setAccountLoadFailed] = useState(false);
   const [catalogReloadNeeded, setCatalogReloadNeeded] = useState(false);
   const catalogRequest = useRef(0);
+
+  const requireLogin = () => {
+    clearRechargeAccessToken();
+    sessionStorage.removeItem('recharge_session_id');
+    setAccessToken(null);
+    setSessionId(null);
+    setIsLoggedIn(false);
+    setUser(null);
+    onAuthRequired?.();
+  };
 
   // Check login state or exchange handoff code on mount
   useEffect(() => {
@@ -397,12 +410,7 @@ export default function RechargePage({
       }
     } catch (err) {
       console.error("[Snow Pro Recharge] Handoff exchange failed:", err);
-      clearRechargeAccessToken();
-      sessionStorage.removeItem('recharge_session_id');
-      setAccessToken(null);
-      setSessionId(null);
-      setIsLoggedIn(false);
-      setUser(null);
+      requireLogin();
     } finally {
       setPageLoading(false);
     }
@@ -449,12 +457,7 @@ export default function RechargePage({
           // The current session AND all remaining unprocessed sessions are retained!
           // Unprocessed entries were never removed from durable storage.
           console.warn(`[Snow Pro Recharge] Auth token expired (401) while verifying pending session ${sid}, retaining session for next authenticated session.`);
-          clearRechargeAccessToken();
-          sessionStorage.removeItem('recharge_session_id');
-          setAccessToken(null);
-          setSessionId(null);
-          setIsLoggedIn(false);
-          setUser(null);
+          requireLogin();
           break;
         } else {
           // Rejection is not proof of fulfillment or refund. A 403 may be a
@@ -473,6 +476,7 @@ export default function RechargePage({
 
   // Fetch user info
   const fetchUserInfo = async (token: string, triggerPendingCheck: boolean = true) => {
+    setAccountLoadFailed(false);
     try {
       const response = await checkoutFetch(`${API_BASE_URL}/get_user`, {
         method: 'GET',
@@ -485,12 +489,7 @@ export default function RechargePage({
       if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       if (response.status === 401) {
         console.error("Auth token expired or unauthorized (401), clearing tokens");
-        clearRechargeAccessToken();
-        sessionStorage.removeItem('recharge_session_id');
-        setAccessToken(null);
-        setSessionId(null);
-        setIsLoggedIn(false);
-        setUser(null);
+        requireLogin();
         return;
       }
 
@@ -519,8 +518,10 @@ export default function RechargePage({
         throw new Error('No user data');
       }
     } catch (err: any) {
+      if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       console.error("Failed to fetch user info:", err);
       setError(tLocal.unknownError);
+      setAccountLoadFailed(true);
     } finally {
       setPageLoading(false);
     }
@@ -575,12 +576,7 @@ export default function RechargePage({
     const token = getValidRechargeAccessToken();
     const sid = sessionId || sessionStorage.getItem('recharge_session_id');
 
-    clearRechargeAccessToken();
-    sessionStorage.removeItem('recharge_session_id');
-    setAccessToken(null);
-    setSessionId(null);
-    setIsLoggedIn(false);
-    setUser(null);
+    requireLogin();
     if (token) {
       try {
         await checkoutFetch(`${API_BASE_URL}/logout_user`, {
@@ -619,11 +615,7 @@ export default function RechargePage({
 
     const token = getValidRechargeAccessToken();
     if (!token) {
-      clearRechargeAccessToken();
-      sessionStorage.removeItem('recharge_session_id');
-      setAccessToken(null);
-      setSessionId(null);
-      setIsLoggedIn(false);
+      requireLogin();
       setError(tLocal.sessionExpiredError);
       paymentInFlight.current = false;
       setPaymentLoading(false);
@@ -651,9 +643,7 @@ export default function RechargePage({
 
       if (!mounted.current || getValidRechargeAccessToken() !== token) return;
       if (response.status === 401) {
-        clearRechargeAccessToken();
-        setIsLoggedIn(false);
-        setUser(null);
+        requireLogin();
         setError(tLocal.sessionExpiredError);
         return;
       }
@@ -708,7 +698,23 @@ export default function RechargePage({
 
   const content = (
     <div className={embedded ? 'max-w-md w-full mx-auto' : 'max-w-md w-full mx-auto px-4 py-12 flex-grow flex flex-col justify-center'}>
-      {!isLoggedIn ? (
+      {!isLoggedIn && accountLoadFailed ? (
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center">
+          <p role="alert" className="text-sm text-red-300">{error}</p>
+          <button
+            type="button"
+            className="mt-5 rounded-xl bg-blue-500 px-5 py-3 font-semibold hover:bg-blue-400"
+            onClick={() => {
+              const token = getValidRechargeAccessToken();
+              if (!token) { requireLogin(); return; }
+              setPageLoading(true);
+              void fetchUserInfo(token);
+            }}
+          >
+            {language === 'zh' ? '重试' : 'Retry'}
+          </button>
+        </div>
+      ) : !isLoggedIn ? (
         /* Handoff Required Card */
         <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-center">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
